@@ -25,44 +25,60 @@ interface KitchenCabinetGuidePageProps {
 
 export default function KitchenCabinetGuidePage({ locale, phone, share }: KitchenCabinetGuidePageProps) {
   const t = useTranslations('guides.kitchenCabinet');
+  // Shared, already-translated guide link labels. Reused rather than adding a
+  // second copy of "Cabinet Refinishing Cost" to this guide's own catalog.
+  const tRelated = useTranslations('guides.relatedGuides');
 
-  const stats = useMemo(() => ({
-    avgCost: '$8,000 – $45,000',
-    perFoot: '$250 – $600 / linear ft',
-    timeline: '2 – 8 weeks',
-  }), []);
+  // Every key below MUST exist in messages/<locale>/guides/kitchenCabinet.json.
+  // This page shipped in d4cfbb9e with a key set the catalog never had —
+  // flatPackAssembly, raisedPanel, materials.laminate, laminateCountertop,
+  // a whole `hardware` section and a whole `labourVsDiy` section — so it served
+  // 44 raw key paths ("guides.kitchenCabinet.hardware.hinges.title") to real
+  // visitors from the day it launched until 2026-08-26. The catalog was the
+  // half that was right: it carries real prices, written once and translated
+  // into all 14 locales. So the component was moved onto the catalog, not the
+  // other way round — inventing cabinet prices to satisfy a key name is not an
+  // option. scripts/ci/render-smoke.mjs now fails the build if this drifts.
+  const stats = useMemo(() => ([
+    { label: t('stats.avgCost'), value: t('stats.avgCostValue') },
+    { label: t('stats.range'), value: t('stats.rangeValue') },
+    { label: t('stats.linearFoot'), value: t('stats.linearFootValue') },
+    { label: t('stats.timeline'), value: t('stats.timelineValue') },
+  ]), [t]);
 
   const cabinetTypes = [
     { key: 'stock', accent: STEP_GREEN, accentLight: STEP_GREEN_LIGHT },
     { key: 'semiCustom', accent: STEP_TEAL, accentLight: STEP_TEAL_LIGHT },
     { key: 'custom', accent: STEP_ORANGE, accentLight: STEP_ORANGE_LIGHT },
-    { key: 'flatPackAssembly', accent: STEP_TEAL, accentLight: STEP_TEAL_LIGHT },
   ];
 
   const doorStyles = [
     { key: 'shaker' },
     { key: 'slab' },
     { key: 'inset' },
-    { key: 'raisedPanel' },
+    { key: 'raised' },
   ];
 
   const materials = [
-    { key: 'laminate' },
     { key: 'thermofoil' },
     { key: 'solidWood' },
     { key: 'mdf' },
+    { key: 'plywood' },
   ];
 
   const countertopCosts = [
-    { key: 'laminateCountertop' },
+    { key: 'laminate' },
     { key: 'quartz' },
     { key: 'granite' },
+    { key: 'solidSurface' },
   ];
 
-  const hardwareItems = [
-    { key: 'hinges' },
-    { key: 'softClose' },
-    { key: 'pullOutOrganizers' },
+  const breakdownItems = [
+    { key: 'cabinets' },
+    { key: 'countertops' },
+    { key: 'hardware' },
+    { key: 'labour' },
+    { key: 'misc' },
   ];
 
   const tips = ['tip1', 'tip2', 'tip3', 'tip4'] as const;
@@ -78,12 +94,8 @@ export default function KitchenCabinetGuidePage({ locale, phone, share }: Kitche
           <p className="text-lg mb-8" style={{ color: TEXT_MID }}>
             {t('hero.subtitle')}
           </p>
-          <div className="grid grid-cols-2 md:grid-cols-3 gap-4 max-w-3xl mx-auto">
-            {[
-              { label: t('stats.avgCost'), value: stats.avgCost },
-              { label: t('stats.perFoot'), value: stats.perFoot },
-              { label: t('stats.timeline'), value: stats.timeline },
-            ].map((stat) => (
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-3xl mx-auto">
+            {stats.map((stat) => (
               <div key={stat.label} className="rounded-xl p-4 text-center" style={{ backgroundColor: CARD, boxShadow: neu() }}>
                 <div className="text-lg md:text-xl font-bold" style={{ color: GOLD }}>{stat.value}</div>
                 <div className="text-xs mt-1" style={{ color: TEXT_MUTED }}>{stat.label}</div>
@@ -105,7 +117,7 @@ export default function KitchenCabinetGuidePage({ locale, phone, share }: Kitche
                   <Package size={20} style={{ color: ct.accent }} />
                 </div>
                 <h3 className="text-lg font-bold mb-1" style={{ color: TEXT }}>{t(`cabinetTypes.${ct.key}.title`)}</h3>
-                <div className="text-xl font-bold mb-3" style={{ color: GOLD }}>{t(`cabinetTypes.${ct.key}.priceRange`)}</div>
+                <div className="text-xl font-bold mb-3" style={{ color: GOLD }}>{t(`cabinetTypes.${ct.key}.price`)}</div>
                 <p className="text-sm" style={{ color: TEXT_MID }}>{t(`cabinetTypes.${ct.key}.description`)}</p>
               </div>
             ))}
@@ -124,7 +136,6 @@ export default function KitchenCabinetGuidePage({ locale, phone, share }: Kitche
                 <div className="flex-shrink-0 mt-1"><Home size={20} style={{ color: GOLD }} /></div>
                 <div>
                   <h3 className="font-bold mb-1" style={{ color: TEXT }}>{t(`doorStyles.${ds.key}.title`)}</h3>
-                  <div className="text-sm font-semibold mb-1" style={{ color: GOLD }}>{t(`doorStyles.${ds.key}.priceRange`)}</div>
                   <p className="text-sm" style={{ color: TEXT_MID }}>{t(`doorStyles.${ds.key}.description`)}</p>
                 </div>
               </div>
@@ -142,7 +153,7 @@ export default function KitchenCabinetGuidePage({ locale, phone, share }: Kitche
             {materials.map((mat) => (
               <div key={mat.key} className="rounded-xl p-5" style={{ backgroundColor: CARD, boxShadow: neu() }}>
                 <h3 className="font-bold mb-1" style={{ color: TEXT }}>{t(`materials.${mat.key}.title`)}</h3>
-                <div className="text-sm font-semibold mb-1" style={{ color: GOLD }}>{t(`materials.${mat.key}.durability`)}</div>
+                <div className="text-sm font-semibold mb-1" style={{ color: GOLD }}>{t(`materials.${mat.key}.priceRange`)}</div>
                 <p className="text-sm" style={{ color: TEXT_MID }}>{t(`materials.${mat.key}.description`)}</p>
               </div>
             ))}
@@ -169,59 +180,59 @@ export default function KitchenCabinetGuidePage({ locale, phone, share }: Kitche
         </div>
       </section>
 
-      {/* Hardware */}
+      {/* Full cost breakdown */}
       <section className="py-14 px-4 sm:px-6 lg:px-8" style={{ backgroundColor: SURFACE_ALT }}>
         <div className="max-w-4xl mx-auto">
-          <h2 className="text-2xl md:text-3xl font-bold mb-2 text-center" style={{ color: TEXT }}>{t('hardware.title')}</h2>
-          <p className="text-center mb-8" style={{ color: TEXT_MID }}>{t('hardware.subtitle')}</p>
-          <div className="grid gap-4 sm:grid-cols-3">
-            {hardwareItems.map((hw) => (
-              <div key={hw.key} className="rounded-xl p-5 text-center" style={{ backgroundColor: CARD, boxShadow: neu() }}>
-                <div className="w-10 h-10 rounded-lg flex items-center justify-center mx-auto mb-3" style={{ backgroundColor: GOLD_PALE }}>
+          <h2 className="text-2xl md:text-3xl font-bold mb-2 text-center" style={{ color: TEXT }}>{t('breakdown.title')}</h2>
+          <p className="text-center mb-8" style={{ color: TEXT_MID }}>{t('breakdown.subtitle')}</p>
+          <div className="space-y-3">
+            {breakdownItems.map((item) => (
+              <div key={item.key} className="rounded-xl p-5 flex flex-col sm:flex-row sm:items-center gap-3" style={{ backgroundColor: CARD, boxShadow: neu() }}>
+                <div className="w-10 h-10 rounded-lg flex items-center justify-center shrink-0" style={{ backgroundColor: GOLD_PALE }}>
                   <Wrench size={20} style={{ color: GOLD }} />
                 </div>
-                <h3 className="font-bold mb-1" style={{ color: TEXT }}>{t(`hardware.${hw.key}.title`)}</h3>
-                <div className="text-sm font-semibold mb-1" style={{ color: GOLD }}>{t(`hardware.${hw.key}.priceRange`)}</div>
-                <p className="text-sm" style={{ color: TEXT_MID }}>{t(`hardware.${hw.key}.description`)}</p>
+                <div className="flex-1">
+                  <h3 className="font-bold mb-1" style={{ color: TEXT }}>{t(`breakdown.${item.key}.title`)}</h3>
+                  <p className="text-sm" style={{ color: TEXT_MID }}>{t(`breakdown.${item.key}.description`)}</p>
+                </div>
+                <div className="text-base font-bold shrink-0 sm:text-right" style={{ color: GOLD }}>{t(`breakdown.${item.key}.range`)}</div>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Labour vs DIY */}
+      {/* Refinish or replace */}
       <section className="py-14 px-4 sm:px-6 lg:px-8" style={{ backgroundColor: SURFACE }}>
         <div className="max-w-4xl mx-auto">
-          <h2 className="text-2xl md:text-3xl font-bold mb-2 text-center" style={{ color: TEXT }}>{t('labourVsDiy.title')}</h2>
-          <p className="text-center mb-8" style={{ color: TEXT_MID }}>{t('labourVsDiy.subtitle')}</p>
+          <h2 className="text-2xl md:text-3xl font-bold mb-2 text-center" style={{ color: TEXT }}>{t('vsReplace.title')}</h2>
+          <p className="text-center mb-8" style={{ color: TEXT_MID }}>{t('vsReplace.subtitle')}</p>
           <div className="grid gap-6 md:grid-cols-2">
             <div className="rounded-2xl p-6" style={{ backgroundColor: CARD, boxShadow: neu() }}>
               <div className="w-10 h-10 rounded-lg flex items-center justify-center mb-3" style={{ backgroundColor: STEP_TEAL_LIGHT }}>
                 <Hammer size={20} style={{ color: STEP_TEAL }} />
               </div>
-              <h3 className="text-lg font-bold mb-3" style={{ color: TEXT }}>{t('labourVsDiy.professional.title')}</h3>
-              <ul className="space-y-2">
-                {(['benefit1', 'benefit2', 'benefit3'] as const).map((b) => (
-                  <li key={b} className="text-sm flex gap-2" style={{ color: TEXT_MID }}>
-                    <span style={{ color: STEP_TEAL }}>✓</span>
-                    {t(`labourVsDiy.professional.${b}`)}
-                  </li>
-                ))}
-              </ul>
+              <h3 className="text-lg font-bold mb-1" style={{ color: TEXT }}>{t('vsReplace.refinish.title')}</h3>
+              <div className="text-lg font-bold mb-3" style={{ color: GOLD }}>{t('vsReplace.refinish.cost')}</div>
+              <p className="text-sm flex gap-2 mb-2" style={{ color: TEXT_MID }}>
+                <span style={{ color: STEP_TEAL }}>✓</span>{t('vsReplace.refinish.refinishPros')}
+              </p>
+              <p className="text-sm flex gap-2" style={{ color: TEXT_MID }}>
+                <span style={{ color: STEP_ORANGE }}>!</span>{t('vsReplace.refinish.refinishCons')}
+              </p>
             </div>
             <div className="rounded-2xl p-6" style={{ backgroundColor: CARD, boxShadow: neu() }}>
               <div className="w-10 h-10 rounded-lg flex items-center justify-center mb-3" style={{ backgroundColor: STEP_ORANGE_LIGHT }}>
                 <Wrench size={20} style={{ color: STEP_ORANGE }} />
               </div>
-              <h3 className="text-lg font-bold mb-3" style={{ color: TEXT }}>{t('labourVsDiy.diyer.title')}</h3>
-              <ul className="space-y-2">
-                {(['risk1', 'risk2', 'risk3'] as const).map((r) => (
-                  <li key={r} className="text-sm flex gap-2" style={{ color: TEXT_MID }}>
-                    <span style={{ color: STEP_ORANGE }}>!</span>
-                    {t(`labourVsDiy.diyer.${r}`)}
-                  </li>
-                ))}
-              </ul>
+              <h3 className="text-lg font-bold mb-1" style={{ color: TEXT }}>{t('vsReplace.replace.title')}</h3>
+              <div className="text-lg font-bold mb-3" style={{ color: GOLD }}>{t('vsReplace.replace.cost')}</div>
+              <p className="text-sm flex gap-2 mb-2" style={{ color: TEXT_MID }}>
+                <span style={{ color: STEP_TEAL }}>✓</span>{t('vsReplace.replace.replacePros')}
+              </p>
+              <p className="text-sm flex gap-2" style={{ color: TEXT_MID }}>
+                <span style={{ color: STEP_ORANGE }}>!</span>{t('vsReplace.replace.replaceCons')}
+              </p>
             </div>
           </div>
         </div>
@@ -258,7 +269,7 @@ export default function KitchenCabinetGuidePage({ locale, phone, share }: Kitche
               {t('related.kitchenGuide')} <ArrowRight size={14} />
             </Link>
             <Link href="/guides/cabinet-refinishing-cost-vancouver" className="inline-flex items-center gap-1 text-sm font-semibold px-4 py-2 rounded-full transition-transform hover:scale-105" style={{ backgroundColor: CARD, boxShadow: neu(), color: GOLD }}>
-              {t('related.cabinetRefinishing')} <ArrowRight size={14} />
+              {tRelated('cabinetRefinishing')} <ArrowRight size={14} />
             </Link>
             <Link href="/guides" className="inline-flex items-center gap-1 text-sm font-semibold px-4 py-2 rounded-full transition-transform hover:scale-105" style={{ backgroundColor: CARD, boxShadow: neu(), color: GOLD }}>
               {t('related.allGuides')} <ArrowRight size={14} />

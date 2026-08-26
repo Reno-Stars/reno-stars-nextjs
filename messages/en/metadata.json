@@ -65,35 +65,43 @@
       "description": "Visit our Richmond BC showroom: see kitchen & bathroom displays, touch real materials, get a free quote. Open by appointment — call 778-960-7999 to book."
     },
     "guides": {
-      "title": "Renovation Costs Vancouver 2026: $150–$400/sqft | Reno Stars",
       "description": "Renovation costs per sq ft Vancouver 2026: $150–$400. Kitchen $15K–$72K, basement $30K–$120K+, bathroom $10K–$60K+. Real projects, free estimate.",
-      "kitchenCost": {
-        "title": "Kitchen Renovation Cost Vancouver 2026 | Reno Stars",
-        "description": "Average kitchen renovation cost Vancouver 2026: budget $15K–$27K, mid-range $28K–$38K, high-end $40K+. Real data from completed projects. Free estimate."
+      "title": "Renovation Costs Vancouver 2026: $150–$400/sqft | Reno Stars",
+      "basementCost": {
+        "title": "Basement Renovation Cost Vancouver 2026: $30K–$120K+",
+        "description": "Basement renovation cost Vancouver: $30K basic finishing to $120K+ legal suite conversion. Real project data, tier breakdowns, permit guide, free estimate."
+      },
+      "basementSuiteCost": {
+        "title": "Legal Basement Suite Cost Vancouver 2026: $60K–$150K",
+        "description": "How much does a legal basement suite conversion cost in Vancouver? Real 2026 pricing — $60K–$150K. Permits handled, all trades coordinated. Free quote."
       },
       "bathroomCost": {
         "title": "Bathroom Renovation Cost Vancouver 2026: $10K–$60K+",
         "description": "Average bathroom renovation cost Vancouver 2026: $10K–$60K+. Tub, shower, toilet & vanity. Budget refresh $10K, full ensuite $25K–$45K+. Free estimate."
       },
-      "wholeHouseCost": {
-        "title": "Whole House Renovation Cost Vancouver 2026: $50K–$200K+",
-        "description": "Vancouver whole-house renovation cost: $50K–$200K+ from real projects. Tier-by-tier breakdown — kitchens, bathrooms, flooring. 2026 prices, free estimate."
-      },
-      "basementCost": {
-        "title": "Basement Renovation Cost Vancouver 2026: $30K–$120K+",
-        "description": "Basement renovation cost Vancouver: $30K basic finishing to $120K+ legal suite conversion. Real project data, tier breakdowns, permit guide, free estimate."
+      "cabinetCost": {
+        "title": "Cabinet Renovation Cost Vancouver 2026 | Reno Stars",
+        "description": "Cabinet renovation Vancouver 2026: refacing & refinishing $4K–$15K. Compare refacing vs. full replacement. Real 2026 project prices, free estimate in 24h."
       },
       "commercialCost": {
         "title": "Commercial Renovation Cost Vancouver 2026 | Reno Stars",
         "description": "Vancouver commercial renovation cost: $50K–$1M+ — restaurants, clinics, offices, retail. Real data by project type, permit-aware planning. Free estimate."
       },
-      "cabinetCost": {
-        "title": "Cabinet Renovation Cost Vancouver 2026 | Reno Stars",
-        "description": "Cabinet renovation Vancouver 2026: refacing & refinishing $4K–$15K. Compare refacing vs. full replacement. Real 2026 project prices, free estimate in 24h."
+      "kitchenCabinet": {
+        "title": "Kitchen Cabinet Cost Vancouver 2026: $3K–$45K | Reno Stars",
+        "description": "Kitchen cabinet renovation cost in Vancouver 2026: $3K refinishing to $45K+ custom replacement, averaging $12,000 ($150–$600/linear ft). Stock vs semi-custom vs custom. Free estimate."
       },
-      "basementSuiteCost": {
-        "title": "Legal Basement Suite Cost Vancouver 2026: $60K–$150K",
-        "description": "How much does a legal basement suite conversion cost in Vancouver? Real 2026 pricing — $60K–$150K. Permits handled, all trades coordinated. Free quote."
+      "kitchenCost": {
+        "title": "Kitchen Renovation Cost Vancouver 2026 | Reno Stars",
+        "description": "Average kitchen renovation cost Vancouver 2026: budget $15K–$27K, mid-range $28K–$38K, high-end $40K+. Real data from completed projects. Free estimate."
+      },
+      "permit": {
+        "title": "Vancouver Renovation Permits 2026: What Needs One | Reno Stars",
+        "description": "Which Vancouver renovations need a building, plumbing, or electrical permit? 2026 guide to BC requirements across Vancouver, Burnaby, Richmond and Surrey — timelines, fees, and how to apply."
+      },
+      "wholeHouseCost": {
+        "title": "Whole House Renovation Cost Vancouver 2026: $50K–$200K+",
+        "description": "Vancouver whole-house renovation cost: $50K–$200K+ from real projects. Tier-by-tier breakdown — kitchens, bathrooms, flooring. 2026 prices, free estimate."
       }
     },
     "about": {

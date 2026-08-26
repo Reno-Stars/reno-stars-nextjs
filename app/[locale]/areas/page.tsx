@@ -5,6 +5,7 @@ import AreasPage from '@/components/pages/AreasPage';
 import { BreadcrumbSchema, FAQSchema } from '@/components/structured-data';
 import { getBaseUrl, buildAlternates, buildOgImageUrl, SITE_NAME, buildAlternateLocales} from '@/lib/utils';
 import { getCompanyFromDb, getServiceAreasFromDb } from '@/lib/db/queries';
+import ClientMessages from '@/components/ClientMessages';
 
 interface PageProps {
   params: Promise<{ locale: string }>;
@@ -67,10 +68,10 @@ export default async function Page({ params }: PageProps) {
   ];
 
   return (
-    <>
+    <ClientMessages ns={['areas', 'cta', 'projects']}>
       <BreadcrumbSchema items={breadcrumbs} locale={locale} />
       <FAQSchema faqs={areasFaqs} locale={locale} />
       <AreasPage locale={locale as Locale} areas={areas} company={company} areasFaqs={areasFaqs} />
-    </>
+    </ClientMessages>
   );
 }

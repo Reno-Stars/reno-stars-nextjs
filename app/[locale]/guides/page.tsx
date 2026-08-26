@@ -4,6 +4,7 @@ import { ogLocaleMap, type Locale } from '@/i18n/config';
 import GuidesIndexPage from '@/components/pages/GuidesIndexPage';
 import { BreadcrumbSchema, FAQSchema, ItemListSchema } from '@/components/structured-data';
 import { getBaseUrl, buildAlternates, buildOgImageUrl, SITE_NAME, buildAlternateLocales} from '@/lib/utils';
+import ClientMessages from '@/components/ClientMessages';
 
 interface PageProps {
   params: Promise<{ locale: string }>;
@@ -78,7 +79,7 @@ export default async function Page({ params }: PageProps) {
   }));
 
   return (
-    <>
+    <ClientMessages ns={['cta', 'guides.index']}>
       <BreadcrumbSchema items={breadcrumbs} locale={locale} />
       <ItemListSchema
         items={itemListItems}
@@ -87,6 +88,6 @@ export default async function Page({ params }: PageProps) {
       />
       <FAQSchema faqs={faqs} locale={locale} />
       <GuidesIndexPage locale={locale as Locale} />
-    </>
+    </ClientMessages>
   );
 }
