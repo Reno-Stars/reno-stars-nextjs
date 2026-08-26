@@ -47,7 +47,8 @@
     "dev:services": "docker compose up -d && pnpm db:push && pnpm db:seed && pnpm db:seed:projects && pnpm db:seed:blog && pnpm storage:seed",
     "images:process": "dotenv -e .env.local -- tsx scripts/process-all-images.ts",
     "images:process:force": "dotenv -e .env.local -- tsx scripts/process-all-images.ts --force",
-    "prepare": "husky"
+    "prepare": "husky",
+    "admin:password": "tsx scripts/set-admin-password.ts"
   },
   "dependencies": {
     "@aws-sdk/client-s3": "^3.1005.0",
