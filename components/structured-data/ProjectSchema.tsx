@@ -155,16 +155,24 @@ export default function ProjectSchema({
       // All images live here too — Service image is what Google's rich-result
       // tooling historically read; WebPage image is the authoritative root.
       ...(allImages.length > 0 && { image: allImages }),
-      ...(budgetRange && {
-        offers: {
-          '@type': 'Offer',
-          priceSpecification: {
-            '@type': 'PriceSpecification',
-            priceCurrency: 'CAD',
-            name: budgetRange,
+      ...(budgetRange && (() => {
+        const cleaned = budgetRange.replace(/[^0-9,]/g, '');
+        const parts = cleaned.split(',');
+        const nums = parts.map((p) => parseInt(p, 10)).filter((n) => !isNaN(n));
+        const minPrice = nums.length > 0 ? Math.min(...nums) : undefined;
+        const maxPrice = nums.length > 1 ? Math.max(...nums) : minPrice;
+        return {
+          offers: {
+            '@type': 'Offer',
+            priceSpecification: {
+              '@type': 'PriceSpecification',
+              priceCurrency: 'CAD',
+              ...(minPrice !== undefined && { minPrice }),
+              ...(maxPrice !== undefined && { maxPrice }),
+            },
           },
-        },
-      }),
+        };
+      })()),
       // Verified client reviews for THIS project. Author name is abbreviated
       // to first name + last initial (matches the on-page card); reviewBody
       // is the verbatim quote. Deliberately NO aggregateRating here.
