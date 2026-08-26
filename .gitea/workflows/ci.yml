@@ -23,8 +23,32 @@
 name: CI
 
 on:
+  # Every branch, not just main/develop.
+  #
+  # Until 2026-08-26 this was `branches: [main, develop]`, which meant NOTHING
+  # gated a merge. Checked against the Gitea task history: 125 runs, and every
+  # one of the last 50 was on `main`. No feature branch had ever run CI.
+  # The three paths all missed it — GitHub Actions is dead (org billing), the
+  # PR lives on GitHub so `pull_request` never reaches Gitea (the mirror
+  # carries branches, not PRs), and a feature-branch push is not `main`.
+  #
+  # So CI ran only AFTER code landed on main. Combined with propose-deploy
+  # refusing to run without a green ci.yml, a bad merge did not get blocked —
+  # it got discovered, with main already broken and every deploy stranded
+  # behind it.
+  #
+  # Safe to widen: build.yml (image build + propose-deploy) stays on
+  # `branches: [main]`, so nothing here can trigger a deploy. The concurrency
+  # group below is keyed on github.ref with cancel-in-progress, so repeated
+  # pushes to one branch supersede rather than pile up.
+  #
+  # Cost note: `seo/daily-**` branches land several times a day (6 on
+  # 2026-08-26 alone) and each now costs a full build + Chromium install. If
+  # that crowds the runners, add `branches-ignore: ['seo/daily-**']` here —
+  # but those branches DO touch message and content files, which is exactly
+  # what the render smoke gate checks, so prefer paying for them.
   push:
-    branches: [main, develop]
+    branches: ['**']
   pull_request:
     branches: [main, develop]
 
