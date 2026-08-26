@@ -1,0 +1,46 @@
+{
+  "awards": {
+    "breadcrumb": "Premios y reconocimientos",
+    "hero": {
+      "badge": "Reconocimiento",
+      "title": "Premios y reconocimientos",
+      "subtitle": "Aquí publicamos cualquier premio, certificación o reconocimiento del sector que reciba Reno Stars, con la entidad que lo otorga, el año y un enlace al anuncio, para que usted mismo pueda comprobarlo."
+    },
+    "empty": {
+      "title": "Todavía no hay nada publicado",
+      "body": "No hemos publicado ningún premio en esta página. Preferimos dejarla vacía antes que llenarla de sellos que usted no puede verificar. Cuando haya algo real que añadir, aparecerá aquí junto con la entidad que lo otorgó y el año."
+    },
+    "criteria": {
+      "title": "Qué aparecerá en esta página",
+      "issuer": "La entidad que lo otorga, con el nombre exacto con el que ella misma se identifica.",
+      "year": "El año en que se otorgó: nada de sellos permanentes sin fecha.",
+      "link": "Un enlace al anuncio o a la lista de finalistas, siempre que la entidad publique alguno."
+    },
+    "verified": {
+      "title": "Lo que sí puede comprobar hoy",
+      "subtitle": "Un premio es la decisión de otra persona. Esto es lo que puede comprobar sobre Reno Stars ahora mismo.",
+      "liability": "Seguro de RC general de {amount}",
+      "liabilityNote": "Cobertura de responsabilidad civil general.",
+      "wcbNote": "Cobertura de WorkSafeBC para el equipo que trabaja en su obra.",
+      "warranty": "Garantía de hasta {years} años",
+      "warrantyNote": "Garantía sobre la mano de obra, detallada en su contrato.",
+      "yearsNote": "Años de experiencia en reformas del equipo.",
+      "projectsNote": "Completados en el área metropolitana de Vancouver."
+    },
+    "reviews": {
+      "title": "El reconocimiento externo que sí tenemos",
+      "rating": "{rating} sobre 5 en Google, a partir de {count} reseñas",
+      "body": "Las reseñas las escriben los clientes y las publica Google, no nosotros. Es la única forma de reconocimiento de este sitio que no depende de nuestra palabra.",
+      "link": "Leer las reseñas"
+    },
+    "list": {
+      "title": "El archivo",
+      "issuedBy": "Otorgado por",
+      "announcement": "Ver el anuncio"
+    },
+    "cta": {
+      "heading": "Júzguenos mejor por el trabajo",
+      "subtitle": "Explore proyectos terminados en el área metropolitana de Vancouver, o reserve una consulta gratuita a domicilio y vea cómo elaboramos un presupuesto."
+    }
+  }
+}

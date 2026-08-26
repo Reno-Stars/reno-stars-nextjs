@@ -4,6 +4,7 @@ export const namespaces = [
   'careersPage',
   'areaBenefits',
   'areas',
+  'awards',
   'beforeAfterPage',
   'benefits',
   'blog',
@@ -45,6 +46,7 @@ export const namespaces = [
   'showroomPage',
   'siteVisit',
   'stats',
+  'transparentPricing',
   'wholeHouse',
 ] as const;
 

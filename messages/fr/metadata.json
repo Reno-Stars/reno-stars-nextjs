@@ -134,6 +134,14 @@
     "careers": {
       "title": "Carrières | Emplois en rénovation Région métropolitaine de Vancouver | Reno Stars",
       "description": "Nous recrutons des ouvriers en rénovation à Vancouver — carrelage, cloisons sèches, peinture, revêtement de sol, finition. Mandarin ou cantonais, un atout."
+    },
+    "transparentPricing": {
+      "title": "Tarification transparente : nos devis | Reno Stars Vancouver",
+      "description": "Comment Reno Stars chiffre une rénovation : devis détaillé ligne par ligne, paiements liés aux étapes du chantier, consultation gratuite à domicile, validité 30 jours."
+    },
+    "awards": {
+      "title": "Prix et distinctions | Reno Stars Vancouver",
+      "description": "Prix, certifications et reconnaissances externes de Reno Stars, entrepreneur en rénovation du Grand Vancouver — organisme, année et source indiqués pour chaque entrée."
     }
   }
 }
