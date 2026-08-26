@@ -35,7 +35,9 @@
     "kitchenVsBathroom": "キッチンとバスルーム: どちらが先?",
     "condoVsHouse": "マンションと戸建てのリノベーション費用",
     "supplies": "当社の供給品",
-    "careers": "キャリア"
+    "careers": "キャリア",
+    "transparentPricing": "明朗な見積もり",
+    "awards": "受賞歴"
   },
   "_translation_meta": {
     "source": "translate.googleapis.com (free, no API key)",

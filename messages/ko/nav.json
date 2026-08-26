@@ -35,7 +35,9 @@
     "kitchenVsBathroom": "주방 vs 욕실: 어느 것이 먼저일까요?",
     "condoVsHouse": "콘도 대 주택 개조 비용",
     "supplies": "우리의 공급품",
-    "careers": "채용"
+    "careers": "채용",
+    "transparentPricing": "투명한 견적",
+    "awards": "수상 내역"
   },
   "_translation_meta": {
     "source": "translate.googleapis.com (free, no API key)",

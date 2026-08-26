@@ -1,0 +1,46 @@
+{
+  "awards": {
+    "breadcrumb": "Awards & Recognition",
+    "hero": {
+      "badge": "Recognition",
+      "title": "Awards & Recognition",
+      "subtitle": "This is where we publish any award, certification or industry recognition Reno Stars receives — named issuer, year, and a link to the announcement, so you can check it for yourself."
+    },
+    "empty": {
+      "title": "Nothing listed here yet",
+      "body": "We have not published any awards on this page. We would rather leave it empty than fill it with badges you cannot verify. When there is something real to add, it will appear here with the organisation that issued it and the year they issued it."
+    },
+    "criteria": {
+      "title": "What will appear on this page",
+      "issuer": "The organisation that issued it, named exactly as it names itself.",
+      "year": "The year it was issued — no evergreen badges without a date.",
+      "link": "A link to the announcement or finalist list, wherever the issuer publishes one."
+    },
+    "verified": {
+      "title": "What you can verify today",
+      "subtitle": "Awards are somebody else's decision. These are the things about Reno Stars you can check right now.",
+      "liability": "{amount} CGL insurance",
+      "liabilityNote": "Commercial general liability coverage.",
+      "wcbNote": "WorkSafeBC coverage for the crew on your site.",
+      "warranty": "Up to {years} years warranty",
+      "warrantyNote": "Workmanship warranty on labour, set out in your contract.",
+      "yearsNote": "Renovation experience behind the team.",
+      "projectsNote": "Completed across Metro Vancouver."
+    },
+    "reviews": {
+      "title": "Independent recognition we do have",
+      "rating": "{rating} out of 5 on Google, from {count} reviews",
+      "body": "Reviews are written by clients and published by Google, not by us. That makes them the one form of recognition on this site that does not depend on our word.",
+      "link": "Read the reviews"
+    },
+    "list": {
+      "title": "The archive",
+      "issuedBy": "Awarded by",
+      "announcement": "View announcement"
+    },
+    "cta": {
+      "heading": "Judge us on the work instead",
+      "subtitle": "Browse completed Metro Vancouver projects, or book a free in-home consultation and see how we quote."
+    }
+  }
+}
