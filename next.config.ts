@@ -168,6 +168,17 @@ const nextConfig: NextConfig = {
       },
 
       // ================================================================
+      // 3b. Tsawwassen — sub-area of Delta with 28+ projects but no
+      //     dedicated /areas/tsawwassen/ page. Inbound links to the
+      //     misspelled URL bleed link equity to a 404.
+      // ================================================================
+      {
+        source: '/:locale(en|zh)/areas/tsawwassen/',
+        destination: '/:locale/areas/delta/',
+        permanent: true,
+      },
+
+      // ================================================================
       // 4. Old WP page renames
       // ================================================================
       // --- WP project CPT slugs (long WP slugs don't exist in new DB) ---
