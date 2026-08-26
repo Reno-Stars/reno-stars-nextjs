@@ -5,7 +5,7 @@ import OptimizedImage from '@/components/OptimizedImage';
 import { useTranslations } from 'next-intl';
 import { Link } from '@/navigation';
 import { SlidersHorizontal, MapPin, Eye, ChevronLeft, ChevronRight, ArrowRight } from 'lucide-react';
-import type { Locale, Company, Project, ImagePair } from '@/lib/types';
+import type { Locale, Company, GalleryProject, ImagePair } from '@/lib/types';
 import type { ShareContext } from '@/lib/share/types';
 import CTASection from '@/components/CTASection';
 import ShareBar from '@/components/share/ShareBar';
@@ -15,7 +15,7 @@ const ITEMS_PER_PAGE = 12;
 
 interface BeforeAfterGalleryPageProps {
   locale: Locale;
-  projects: Project[];
+  projects: GalleryProject[];
   company: Company;
   /** `url` is the page canonical, derived server-side via buildAlternates so it
    *  cannot drift from the canonical the page declares. */

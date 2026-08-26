@@ -5,7 +5,7 @@ import ServicesPage from '@/components/pages/ServicesPage';
 import AnswerBlockSection from '@/components/home/AnswerBlockSection';
 import { BreadcrumbSchema, ServiceSchema, FAQSchema } from '@/components/structured-data';
 import { getLocalizedService } from '@/lib/data/services';
-import { getBaseUrl, buildAlternates, buildOgImageUrl, SITE_NAME, buildAlternateLocales} from '@/lib/utils';
+import { getBaseUrl, buildAlternates, buildOgImageUrl, SITE_NAME, buildAlternateLocales, slimForClient } from '@/lib/utils';
 import { getCompanyFromDb, getServicesFromDb, getServiceAreasFromDb } from '@/lib/db/queries';
 import ClientMessages from '@/components/ClientMessages';
 
@@ -132,6 +132,27 @@ export default async function Page({ params }: PageProps) {
     return { question, answer, servicesTitle, viewServiceLabel };
   }
 
+  // <ServicesPage> is a `'use client'` component, so every prop is serialized
+  // into the RSC flight payload — the same trap the layout documents on
+  // `minimalLocalized`. Measured on /en/services/ before this: 2.27 MB of props,
+  // of which 1.26 MB was `ServiceArea.content` and 0.72 MB was
+  // `Service.long_description` — two fields the services HUB never renders (it
+  // shows service title/description/tags/icon and area name/description; the
+  // long copy belongs to /services/[slug] and /areas/[city]).
+  //
+  // So: drop those, and collapse what remains to `{ en, <locale> }`.
+  // `getLocalizedService`/`getLocalizedArea` read every dropped field through
+  // `pickLocaleOptional`, which returns `undefined` for a missing key — the same
+  // value the component already ignored. `areas` (unslimmed) still feeds
+  // ServiceSchema above, which is a server component.
+  const loc = locale as Locale;
+  const clientServices = visibleServices.map((s) =>
+    slimForClient(s, loc, ['long_description', 'benefits']),
+  );
+  const clientAreas = areas.map((a) =>
+    slimForClient(a, loc, ['content', 'highlights', 'metaTitle', 'metaDescription']),
+  );
+
   const answerBlockT = answerBlockTranslations();
   const answerBlockServices = visibleServices.map((s) => {
     const localized = getLocalizedService(s, locale as Locale);
@@ -173,7 +194,7 @@ export default async function Page({ params }: PageProps) {
           translations={answerBlockT}
         />
       )}
-      <ServicesPage locale={locale as Locale} company={company} services={visibleServices} areas={areas} />
+      <ServicesPage locale={locale as Locale} company={company} services={clientServices} areas={clientAreas} />
     </ClientMessages>
   );
 }

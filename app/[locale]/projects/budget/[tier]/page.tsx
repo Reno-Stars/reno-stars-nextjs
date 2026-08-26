@@ -7,6 +7,7 @@ import ProjectsPage from '@/components/pages/ProjectsPage';
 import { BreadcrumbSchema, ItemListSchema } from '@/components/structured-data';
 import { getBaseUrl, buildAlternates, buildOgImageUrl, SITE_NAME, buildAlternateLocales, pickLocale } from '@/lib/utils';
 import { getCompanyFromDb, getProjectsListFromDb, getSitesAsProjectsFromDb, getCategoriesLocalized } from '@/lib/db/queries';
+import { slimProjectForListing, slimSiteForListing } from '@/lib/data/listing-payload';
 import { NAVY, GOLD, GOLD_PALE, SURFACE_ALT, CARD, TEXT_MID } from '@/lib/theme';
 import type { Project } from '@/lib/types';
 import ClientMessages from '@/components/ClientMessages';
@@ -215,8 +216,8 @@ export default async function Page({ params }: PageProps) {
       <ProjectsPage
         locale={loc}
         company={company}
-        projects={filteredProjects}
-        sitesAsProjects={filteredSites}
+        projects={filteredProjects.map((p) => slimProjectForListing(p, loc))}
+        sitesAsProjects={filteredSites.map((s) => slimSiteForListing(s, loc))}
         categories={categories}
       />
     </ClientMessages>
