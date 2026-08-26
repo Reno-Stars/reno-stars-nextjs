@@ -19,6 +19,27 @@ import { locales, LOCALE_META } from '@/i18n/config';
 // replacing it — and are a branding decision, not a bug, so they are not
 // asserted here.
 
+/**
+ * Transliterations MT produced — the name respelled in another script.
+ * Normalised to "Reno Stars" on 2026-08-26: the brand read three different
+ * ways in Japanese (リノスター / リノスターズ / リノ スターズ), two in Russian
+ * (Рено Старс / Рино Старс) and two in Korean, so it was not one brand at all.
+ * LOCALE_META.brandName grants a localized brand to zh and zh-Hant only.
+ *
+ * The renovation NOUN shares a stem with these in several scripts
+ * (リノベーション, 리노베이션, रेनोवेशन) and must never be caught by them —
+ * every entry here is the full brand, never a stem.
+ */
+const TRANSLITERATED_BRAND = [
+  'リノ スターズ', 'リノスターズ', 'リノ スター', 'リノスター',
+  'रेनो स्टार्स', 'रेनो स्टार',
+  'Рено Старс', 'Рино Старс',
+  'رينو ستارز', 'رينو ستار',
+  'رنو استارز',
+  '리노 스타즈', '리노스타즈', '레노 스타스',
+  'ਰੇਨੋ ਸਟਾਰਸ',
+];
+
 /** Meaning-translations of "Reno Stars" that MT has produced or would produce. */
 const TRANSLATED_BRAND = [
   'Étoiles de Réno',
@@ -46,11 +67,11 @@ describe('brand name is never machine-translated', () => {
     expect([...localized].sort()).toEqual(['zh', 'zh-Hant']);
   });
 
-  it.each(locales)('%s carries no translated form of the brand', (locale) => {
+  it.each(locales)('%s carries no translated or transliterated brand', (locale) => {
     const hits: string[] = [];
     for (const file of jsonFiles(path.join('messages', locale))) {
       const text = readFileSync(file, 'utf8');
-      for (const bad of TRANSLATED_BRAND) {
+      for (const bad of [...TRANSLATED_BRAND, ...TRANSLITERATED_BRAND]) {
         if (text.includes(bad)) hits.push(`${path.relative('messages', file)}: ${bad}`);
       }
     }
