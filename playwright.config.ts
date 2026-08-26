@@ -26,7 +26,14 @@ export default defineConfig({
       // available. Unset locally -> Playwright's pinned build, as before.
       use: {
         ...devices['Desktop Chrome'],
+        // PW_CHANNEL picks an installed browser family (e.g. 'chrome');
+        // PW_EXECUTABLE points at a specific binary, which is how a
+        // distro-packaged chromium gets used. Neither set -> Playwright's own
+        // pinned build, which is what happens locally.
         ...(process.env.PW_CHANNEL ? { channel: process.env.PW_CHANNEL } : {}),
+        ...(process.env.PW_EXECUTABLE
+          ? { launchOptions: { executablePath: process.env.PW_EXECUTABLE } }
+          : {}),
       },
     },
     {

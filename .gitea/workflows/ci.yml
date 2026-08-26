@@ -209,29 +209,49 @@ jobs:
 
       - name: Provide a browser for Playwright
         id: browser
-        # The runner cannot reach cdn.playwright.dev — five 30s timeouts on
-        # 2026-08-26 — while apt pulled 233 packages from the Ubuntu archives
-        # in the same step, so this is that one host, not egress in general.
-        # A Playwright image cannot be baked either: the registry caps layers
-        # at 100 MB (Cloudflare free plan) and Playwright's is ~751 MB.
+        # The runner cannot reach cdn.playwright.dev — five 30s timeouts, twice
+        # over — while apt pulled 233 packages from the Ubuntu archives AND
+        # ppa.launchpadcontent.net in the same step. So it is that one host,
+        # not egress in general, and the fix is to get Chromium from apt.
         #
-        # So: prefer a browser the image already ships, fall back to the
-        # download, and report which. Never silently skip the tests — a
-        # missing browser must look different from a passing suite.
+        # `playwright install-deps` still runs: the system libraries come from
+        # the Ubuntu archives, which work. Only the browser BINARY is blocked.
+        # A Playwright image cannot be baked either — the registry caps layers
+        # at 100 MB (Cloudflare free plan) against Playwright's ~751 MB.
+        #
+        # Tiers, cheapest first. Never silently skip: a missing browser has to
+        # look different from a passing suite.
         run: |
+          set -u
+          pnpm exec playwright install-deps chromium || true
+
           if command -v google-chrome >/dev/null 2>&1; then
             echo "channel=chrome" >> "$GITHUB_OUTPUT"
+            echo "exe=" >> "$GITHUB_OUTPUT"
             echo "using preinstalled google-chrome: $(google-chrome --version)"
           elif command -v chromium >/dev/null 2>&1; then
-            echo "channel=chromium" >> "$GITHUB_OUTPUT"
-            echo "using preinstalled chromium: $(chromium --version)"
-          elif pnpm exec playwright install --with-deps chromium; then
             echo "channel=" >> "$GITHUB_OUTPUT"
+            echo "exe=$(command -v chromium)" >> "$GITHUB_OUTPUT"
+            echo "using preinstalled chromium: $(chromium --version)"
+          elif pnpm exec playwright install chromium; then
+            echo "channel=" >> "$GITHUB_OUTPUT"
+            echo "exe=" >> "$GITHUB_OUTPUT"
             echo "downloaded Playwright's bundled chromium"
           else
-            echo "channel=UNAVAILABLE" >> "$GITHUB_OUTPUT"
-            echo "::error::No browser available: no system Chrome/Chromium and cdn.playwright.dev is unreachable from this runner. Allow egress to cdn.playwright.dev, or add a browser to the runner image."
-            exit 1
+            echo "cdn.playwright.dev unreachable — trying apt (ppa.launchpadcontent.net is reachable from here)"
+            sudo apt-get install -y software-properties-common >/dev/null 2>&1 || true
+            sudo add-apt-repository -y ppa:xtradeb/apps >/dev/null 2>&1 || true
+            sudo apt-get update -qq || true
+            if sudo apt-get install -y chromium >/dev/null 2>&1 && command -v chromium >/dev/null 2>&1; then
+              echo "channel=" >> "$GITHUB_OUTPUT"
+              echo "exe=$(command -v chromium)" >> "$GITHUB_OUTPUT"
+              echo "installed chromium from apt: $(chromium --version)"
+            else
+              echo "channel=UNAVAILABLE" >> "$GITHUB_OUTPUT"
+              echo "exe=" >> "$GITHUB_OUTPUT"
+              echo "::error::No browser available: no system Chrome/Chromium, cdn.playwright.dev unreachable, and apt could not supply chromium. Allow egress to cdn.playwright.dev, or bake a browser into the k8s-heavy runner image."
+              exit 1
+            fi
           fi
 
       - name: E2E (chromium)
@@ -248,6 +268,7 @@ jobs:
           PLAYWRIGHT_NO_SERVER: '1'
           BASE_URL: http://127.0.0.1:3000
           PW_CHANNEL: ${{ steps.browser.outputs.channel }}
+          PW_EXECUTABLE: ${{ steps.browser.outputs.exe }}
         run: >-
           pnpm exec playwright test --project=chromium
           tests/e2e/homepage.spec.ts
