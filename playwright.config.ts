@@ -37,10 +37,23 @@ export default defineConfig({
       use: { ...devices['iPhone 12'] },
     },
   ],
-  webServer: {
-    command: 'npm run build && npm run start',
-    url: 'http://localhost:3000',
-    reuseExistingServer: !process.env.CI,
-    timeout: 120 * 1000,
-  },
+  // PLAYWRIGHT_NO_SERVER=1 runs the specs against an ALREADY-RUNNING server at
+  // BASE_URL. CI uses it so the build job's server (started once, after
+  // `pnpm build`, against the seeded Postgres) is reused instead of paying for
+  // a second full build — Gitea has no artifacts backend, so `.next` cannot be
+  // handed between jobs anyway.
+  //
+  // It also keeps a local run off port 3000, which is the production port and
+  // must never be bound (see the repo's standing orders).
+  //
+  // The command is `pnpm`, not `npm`: this is a pnpm workspace, and `npm run
+  // build` here is how the invoice-service CI port broke.
+  webServer: process.env.PLAYWRIGHT_NO_SERVER
+    ? undefined
+    : {
+        command: 'pnpm build && pnpm start',
+        url: process.env.BASE_URL || 'http://localhost:3000',
+        reuseExistingServer: !process.env.CI,
+        timeout: 120 * 1000,
+      },
 });
