@@ -30,7 +30,7 @@
  * much harsher omit list than the top-level projects.
  */
 import type { Locale } from '@/i18n/config';
-import type { Project, SiteWithProjects } from '@/lib/types';
+import type { GalleryProject, Project, SiteWithProjects } from '@/lib/types';
 import { deepMinimalLocalized, slimForClient } from '@/lib/utils';
 
 /** Not rendered by the grid; not read by `getLocalizedProject`. */
@@ -93,4 +93,30 @@ export function slimSiteForListing(site: SiteWithProjects, locale: Locale): Site
       allImages: [],
     },
   };
+}
+
+/**
+ * Slim one `Project` down to the before/after gallery's `GalleryProject` view.
+ *
+ * The gallery reads five fields; `getProjectsFromDb()` returns the full
+ * editorial row, which put 1.48 MB of props on /en/before-after/ — the single
+ * heaviest client payload on the site after /services/. Projecting to the
+ * declared prop type, then collapsing the locales that survive, is the whole
+ * fix; nothing the component renders changes.
+ *
+ * Note the gallery indexes `title[locale]` and `alt[locale]` DIRECTLY (with a
+ * `|| title.en` / `|| \`${pairTitle} - Before\`` fallback), which is exactly why
+ * `deepMinimalLocalized` must be key-exact — see its doc comment.
+ */
+export function slimProjectForGallery(project: Project, locale: Locale): GalleryProject {
+  return deepMinimalLocalized(
+    {
+      slug: project.slug,
+      title: project.title,
+      service_type: project.service_type,
+      location_city: project.location_city,
+      image_pairs: project.image_pairs,
+    },
+    locale,
+  );
 }
