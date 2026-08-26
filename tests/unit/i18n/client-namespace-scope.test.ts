@@ -49,10 +49,24 @@ const TOP_LEVEL = new Set(
     .filter((f) => f.endsWith('.json'))
     .map((f) => f.slice(0, -5)),
 );
+/**
+ * Namespaces under `guides`, read the way i18n/request.ts ASSEMBLES them —
+ * the top-level keys inside messages/en/guides/*.json, not the filenames.
+ *
+ * Those are not the same list. `relatedGuides.json` carries TWO namespaces,
+ * `relatedGuides` and `cityCostTable`. Deriving this from filenames silently
+ * classified `guides.cityCostTable` as "not a real namespace", so the scoping
+ * analyzer dropped it from three cost-guide pages and this test agreed with
+ * itself and stayed green. The render smoke gate missed it too: that section
+ * only renders when the city cost rows are present, so a run without a
+ * populated database never reaches the keys.
+ */
 const GUIDE_SECTIONS = new Set(
   readdirSync(path.join(ROOT, 'messages/en/guides'))
     .filter((f) => f.endsWith('.json'))
-    .map((f) => f.slice(0, -5)),
+    .flatMap((f) =>
+      Object.keys(JSON.parse(readFileSync(path.join(ROOT, 'messages/en/guides', f), 'utf8'))),
+    ),
 );
 
 const isRealNamespace = (n: string): boolean =>

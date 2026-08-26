@@ -119,7 +119,7 @@ export default async function Page({ params }: PageProps) {
   ];
 
   return (
-    <ClientMessages ns={['cta', 'guides.kitchenCost', 'guides.relatedGuides', 'share']}>
+    <ClientMessages ns={['cta', 'guides.cityCostTable', 'guides.kitchenCost', 'guides.relatedGuides', 'share']}>
       <BreadcrumbSchema items={breadcrumbs} locale={locale} />
       <FAQSchema faqs={faqs} locale={locale} />
       <ArticleSchema
