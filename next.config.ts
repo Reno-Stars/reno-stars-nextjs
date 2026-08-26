@@ -685,6 +685,7 @@ const nextConfig: NextConfig = {
         destination: '/en/contact/',
         permanent: true,
       },
+      { source: '/blog', destination: '/en/blog/', permanent: true },
       { source: '/blog/', destination: '/en/blog/', permanent: true },
       {
         source: '/blog/:path*/',
