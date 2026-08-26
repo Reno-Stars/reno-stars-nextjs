@@ -35,13 +35,22 @@ export function generateMetadata(): Metadata {
   // generateMetadata() pulling from messages/<locale>/metadata.json.
   //
   // Pre-2026-05-30 the fallback was a generic 12-word filler. Now it
-  // mirrors the structure of metadata.home (Trusted-Vancouver hook +
-  // quantified credibility signals + service breadth + CTA) using
-  // config-derived numbers (lib/company-config.ts, no runtime data
-  // access). Boosts the 404 page's SERP description and any future
-  // route that forgets to define its own metadata.
-  title: `${SITE_NAME} — Vancouver Renovation | Kitchen, Bath & Whole-House`,
-  description: `Trusted Vancouver renovation & remodeling contractor — ${getYearsExperience()}+ yrs, 700+ projects, 5★ Google, $5M insured, 3-yr warranty. Kitchen, bathroom & whole-house renovations across Metro Vancouver. Free quote 24h.`,
+  // mirrors the structure of metadata.home (service breadth + quantified
+  // credibility signals + CTA) using config-derived numbers
+  // (lib/company-config.ts, no runtime data access). Boosts the 404 page's
+  // SERP description and any future route that forgets to define its own
+  // metadata.
+  //
+  // Length discipline (2026-08-26): the title was 63 chars and the
+  // description 201 — both past Google's SERP truncation point (~60 chars /
+  // ~160 chars), so the tail was being cut in every result this fallback
+  // reached. The dropped "5★ Google" claim is DELIBERATE: this module has no
+  // runtime data access, so the rating here could only ever be a hardcoded
+  // number that silently goes stale. The live figure is read from
+  // getGoogleReviews() in app/[locale]/page.tsx, which is the only place that
+  // asserts it.
+  title: `Vancouver Renovation Contractor | ${SITE_NAME}`,
+  description: `Kitchen, bathroom, basement and whole-home renovations across Metro Vancouver. ${getYearsExperience()}+ yrs, $5M CGL insured, 3-yr warranty. Free quote in 24 hours.`,
   authors: [{ name: 'Reno Stars' }],
   // formatDetection: telephone:true makes iOS Safari auto-link any phone
   // number in body text into a tap-to-call link. The contractor business

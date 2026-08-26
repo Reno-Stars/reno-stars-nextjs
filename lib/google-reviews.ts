@@ -487,3 +487,39 @@ export async function getGoogleReviews(): Promise<GooglePlaceRating> {
     return EMPTY_RESULT;
   }
 }
+
+// ---------------------------------------------------------------------------
+// SERP metadata proof asset
+// ---------------------------------------------------------------------------
+
+/**
+ * A rating is only allowed into a <title> once it is genuinely credible.
+ * 4.5 keeps the "N-Star" phrasing honest after rounding to one decimal; 10
+ * reviews stops a brand-new or reset listing from shipping a 5.0 built on two
+ * ratings.
+ */
+const MIN_RATING_FOR_SERP = 4.5;
+const MIN_REVIEWS_FOR_SERP = 10;
+
+/**
+ * Format the live Google rating for use in a page title/description, or return
+ * `null` when it must not be claimed at all.
+ *
+ * Why this is a guard and not a formatter: `getGoogleReviews()` degrades to
+ * `{ rating: 0, userRatingCount: 0 }` when the Places API AND the DB cache row
+ * are both unavailable. Interpolating that yields "0.0-Star Vancouver
+ * Renovation Contractor" — a false claim published to every crawler. Callers
+ * MUST treat `null` as "fall back to the copy that makes no rating claim",
+ * never as "use a default rating".
+ *
+ * Returns strings (not numbers) because these feed ICU message params, and
+ * `rating` must render as "5.0", not "5".
+ */
+export function serpRatingParams(
+  reviews: Pick<GooglePlaceRating, 'rating' | 'userRatingCount'>,
+): { rating: string; reviewCount: string } | null {
+  const { rating, userRatingCount } = reviews;
+  if (!Number.isFinite(rating) || rating < MIN_RATING_FOR_SERP) return null;
+  if (!Number.isInteger(userRatingCount) || userRatingCount < MIN_REVIEWS_FOR_SERP) return null;
+  return { rating: rating.toFixed(1), reviewCount: String(userRatingCount) };
+}
