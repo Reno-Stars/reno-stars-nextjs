@@ -9,6 +9,7 @@ import { getBaseUrl, buildAlternates, buildOgImageUrl, SITE_NAME, buildAlternate
 import { getCompanyFromDb, getProjectsListFromDb, getSitesAsProjectsFromDb, getCategoriesLocalized } from '@/lib/db/queries';
 import { NAVY, GOLD, GOLD_PALE, SURFACE_ALT, CARD, TEXT_MID } from '@/lib/theme';
 import type { Project } from '@/lib/types';
+import ClientMessages from '@/components/ClientMessages';
 
 interface PageProps {
   params: Promise<{ locale: string; tier: string }>;
@@ -168,7 +169,7 @@ export default async function Page({ params }: PageProps) {
   ];
 
   return (
-    <>
+    <ClientMessages ns={['areas', 'category', 'cta', 'lightbox', 'modal', 'projects', 'wholeHouse']}>
       <BreadcrumbSchema items={breadcrumbs} locale={locale} />
       <ItemListSchema
         items={itemListItems}
@@ -218,6 +219,6 @@ export default async function Page({ params }: PageProps) {
         sitesAsProjects={filteredSites}
         categories={categories}
       />
-    </>
+    </ClientMessages>
   );
 }

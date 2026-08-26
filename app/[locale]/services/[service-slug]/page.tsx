@@ -11,6 +11,7 @@ import { BreadcrumbSchema, ServiceSchema, FAQSchema } from '@/components/structu
 import { getBaseUrl, buildAlternates, SITE_NAME, truncateMetaDescription, buildAlternateLocales} from '@/lib/utils';
 import { images as siteImages } from '@/lib/data';
 import { buildOptimizedUrl, buildSrcSet, isR2Url, buildProcessedUrl, buildProcessedSrcSet } from '@/lib/image';
+import ClientMessages from '@/components/ClientMessages';
 
 interface PageProps {
   params: Promise<{ locale: string; 'service-slug': string }>;
@@ -343,7 +344,7 @@ export default async function Page({ params }: PageProps) {
   const shareUrl = buildAlternates(`/services/${serviceSlug}/`, locale).canonical;
 
   return (
-    <>
+    <ClientMessages ns={['areas', 'costGuidesSection', 'cta', 'faq', 'lightbox', 'modal', 'projects', 'serviceBenefits', 'share', 'wholeHouse']}>
       {/* Hero preload — React 19's auto-preload for srcset <img> tags omits
           fetchPriority="high", so the full-res hero ends up downloading at
           normal priority AFTER the 20px LQIP thumb. On mobile/slow links
@@ -418,6 +419,6 @@ export default async function Page({ params }: PageProps) {
           imageUrl: serviceHeroImage,
         }}
       />
-    </>
+    </ClientMessages>
   );
 }

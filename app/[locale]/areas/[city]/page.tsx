@@ -11,6 +11,7 @@ import { images as siteImages } from '@/lib/data';
 import { getCompanyFromDb, getServicesFromDb, getServiceAreasFromDb, getServiceAreaBySlugFromDb, getFaqsByAreaFromDb, getProjectsByAreaFromDb, getReviewsByCityFromDb } from '@/lib/db/queries';
 import { getGoogleReviews, projectReviewsToLocale } from '@/lib/google-reviews';
 import { getYearsExperience } from '@/lib/company-config';
+import ClientMessages from '@/components/ClientMessages';
 
 interface PageProps {
   params: Promise<{ locale: string; city: string }>;
@@ -433,7 +434,7 @@ export default async function Page({ params }: PageProps) {
   const { title: shareTitle } = await resolveAreaMeta(localizedArea, city, locale);
 
   return (
-    <>
+    <ClientMessages ns={['areaBenefits', 'areas', 'costGuidesSection', 'cta', 'projects', 'share']}>
       <BreadcrumbSchema items={breadcrumbs} locale={locale} />
       <LocalBusinessAreaSchema
         company={company}
@@ -459,6 +460,6 @@ export default async function Page({ params }: PageProps) {
         cityClientReviews={cityClientReviews}
         share={{ url: shareUrl, title: shareTitle, imageUrl: siteImages.hero }}
       />
-    </>
+    </ClientMessages>
   );
 }

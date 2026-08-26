@@ -5,6 +5,7 @@ import { ogLocaleMap, type Locale } from "@/i18n/config";
 import HomePage from "@/components/pages/HomePage";
 import { BreadcrumbSchema, FAQSchema } from "@/components/structured-data";
 import { getBaseUrl, buildAlternates, buildOgImageUrl, SITE_NAME, pickLocale, buildAlternateLocales} from '@/lib/utils';
+import ClientMessages from '@/components/ClientMessages';
 import { WORKSAFE_BC_LOGO } from "@/lib/data";
 import {
   getCompanyFromDb,
@@ -276,7 +277,7 @@ export default async function Page({ params }: PageProps) {
   const faqSchemaItems = localizedFaqs.map((f) => ({ question: f.question, answer: f.answer }));
 
   return (
-    <>
+    <ClientMessages ns={['cta', 'form', 'modal']}>
       <BreadcrumbSchema items={breadcrumbs} locale={locale} />
       <FAQSchema faqs={faqSchemaItems} locale={locale} />
       <HomePage
@@ -295,6 +296,6 @@ export default async function Page({ params }: PageProps) {
         stats={stats}
         translations={translations}
       />
-    </>
+    </ClientMessages>
   );
 }
