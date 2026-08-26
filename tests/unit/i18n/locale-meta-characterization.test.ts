@@ -2,6 +2,7 @@ import { describe, it, expect } from 'vitest';
 import {
   locales, localeNames, ogLocaleMap, rtlLocales, isRtl,
   INDEXABLE_LEAF_LOCALES, isIndexableLeafLocale, PRERENDERED_LOCALES,
+  INDEXABLE_SERVICE_CITY_LOCALES, isIndexableServiceCityLocale,
 } from '@/i18n/config';
 import { LOCALE_TO_SUFFIX, localeSuffix, fieldKey, hasDedicatedColumn } from '@/lib/admin/locale-keys';
 import { LOCALE_TO_DB_SUFFIX, pickLocale } from '@/lib/utils';
@@ -101,6 +102,34 @@ describe('indexability', () => {
 
   it('PRERENDERED_LOCALES is empty — the site is force-dynamic SSR', () => {
     expect([...PRERENDERED_LOCALES]).toEqual([]);
+  });
+
+  // service×city is gated SEPARATELY from indexableLeaf as of 2026-08-26.
+  // Not a reversal of the 2026-08-07 decision — a repair: the flip's own
+  // commit message assumed the sitemap already submitted all 14 for this
+  // route, and it never has. See LocaleMeta.indexableServiceCity.
+  it('service×city is open for en/zh/zh-Hant only', () => {
+    expect([...INDEXABLE_SERVICE_CITY_LOCALES].sort()).toEqual(['en', 'zh', 'zh-Hant']);
+  });
+
+  it('isIndexableServiceCityLocale agrees with the list, and rejects unknown codes', () => {
+    for (const loc of locales) {
+      expect(isIndexableServiceCityLocale(loc)).toBe(
+        loc === 'en' || loc === 'zh' || loc === 'zh-Hant',
+      );
+    }
+    expect(isIndexableServiceCityLocale('de')).toBe(false);
+  });
+
+  // The whole point of the split is that a locale can be good enough to index
+  // a hand-written project page and still not be worth 154 templated
+  // service×city siblings. If this ever fails, the two flags have been
+  // re-merged and the sitemap/robots drift can come back.
+  it('service×city is a SUBSET of the leaf-indexable locales', () => {
+    for (const loc of INDEXABLE_SERVICE_CITY_LOCALES) {
+      expect(isIndexableLeafLocale(loc)).toBe(true);
+    }
+    expect(INDEXABLE_SERVICE_CITY_LOCALES.length).toBeLessThan(INDEXABLE_LEAF_LOCALES.length);
   });
 });
 
