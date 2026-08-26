@@ -33,12 +33,21 @@
       "subtitle": "Las condiciones de pago se fijan en cada contrato de proyecto. Normalmente se estructuran en torno a estas fases:",
       "steps": {
         "s1": "A la firma",
-        "s2": "Al inicio de la obra",
-        "s3": "Al completar fases clave",
-        "s4": "En la aceptación final"
+        "s2": "Al iniciar la obra",
+        "s3": "En el primer hito de obra",
+        "s4": "En el segundo hito de obra",
+        "s5": "Tras la inspección final"
       },
-      "note": "Las fases que se apliquen a su proyecto, y el importe asociado a cada una, constan en su contrato, de modo que puede ver qué activa cada pago antes de firmar nada.",
-      "methods": "Aceptamos transferencia Interac, cheque certificado y tarjeta de crédito."
+      "note": "El calendario de cinco etapas siguiente es el que usamos con más frecuencia. Las etapas aplicables a su proyecto y el hito que activa cada pago figuran en su contrato, de modo que sabe qué libera cada pago antes de firmar.",
+      "methods": "Aceptamos transferencia Interac, cheque certificado y tarjeta de crédito.",
+      "percentages": {
+        "s1": "10",
+        "s2": "40",
+        "s3": "25",
+        "s4": "20",
+        "s5": "5"
+      },
+      "commonLabel": "Calendario más habitual"
     },
     "getting": {
       "title": "Cómo conseguir su cifra",

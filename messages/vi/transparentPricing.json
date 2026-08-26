@@ -34,11 +34,20 @@
       "steps": {
         "s1": "Khi ký hợp đồng",
         "s2": "Khi khởi công",
-        "s3": "Khi hoàn thành các giai đoạn chính",
-        "s4": "Khi nghiệm thu cuối cùng"
+        "s3": "Tại mốc thi công thứ nhất",
+        "s4": "Tại mốc thi công thứ hai",
+        "s5": "Sau nghiệm thu cuối cùng"
       },
-      "note": "Các mốc áp dụng cho dự án của quý vị, cùng số tiền gắn với từng mốc, được ghi trong hợp đồng — nên quý vị thấy rõ điều gì kích hoạt mỗi khoản thanh toán trước khi ký bất cứ thứ gì.",
-      "methods": "Chúng tôi nhận chuyển khoản Interac, séc bảo chi và thẻ tín dụng."
+      "note": "Lịch thanh toán năm giai đoạn dưới đây là phương án chúng tôi dùng nhiều nhất. Các giai đoạn áp dụng cho dự án của bạn và điều kiện của từng lần thanh toán đều được ghi trong hợp đồng, để bạn biết rõ trước khi ký.",
+      "methods": "Chúng tôi nhận chuyển khoản Interac, séc bảo chi và thẻ tín dụng.",
+      "percentages": {
+        "s1": "10",
+        "s2": "40",
+        "s3": "25",
+        "s4": "20",
+        "s5": "5"
+      },
+      "commonLabel": "Lịch phổ biến nhất"
     },
     "getting": {
       "title": "Cách nhận con số của quý vị",

@@ -47,7 +47,12 @@ const QUOTE_ICONS = {
  * split differs per contract, and a number invented here would contradict the
  * document the client actually signs.
  */
-const MILESTONE_KEYS = ['s1', 's2', 's3', 's4'] as const;
+// Five stages, and the split that 94 of the 124 five-stage invoices in the
+// production database actually use: 10 / 40 / 25 / 20 / 5. The stage-3 and
+// stage-4 triggers vary by project type (floor tile down, cabinets on site),
+// so the copy names them by role rather than by a trade that would be wrong
+// for a basement or a whole-house job.
+const MILESTONE_KEYS = ['s1', 's2', 's3', 's4', 's5'] as const;
 
 /** How a homeowner gets from "interested" to a written number. */
 const GETTING_KEYS = ['s1', 's2', 's3'] as const;
@@ -120,7 +125,13 @@ export default function TransparentPricingPage({ locale }: TransparentPricingPag
           <p className="text-sm sm:text-base mb-6" style={{ color: TEXT_MID }}>
             {t('milestones.subtitle')}
           </p>
-          <ol className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          <p
+            className="text-xs font-semibold uppercase tracking-wider mb-3"
+            style={{ color: TEXT_MUTED }}
+          >
+            {t('milestones.commonLabel')}
+          </p>
+          <ol className="grid sm:grid-cols-2 lg:grid-cols-5 gap-4">
             {MILESTONE_KEYS.map((k, i) => (
               <li key={k} className="rounded-xl p-4" style={{ backgroundColor: SURFACE_ALT }}>
                 <span
@@ -130,6 +141,9 @@ export default function TransparentPricingPage({ locale }: TransparentPricingPag
                 >
                   {i + 1}
                 </span>
+                <p className="text-2xl font-bold leading-none mb-1" style={{ color: GOLD }}>
+                  {t(`milestones.percentages.${k}`)}%
+                </p>
                 <p className="text-sm font-semibold" style={{ color: TEXT }}>
                   {t(`milestones.steps.${k}`)}
                 </p>
