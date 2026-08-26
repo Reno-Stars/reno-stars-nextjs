@@ -1,0 +1,83 @@
+{
+  "transparentPricing": {
+    "breadcrumb": "Transparent Pricing",
+    "hero": {
+      "badge": "How we quote",
+      "title": "Transparent Pricing",
+      "subtitle": "Every Reno Stars quote is written out line by line, and every payment is tied to a stage of the build rather than a date on a calendar. This page explains how that works before you ask us for a number."
+    },
+    "quote": {
+      "title": "What is inside a Reno Stars quote",
+      "subtitle": "The quote is built from the scope we measured at your home, so it reads as a list of work — not as one rounded number for the word renovation.",
+      "items": {
+        "itemised": {
+          "title": "Itemised, area by area",
+          "body": "Work is broken out by room and by trade. You can see what each part of the project costs instead of one total covering everything."
+        },
+        "steps": {
+          "title": "Every line names the work it covers",
+          "body": "A line item is more than a label and a price. It carries the steps included in that item, so the scope you are paying for is written down instead of agreed verbally."
+        },
+        "included": {
+          "title": "Labour, materials, management, cleanup",
+          "body": "Quotes cover labour, materials, project management and cleanup. Permits are included where they apply to your project."
+        },
+        "exclusions": {
+          "title": "Exclusions written down, not hidden",
+          "body": "A quote may exclude permit and municipal inspection fees, and costs for hidden conditions found once walls are open — structural damage, or outdated wiring and plumbing. Where that applies, it is stated on the quote."
+        }
+      }
+    },
+    "milestones": {
+      "title": "Payments follow the build, not the calendar",
+      "subtitle": "Payment terms are set out in each project contract. They are typically structured around these stages:",
+      "steps": {
+        "s1": "On signing",
+        "s2": "At start of construction",
+        "s3": "On completion of key phases",
+        "s4": "On final acceptance"
+      },
+      "note": "The stages that apply to your project, and the amount attached to each one, are set out in your contract — so you can see what triggers every payment before you sign anything.",
+      "methods": "We accept e-transfer, certified cheque and credit card."
+    },
+    "getting": {
+      "title": "How to get your number",
+      "steps": {
+        "s1": {
+          "title": "Free in-home consultation",
+          "body": "We come to you, measure, and walk through the scope together. There is no charge for the visit and no deposit is required to receive a quote."
+        },
+        "s2": {
+          "title": "Written itemised quote",
+          "body": "You receive the written estimate, typically within 2–3 business days of the visit. Unless we state otherwise in writing, it holds for 30 days."
+        },
+        "s3": {
+          "title": "Read it line by line",
+          "body": "Compare scope, not just the bottom line. A cheaper quote often reads cheaper because something you still need has been left out of it."
+        }
+      }
+    },
+    "faqSection": {
+      "title": "Frequently Asked Questions"
+    },
+    "faq": {
+      "q1": "Is the consultation and quote free?",
+      "a1": "Yes. In-home consultations and written renovation estimates are free, and no deposit is required to receive a quote.",
+      "q2": "What is included in the price, and what is not?",
+      "a2": "Quotes cover labour, materials, project management and cleanup, with permits included where they apply. A quote may exclude permit and municipal inspection fees, and costs for hidden conditions discovered during construction such as structural damage or outdated wiring and plumbing. Anything excluded is written on the quote itself.",
+      "q3": "How long is a quote valid?",
+      "a3": "Unless we state otherwise in writing, a quote is valid for 30 days from the date it is issued. Final pricing is established when the project contract is signed.",
+      "q4": "What happens if the scope changes mid-project?",
+      "a4": "Mid-project scope changes are handled as written change orders. They require written agreement from both sides and may affect both the project price and the timeline, so nothing is added to your bill without your signature."
+    },
+    "related": {
+      "title": "Keep reading",
+      "financing": "Financing and budget planning",
+      "workflow": "Our five-step renovation workflow"
+    },
+    "cta": {
+      "heading": "Ready to see your itemised quote?",
+      "subtitle": "Book a free in-home consultation. We measure, walk the scope with you, and send the written quote — no deposit, no obligation."
+    }
+  }
+}

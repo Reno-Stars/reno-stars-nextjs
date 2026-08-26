@@ -1,0 +1,83 @@
+{
+  "transparentPricing": {
+    "breadcrumb": "Precios transparentes",
+    "hero": {
+      "badge": "Cómo presupuestamos",
+      "title": "Precios transparentes",
+      "subtitle": "Cada presupuesto de Reno Stars se detalla línea por línea, y cada pago va ligado a una fase de la obra en lugar de a una fecha del calendario. Esta página explica cómo funciona antes de que nos pida una cifra."
+    },
+    "quote": {
+      "title": "Qué contiene un presupuesto de Reno Stars",
+      "subtitle": "El presupuesto se construye a partir de lo que medimos en su casa, así que se lee como una lista de trabajos y no como una cifra redonda junto a la palabra reforma.",
+      "items": {
+        "itemised": {
+          "title": "Desglosado, estancia por estancia",
+          "body": "El trabajo se separa por habitación y por oficio. Puede ver cuánto cuesta cada parte del proyecto en lugar de un único total que lo engloba todo."
+        },
+        "steps": {
+          "title": "Cada línea indica el trabajo que cubre",
+          "body": "Una partida es algo más que un nombre y un precio: incluye los pasos que abarca, de modo que lo que usted paga queda por escrito en vez de acordado de palabra."
+        },
+        "included": {
+          "title": "Mano de obra, materiales, gestión y limpieza",
+          "body": "Los presupuestos cubren mano de obra, materiales, gestión del proyecto y limpieza. Los permisos se incluyen cuando corresponden a su proyecto."
+        },
+        "exclusions": {
+          "title": "Las exclusiones se escriben, no se esconden",
+          "body": "Un presupuesto puede excluir las tasas de permisos e inspecciones municipales, y los costes de condiciones ocultas que aparecen al abrir las paredes: daños estructurales o instalaciones eléctricas y de fontanería obsoletas. Cuando es el caso, se indica en el presupuesto."
+        }
+      }
+    },
+    "milestones": {
+      "title": "Los pagos siguen a la obra, no al calendario",
+      "subtitle": "Las condiciones de pago se fijan en cada contrato de proyecto. Normalmente se estructuran en torno a estas fases:",
+      "steps": {
+        "s1": "A la firma",
+        "s2": "Al inicio de la obra",
+        "s3": "Al completar fases clave",
+        "s4": "En la aceptación final"
+      },
+      "note": "Las fases que se apliquen a su proyecto, y el importe asociado a cada una, constan en su contrato, de modo que puede ver qué activa cada pago antes de firmar nada.",
+      "methods": "Aceptamos transferencia Interac, cheque certificado y tarjeta de crédito."
+    },
+    "getting": {
+      "title": "Cómo conseguir su cifra",
+      "steps": {
+        "s1": {
+          "title": "Consulta gratuita a domicilio",
+          "body": "Vamos a su casa, medimos y repasamos juntos el alcance del trabajo. La visita no tiene coste y no se exige ningún depósito para recibir un presupuesto."
+        },
+        "s2": {
+          "title": "Presupuesto escrito y desglosado",
+          "body": "Recibirá el presupuesto por escrito, normalmente en un plazo de 2 a 3 días laborables desde la visita. Salvo que indiquemos otra cosa por escrito, es válido durante 30 días."
+        },
+        "s3": {
+          "title": "Léalo línea por línea",
+          "body": "Compare el alcance, no solo el total. Un presupuesto más barato suele serlo porque ha dejado fuera algo que usted sigue necesitando."
+        }
+      }
+    },
+    "faqSection": {
+      "title": "Preguntas frecuentes"
+    },
+    "faq": {
+      "q1": "¿La consulta y el presupuesto son gratuitos?",
+      "a1": "Sí. Las consultas a domicilio y los presupuestos de reforma por escrito son gratuitos, y no se exige ningún depósito para recibir un presupuesto.",
+      "q2": "¿Qué incluye el precio y qué no?",
+      "a2": "Los presupuestos cubren mano de obra, materiales, gestión del proyecto y limpieza, con los permisos incluidos cuando corresponden. Un presupuesto puede excluir las tasas de permisos e inspecciones municipales y los costes de condiciones ocultas descubiertas durante la obra, como daños estructurales o instalaciones eléctricas y de fontanería obsoletas. Todo lo excluido queda escrito en el propio presupuesto.",
+      "q3": "¿Cuánto tiempo es válido un presupuesto?",
+      "a3": "Salvo que indiquemos otra cosa por escrito, un presupuesto es válido durante 30 días desde su fecha de emisión. El precio definitivo se establece al firmar el contrato del proyecto.",
+      "q4": "¿Qué ocurre si el alcance cambia a mitad de obra?",
+      "a4": "Los cambios de alcance a mitad de obra se tramitan como órdenes de cambio por escrito. Requieren el acuerdo escrito de ambas partes y pueden afectar tanto al precio como al plazo, así que nada se añade a su factura sin su firma."
+    },
+    "related": {
+      "title": "Seguir leyendo",
+      "financing": "Financiación y planificación del presupuesto",
+      "workflow": "Nuestro proceso de reforma en cinco pasos"
+    },
+    "cta": {
+      "heading": "¿Quiere ver su presupuesto desglosado?",
+      "subtitle": "Reserve una consulta gratuita a domicilio. Medimos, repasamos el alcance con usted y le enviamos el presupuesto por escrito: sin depósito y sin compromiso."
+    }
+  }
+}
