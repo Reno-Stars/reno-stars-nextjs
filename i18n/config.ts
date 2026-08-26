@@ -66,8 +66,58 @@ export interface LocaleMeta {
    * (app/[locale]/blog/[slug]/page.tsx + the nativeLocales filter in
    * app/sitemap.ts). That gate stays: an untranslated post renders the English
    * body under a foreign-language URL, which is genuine duplicate content.
+   *
+   * NOTE: since 2026-08-26 this flag no longer governs the service×city route.
+   * See `indexableServiceCity` below for why that one had to be split out.
    */
   indexableLeaf: boolean;
+  /**
+   * The service×city route (`/[locale]/services/[slug]/[city]/`) may be
+   * indexed. When false the page gets `robots: noindex, follow`, is dropped
+   * from that route's hreflang set, and is omitted from the sitemap.
+   *
+   * WHY THIS IS SEPARATE FROM `indexableLeaf` — it is repairing a defect, not
+   * reversing the 2026-08-07 decision.
+   *
+   * Commit 3470429f opened `indexableLeaf` for all 14 locales and stated that
+   * service×city pages would "rejoin the sitemap — since the sitemap already
+   * listed all 14". That premise was false for this one route: commit 1ce70173
+   * had pruned it to en+zh via a hardcoded `SERVICE_CITY_LOCALES` in
+   * app/sitemap.ts, and 3470429f did not touch it. So from 2026-08-07 the three
+   * channels disagreed on 1,694 URLs (154 service×city combos × 11 minor
+   * locales + zh-Hant), each one simultaneously:
+   *   - indexable        (isIndexableLeafLocale → true, no robots noindex)
+   *   - self-canonical   (rel=canonical points at itself)
+   *   - hreflang-advertised from all 14 sibling pages
+   *   - NOT in the sitemap
+   * Verified live on 2026-08-26: /ja/services/kitchen/burnaby/ returns 200 with
+   * a self-canonical, 14 hreflang alternates, and no robots meta.
+   *
+   * That is the largest single crawl leak on the site — roughly two thirds of
+   * the ~2,550 URLs GSC reports as "Crawled - currently not indexed".
+   *
+   * There were only two consistent repairs: submit the 1,694, or close them.
+   * Closed, on measured performance. GSC (property https://www.reno-stars.com/),
+   * 17 days AFTER the flip (2026-08-08 → 08-24), service×city only:
+   *   en       154 URLs submitted     6 clicks  1,383 impressions
+   *   zh       154 URLs submitted    18 clicks    300 impressions
+   *   zh-Hant  154 URLs NOT submitted 15 clicks    237 impressions
+   *   11 minor 1,694 URLs NOT submitted 2 clicks   305 impressions
+   * Over 90 days the same 11 minor locales total 5 clicks across 1,694 URLs.
+   * Closing them costs ~2 clicks per 17 days and takes 1,694 URLs out of the
+   * crawlable-indexable set.
+   *
+   * zh-Hant went the OTHER way and is opened here: 15 clicks in 17 days on this
+   * route — more than en (6) — and 73 clicks / 2,618 impressions over 90 days,
+   * 57% of zh's. 138 of its 154 URLs already have impressions, so submitting
+   * them adds no crawl load; it just stops them being orphaned.
+   *
+   * Re-opening one of the eleven is a MEASUREMENT decision like `indexableLeaf`,
+   * but a different measurement: `locale_readiness.py` scores translation
+   * quality, which says nothing about whether a page is one of 154 templated
+   * siblings. Ask GSC for that locale's earned clicks on this route first.
+   */
+  indexableServiceCity: boolean;
   /**
    * Prerendered at build time. All false since 2026-06-08: the whole site is
    * force-dynamic SSR (see app/[locale]/layout.tsx). There are currently zero
@@ -153,7 +203,7 @@ export interface LocaleMeta {
  */
 export const LOCALE_META: Record<Locale, LocaleMeta> = {
   en: {
-    name: 'English', ogLocale: 'en_US', dir: 'ltr', indexableLeaf: true, prerender: false,
+    name: 'English', ogLocale: 'en_US', dir: 'ltr', indexableLeaf: true, indexableServiceCity: true, prerender: false,
     dbSuffix: 'En', dbColumn: true, gtxLang: 'en',
     shareTargets: ['facebook', 'x', 'linkedin', 'pinterest', 'whatsapp', 'reddit',
                    'threads', 'bluesky', 'messenger', 'tumblr', 'sms'],
@@ -162,7 +212,7 @@ export const LOCALE_META: Record<Locale, LocaleMeta> = {
   // Mainland: WeChat/Weibo/QQ are the whole game. X and Facebook are here for
   // overseas Mandarin readers, who are a real slice of this site's zh traffic.
   zh: {
-    name: '简体中文', ogLocale: 'zh_CN', dir: 'ltr', indexableLeaf: true, prerender: false,
+    name: '简体中文', ogLocale: 'zh_CN', dir: 'ltr', indexableLeaf: true, indexableServiceCity: true, prerender: false,
     dbSuffix: 'Zh', dbColumn: true, gtxLang: 'zh-CN',
     shareTargets: ['wechat', 'weibo', 'qzone', 'x', 'facebook', 'line'],
     brandName: '聚星装修',
@@ -170,14 +220,14 @@ export const LOCALE_META: Record<Locale, LocaleMeta> = {
   },
   // HK/TW: LINE is dominant, Weibo much less so than mainland.
   'zh-Hant': {
-    name: '繁體中文', ogLocale: 'zh_TW', dir: 'ltr', indexableLeaf: true, prerender: false,
+    name: '繁體中文', ogLocale: 'zh_TW', dir: 'ltr', indexableLeaf: true, indexableServiceCity: true, prerender: false,
     dbSuffix: 'ZhHant', dbColumn: false, gtxLang: 'zh-TW', fallback: ['zh'],
     shareTargets: ['wechat', 'line', 'facebook', 'x', 'weibo', 'threads', 'telegram'],
     brandName: '聚星裝修',
     nativeSupport: true, schemaLanguage: 'Cantonese',
   },
   ja: {
-    name: '日本語', ogLocale: 'ja_JP', dir: 'ltr', indexableLeaf: true, prerender: false,
+    name: '日本語', ogLocale: 'ja_JP', dir: 'ltr', indexableLeaf: true, indexableServiceCity: false, prerender: false,
     dbSuffix: 'Ja', dbColumn: false, gtxLang: 'ja',
     shareTargets: ['line', 'x', 'facebook', 'threads', 'pinterest', 'tumblr'],
     nativeSupport: false, schemaLanguage: 'Japanese',
@@ -185,64 +235,64 @@ export const LOCALE_META: Record<Locale, LocaleMeta> = {
   // No KakaoTalk: it needs the Kakao JS SDK + a registered app key. Korean
   // readers reach it through the native sheet meanwhile. Tracked as a follow-up.
   ko: {
-    name: '한국어', ogLocale: 'ko_KR', dir: 'ltr', indexableLeaf: true, prerender: false,
+    name: '한국어', ogLocale: 'ko_KR', dir: 'ltr', indexableLeaf: true, indexableServiceCity: false, prerender: false,
     dbSuffix: 'Ko', dbColumn: false, gtxLang: 'ko',
     shareTargets: ['x', 'facebook', 'line', 'threads', 'pinterest'],
     nativeSupport: false, schemaLanguage: 'Korean',
   },
   es: {
-    name: 'Español', ogLocale: 'es_ES', dir: 'ltr', indexableLeaf: true, prerender: false,
+    name: 'Español', ogLocale: 'es_ES', dir: 'ltr', indexableLeaf: true, indexableServiceCity: false, prerender: false,
     dbSuffix: 'Es', dbColumn: false, gtxLang: 'es',
     shareTargets: ['whatsapp', 'facebook', 'x', 'messenger', 'telegram', 'pinterest',
                    'threads', 'sms'],
     nativeSupport: false, schemaLanguage: 'Spanish',
   },
   pa: {
-    name: 'ਪੰਜਾਬੀ', ogLocale: 'pa_IN', dir: 'ltr', indexableLeaf: true, prerender: false,
+    name: 'ਪੰਜਾਬੀ', ogLocale: 'pa_IN', dir: 'ltr', indexableLeaf: true, indexableServiceCity: false, prerender: false,
     dbSuffix: 'Pa', dbColumn: false, gtxLang: 'pa',
     shareTargets: ['whatsapp', 'facebook', 'telegram', 'x', 'messenger', 'pinterest', 'sms'],
     nativeSupport: false, schemaLanguage: 'Punjabi',
   },
   // Philippines skews hard to Facebook/Messenger; Viber is still widely used.
   tl: {
-    name: 'Tagalog', ogLocale: 'tl_PH', dir: 'ltr', indexableLeaf: true, prerender: false,
+    name: 'Tagalog', ogLocale: 'tl_PH', dir: 'ltr', indexableLeaf: true, indexableServiceCity: false, prerender: false,
     dbSuffix: 'Tl', dbColumn: false, gtxLang: 'tl',
     shareTargets: ['facebook', 'messenger', 'whatsapp', 'x', 'viber', 'telegram',
                    'pinterest', 'sms'],
     nativeSupport: false, schemaLanguage: 'Tagalog',
   },
   fa: {
-    name: 'فارسی', ogLocale: 'fa_IR', dir: 'rtl', indexableLeaf: true, prerender: false,
+    name: 'فارسی', ogLocale: 'fa_IR', dir: 'rtl', indexableLeaf: true, indexableServiceCity: false, prerender: false,
     dbSuffix: 'Fa', dbColumn: false, gtxLang: 'fa',
     shareTargets: ['whatsapp', 'telegram', 'facebook', 'x', 'viber', 'pinterest', 'sms'],
     nativeSupport: false, schemaLanguage: 'Persian',
   },
   vi: {
-    name: 'Tiếng Việt', ogLocale: 'vi_VN', dir: 'ltr', indexableLeaf: true, prerender: false,
+    name: 'Tiếng Việt', ogLocale: 'vi_VN', dir: 'ltr', indexableLeaf: true, indexableServiceCity: false, prerender: false,
     dbSuffix: 'Vi', dbColumn: false, gtxLang: 'vi',
     shareTargets: ['facebook', 'zalo', 'messenger', 'telegram', 'x', 'viber', 'pinterest'],
     nativeSupport: false, schemaLanguage: 'Vietnamese',
   },
   ru: {
-    name: 'Русский', ogLocale: 'ru_RU', dir: 'ltr', indexableLeaf: true, prerender: false,
+    name: 'Русский', ogLocale: 'ru_RU', dir: 'ltr', indexableLeaf: true, indexableServiceCity: false, prerender: false,
     dbSuffix: 'Ru', dbColumn: false, gtxLang: 'ru',
     shareTargets: ['telegram', 'vk', 'whatsapp', 'viber', 'x', 'facebook'],
     nativeSupport: false, schemaLanguage: 'Russian',
   },
   ar: {
-    name: 'العربية', ogLocale: 'ar_AE', dir: 'rtl', indexableLeaf: true, prerender: false,
+    name: 'العربية', ogLocale: 'ar_AE', dir: 'rtl', indexableLeaf: true, indexableServiceCity: false, prerender: false,
     dbSuffix: 'Ar', dbColumn: false, gtxLang: 'ar',
     shareTargets: ['whatsapp', 'telegram', 'facebook', 'x', 'viber', 'pinterest', 'sms'],
     nativeSupport: false, schemaLanguage: 'Arabic',
   },
   hi: {
-    name: 'हिन्दी', ogLocale: 'hi_IN', dir: 'ltr', indexableLeaf: true, prerender: false,
+    name: 'हिन्दी', ogLocale: 'hi_IN', dir: 'ltr', indexableLeaf: true, indexableServiceCity: false, prerender: false,
     dbSuffix: 'Hi', dbColumn: false, gtxLang: 'hi',
     shareTargets: ['whatsapp', 'facebook', 'telegram', 'x', 'messenger', 'pinterest', 'sms'],
     nativeSupport: false, schemaLanguage: 'Hindi',
   },
   fr: {
-    name: 'Français', ogLocale: 'fr_CA', dir: 'ltr', indexableLeaf: true, prerender: false,
+    name: 'Français', ogLocale: 'fr_CA', dir: 'ltr', indexableLeaf: true, indexableServiceCity: false, prerender: false,
     dbSuffix: 'Fr', dbColumn: false, gtxLang: 'fr',
     shareTargets: ['facebook', 'x', 'linkedin', 'whatsapp', 'pinterest', 'telegram',
                    'threads', 'messenger', 'sms'],
@@ -294,6 +344,24 @@ export const INDEXABLE_LEAF_LOCALES: readonly Locale[] = localesWhere((m) => m.i
 /** True when this locale's leaf pages may be indexed. */
 export function isIndexableLeafLocale(locale: string): boolean {
   return (INDEXABLE_LEAF_LOCALES as readonly string[]).includes(locale);
+}
+
+/**
+ * Locales whose service×city pages are indexable. See
+ * LocaleMeta.indexableServiceCity.
+ *
+ * This ONE list drives all three channels for that route — the `robots` tag and
+ * the hreflang set in app/[locale]/services/[service-slug]/[city]/page.tsx, and
+ * both the submitted URLs and their hreflang alternates in app/sitemap.ts. The
+ * en/zh pair used to be hardcoded in the sitemap and derived from a different
+ * flag on the page, which is exactly how they came to disagree on 1,694 URLs.
+ */
+export const INDEXABLE_SERVICE_CITY_LOCALES: readonly Locale[] =
+  localesWhere((m) => m.indexableServiceCity);
+
+/** True when this locale's service×city pages may be indexed. */
+export function isIndexableServiceCityLocale(locale: string): boolean {
+  return (INDEXABLE_SERVICE_CITY_LOCALES as readonly string[]).includes(locale);
 }
 
 /** Locales prerendered at build time. See LocaleMeta.prerender. */
