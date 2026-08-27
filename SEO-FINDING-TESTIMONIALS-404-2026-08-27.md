@@ -6,45 +6,28 @@
 
 ## Finding
 
-`/en/testimonials/` returns HTTP 404.
+`https://www.reno-stars.com/en/testimonials/` returns HTTP 404.
 
-- `testimonials` table has 3 rows (all featured, verified, with text_en/text_zh/author names)
-- No route found at `/app/[locale]/testimonials/`
-- Sitemap does not contain `/en/testimonials/`
-- No `app/testimonials` directory exists
+The `testimonials` DB table has 3 rows (id, text_en, text_zh, source — no author_en/author_zh):
+- 1 featured/verified row + 2 others
+- No corresponding Next.js route at `app/[locale]/testimonials/`
+- Not in sitemap.xml, not indexed
+- This is a removed/deprecated feature — testimonials exist in DB but no page serves them
 
-## DB State
+## What I Verified Was Already Correct (2026-08-27 tick)
 
-```sql
--- 3 testimonials, all featured and verified
-SELECT id, LEFT(text_en,60), name, location, is_featured, verified
-FROM testimonials LIMIT 3;
--- id | left                             | name       | location     | is_featured | verified
--- --- | ---                              | ---        | ---          | ---         | ---
--- 9ac | Reno Stars transformed our...    | Sarah M.   | Vancouver BC | true        | true
--- 133 | Professional team from...        | David L.   | Richmond BC  | true        | true
--- 2ce | Best renovation experience...    | Jennifer K | Burnaby BC   | true        | true
-```
+- Service pages (kitchen, bathroom, basement, heat-pump-hvac, accessible-bathroom, commercial):
+  ALL have FAQPage + Question + Answer + HowTo structured data. Earlier "FAQ schema gap"
+  finding was incorrect — service pages are fully structured.
+- Guides section: BlogPosting + FAQPage + HowTo + HowToStep + ImageObject + SpeakableSpecification + AggregateRating present on bathroom renovation cost guide.
+- Careers page: JobPosting + AggregateRating + Organization + ContactPoint present.
+- Guides listing: ItemList + FAQPage present.
+- Blog API: still returning 503 "Blog API not configured." — heat-pump and poly-b post drafts committed and waiting on branch.
 
-## What This Means
+## Resolution Requires
 
-- The 3 testimonials exist in the DB but are NOT accessible as a standalone page
-- They may be rendered inline on other pages (homepage, projects listing)
-- A dedicated testimonials page would provide:
-  - Thin-content SEO value (Google rewards trust signal pages)
-  - Internal linking surface for project pages
-  - Crawlable entry point for review schema
+A developer creating `app/[locale]/testimonials/page.tsx` that queries the `testimonials` table and renders the 3 testimonial rows with proper schema (perhaps `Review` schema with AggregateRating for the listing, or `Person` + `Review` for each entry).
 
-## Action Required
+## Status
 
-A developer needs to create `/app/[locale]/testimonials/page.tsx` to surface the 3 DB rows as a dedicated page with:
-- `LocalBusinessSchema` with the testimonials as `Review` entities
-- `FAQPage` schema (common questions about working with Reno Stars)
-- Proper hreflang for all 14 locales
-- Canonical pointing to `/en/testimonials/`
-
-## Verified
-
-- HTTP 404: `curl -o /dev/null -w "%{http_code}" https://www.reno-stars.com/en/testimonials/` → `404`
-- Sitemap: `grep testimonials /workspace/reno-stars.com/public/sitemap.xml` → no entries
-- Route check: `find /workspace/reno-stars.com/app -name '*testimonial*'` → no results
+NOT APPLIED — this is a code change, not a database migration.
