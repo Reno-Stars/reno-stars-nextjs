@@ -1,0 +1,46 @@
+{
+  "awards": {
+    "breadcrumb": "Mga Parangal at Pagkilala",
+    "hero": {
+      "badge": "Pagkilala",
+      "title": "Mga Parangal at Pagkilala",
+      "subtitle": "Dito namin ilalathala ang anumang parangal, sertipikasyon o pagkilala mula sa industriya na matatanggap ng Reno Stars — kasama ang nagbigay, ang taon, at link sa anunsyo, para kayo mismo ang makapagsuri."
+    },
+    "empty": {
+      "title": "Wala pang nakalista rito",
+      "body": "Wala pa kaming inilathalang parangal sa pahinang ito. Mas gugustuhin naming iwan itong walang laman kaysa punuin ng mga badge na hindi ninyo mabeberipika. Kapag may tunay nang maidaragdag, lalabas ito rito kasama ang organisasyong nagbigay at ang taon."
+    },
+    "criteria": {
+      "title": "Ano ang lalabas sa pahinang ito",
+      "issuer": "Ang organisasyong nagbigay, nakasulat nang eksakto sa pangalang ginagamit nila.",
+      "year": "Ang taon ng pagkakaloob — walang badge na walang petsa.",
+      "link": "Link sa anunsyo o listahan ng finalist, kung may inilalathala ang nagbigay."
+    },
+    "verified": {
+      "title": "Ang mabeberipika ninyo ngayon",
+      "subtitle": "Ang parangal ay desisyon ng iba. Ito naman ang mga bagay tungkol sa Reno Stars na masusuri ninyo ngayon din.",
+      "liability": "{amount} na CGL insurance",
+      "liabilityNote": "Commercial general liability coverage.",
+      "wcbNote": "Saklaw ng WorkSafeBC para sa mga manggagawa sa inyong site.",
+      "warranty": "Hanggang {years} taong warranty",
+      "warrantyNote": "Warranty sa pagkakagawa, nakasaad sa inyong kontrata.",
+      "yearsNote": "Karanasan sa renovation ng aming koponan.",
+      "projectsNote": "Natapos sa buong Metro Vancouver."
+    },
+    "reviews": {
+      "title": "Ang panlabas na pagkilalang mayroon talaga kami",
+      "rating": "{rating} sa 5 sa Google, mula sa {count} na review",
+      "body": "Ang mga review ay isinusulat ng mga kliyente at inilalathala ng Google, hindi namin. Kaya ito ang tanging anyo ng pagkilala sa site na ito na hindi nakasalalay sa salita namin.",
+      "link": "Basahin ang mga review"
+    },
+    "list": {
+      "title": "Ang talaan",
+      "issuedBy": "Iginawad ng",
+      "announcement": "Tingnan ang anunsyo"
+    },
+    "cta": {
+      "heading": "Hatulan ninyo kami sa aming trabaho",
+      "subtitle": "Tingnan ang mga natapos naming proyekto sa Metro Vancouver, o mag-book ng libreng konsultasyon sa inyong bahay at tingnan kung paano kami gumagawa ng quote."
+    }
+  }
+}

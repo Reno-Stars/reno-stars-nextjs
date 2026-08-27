@@ -5,6 +5,7 @@ import BathroomCostGuidePage from '@/components/pages/BathroomCostGuidePage';
 import { ArticleSchema, BreadcrumbSchema, FAQSchema, HowToSchema } from '@/components/structured-data';
 import { getBaseUrl, buildAlternates, buildOgImageUrl, SITE_NAME, buildAlternateLocales} from '@/lib/utils';
 import { getBathroomProjectsForGuide, getCompanyFromDb } from '@/lib/db/queries';
+import ClientMessages from '@/components/ClientMessages';
 
 interface PageProps {
   params: Promise<{ locale: string }>;
@@ -123,7 +124,7 @@ export default async function Page({ params }: PageProps) {
   ];
 
   return (
-    <>
+    <ClientMessages ns={['cta', 'guides.bathroomCost', 'guides.relatedGuides', 'share']}>
       <BreadcrumbSchema items={breadcrumbs} locale={locale} />
       <FAQSchema faqs={faqs} locale={locale} />
       <ArticleSchema
@@ -153,6 +154,6 @@ export default async function Page({ params }: PageProps) {
         phone={company.phone}
         share={{ url: shareUrl, title: mt('title'), imageUrl: ogImage }}
       />
-    </>
+    </ClientMessages>
   );
 }

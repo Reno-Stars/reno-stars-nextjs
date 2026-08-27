@@ -3,6 +3,7 @@ import { getTranslations, setRequestLocale } from 'next-intl/server';
 import { getBaseUrl } from '@/lib/utils';
 import { TEXT, TEXT_MID, SURFACE_ALT } from '@/lib/theme';
 import SiteVisitChecklist from '@/components/site-visit/SiteVisitChecklist';
+import ClientMessages from '@/components/ClientMessages';
 import catalogJson from '@/data/site-visit/catalog.json';
 import type { SiteVisitCatalog } from '@/lib/site-visit/types';
 
@@ -66,7 +67,9 @@ export default async function Page({ params }: PageProps) {
       </header>
 
       <div className="mt-8">
-        <SiteVisitChecklist catalog={catalog} />
+        <ClientMessages ns={['siteVisit']}>
+          <SiteVisitChecklist catalog={catalog} />
+        </ClientMessages>
       </div>
     </main>
   );

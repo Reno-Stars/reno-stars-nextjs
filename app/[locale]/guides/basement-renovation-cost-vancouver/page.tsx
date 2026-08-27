@@ -5,6 +5,7 @@ import BasementCostGuidePage from '@/components/pages/BasementCostGuidePage';
 import { ArticleSchema, BreadcrumbSchema, FAQSchema, HowToSchema } from '@/components/structured-data';
 import { getBaseUrl, buildAlternates, buildOgImageUrl, SITE_NAME, buildAlternateLocales} from '@/lib/utils';
 import { getCompanyFromDb, getWholeHouseProjectsForGuide } from '@/lib/db/queries';
+import ClientMessages from '@/components/ClientMessages';
 
 interface PageProps {
   params: Promise<{ locale: string }>;
@@ -111,8 +112,13 @@ export default async function Page({ params }: PageProps) {
     },
   ];
 
+  // `guides.cityCostTable` lives INSIDE messages/en/guides/relatedGuides.json rather
+  // than in a file of its own, so client-namespace-scope.test.ts cannot see it — that
+  // test recognises guide sections by FILENAME. This page therefore shipped
+  // `guides.cityCostTable.*` as visible text until the render smoke gate caught it.
+  // Declared explicitly here; the same applies to the other cost guides.
   return (
-    <>
+    <ClientMessages ns={['cta', 'guides.basementCost', 'guides.cityCostTable', 'guides.relatedGuides', 'share']}>
       <BreadcrumbSchema items={breadcrumbs} locale={locale} />
       <FAQSchema faqs={faqs} locale={locale} />
       <ArticleSchema
@@ -142,6 +148,6 @@ export default async function Page({ params }: PageProps) {
         phone={company.phone}
         share={{ url: shareUrl, title: mt('title'), imageUrl: ogImage }}
       />
-    </>
+    </ClientMessages>
   );
 }

@@ -5,6 +5,7 @@ import KitchenCabinetGuidePage from '@/components/pages/KitchenCabinetGuidePage'
 import { ArticleSchema, BreadcrumbSchema, FAQSchema } from '@/components/structured-data';
 import { getBaseUrl, buildAlternates, buildOgImageUrl, SITE_NAME, buildAlternateLocales } from '@/lib/utils';
 import { getCompanyFromDb } from '@/lib/db/queries';
+import ClientMessages from '@/components/ClientMessages';
 
 interface PageProps {
   params: Promise<{ locale: string }>;
@@ -75,7 +76,7 @@ export default async function Page({ params }: PageProps) {
   const ogImage = buildOgImageUrl(mt('title'), mt('description'));
 
   return (
-    <>
+    <ClientMessages ns={['cta', 'guides.kitchenCabinet', 'guides.relatedGuides', 'share']}>
       <BreadcrumbSchema items={breadcrumbs} locale={locale} />
       <FAQSchema faqs={faqs} locale={locale} />
       <ArticleSchema
@@ -94,6 +95,6 @@ export default async function Page({ params }: PageProps) {
         phone={company.phone}
         share={{ url: shareUrl, title: mt('title'), imageUrl: ogImage }}
       />
-    </>
+    </ClientMessages>
   );
 }

@@ -15,6 +15,7 @@ import { pickLocale } from '@/lib/utils';
 // gold accent in this file uses the bright variant without per-line changes.
 import { NAVY, GOLD_ON_DARK as GOLD } from '@/lib/theme';
 import { WORKSAFE_BC_LOGO } from '@/lib/data';
+import { HAS_AWARDS } from '@/lib/awards';
 
 type IconComponent = React.ComponentType<{ className?: string }>;
 
@@ -277,6 +278,13 @@ export default function Footer({ company, socialLinks, services, areas, googleRa
     // The /guides/ hub (above) is now the single entry point to those pages.
     { href: '/renovation-near-me', label: t('nav.renovationNearMe') },
     { href: '/financing', label: t('nav.financing') },
+    { href: '/transparent-pricing', label: t('nav.transparentPricing') },
+    // /awards/ is an empty archive until Reno Stars actually wins something
+    // (lib/awards.ts). Linking a page that says "nothing listed here yet" from
+    // every page in the site is worse than not linking it, so the quick link
+    // appears with the first real entry — same switch that flips the page out
+    // of `robots: noindex` and into the sitemap.
+    ...(HAS_AWARDS ? [{ href: '/awards', label: t('nav.awards') }] : []),
     { href: '/careers', label: t('nav.careers') },
     { href: '/before-after', label: t('nav.beforeAfter') },
     // Network Partner backlink — Vancouver Construction Network directory listing.

@@ -6,6 +6,7 @@ import { BreadcrumbSchema, FAQSchema } from '@/components/structured-data';
 import { getBaseUrl, buildAlternates, buildOgImageUrl, SITE_NAME, buildAlternateLocales } from '@/lib/utils';
 import { getCompanyFromDb, getTrustBadgesFromDb } from '@/lib/db/queries';
 import { getYearsExperience } from '@/lib/company-config';
+import ClientMessages from '@/components/ClientMessages';
 
 interface PageProps {
   params: Promise<{ locale: string }>;
@@ -80,7 +81,7 @@ export default async function Page({ params }: PageProps) {
   };
 
   return (
-    <>
+    <ClientMessages ns={['aboutPage']}>
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(aboutPageSchema).replace(/</g, '\\u003c') }}
@@ -92,6 +93,6 @@ export default async function Page({ params }: PageProps) {
         company={company}
         badges={badges}
       />
-    </>
+    </ClientMessages>
   );
 }

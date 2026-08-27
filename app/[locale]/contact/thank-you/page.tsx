@@ -2,6 +2,7 @@ import { Metadata } from 'next';
 import { getTranslations, setRequestLocale } from 'next-intl/server';
 import { type Locale } from '@/i18n/config';
 import ThankYouPage from '@/components/pages/ThankYouPage';
+import ClientMessages from '@/components/ClientMessages';
 
 interface PageProps {
   params: Promise<{ locale: string }>;
@@ -34,5 +35,9 @@ export default async function Page({ params }: PageProps) {
   const { locale } = await params;
   setRequestLocale(locale);
 
-  return <ThankYouPage locale={locale as Locale} />;
+  return (
+    <ClientMessages ns={['contact']}>
+      <ThankYouPage locale={locale as Locale} />
+    </ClientMessages>
+  );
 }

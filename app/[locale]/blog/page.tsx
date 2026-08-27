@@ -6,6 +6,7 @@ import FaqSection from '@/components/home/FaqSection';
 import { BreadcrumbSchema, BlogSchema, ItemListSchema, FAQSchema } from '@/components/structured-data';
 import { getBaseUrl, buildAlternates, buildOgImageUrl, SITE_NAME, buildAlternateLocales, pickLocale } from '@/lib/utils';
 import { getCompanyFromDb, getBlogPostsPaginatedFromDb, getBlogPostsFromDb, BLOG_POSTS_PER_PAGE } from '@/lib/db/queries';
+import ClientMessages from '@/components/ClientMessages';
 
 interface PageProps {
   params: Promise<{ locale: string }>;
@@ -88,7 +89,7 @@ export default async function Page({ params, searchParams }: PageProps) {
   };
 
   return (
-    <>
+    <ClientMessages ns={['areas', 'blog', 'cta', 'projects']}>
       {currentPage > 1 && (
         <link rel="prev" href={`${baseUrl}/${locale}/blog/${currentPage === 2 ? '' : `?page=${currentPage - 1}`}`} />
       )}
@@ -134,6 +135,6 @@ export default async function Page({ params, searchParams }: PageProps) {
       {currentPage === 1 && (
         <FaqSection faqs={blogFaqs} translations={blogFaqTranslations} />
       )}
-    </>
+    </ClientMessages>
   );
 }
