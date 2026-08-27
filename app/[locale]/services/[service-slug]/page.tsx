@@ -1,7 +1,7 @@
 import { Metadata } from 'next';
 import { getTranslations, setRequestLocale } from 'next-intl/server';
 import { notFound } from 'next/navigation';
-import { ogLocaleMap, hasNativeSupport, type Locale } from '@/i18n/config';
+import { ogLocaleMap, hasNativeSupport, isIndexableLeafLocale, INDEXABLE_LEAF_LOCALES, type Locale } from '@/i18n/config';
 import { getLocalizedService } from '@/lib/data/services';
 import type { ServiceType } from '@/lib/types';
 import { getCompanyFromDb, getServicesFromDb, getServiceAreasFromDb, getReviewsByServiceType } from '@/lib/db/queries';
@@ -259,10 +259,13 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
   const title = buildServiceTitle(localizedService.title, locale as Locale);
 
+  const isIndexableLocale = isIndexableLeafLocale(locale);
+
   return {
     title,
     description,
-    alternates: buildAlternates(`/services/${serviceSlug}/`, locale),
+    ...(isIndexableLocale ? {} : { robots: { index: false, follow: true } }),
+    alternates: buildAlternates(`/services/${serviceSlug}/`, locale, INDEXABLE_LEAF_LOCALES),
     openGraph: {
       title,
       description,
