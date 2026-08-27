@@ -15,6 +15,8 @@ interface ContactPageSchemaProps {
 
 export default function ContactPageSchema({ company, areaNames, locale = 'en' }: ContactPageSchemaProps) {
   const addr = parseAddress(company.address);
+  const hasFullAddress = addr.streetAddress && addr.locality
+    && addr.region && addr.postalCode;
 
   // inLanguage declares the natural language of the ContactPage so Google
   // can match it to localized SERPs (e.g. show the /zh/contact/ schema
@@ -40,14 +42,23 @@ export default function ContactPageSchema({ company, areaNames, locale = 'en' }:
       url: BASE_URL,
       telephone: e164(company.phone),
       email: company.email,
-      address: {
-        '@type': 'PostalAddress',
-        streetAddress: addr.streetAddress,
-        addressLocality: addr.locality,
-        addressRegion: addr.region,
-        postalCode: addr.postalCode,
-        addressCountry: 'CA',
-      },
+      // Only emit address when all four PostalAddress sub-fields are present.
+      // A fabricated postalCode in a rated HomeAndConstructionBusiness node
+      // suppresses stars in SERP — the same class of defect already fixed in
+      // ServiceSchema and ProjectSchema. Guard matches the pattern:
+      // parse-address.ts returns empty strings (never fabricated values) when
+      // the company address has fewer than 4 comma-separated segments, so
+      // `hasFullAddress` is the honest gate for all four real sub-fields.
+      ...(hasFullAddress && {
+        address: {
+          '@type': 'PostalAddress',
+          streetAddress: addr.streetAddress,
+          addressLocality: addr.locality,
+          addressRegion: addr.region,
+          postalCode: addr.postalCode,
+          addressCountry: 'CA',
+        },
+      }),
       contactPoint: {
         '@type': 'ContactPoint',
         telephone: e164(company.phone),
