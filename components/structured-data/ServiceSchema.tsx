@@ -41,12 +41,8 @@ export default function ServiceSchema({
   const baseUrl = getBaseUrl();
   const absoluteUrl = `${baseUrl}${url}`;
   const addressParts = parseAddress(company.address);
-
-  // Same defensive guard as ProjectSchema: only emit address when the
-  // company.address had all four comma-separated segments (real data).
-  // A fabricated postal code in a rated Service node would suppress stars
-  // on every service-area page, same class of defect as the project pages.
-  const hasRealAddress = company.address.split(', ').length >= 4;
+  const hasFullAddress = addressParts.streetAddress && addressParts.locality
+    && addressParts.region && addressParts.postalCode;
 
   const schema: Record<string, unknown> = {
     '@context': 'https://schema.org',
@@ -60,7 +56,10 @@ export default function ServiceSchema({
       name: company.name,
       url: baseUrl,
       telephone: e164(company.phone),
-      ...(hasRealAddress && {
+      // Only emit address when all four PostalAddress sub-fields are present.
+      // A fabricated postalCode in a rated Service node suppresses stars in SERP —
+      // the same class of defect already fixed in ProjectSchema. Keep them in sync.
+      ...(hasFullAddress && {
         address: {
           '@type': 'PostalAddress',
           streetAddress: addressParts.streetAddress,
