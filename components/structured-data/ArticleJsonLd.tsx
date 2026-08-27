@@ -12,6 +12,14 @@ interface ArticleJsonLdProps {
   url: string;
   image?: string;
   locale?: string;
+  /**
+   * Optional list of focus + supporting keywords. Emitted as Schema.org
+   * `keywords` on the Article node — same signal as ArticleSchema BlogPosting.
+   * AI search engines (Perplexity, Claude Search, Google AI Overview) use
+   * JSON-LD `keywords` for topical-clustering even when the `<meta name="keywords">`
+   * tag (fed from the same source on this page) is ignored by Google itself.
+   */
+  keywords?: string[];
 }
 
 /**
@@ -33,6 +41,7 @@ export default function ArticleJsonLd({
   url,
   image,
   locale,
+  keywords,
 }: ArticleJsonLdProps): React.ReactElement {
   const resolvedAuthorName = authorName ?? `${company.name} Team`;
   const baseUrl = getBaseUrl();
@@ -77,6 +86,7 @@ export default function ArticleJsonLd({
       },
     }),
     ...(locale && { inLanguage: locale }),
+    ...(keywords && keywords.length > 0 && { keywords }),
   };
 
   return <JsonLd data={schema} />;
