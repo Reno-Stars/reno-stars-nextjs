@@ -5,7 +5,7 @@ import { locales, ogLocaleMap, type Locale } from '@/i18n/config';
 import { getLocalizedBlogPost } from '@/lib/data';
 import BlogPostPage from '@/components/pages/BlogPostPage';
 import { getLocalizedService, getLocalizedArea } from '@/lib/data';
-import { BreadcrumbSchema, ArticleSchema, ArticleJsonLd, FAQSchema } from '@/components/structured-data';
+import { BreadcrumbSchema, ArticleSchema, FAQSchema } from '@/components/structured-data';
 import { getBaseUrl, buildAlternates, SITE_NAME, truncateMetaDescription, buildAlternateLocales} from '@/lib/utils';
 import { images as siteImages } from '@/lib/data';
 import { getCompanyFromDb, getBlogPostBySlugFromDb, getServicesFromDb, getServiceAreasFromDb } from '@/lib/db/queries';
@@ -240,17 +240,6 @@ export default async function Page({ params }: PageProps) {
         image={ogImage}
         locale={locale}
         keywords={post.seo_keywords?.[locale as Locale]?.split(',').map(k => k.trim()).filter(Boolean)}
-      />
-      <ArticleJsonLd
-        company={company}
-        headline={localizedPost.title}
-        description={localizedPost.excerpt}
-        datePublished={datePublished}
-        dateModified={dateModified}
-        authorName={post.author}
-        url={`/${locale}/blog/${slug}/`}
-        image={ogImage}
-        locale={locale}
       />
       <BlogPostPage
         locale={locale as Locale}
