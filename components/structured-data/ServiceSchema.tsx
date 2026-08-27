@@ -41,6 +41,10 @@ export default function ServiceSchema({
   const baseUrl = getBaseUrl();
   const absoluteUrl = `${baseUrl}${url}`;
   const addressParts = parseAddress(company.address);
+  // Only emit the PostalAddress sub-field when all 4 segments are present.
+  // Emitting empty sub-fields — or a fabricated postal code — corrupts the JSON-LD.
+  const hasFullAddress =
+    !!(addressParts.streetAddress && addressParts.locality && addressParts.region && addressParts.postalCode);
 
   const schema: Record<string, unknown> = {
     '@context': 'https://schema.org',
@@ -57,14 +61,16 @@ export default function ServiceSchema({
       // Split address into proper PostalAddress sub-fields per Schema.org spec.
       // Previously the full company.address string was crammed into streetAddress,
       // which breaks structured-address parsing. Now each part lives in its own field.
-      address: {
-        '@type': 'PostalAddress',
-        streetAddress: addressParts.streetAddress,
-        addressLocality: addressParts.locality,
-        addressRegion: addressParts.region,
-        postalCode: addressParts.postalCode,
-        addressCountry: 'CA',
-      },
+      ...(hasFullAddress && {
+        address: {
+          '@type': 'PostalAddress',
+          streetAddress: addressParts.streetAddress,
+          addressLocality: addressParts.locality,
+          addressRegion: addressParts.region,
+          postalCode: addressParts.postalCode,
+          addressCountry: 'CA',
+        },
+      }),
     },
     url: absoluteUrl,
   };
