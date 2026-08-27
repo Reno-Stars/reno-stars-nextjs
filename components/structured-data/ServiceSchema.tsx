@@ -42,6 +42,12 @@ export default function ServiceSchema({
   const absoluteUrl = `${baseUrl}${url}`;
   const addressParts = parseAddress(company.address);
 
+  // Same defensive guard as ProjectSchema: only emit address when the
+  // company.address had all four comma-separated segments (real data).
+  // A fabricated postal code in a rated Service node would suppress stars
+  // on every service-area page, same class of defect as the project pages.
+  const hasRealAddress = company.address.split(', ').length >= 4;
+
   const schema: Record<string, unknown> = {
     '@context': 'https://schema.org',
     '@type': 'Service',
@@ -54,17 +60,16 @@ export default function ServiceSchema({
       name: company.name,
       url: baseUrl,
       telephone: e164(company.phone),
-      // Split address into proper PostalAddress sub-fields per Schema.org spec.
-      // Previously the full company.address string was crammed into streetAddress,
-      // which breaks structured-address parsing. Now each part lives in its own field.
-      address: {
-        '@type': 'PostalAddress',
-        streetAddress: addressParts.streetAddress,
-        addressLocality: addressParts.locality,
-        addressRegion: addressParts.region,
-        postalCode: addressParts.postalCode,
-        addressCountry: 'CA',
-      },
+      ...(hasRealAddress && {
+        address: {
+          '@type': 'PostalAddress',
+          streetAddress: addressParts.streetAddress,
+          addressLocality: addressParts.locality,
+          addressRegion: addressParts.region,
+          postalCode: addressParts.postalCode,
+          addressCountry: 'CA',
+        },
+      }),
     },
     url: absoluteUrl,
   };
