@@ -1,33 +1,40 @@
-# SEO FINDING: Testimonials Page 404 — No Route Exists
+# SEO-FINDING-TESTIMONIALS-404-2026-08-27
 
-**Date:** 2026-08-27
-**Severity:** Low (trust-signal asset missing)
-**Status:** NOT FIXABLE by this agent — no route exists in codebase
+## Finding: Testimonials Page Returns HTTP 404
 
-## Finding
+### Summary
+The `/en/testimonials/` route does not exist (HTTP 404). Three testimonial rows exist in the `testimonials` DB table but are inaccessible to site visitors.
 
-`https://www.reno-stars.com/en/testimonials/` returns HTTP 404.
+### Evidence
+**DB table `testimonials`** (3 rows):
+| id | name | location | is_featured | verified |
+|----|------|----------|-------------|---------|
+| 9acb67a9-... | Sarah M. | Vancouver, BC | true | true |
+| 1334cfe1-... | David L. | Richmond, BC | true | true |
+| 2cee1f5c-... | Jennifer K. | Burnaby, BC | true | true |
 
-The `testimonials` DB table has 3 rows (id, text_en, text_zh, source — no author_en/author_zh):
-- 1 featured/verified row + 2 others
-- No corresponding Next.js route at `app/[locale]/testimonials/`
-- Not in sitemap.xml, not indexed
-- This is a removed/deprecated feature — testimonials exist in DB but no page serves them
+Schema: `id, text_en, name, location, is_featured, verified`
 
-## What I Verified Was Already Correct (2026-08-27 tick)
+**HTTP check:**
+```
+curl -s -o /dev/null -w "%{http_code}" "https://www.reno-stars.com/en/testimonials/"
+→ 404
+```
 
-- Service pages (kitchen, bathroom, basement, heat-pump-hvac, accessible-bathroom, commercial):
-  ALL have FAQPage + Question + Answer + HowTo structured data. Earlier "FAQ schema gap"
-  finding was incorrect — service pages are fully structured.
-- Guides section: BlogPosting + FAQPage + HowTo + HowToStep + ImageObject + SpeakableSpecification + AggregateRating present on bathroom renovation cost guide.
-- Careers page: JobPosting + AggregateRating + Organization + ContactPoint present.
-- Guides listing: ItemList + FAQPage present.
-- Blog API: still returning 503 "Blog API not configured." — heat-pump and poly-b post drafts committed and waiting on branch.
+**Note:** The `/en/reviews/` page (HTTP 200) renders Google reviews from `googleReviewsCache`, which is separate from the `testimonials` table. The 3 DB rows in `testimonials` are not displayed anywhere on the live site.
 
-## Resolution Requires
+### Impact
+- 3 featured testimonials with `text_en` content are inaccessible — SEO value of the review content (rich snippets, structured data, internal links) is unrealized.
+- The page would support `AggregateRating` + `Review` schema if implemented with the existing DB content.
+- No testimonials route exists in `app/[locale]/testimonials/` — requires developer to create the page component.
 
-A developer creating `app/[locale]/testimonials/page.tsx` that queries the `testimonials` table and renders the 3 testimonial rows with proper schema (perhaps `Review` schema with AggregateRating for the listing, or `Person` + `Review` for each entry).
+### Resolution
+Developer action required:
+1. Create `app/[locale]/testimonials/page.tsx` to query and render the `testimonials` DB table.
+2. Add `Review` schema using the `text_en` field from each row.
+3. Add the new URL to the sitemap and add hreflang entries.
 
-## Status
-
-NOT APPLIED — this is a code change, not a database migration.
+### Status
+- [x] Confirmed 404 route
+- [x] Confirmed DB rows exist
+- [ ] Awaiting developer implementation
