@@ -239,7 +239,7 @@ export default async function Page({ params }: PageProps) {
         url={`/${locale}/blog/${slug}/`}
         image={ogImage}
         locale={locale}
-        keywords={post.seo_keywords?.[locale as Locale]?.split(',').map(k => k.trim()).filter(Boolean)}
+        keywords={(post.seo_keywords?.[locale as Locale] ?? undefined)?.split(',').map(k => k.trim()).filter(Boolean) ?? undefined}
       />
       <ArticleJsonLd
         company={company}
