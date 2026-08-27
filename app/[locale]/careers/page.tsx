@@ -1,6 +1,6 @@
 import { Metadata } from 'next';
 import { getTranslations, setRequestLocale } from 'next-intl/server';
-import { ogLocaleMap, isIndexableLeafLocale, INDEXABLE_LEAF_LOCALES, type Locale } from '@/i18n/config';
+import { ogLocaleMap, type Locale } from '@/i18n/config';
 import CareersPage, { DUTY_KEYS, REQ_KEYS } from '@/components/pages/CareersPage';
 import { BreadcrumbSchema } from '@/components/structured-data';
 import JobPostingSchema from '@/components/structured-data/JobPostingSchema';
@@ -30,13 +30,10 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const baseUrl = getBaseUrl();
   const ogImage = buildOgImageUrl(t('title'), t('description'));
 
-  const isIndexableLocale = isIndexableLeafLocale(locale);
-
   return {
     title: t('title'),
     description: t('description'),
-    ...(isIndexableLocale ? {} : { robots: { index: false, follow: true } }),
-    alternates: buildAlternates('/careers/', locale, INDEXABLE_LEAF_LOCALES),
+    alternates: buildAlternates('/careers/', locale),
     openGraph: {
       title: t('title'),
       description: t('description'),

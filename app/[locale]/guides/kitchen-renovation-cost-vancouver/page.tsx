@@ -1,6 +1,6 @@
 import { Metadata } from 'next';
 import { getTranslations, setRequestLocale } from 'next-intl/server';
-import { ogLocaleMap, isIndexableLeafLocale, INDEXABLE_LEAF_LOCALES, type Locale } from '@/i18n/config';
+import { ogLocaleMap, type Locale } from '@/i18n/config';
 import KitchenCostGuidePage from '@/components/pages/KitchenCostGuidePage';
 import { ArticleSchema, BreadcrumbSchema, FAQSchema, HowToSchema } from '@/components/structured-data';
 import { getBaseUrl, buildAlternates, buildOgImageUrl, SITE_NAME, buildAlternateLocales} from '@/lib/utils';
@@ -18,13 +18,10 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const baseUrl = getBaseUrl();
   const ogImage = buildOgImageUrl(t('title'), t('description'));
 
-  const isIndexableLocale = isIndexableLeafLocale(locale);
-
   return {
     title: t('title'),
     description: t('description'),
-    ...(isIndexableLocale ? {} : { robots: { index: false, follow: true } }),
-    alternates: buildAlternates('/guides/kitchen-renovation-cost-vancouver/', locale, INDEXABLE_LEAF_LOCALES),
+    alternates: buildAlternates('/guides/kitchen-renovation-cost-vancouver/', locale),
     openGraph: {
       title: t('title'),
       description: t('description'),
