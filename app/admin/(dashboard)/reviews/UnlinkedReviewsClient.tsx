@@ -25,7 +25,12 @@ export default function UnlinkedReviewsClient({ reviews, projectOptions }: Unlin
       <p style={{ color: TEXT_MID, fontSize: '0.875rem', margin: '0 0 0.5rem' }}>
         {t.projectReviews.unlinkedIntro}
       </p>
-      <ProjectReviewsSection defaultProjectId={null} projectOptions={projectOptions} reviews={reviews} />
+      <ProjectReviewsSection
+        defaultProjectId={null}
+        scope="unlinked"
+        projectOptions={projectOptions}
+        reviews={reviews}
+      />
     </div>
   );
 }
