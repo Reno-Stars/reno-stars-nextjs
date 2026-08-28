@@ -23,6 +23,15 @@ interface ArticleSchemaProps {
    * array, not the comma-joined string.
    */
   keywords?: string[];
+  /**
+   * Schema.org articleSection — the high-level content category this article
+   * belongs to (e.g. "Kitchen Renovation", "Bathroom Remodel", "Permits &
+   * Regulations"). Used by Google to understand article taxonomy. If not
+   * provided the field is omitted (prefer honest omission over a generic
+   * guess). Suggested: pass a meaningful category string derived from the
+   * post's service area or topic.
+   */
+  articleSection?: string;
 }
 
 export default function ArticleSchema({
@@ -36,6 +45,7 @@ export default function ArticleSchema({
   image,
   locale,
   keywords,
+  articleSection,
 }: ArticleSchemaProps): React.ReactElement {
   const resolvedAuthorName = authorName ?? `${company.name} Team`;
   const baseUrl = getBaseUrl();
@@ -99,6 +109,7 @@ export default function ArticleSchema({
     }),
     ...(locale && { inLanguage: locale }),
     ...(keywords && keywords.length > 0 && { keywords }),
+    ...(articleSection && { articleSection }),
   };
 
   return (
