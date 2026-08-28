@@ -38,9 +38,19 @@ export interface ReviewProjectOption {
   label: string;
 }
 
+/**
+ * Which admin surface is rendering the section. The card is shared by the
+ * project edit page and /admin/reviews, and the copy differs: 'project' talks
+ * about "this project" and the project page, 'unlinked' about the /reviews hub
+ * (an unlinked review has no project page to be on).
+ */
+export type ReviewsScope = 'project' | 'unlinked';
+
 interface ProjectReviewsSectionProps {
   /** Pre-selected project for NEW reviews (null on the unlinked-reviews page). */
   defaultProjectId: string | null;
+  /** Surface-specific copy. Defaults to the project edit page. */
+  scope?: ReviewsScope;
   /** Projects offered by the "linked project" select. */
   projectOptions: ReviewProjectOption[];
   reviews: AdminProjectReview[];
@@ -255,6 +265,7 @@ function ReviewRow({ review, onEdit, onDelete }: ReviewRowProps) {
 }
 
 interface DeleteReviewDialogProps {
+  scope: ReviewsScope;
   open: boolean;
   loading: boolean;
   onConfirm: () => void;
@@ -263,13 +274,13 @@ interface DeleteReviewDialogProps {
 
 /** Delete-confirmation dialog for a review — the review-specific labels around
  *  the shared ConfirmDialog, extracted so the section stays small (#34). */
-function DeleteReviewDialog({ open, loading, onConfirm, onCancel }: DeleteReviewDialogProps) {
+function DeleteReviewDialog({ scope, open, loading, onConfirm, onCancel }: DeleteReviewDialogProps) {
   const t = useAdminTranslations();
   return (
     <ConfirmDialog
       open={open}
       title={t.projectReviews.deleteReview}
-      message={t.projectReviews.deleteMessage}
+      message={scope === 'unlinked' ? t.projectReviews.unlinkedDeleteMessage : t.projectReviews.deleteMessage}
       onConfirm={onConfirm}
       onCancel={onCancel}
       loading={loading}
@@ -278,6 +289,7 @@ function DeleteReviewDialog({ open, loading, onConfirm, onCancel }: DeleteReview
 }
 
 interface ReviewListProps {
+  scope: ReviewsScope;
   reviews: AdminProjectReview[];
   editingId: string | 'new' | null;
   defaultProjectId: string | null;
@@ -289,13 +301,13 @@ interface ReviewListProps {
 
 /** The review rows / inline edit forms plus the "add review" affordance —
  *  extracted so ProjectReviewsSection's own body stays under 50 lines (#34). */
-function ReviewList({ reviews, editingId, defaultProjectId, projectOptions, onEdit, onSaved, onDelete }: ReviewListProps) {
+function ReviewList({ scope, reviews, editingId, defaultProjectId, projectOptions, onEdit, onSaved, onDelete }: ReviewListProps) {
   const t = useAdminTranslations();
   return (
     <>
       {reviews.length === 0 && editingId !== 'new' && (
         <p style={{ color: TEXT_MID, fontSize: '0.8125rem', margin: '0 0 0.75rem' }}>
-          {t.projectReviews.noReviews}
+          {scope === 'unlinked' ? t.projectReviews.unlinkedNoReviews : t.projectReviews.noReviews}
         </p>
       )}
 
@@ -342,13 +354,17 @@ function ReviewList({ reviews, editingId, defaultProjectId, projectOptions, onEd
 }
 
 /**
- * "Verified Reviews" admin section — manages project-linked verified client
- * reviews (project_reviews). Rendered as a standalone card BELOW the project
- * edit form (it owns its own <form> elements, so it cannot nest inside
- * ProjectForm's form). Every mutation revalidates the project's public pages
- * via the server actions; the router.refresh() re-reads the list.
+ * "Verified Reviews" admin section — manages verified client reviews
+ * (project_reviews). Rendered as a standalone card BELOW the project edit form
+ * (it owns its own <form> elements, so it cannot nest inside ProjectForm's
+ * form) and again on /admin/reviews for the unlinked ones. `scope` picks the
+ * copy for the surface: the project page's tooltip/empty-state/delete message
+ * all say "this project", which is false on the unlinked page — an unlinked
+ * review belongs to no project and lives only on the /reviews hub. Every
+ * mutation revalidates the affected public pages via the server actions; the
+ * router.refresh() re-reads the list.
  */
-export default function ProjectReviewsSection({ defaultProjectId, projectOptions, reviews }: ProjectReviewsSectionProps) {
+export default function ProjectReviewsSection({ defaultProjectId, scope = 'project', projectOptions, reviews }: ProjectReviewsSectionProps) {
   const t = useAdminTranslations();
   const router = useRouter();
   const { toast } = useToast();
@@ -387,6 +403,7 @@ export default function ProjectReviewsSection({ defaultProjectId, projectOptions
       style={{ backgroundColor: CARD, borderRadius: '12px', padding: '1.5rem', boxShadow: neu(6), maxWidth: '900px', marginTop: '1.5rem' }}
     >
       <DeleteReviewDialog
+        scope={scope}
         open={deleteId !== null}
         loading={isDeletePending}
         onConfirm={handleDelete}
@@ -397,10 +414,11 @@ export default function ProjectReviewsSection({ defaultProjectId, projectOptions
         <span style={{ color: NAVY, fontWeight: 600, fontSize: '0.8125rem' }}>
           {t.projectReviews.title}
         </span>
-        <Tooltip content={t.projectReviews.tooltip} />
+        <Tooltip content={scope === 'unlinked' ? t.projectReviews.unlinkedTooltip : t.projectReviews.tooltip} />
       </div>
 
       <ReviewList
+        scope={scope}
         reviews={reviews}
         editingId={editingId}
         defaultProjectId={defaultProjectId}
