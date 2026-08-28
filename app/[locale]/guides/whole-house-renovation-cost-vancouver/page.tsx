@@ -128,6 +128,7 @@ export default async function Page({ params }: PageProps) {
         dateModified="2026-06-25"
         image={ogImage}
         locale={locale}
+        articleSection={locale === 'zh' ? '全屋装修' : 'Whole House Renovation'}
       />
       <HowToSchema
         name={locale === 'zh' ? '如何规划温哥华全屋装修预算' : 'How to Budget for a Whole House Renovation in Vancouver'}

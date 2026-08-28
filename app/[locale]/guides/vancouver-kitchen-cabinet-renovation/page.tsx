@@ -86,6 +86,7 @@ export default async function Page({ params }: PageProps) {
         dateModified="2026-08-04"
         image={ogImage}
         locale={locale}
+        articleSection={locale === 'zh' ? '厨房橱柜装修' : 'Kitchen Cabinet Renovation'}
       />
       <KitchenCabinetGuidePage
         locale={locale as Locale}

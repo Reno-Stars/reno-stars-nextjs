@@ -96,6 +96,7 @@ export default async function Page({ params }: PageProps) {
         dateModified="2026-06-25"
         image={ogImage}
         locale={locale}
+        articleSection={locale === 'zh' ? '商业装修工程' : 'Commercial Renovation'}
       />
       <CommercialCostGuidePage
         locale={locale as Locale}

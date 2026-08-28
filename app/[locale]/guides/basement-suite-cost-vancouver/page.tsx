@@ -90,6 +90,7 @@ export default async function Page({ params }: PageProps) {
         dateModified="2026-06-25"
         image={ogImage}
         locale={locale}
+        articleSection={locale === 'zh' ? '地下室套房装修' : 'Basement Suite Renovation'}
       />
       <BasementSuiteCostGuidePage
         locale={locale as Locale}

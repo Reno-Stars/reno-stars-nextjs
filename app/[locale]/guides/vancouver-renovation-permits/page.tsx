@@ -84,6 +84,7 @@ export default async function Page({ params }: PageProps) {
         dateModified="2026-08-04"
         image={ogImage}
         locale={locale}
+        articleSection={locale === 'zh' ? '温哥华装修许可证' : 'Vancouver Renovation Permits'}
       />
       <PermitGuidePage
         locale={locale as Locale}

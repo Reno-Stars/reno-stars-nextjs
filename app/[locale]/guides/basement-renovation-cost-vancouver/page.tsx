@@ -128,6 +128,7 @@ export default async function Page({ params }: PageProps) {
         dateModified="2026-06-25"
         image={ogImage}
         locale={locale}
+        articleSection={locale === 'zh' ? '地下室装修' : 'Basement Renovation'}
       />
       <HowToSchema
         name={locale === 'zh' ? '如何规划温哥华地下室装修预算' : 'How to Budget for a Basement Renovation in Vancouver'}
