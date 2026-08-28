@@ -53,6 +53,18 @@ export const getProjectsByAreaFromDb = cachedQueryWithArgs<string, Project[]>(as
 }, ['getProjectsByAreaFromDb'], { tags: ['projects:by-area'] });
 
 /** Lightweight kitchen project data for the cost guide page. */
+/*
+ * `localizations` is destructured OUT of every row below and never spread into
+ * the returned object. It is the source for the three Localized fields and
+ * nothing else — a jsonb blob carrying every localized column (metaTitle*,
+ * metaDescription*, challenge*, solution*, category*, spaceType*) for the 12
+ * non-en/zh locales.
+ *
+ * Spreading `...r` shipped that blob into the client flight payload: 258 KB of
+ * the kitchen guide's 266 KB block, ~360 KB on the bathroom guide, for data no
+ * component reads. KitchenGuideProject does not declare the field, so the
+ * spread carried it straight past the type checker.
+ */
 export interface KitchenGuideProject {
   /** Legacy flat fields kept for unchanged consumers — read .title/.duration/
    *  .spaceType (Localized<string>) when rendering across all 5 locales. */
@@ -94,14 +106,14 @@ export const getKitchenProjectsForGuide = cachedQuery(async (): Promise<KitchenG
       ))
       .orderBy(desc(projectsTable.createdAt));
 
-    return rows.map((r: typeof rows[number]) => ({
+    return rows.map(({ localizations, ...r }: typeof rows[number]) => ({
       ...r,
-      title: buildLocalized('title', r.titleEn, r.titleZh, r.localizations as Record<string, unknown> | null),
+      title: buildLocalized('title', r.titleEn, r.titleZh, localizations as Record<string, unknown> | null),
       duration: r.durationEn && r.durationZh
-        ? buildLocalized('duration', r.durationEn, r.durationZh, r.localizations as Record<string, unknown> | null)
+        ? buildLocalized('duration', r.durationEn, r.durationZh, localizations as Record<string, unknown> | null)
         : undefined,
       spaceType: r.spaceTypeEn && r.spaceTypeZh
-        ? buildLocalized('spaceType', r.spaceTypeEn, r.spaceTypeZh, r.localizations as Record<string, unknown> | null)
+        ? buildLocalized('spaceType', r.spaceTypeEn, r.spaceTypeZh, localizations as Record<string, unknown> | null)
         : undefined,
     }));
   }, []);
@@ -130,14 +142,14 @@ export const getBathroomProjectsForGuide = cachedQuery(async (): Promise<Kitchen
       ))
       .orderBy(desc(projectsTable.createdAt));
 
-    return rows.map((r: typeof rows[number]) => ({
+    return rows.map(({ localizations, ...r }: typeof rows[number]) => ({
       ...r,
-      title: buildLocalized('title', r.titleEn, r.titleZh, r.localizations as Record<string, unknown> | null),
+      title: buildLocalized('title', r.titleEn, r.titleZh, localizations as Record<string, unknown> | null),
       duration: r.durationEn && r.durationZh
-        ? buildLocalized('duration', r.durationEn, r.durationZh, r.localizations as Record<string, unknown> | null)
+        ? buildLocalized('duration', r.durationEn, r.durationZh, localizations as Record<string, unknown> | null)
         : undefined,
       spaceType: r.spaceTypeEn && r.spaceTypeZh
-        ? buildLocalized('spaceType', r.spaceTypeEn, r.spaceTypeZh, r.localizations as Record<string, unknown> | null)
+        ? buildLocalized('spaceType', r.spaceTypeEn, r.spaceTypeZh, localizations as Record<string, unknown> | null)
         : undefined,
     }));
   }, []);
@@ -166,14 +178,14 @@ export const getWholeHouseProjectsForGuide = cachedQuery(async (): Promise<Kitch
       ))
       .orderBy(desc(projectsTable.createdAt));
 
-    return rows.map((r: typeof rows[number]) => ({
+    return rows.map(({ localizations, ...r }: typeof rows[number]) => ({
       ...r,
-      title: buildLocalized('title', r.titleEn, r.titleZh, r.localizations as Record<string, unknown> | null),
+      title: buildLocalized('title', r.titleEn, r.titleZh, localizations as Record<string, unknown> | null),
       duration: r.durationEn && r.durationZh
-        ? buildLocalized('duration', r.durationEn, r.durationZh, r.localizations as Record<string, unknown> | null)
+        ? buildLocalized('duration', r.durationEn, r.durationZh, localizations as Record<string, unknown> | null)
         : undefined,
       spaceType: r.spaceTypeEn && r.spaceTypeZh
-        ? buildLocalized('spaceType', r.spaceTypeEn, r.spaceTypeZh, r.localizations as Record<string, unknown> | null)
+        ? buildLocalized('spaceType', r.spaceTypeEn, r.spaceTypeZh, localizations as Record<string, unknown> | null)
         : undefined,
     }));
   }, []);
@@ -202,14 +214,14 @@ export const getCommercialProjectsForGuide = cachedQuery(async (): Promise<Kitch
       ))
       .orderBy(desc(projectsTable.createdAt));
 
-    return rows.map((r: typeof rows[number]) => ({
+    return rows.map(({ localizations, ...r }: typeof rows[number]) => ({
       ...r,
-      title: buildLocalized('title', r.titleEn, r.titleZh, r.localizations as Record<string, unknown> | null),
+      title: buildLocalized('title', r.titleEn, r.titleZh, localizations as Record<string, unknown> | null),
       duration: r.durationEn && r.durationZh
-        ? buildLocalized('duration', r.durationEn, r.durationZh, r.localizations as Record<string, unknown> | null)
+        ? buildLocalized('duration', r.durationEn, r.durationZh, localizations as Record<string, unknown> | null)
         : undefined,
       spaceType: r.spaceTypeEn && r.spaceTypeZh
-        ? buildLocalized('spaceType', r.spaceTypeEn, r.spaceTypeZh, r.localizations as Record<string, unknown> | null)
+        ? buildLocalized('spaceType', r.spaceTypeEn, r.spaceTypeZh, localizations as Record<string, unknown> | null)
         : undefined,
     }));
   }, []);
@@ -241,14 +253,14 @@ export const getCabinetProjectsForGuide = cachedQuery(async (): Promise<KitchenG
       ))
       .orderBy(desc(projectsTable.createdAt));
 
-    return rows.map((r: typeof rows[number]) => ({
+    return rows.map(({ localizations, ...r }: typeof rows[number]) => ({
       ...r,
-      title: buildLocalized('title', r.titleEn, r.titleZh, r.localizations as Record<string, unknown> | null),
+      title: buildLocalized('title', r.titleEn, r.titleZh, localizations as Record<string, unknown> | null),
       duration: r.durationEn && r.durationZh
-        ? buildLocalized('duration', r.durationEn, r.durationZh, r.localizations as Record<string, unknown> | null)
+        ? buildLocalized('duration', r.durationEn, r.durationZh, localizations as Record<string, unknown> | null)
         : undefined,
       spaceType: r.spaceTypeEn && r.spaceTypeZh
-        ? buildLocalized('spaceType', r.spaceTypeEn, r.spaceTypeZh, r.localizations as Record<string, unknown> | null)
+        ? buildLocalized('spaceType', r.spaceTypeEn, r.spaceTypeZh, localizations as Record<string, unknown> | null)
         : undefined,
     }));
   }, []);

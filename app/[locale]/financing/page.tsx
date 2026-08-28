@@ -4,6 +4,7 @@ import { ogLocaleMap, type Locale } from '@/i18n/config';
 import FinancingPage from '@/components/pages/FinancingPage';
 import { BreadcrumbSchema, FAQSchema } from '@/components/structured-data';
 import { getBaseUrl, buildAlternates, buildOgImageUrl, SITE_NAME, buildAlternateLocales} from '@/lib/utils';
+import ClientMessages from '@/components/ClientMessages';
 
 interface PageProps {
   params: Promise<{ locale: string }>;
@@ -62,10 +63,10 @@ export default async function Page({ params }: PageProps) {
   ];
 
   return (
-    <>
+    <ClientMessages ns={['cta', 'financing']}>
       <BreadcrumbSchema items={breadcrumbs} locale={locale} />
       <FAQSchema faqs={faqs} locale={locale} />
       <FinancingPage locale={locale as Locale} />
-    </>
+    </ClientMessages>
   );
 }

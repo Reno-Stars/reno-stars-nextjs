@@ -268,6 +268,26 @@ export interface Service {
 }
 
 /**
+ * Exactly the fields the before/after gallery reads off a project.
+ *
+ * Lives here rather than beside the component because `lib/data/listing-payload`
+ * needs it on the SERVER: importing it from the `'use client'` file added a
+ * server→client-component edge that made the i18n namespace-scope test believe
+ * /projects/ renders the gallery.
+ *
+ * Narrower than `Project` on purpose: `BeforeAfterGalleryPage` is a client
+ * component, so whatever its props declare is what gets serialized into the RSC
+ * flight payload on every request. Full `Project` rows put 1.48 MB there —
+ * 0.54 MB of `description`, 0.17 MB of `solution`, 0.14 MB of `challenge`, none
+ * of which the gallery renders. Widen it only when the gallery actually starts
+ * rendering the field, so the payload cost stays visible at the boundary.
+ */
+export type GalleryProject = Pick<
+  Project,
+  'slug' | 'title' | 'service_type' | 'location_city' | 'image_pairs'
+>;
+
+/**
  * A geographic service area.
  */
 export interface ServiceArea {

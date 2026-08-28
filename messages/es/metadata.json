@@ -1,8 +1,10 @@
 {
   "metadata": {
     "home": {
-      "title": "Empresa de Renovación Residencial y Comercial | Reno Stars",
-      "description": "Remodelación de cocina, baño y casa completa en Metro Vancouver. {years}+ años, seguro CGL de $5M, garantía de 3 años. Cotización gratis en 24 h."
+      "title": "Contratista de Renovación en Vancouver | Reno Stars",
+      "titleRated": "Contratista de Renovación Vancouver {rating}/5 | Reno Stars",
+      "description": "Remodelación de cocina, baño y casa completa en Metro Vancouver. {years}+ años, seguro CGL de $5M, garantía de 3 años. Cotización gratis en 24 h.",
+      "descriptionRated": "Calificación {rating}/5 con {reviewCount} reseñas de Google. Remodelación de cocina, baño y casa completa en Metro Vancouver. Cotización gratis en 24 h."
     },
     "services": {
       "title": "Servicios de remodelación en Vancouver — $5M asegurado | Reno Stars",
@@ -13,8 +15,8 @@
       "description": "Vea más de 100 proyectos reales de remodelación en Metro Vancouver con fotos antes/después, costos reales y plazos. Transformaciones de cocina, baño, sótano y casa completa."
     },
     "projectsBudget": {
-      "title": "{tier} Proyectos de renovación Vancouver | Estrellas de Reno",
-      "description": "Proyectos reales de renovación {tier} en Metro Vancouver: costos reales, fotografías de antes y después y cronogramas. Filtrar por cocina, baño, sótano o toda la casa."
+      "title": "{tier} Proyectos de renovación Vancouver | Reno Stars",
+      "description": "Proyectos reales de renovación {tier} en Metro Vancouver: costos reales, fotos de antes y después y plazos. Filtra por cocina, baño o sótano."
     },
     "contact": {
       "title": "Cotización gratis de remodelación en Vancouver | Contacto Reno Stars",
@@ -29,7 +31,7 @@
       "description": "Cotizaciones transparentes, proceso estructurado, comunicación rápida y equipos estables. Reseñas de 5 estrellas en Google, seguro CGL de $5M, cobertura WCB."
     },
     "design": {
-      "title": "Galería de diseño de remodelación | Proyectos reales en Vancouver | Reno Stars",
+      "title": "Galería de Diseño de Remodelación Vancouver | Reno Stars",
       "description": "Explore ideas de diseño de remodelación a partir de más de 100 proyectos reales en Metro Vancouver. Inspiración para cocina, baño, sótano y casa completa."
     },
     "projectCategory": {
@@ -49,7 +51,7 @@
       "description": "Reno Stars sirve a 17 comunidades en Metro Vancouver y el Fraser Valley. Encuentre servicios de remodelación en su ciudad y obtenga una cotización gratis."
     },
     "area": {
-      "title": "Contratista de remodelación en {area} | Cocina y baño | Reno Stars",
+      "title": "Contratista de Renovación en {area} | Reno Stars",
       "description": "Servicios profesionales de remodelación en {area}. Cocinas, baños y casas completas. Contáctenos para una cotización gratis."
     },
     "thankYou": {
@@ -61,39 +63,47 @@
       "description": "Conozca nuestro proceso de remodelación en 5 pasos. De la consulta inicial a la entrega del proyecto, hacemos su remodelación simple y sin preocupaciones."
     },
     "showroom": {
-      "title": "Showroom de remodelación en Richmond BC | Consulta gratis | Reno Stars",
+      "title": "Showroom de Remodelación Richmond BC | Reno Stars",
       "description": "Visite nuestra sala de exposición de Richmond BC: vea exhibidores de cocinas y baños, toque materiales reales y obtenga una cotización gratuita. Abierto con cita previa: llame al 778-960-7999 para reservar."
     },
     "guides": {
-      "title": "Guías de costos de remodelación | Vancouver BC | Reno Stars",
       "description": "Guías gratis de costos de remodelación basadas en datos reales del Greater Vancouver. Precios de cocina, baño y casa completa con presupuestos y plazos reales.",
-      "kitchenCost": {
-        "title": "Costo de remodelación de cocina Vancouver BC (2026) | Reno Stars",
-        "description": "¿Cuánto cuesta una remodelación de cocina en Vancouver? Precios reales de $15,000 a $72,000 basados en 16 proyectos completados. Obtenga desgloses de costos precisos por nivel."
+      "title": "Guías de costos de remodelación | Vancouver BC | Reno Stars",
+      "basementCost": {
+        "title": "Costo de remodelación de sótano Vancouver BC (2026) | Reno Stars",
+        "description": "¿Cuánto cuesta una remodelación de sótano en Vancouver? Precios típicos de $30,000 a $120,000+ para Greater Vancouver. Obtenga desgloses de costos precisos por nivel, además de consejos para ahorrar dinero."
+      },
+      "basementSuiteCost": {
+        "title": "Costo de conversión a suite de sótano Vancouver BC (2026) | Reno Stars",
+        "description": "¿Cuánto cuesta una suite de sótano legal en Vancouver? Precios típicos de $60,000 a $150,000. Desglose detallado de costos, análisis de ROI y regulaciones municipales."
       },
       "bathroomCost": {
         "title": "Costo promedio de remodelación de baño Vancouver (2026) | Reno Stars",
         "description": "¿Cuál es el costo promedio de remodelación de baño en Vancouver? Precios reales de $10K-$60K+ basados en 19 proyectos completados. Desglose completo de costos por baños de 3 piezas, 4 piezas y 5 piezas."
       },
-      "wholeHouseCost": {
-        "title": "Costo de remodelación de casa completa Vancouver BC (2026) | Reno Stars",
-        "description": "Costo de remodelación de casa completa en Vancouver: $50K-$200K+ de proyectos reales. Desglose completo por alcance — cocinas, baños, pisos y más. Obtenga un presupuesto gratuito de Reno Stars."
-      },
-      "basementCost": {
-        "title": "Costo de remodelación de sótano Vancouver BC (2026) | Reno Stars",
-        "description": "¿Cuánto cuesta una remodelación de sótano en Vancouver? Precios típicos de $30,000 a $120,000+ para Greater Vancouver. Obtenga desgloses de costos precisos por nivel, además de consejos para ahorrar dinero."
+      "cabinetCost": {
+        "title": "Costo de renovación de gabinetes Vancouver BC (2026) | Reno Stars",
+        "description": "¿Cuánto cuesta la renovación de gabinetes en Vancouver? Precios típicos de $4,000 a $15,000 para Greater Vancouver. Compare opciones de renovación, refacción y reemplazo completo."
       },
       "commercialCost": {
         "title": "Costo de remodelación comercial en Vancouver BC (2026) | Reno Stars",
         "description": "¿Cuánto cuesta una remodelación comercial en Vancouver? Los costos típicos van de $50,000 a $1,000,000+. Desglose detallado por tipo de proyecto con datos reales."
       },
-      "cabinetCost": {
-        "title": "Costo de renovación de gabinetes Vancouver BC (2026) | Reno Stars",
-        "description": "¿Cuánto cuesta la renovación de gabinetes en Vancouver? Precios típicos de $4,000 a $15,000 para Greater Vancouver. Compare opciones de renovación, refacción y reemplazo completo."
+      "kitchenCabinet": {
+        "title": "Costo de gabinetes de cocina en Vancouver 2026: $3K–$45K | Reno Stars",
+        "description": "Costo de gabinetes de cocina en Vancouver 2026: desde $3,000 por restauración hasta $45,000+ a medida, promedio $12,000 ($150–$600/pie lineal)."
       },
-      "basementSuiteCost": {
-        "title": "Costo de conversión a suite de sótano Vancouver BC (2026) | Reno Stars",
-        "description": "¿Cuánto cuesta una suite de sótano legal en Vancouver? Precios típicos de $60,000 a $150,000. Desglose detallado de costos, análisis de ROI y regulaciones municipales."
+      "kitchenCost": {
+        "title": "Costo de remodelación de cocina Vancouver BC (2026) | Reno Stars",
+        "description": "¿Cuánto cuesta una remodelación de cocina en Vancouver? Precios reales de $15,000 a $72,000 basados en 16 proyectos completados. Obtenga desgloses de costos precisos por nivel."
+      },
+      "permit": {
+        "title": "Permisos de Renovación en Vancouver 2026 | Reno Stars",
+        "description": "¿Qué renovaciones en Vancouver requieren permiso de construcción, plomería o electricidad? Guía 2026 de los requisitos de BC: plazos, tarifas y trámites."
+      },
+      "wholeHouseCost": {
+        "title": "Costo de remodelación de casa completa Vancouver BC (2026) | Reno Stars",
+        "description": "Costo de remodelación de casa completa en Vancouver: $50K-$200K+ de proyectos reales. Desglose completo por alcance — cocinas, baños, pisos y más. Obtenga un presupuesto gratuito de Reno Stars."
       }
     },
     "about": {
@@ -113,7 +123,7 @@
       "description": "Impresionantes transformaciones antes/después de remodelaciones en Metro Vancouver. Proyectos reales, costos reales, resultados reales. Cocina, baño y casa completa."
     },
     "features": {
-      "title": "Por qué Reno Stars | $5M asegurado, garantía 3 años, reseñas 5 estrellas",
+      "title": "$5M Asegurado, Garantía de 3 Años | Reno Stars",
       "description": "Lo que diferencia a Reno Stars: seguro CGL de $5M, cobertura WCB, 3 años de garantía, equipo bilingüe, reseñas de 5 estrellas en Google. Vancouver."
     },
     "nearMe": {
@@ -123,7 +133,15 @@
     "localBusinessDescription": "Servicios profesionales de remodelación residencial en Metro Vancouver. Remodelaciones de cocina, baño y casa completa. Licenciados, asegurados con hasta $5M de seguro CGL, cobertura WCB activa y hasta 3 años de garantía.",
     "careers": {
       "title": "Carreras | Trabajos de renovación Metro Vancouver | Reno Stars",
-      "description": "Reno Stars está contratando trabajadores de renovación en Metro Vancouver: mosaicos, paneles de yeso, pintura, pisos y acabados. El mandarín o el cantonés son una gran ventaja. Llame al 778-960-7999 para aplicar."
+      "description": "Contratamos trabajadores de renovación en Metro Vancouver: azulejos, tablaroca, pintura, pisos y acabados. Mandarín o cantonés, una ventaja. 778-960-7999."
+    },
+    "transparentPricing": {
+      "title": "Precios transparentes: cómo presupuestamos | Reno Stars",
+      "description": "Cómo presupuesta Reno Stars una reforma: alcance desglosado línea por línea, pagos ligados a las fases de obra, consulta gratuita a domicilio y validez de 30 días."
+    },
+    "awards": {
+      "title": "Premios y reconocimientos | Reno Stars Vancouver",
+      "description": "Premios, certificaciones y reconocimientos externos de Reno Stars, empresa de reformas del área metropolitana de Vancouver: entidad, año y fuente en cada entrada."
     }
   }
 }

@@ -1,8 +1,32 @@
 name: CI
 
 on:
+  # Every branch, not just main/develop.
+  #
+  # Until 2026-08-26 this was `branches: [main, develop]`, which meant NOTHING
+  # gated a merge. Checked against the Gitea task history: 125 runs, and every
+  # one of the last 50 was on `main`. No feature branch had ever run CI.
+  # The three paths all missed it — GitHub Actions is dead (org billing), the
+  # PR lives on GitHub so `pull_request` never reaches Gitea (the mirror
+  # carries branches, not PRs), and a feature-branch push is not `main`.
+  #
+  # So CI ran only AFTER code landed on main. Combined with propose-deploy
+  # refusing to run without a green ci.yml, a bad merge did not get blocked —
+  # it got discovered, with main already broken and every deploy stranded
+  # behind it.
+  #
+  # Safe to widen: build.yml (image build + propose-deploy) stays on
+  # `branches: [main]`, so nothing here can trigger a deploy. The concurrency
+  # group below is keyed on github.ref with cancel-in-progress, so repeated
+  # pushes to one branch supersede rather than pile up.
+  #
+  # Cost note: `seo/daily-**` branches land several times a day (6 on
+  # 2026-08-26 alone) and each now costs a full build + Chromium install. If
+  # that crowds the runners, add `branches-ignore: ['seo/daily-**']` here —
+  # but those branches DO touch message and content files, which is exactly
+  # what the render smoke gate checks, so prefer paying for them.
   push:
-    branches: [main, develop]
+    branches: ['**']
   pull_request:
     branches: [main, develop]
 
@@ -132,3 +156,94 @@ jobs:
 
       - name: Build application
         run: pnpm build
+
+      # ---------------------------------------------------------------- gates
+      # Everything above this line inspects SOURCE. On 2026-08-26 lint,
+      # typecheck, 1,274 unit tests and this build were all green on a commit
+      # that rendered "nav.home" and "footer.quickLinks" as visible text on
+      # every page. The same blind spot is why
+      # /en/guides/vancouver-kitchen-cabinet-renovation/ has been serving 44
+      # raw i18n key paths to real visitors. These two steps read OUTPUT.
+
+      - name: Start production server
+        # nohup + disown, because a plain `&` dies with the step's shell.
+        # Readiness is polled inside render-smoke.mjs rather than by a curl
+        # loop: the Gitea act_runner image has no curl (see this file's header
+        # on .gitea, and the runner-difference list there).
+        run: nohup pnpm start > /tmp/next-server.log 2>&1 &
+
+      - name: Render smoke (status, i18n key paths, namespace scoping)
+        run: BASE_URL=http://127.0.0.1:3000 node scripts/ci/render-smoke.mjs
+
+      - name: Server log on failure
+        if: failure()
+        run: tail -100 /tmp/next-server.log || true
+
+      - name: Provide a browser for Playwright
+        id: browser
+        # The runner cannot reach cdn.playwright.dev — five 30s timeouts, twice
+        # over — while apt pulled 233 packages from the Ubuntu archives AND
+        # ppa.launchpadcontent.net in the same step. So it is that one host,
+        # not egress in general, and the fix is to get Chromium from apt.
+        #
+        # `playwright install-deps` still runs: the system libraries come from
+        # the Ubuntu archives, which work. Only the browser BINARY is blocked.
+        # A Playwright image cannot be baked either — the registry caps layers
+        # at 100 MB (Cloudflare free plan) against Playwright's ~751 MB.
+        #
+        # Tiers, cheapest first. Never silently skip: a missing browser has to
+        # look different from a passing suite.
+        run: |
+          set -u
+          pnpm exec playwright install-deps chromium || true
+
+          if command -v google-chrome >/dev/null 2>&1; then
+            echo "channel=chrome" >> "$GITHUB_OUTPUT"
+            echo "exe=" >> "$GITHUB_OUTPUT"
+            echo "using preinstalled google-chrome: $(google-chrome --version)"
+          elif command -v chromium >/dev/null 2>&1; then
+            echo "channel=" >> "$GITHUB_OUTPUT"
+            echo "exe=$(command -v chromium)" >> "$GITHUB_OUTPUT"
+            echo "using preinstalled chromium: $(chromium --version)"
+          elif pnpm exec playwright install chromium; then
+            echo "channel=" >> "$GITHUB_OUTPUT"
+            echo "exe=" >> "$GITHUB_OUTPUT"
+            echo "downloaded Playwright's bundled chromium"
+          else
+            echo "cdn.playwright.dev unreachable — trying apt (ppa.launchpadcontent.net is reachable from here)"
+            sudo apt-get install -y software-properties-common >/dev/null 2>&1 || true
+            sudo add-apt-repository -y ppa:xtradeb/apps >/dev/null 2>&1 || true
+            sudo apt-get update -qq || true
+            if sudo apt-get install -y chromium >/dev/null 2>&1 && command -v chromium >/dev/null 2>&1; then
+              echo "channel=" >> "$GITHUB_OUTPUT"
+              echo "exe=$(command -v chromium)" >> "$GITHUB_OUTPUT"
+              echo "installed chromium from apt: $(chromium --version)"
+            else
+              echo "channel=UNAVAILABLE" >> "$GITHUB_OUTPUT"
+              echo "exe=" >> "$GITHUB_OUTPUT"
+              echo "::error::No browser available: no system Chrome/Chromium, cdn.playwright.dev unreachable, and apt could not supply chromium. Allow egress to cdn.playwright.dev, or bake a browser into the k8s-heavy runner image."
+              exit 1
+            fi
+          fi
+
+      - name: E2E (chromium)
+        # Reuses the server started above. Gitea has no artifacts backend, so
+        # .next cannot be handed to a separate job — a standalone e2e job would
+        # pay for a second full build.
+        #
+        # admin-*.spec.ts are excluded on purpose: they need admin credentials
+        # CI does not hold (the /admin password lives in the website DB, not an
+        # env var). Two site-visit tests are test.fixme'd — they fail
+        # identically against production, so they are pre-existing, not
+        # regressions, and a red job here strands every deploy.
+        env:
+          PLAYWRIGHT_NO_SERVER: '1'
+          BASE_URL: http://127.0.0.1:3000
+          PW_CHANNEL: ${{ steps.browser.outputs.channel }}
+          PW_EXECUTABLE: ${{ steps.browser.outputs.exe }}
+        run: >-
+          pnpm exec playwright test --project=chromium
+          tests/e2e/homepage.spec.ts
+          tests/e2e/contact.spec.ts
+          tests/e2e/mobile-responsive.spec.ts
+          tests/e2e/site-visit-checklist.spec.ts

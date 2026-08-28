@@ -1,20 +1,22 @@
 {
   "metadata": {
     "home": {
-      "title": "Entreprise de Rénovation Résidentielle et Commerciale | Reno Stars",
-      "description": "Rénovation de cuisine, salle de bain et maison complète à Vancouver. {years}+ ans d'expérience, assurance 5 M$, garantie 3 ans. Devis gratuit en 24 h."
+      "title": "Entrepreneur en Rénovation à Vancouver | Reno Stars",
+      "titleRated": "Entrepreneur en Rénovation Vancouver {rating}/5 | Reno Stars",
+      "description": "Rénovation de cuisine, salle de bain et maison complète à Vancouver. {years}+ ans d'expérience, assurance 5 M$, garantie 3 ans. Devis gratuit en 24 h.",
+      "descriptionRated": "Noté {rating}/5 sur {reviewCount} avis Google. Rénovation de cuisine, salle de bain, sous-sol et maison complète à Vancouver. Devis gratuit en 24 h."
     },
     "services": {
-      "title": "Services de rénovation de Vancouver — 5 millions de dollars assurés | Étoiles de Réno",
+      "title": "Services de rénovation de Vancouver — 5 millions de dollars assurés | Reno Stars",
       "description": "Services de rénovation de cuisines, de salles de bains, de maisons entières, de sous-sols et de commerces dans la région métropolitaine de Vancouver. Plus de 20 ans d'expérience, assurance CGL de 5 millions de dollars, garantie de 3 ans. Devis gratuits."
     },
     "projects": {
-      "title": "Plus de 100 projets de rénovation Vancouver | Avant et après | Étoiles de Réno",
+      "title": "Plus de 100 projets de rénovation Vancouver | Avant et après | Reno Stars",
       "description": "Découvrez plus de 100 projets de rénovation réels dans la région métropolitaine de Vancouver avec des photos avant/après, les coûts réels et les délais. Transformations de cuisine, salle de bain, sous-sol et maison entière."
     },
     "projectsBudget": {
-      "title": "{tier} Projets de rénovation Vancouver | Étoiles de Réno",
-      "description": "Projets de rénovation réels {tier} dans la région métropolitaine de Vancouver : coûts réels, photos avant/après et délais. Filtrez par cuisine, salle de bain, sous-sol ou maison entière."
+      "title": "{tier} Projets de rénovation Vancouver | Reno Stars",
+      "description": "Projets de rénovation {tier} réels à Metro Vancouver : coûts réels, photos avant/après et délais. Filtrez par cuisine, salle de bain ou sous-sol."
     },
     "contact": {
       "title": "Devis de rénovation gratuit Vancouver | Contacter Reno Stars",
@@ -29,7 +31,7 @@
       "description": "Devis transparents, processus structuré, communication réactive et équipes stables. Avis Google cinq étoiles, assurance CGL de 5 millions de dollars, couverture WCB. Découvrez pourquoi les propriétaires de Vancouver nous font confiance."
     },
     "design": {
-      "title": "Galerie de conception de rénovation | Projets réels de Vancouver | Étoiles de Réno",
+      "title": "Galerie de Design de Rénovation Vancouver | Reno Stars",
       "description": "Parcourez les idées de conception de rénovation parmi plus de 100 projets réels de la région métropolitaine de Vancouver. Inspiration pour la cuisine, la salle de bain, le sous-sol et toute la maison avec les coûts réels."
     },
     "projectCategory": {
@@ -37,23 +39,23 @@
       "description": "Découvrez nos projets de rénovation {category} à Vancouver et dans le Lower Mainland. Visualisez des photos avant et après et des inspirations de conception."
     },
     "projectDetail": {
-      "titleWithLocation": "{title} dans {city} | Étoiles de Réno"
+      "titleWithLocation": "{title} dans {city} | Reno Stars"
     },
     "serviceLocation": {
-      "title": "{service} dans {area} | Étoiles de Réno",
-      "titleWithTagline": "{service} dans {area} – {tagline} | Étoiles de Réno",
+      "title": "{service} dans {area} | Reno Stars",
+      "titleWithTagline": "{service} dans {area} – {tagline} | Reno Stars",
       "description": "Expert {service} dans {area} par Reno Stars. {years} + années d'expérience, assurance CGL de 5 millions de dollars, couverture WCB active, jusqu'à 3 ans de garantie. Consultez les projets locaux et obtenez un devis gratuit dès aujourd'hui."
     },
     "areas": {
-      "title": "Rénovation près de chez vous | 17 régions métropolitaines de Vancouver | Étoiles de Réno",
+      "title": "Rénovation près de chez vous | 17 régions métropolitaines de Vancouver | Reno Stars",
       "description": "Reno Stars dessert 17 communautés de la région métropolitaine de Vancouver et de la vallée du Fraser. Trouvez des services de rénovation dans votre ville et obtenez un devis gratuit."
     },
     "area": {
-      "title": "Entrepreneur en Rénovation dans {area} | Cuisine et salle de bain | Étoiles de Réno",
+      "title": "Entrepreneur en Rénovation à {area} | Reno Stars",
       "description": "Services de rénovation professionnels à {area}. Rénovation de cuisine, salle de bain et maison entière. Contactez-nous pour un devis gratuit."
     },
     "thankYou": {
-      "title": "Merci | Étoiles de Réno",
+      "title": "Merci | Reno Stars",
       "description": "Votre message a été reçu. Nous vous répondrons sous peu."
     },
     "process": {
@@ -61,39 +63,47 @@
       "description": "Découvrez notre flux de travail de rénovation rationalisé en 5 étapes. De la consultation initiale à la remise du projet, nous rendons votre parcours de rénovation simple et sans souci."
     },
     "showroom": {
-      "title": "Salle d'exposition de rénovation Richmond BC | Consultation gratuite | Étoiles de Réno",
+      "title": "Showroom de Rénovation Richmond BC | Reno Stars",
       "description": "Visitez notre salle d'exposition de Richmond BC : découvrez les présentoirs de cuisine et de salle de bain, touchez de vrais matériaux, obtenez un devis gratuit. Ouvert sur rendez-vous – appelez le 778-960-7999 pour réserver."
     },
     "guides": {
-      "title": "Coût de rénovation Vancouver 2026 : 4 000 $ à 200 000 $ + par type de projet",
       "description": "Coûts réels de rénovation de Vancouver à partir de plus de 100 projets. Cuisine de 15 000 $ à 72 000 $, salle de bain de 10 000 $ à 60 000 $, maison entière de 50 000 $ à 200 000 $ et plus, sous-sol de 30 000 $ à 120 000 $. Répartition des niveaux, devis gratuit.",
-      "kitchenCost": {
-        "title": "Coût de rénovation de cuisine Vancouver 2026 : 15 000 $ à 72 000 $ Données réelles",
-        "description": "Coût de rénovation de la cuisine de Vancouver : 15 000 $ à 72 000 $ provenant de 16 projets réels. Niveaux de prix détaillés, délais et ce que votre budget achète réellement. Estimation gratuite en 24h."
+      "title": "Coût de rénovation Vancouver 2026 : 4 000 $ à 200 000 $ + par type de projet",
+      "basementCost": {
+        "title": "Coût de rénovation du sous-sol Vancouver 2026 : 30 000 $ à 120 000 $ + données réelles",
+        "description": "Coût de rénovation du sous-sol de Vancouver : 30 000 $ à plus de 120 000 $ provenant de projets réels. Répartition des niveaux, guide des permis, conseils pour économiser de l'argent. Données 2026, estimation gratuite en 24h."
+      },
+      "basementSuiteCost": {
+        "title": "Coût du sous-sol légal Vancouver 2026 : 60 000 $ à 150 000 $",
+        "description": "Coût de conversion du sous-sol légal de Vancouver : 60 000 $ à 150 000 $. Répartition des coûts, analyse du ROI, règles municipales. Données 2026, estimation gratuite en 24h."
       },
       "bathroomCost": {
         "title": "Coût Rénovation Salle de Bain Vancouver 2026 | Reno Stars",
         "description": "Coût rénovation salle de bain Vancouver 2026 : 10 000 $ – 60 000 $. Prix réels par 3 pièces, 4 pièces et suite maîtresse. Estimation gratuite en 24h."
       },
-      "wholeHouseCost": {
-        "title": "Coût de rénovation de toute la maison Vancouver 2026 : 50 000 $ à 200 000 $ +",
-        "description": "Coût de rénovation de toute la maison à Vancouver : 50 000 $ à plus de 200 000 $ provenant de projets réels. Répartition niveau par niveau : cuisines, salles de bains, revêtements de sol. Tarifs 2026, estimation gratuite."
-      },
-      "basementCost": {
-        "title": "Coût de rénovation du sous-sol Vancouver 2026 : 30 000 $ à 120 000 $ + données réelles",
-        "description": "Coût de rénovation du sous-sol de Vancouver : 30 000 $ à plus de 120 000 $ provenant de projets réels. Répartition des niveaux, guide des permis, conseils pour économiser de l'argent. Données 2026, estimation gratuite en 24h."
+      "cabinetCost": {
+        "title": "Coût de finition des armoires Vancouver 2026 : 4 000 $ à 15 000 $ Données réelles",
+        "description": "Coût de finition des armoires de Vancouver : 4 000 $ à 15 000 $. Comparaison entre finition, refaçage et remplacement complet. Tarifs 2026, données réelles du projet, estimation gratuite en 24h."
       },
       "commercialCost": {
         "title": "Coût de la rénovation commerciale Vancouver 2026 : 50 000 $ à 1 M$+",
         "description": "Coût de la rénovation commerciale à Vancouver : 50 000 $ à 1 M$+ par type de projet. Restaurants, cliniques, bureaux, commerces de détail. Données réelles, planification tenant compte des permis. Estimation gratuite en 24h."
       },
-      "cabinetCost": {
-        "title": "Coût de finition des armoires Vancouver 2026 : 4 000 $ à 15 000 $ Données réelles",
-        "description": "Coût de finition des armoires de Vancouver : 4 000 $ à 15 000 $. Comparaison entre finition, refaçage et remplacement complet. Tarifs 2026, données réelles du projet, estimation gratuite en 24h."
+      "kitchenCabinet": {
+        "title": "Coût des armoires de cuisine à Vancouver 2026 : 3 000 $ à 45 000 $ | Reno Stars",
+        "description": "Coût des armoires de cuisine à Vancouver 2026 : de 3 000 $ (refinition) à plus de 45 000 $ (sur mesure), en moyenne 12 000 $. Estimation gratuite."
       },
-      "basementSuiteCost": {
-        "title": "Coût du sous-sol légal Vancouver 2026 : 60 000 $ à 150 000 $",
-        "description": "Coût de conversion du sous-sol légal de Vancouver : 60 000 $ à 150 000 $. Répartition des coûts, analyse du ROI, règles municipales. Données 2026, estimation gratuite en 24h."
+      "kitchenCost": {
+        "title": "Coût de rénovation de cuisine Vancouver 2026 : 15 000 $ à 72 000 $ Données réelles",
+        "description": "Coût de rénovation de la cuisine de Vancouver : 15 000 $ à 72 000 $ provenant de 16 projets réels. Niveaux de prix détaillés, délais et ce que votre budget achète réellement. Estimation gratuite en 24h."
+      },
+      "permit": {
+        "title": "Permis de Rénovation à Vancouver 2026 | Reno Stars",
+        "description": "Quelles rénovations à Vancouver exigent un permis de construction, de plomberie ou d'électricité ? Guide 2026 des exigences de la C.-B. : délais et frais."
+      },
+      "wholeHouseCost": {
+        "title": "Coût de rénovation de toute la maison Vancouver 2026 : 50 000 $ à 200 000 $ +",
+        "description": "Coût de rénovation de toute la maison à Vancouver : 50 000 $ à plus de 200 000 $ provenant de projets réels. Répartition niveau par niveau : cuisines, salles de bains, revêtements de sol. Tarifs 2026, estimation gratuite."
       }
     },
     "about": {
@@ -109,21 +119,29 @@
       "description": "Explorez les options de financement de rénovation dans la région métropolitaine de Vancouver. HELOC, prêts personnels, refinancement hypothécaire et conseils de planification budgétaire pour votre projet de rénovation domiciliaire."
     },
     "beforeAfter": {
-      "title": "Avant et après : de vraies rénovations à Vancouver | Étoiles de Réno",
+      "title": "Avant et après : de vraies rénovations à Vancouver | Reno Stars",
       "description": "Superbes transformations avant et après rénovation de la région métropolitaine de Vancouver. De vrais projets, de vrais coûts, de vrais résultats. Cuisine, salle de bain et toute la maison."
     },
     "features": {
-      "title": "Pourquoi Reno Stars | 5 millions de dollars assurés, garantie de 3 ans, des avis cinq étoiles",
+      "title": "Assurance 5 M$, Garantie 3 Ans | Reno Stars",
       "description": "Ce qui différencie Reno Stars : assurance CGL de 5 millions de dollars, couverture WCB, garantie de fabrication de 3 ans, équipe bilingue, des avis Google cinq étoiles. Vancouver."
     },
     "nearMe": {
-      "title": "Rénovation domiciliaire à proximité | Métro de Vancouver | Étoiles de Réno",
+      "title": "Rénovation domiciliaire à proximité | Métro de Vancouver | Reno Stars",
       "description": "Entreprise de rénovation domiciliaire la mieux notée près de chez vous à Vancouver, Richmond, Burnaby, Surrey et 14 villes de la région métropolitaine de Vancouver. Avis Google 5 étoiles, plus de 20 ans, 5 millions de dollars assurés. Devis gratuits."
     },
     "localBusinessDescription": "Services professionnels de rénovation domiciliaire dans la région métropolitaine de Vancouver. Cuisine, salle de bain, rénovations de toute la maison. Agréé, assuré avec une assurance CGL jusqu'à 5 millions de dollars, une couverture WCB active et jusqu'à 3 ans de garantie.",
     "careers": {
       "title": "Carrières | Emplois en rénovation Région métropolitaine de Vancouver | Reno Stars",
-      "description": "Reno Stars embauche des ouvriers en rénovation dans la région métropolitaine de Vancouver – carrelage, cloisons sèches, peinture, revêtement de sol et finition. Le mandarin ou le cantonais est un atout important. Appelez le 778-960-7999 pour postuler."
+      "description": "Nous recrutons des ouvriers en rénovation à Vancouver — carrelage, cloisons sèches, peinture, revêtement de sol, finition. Mandarin ou cantonais, un atout."
+    },
+    "transparentPricing": {
+      "title": "Tarification transparente : nos devis | Reno Stars Vancouver",
+      "description": "Comment Reno Stars chiffre une rénovation : devis détaillé ligne par ligne, paiements liés aux étapes du chantier, consultation gratuite à domicile, validité 30 jours."
+    },
+    "awards": {
+      "title": "Prix et distinctions | Reno Stars Vancouver",
+      "description": "Prix, certifications et reconnaissances externes de Reno Stars, entrepreneur en rénovation du Grand Vancouver — organisme, année et source indiqués pour chaque entrée."
     }
   }
 }

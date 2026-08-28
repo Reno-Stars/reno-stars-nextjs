@@ -13,6 +13,7 @@ import { getBaseUrl, buildAlternates, SITE_NAME, truncateMetaDescription, pickLo
 import { images as siteImages } from '@/lib/data';
 import { getCompanyFromDb, getProjectsFromDb, getSiteBySlugFromDb, getServiceTypeToCategory, getCategoriesLocalized, getCategorySlugs, getServiceBlocksBySlug, getProjectReviews } from '@/lib/db/queries';
 import { getGoogleReviews } from '@/lib/google-reviews';
+import ClientMessages from '@/components/ClientMessages';
 
 interface PageProps {
   params: Promise<{ locale: string; slug: string }>;
@@ -201,7 +202,7 @@ export default async function Page({ params }: PageProps) {
     );
 
     return (
-      <>
+      <ClientMessages ns={['cta', 'lightbox', 'modal', 'projects', 'share', 'wholeHouse']}>
         <BreadcrumbSchema items={breadcrumbs} locale={locale} />
         <ProjectCategorySchema
           categoryName={categoryName}
@@ -229,7 +230,7 @@ export default async function Page({ params }: PageProps) {
           <ItemListSchema items={categoryBlockSchema.imageList.items} name={categoryBlockSchema.imageList.name} description={categoryBlockSchema.imageList.description} locale={categoryBlockSchema.imageList.locale} />
         )}
         <ProjectCategoryPage locale={locale as Locale} categorySlug={slug} company={company} projects={allProjects} categories={categories} categoryBlocks={categoryBlocks} />
-      </>
+      </ClientMessages>
     );
   }
 
@@ -271,7 +272,7 @@ export default async function Page({ params }: PageProps) {
       .map((p) => getLocalizedProject(p, locale as Locale));
 
     return (
-      <>
+      <ClientMessages ns={['cta', 'lightbox', 'modal', 'projects', 'share', 'wholeHouse']}>
         <BreadcrumbSchema items={breadcrumbs} locale={locale} />
         <ProjectSchema
           company={company}
@@ -322,7 +323,7 @@ export default async function Page({ params }: PageProps) {
             imageUrl: project.hero_image,
           }}
         />
-      </>
+      </ClientMessages>
     );
   }
 
@@ -346,7 +347,7 @@ export default async function Page({ params }: PageProps) {
     );
 
     return (
-      <>
+      <ClientMessages ns={['cta', 'lightbox', 'modal', 'projects', 'share', 'wholeHouse']}>
         <BreadcrumbSchema items={breadcrumbs} locale={locale} />
         <ProjectSchema
           company={company}
@@ -378,7 +379,7 @@ export default async function Page({ params }: PageProps) {
           <ItemListSchema items={siteBlockSchema.imageList.items} name={siteBlockSchema.imageList.name} description={siteBlockSchema.imageList.description} locale={siteBlockSchema.imageList.locale} />
         )}
         <SiteDetailPage site={localizedSite} company={company} />
-      </>
+      </ClientMessages>
     );
   }
 

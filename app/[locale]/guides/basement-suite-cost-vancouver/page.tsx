@@ -1,10 +1,11 @@
 import { Metadata } from 'next';
 import { getTranslations, setRequestLocale } from 'next-intl/server';
-import { ogLocaleMap, type Locale } from '@/i18n/config';
+import { ogLocaleMap, isIndexableLeafLocale, INDEXABLE_LEAF_LOCALES, type Locale } from '@/i18n/config';
 import BasementSuiteCostGuidePage from '@/components/pages/BasementSuiteCostGuidePage';
 import { ArticleSchema, BreadcrumbSchema, FAQSchema } from '@/components/structured-data';
 import { getBaseUrl, buildAlternates, buildOgImageUrl, SITE_NAME, buildAlternateLocales} from '@/lib/utils';
 import { getCompanyFromDb, getWholeHouseProjectsForGuide } from '@/lib/db/queries';
+import ClientMessages from '@/components/ClientMessages';
 
 interface PageProps {
   params: Promise<{ locale: string }>;
@@ -17,10 +18,13 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const baseUrl = getBaseUrl();
   const ogImage = buildOgImageUrl(t('title'), t('description'));
 
+  const isIndexableLocale = isIndexableLeafLocale(locale);
+
   return {
     title: t('title'),
     description: t('description'),
-    alternates: buildAlternates('/guides/basement-suite-cost-vancouver/', locale),
+    ...(isIndexableLocale ? {} : { robots: { index: false, follow: true } }),
+    alternates: buildAlternates('/guides/basement-suite-cost-vancouver/', locale, INDEXABLE_LEAF_LOCALES),
     openGraph: {
       title: t('title'),
       description: t('description'),
@@ -76,7 +80,7 @@ export default async function Page({ params }: PageProps) {
   const ogImage = buildOgImageUrl(mt('title'), mt('description'));
 
   return (
-    <>
+    <ClientMessages ns={['cta', 'guides.basementSuiteCost', 'share']}>
       <BreadcrumbSchema items={breadcrumbs} locale={locale} />
       <FAQSchema faqs={faqs} locale={locale} />
       <ArticleSchema
@@ -96,6 +100,6 @@ export default async function Page({ params }: PageProps) {
         phone={company.phone}
         share={{ url: shareUrl, title: mt('title'), imageUrl: ogImage }}
       />
-    </>
+    </ClientMessages>
   );
 }

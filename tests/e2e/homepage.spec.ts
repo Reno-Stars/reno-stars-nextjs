@@ -159,8 +159,13 @@ test.describe('Accessibility', () => {
     await page.goto('/');
 
     // Check for skip link (common accessibility pattern)
+    // #main-content is what app/[locale]/layout.tsx actually renders. Without
+    // it this selector matched nothing, fell through to the Tab branch, and
+    // demanded focus land inside <nav> — but the first focusable IS the skip
+    // link, which is not in the nav. So a correctly implemented skip link
+    // failed the skip-link test. Verified against production before changing.
     const skipLink = page.locator(
-      'a[href="#main"], a[href="#content"], .skip-link'
+      'a[href="#main-content"], a[href="#main"], a[href="#content"], .skip-link'
     );
     const skipLinkExists = (await skipLink.count()) > 0;
 

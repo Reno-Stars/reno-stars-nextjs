@@ -2,9 +2,11 @@ import { Metadata } from 'next';
 import { getTranslations, setRequestLocale } from 'next-intl/server';
 import { ogLocaleMap, type Locale } from '@/i18n/config';
 import BeforeAfterGalleryPage from '@/components/pages/BeforeAfterGalleryPage';
+import { slimProjectForGallery } from '@/lib/data/listing-payload';
 import { BreadcrumbSchema, FAQSchema } from '@/components/structured-data';
 import { getBaseUrl, buildAlternates, buildOgImageUrl, SITE_NAME, buildAlternateLocales} from '@/lib/utils';
 import { getProjectsFromDb, getCompanyFromDb } from '@/lib/db/queries';
+import ClientMessages from '@/components/ClientMessages';
 
 interface PageProps {
   params: Promise<{ locale: string }>;
@@ -79,15 +81,15 @@ export default async function Page({ params }: PageProps) {
   const shareImage = buildOgImageUrl(mt('title'), mt('description'));
 
   return (
-    <>
+    <ClientMessages ns={['beforeAfterPage', 'cta', 'share']}>
       <BreadcrumbSchema items={breadcrumbs} locale={locale} />
       <FAQSchema faqs={faqs} locale={locale} />
       <BeforeAfterGalleryPage
         locale={locale as Locale}
-        projects={projectsWithPairs}
+        projects={projectsWithPairs.map((p) => slimProjectForGallery(p, locale as Locale))}
         company={company}
         share={{ url: shareUrl, title: mt('title'), imageUrl: shareImage }}
       />
-    </>
+    </ClientMessages>
   );
 }

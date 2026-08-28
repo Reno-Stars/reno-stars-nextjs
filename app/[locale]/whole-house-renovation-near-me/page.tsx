@@ -7,6 +7,7 @@ import { getBaseUrl, buildAlternates, SITE_NAME } from '@/lib/utils';
 import { getServiceAreasFromDb, getCompanyFromDb, getProjectsListFromDb } from '@/lib/db/queries';
 import { getGoogleReviews } from '@/lib/google-reviews';
 import { selectNearbyProjects } from '@/lib/near-me-projects';
+import ClientMessages from '@/components/ClientMessages';
 
 interface PageProps { params: Promise<{ locale: string }>; }
 
@@ -81,7 +82,7 @@ export default async function Page({ params }: PageProps) {
   // must point at the page we tell search engines is the real one.
   const shareUrl = buildAlternates(CANONICAL_PATH, locale).canonical;
   return (
-    <>
+    <ClientMessages ns={['nearMe', 'share']}>
       <BreadcrumbSchema items={breadcrumbs} locale={locale} />
       <FAQSchema faqs={faqs} locale={locale} />
       <ServiceSchema
@@ -109,6 +110,6 @@ export default async function Page({ params }: PageProps) {
         share={{ url: shareUrl, title: getPageTitle(locale) }}
         shareItemId="whole-house-renovation-near-me"
       />
-    </>
+    </ClientMessages>
   );
 }
