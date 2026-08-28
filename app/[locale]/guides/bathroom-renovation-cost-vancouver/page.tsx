@@ -1,10 +1,11 @@
 import { Metadata } from 'next';
 import { getTranslations, setRequestLocale } from 'next-intl/server';
-import { ogLocaleMap, type Locale } from '@/i18n/config';
+import { ogLocaleMap, isIndexableLeafLocale, INDEXABLE_LEAF_LOCALES, type Locale } from '@/i18n/config';
 import BathroomCostGuidePage from '@/components/pages/BathroomCostGuidePage';
 import { ArticleSchema, BreadcrumbSchema, FAQSchema, HowToSchema } from '@/components/structured-data';
 import { getBaseUrl, buildAlternates, buildOgImageUrl, SITE_NAME, buildAlternateLocales} from '@/lib/utils';
 import { getBathroomProjectsForGuide, getCompanyFromDb } from '@/lib/db/queries';
+import ClientMessages from '@/components/ClientMessages';
 
 interface PageProps {
   params: Promise<{ locale: string }>;
@@ -17,10 +18,13 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const baseUrl = getBaseUrl();
   const ogImage = buildOgImageUrl(t('title'), t('description'));
 
+  const isIndexableLocale = isIndexableLeafLocale(locale);
+
   return {
     title: t('title'),
     description: t('description'),
-    alternates: buildAlternates('/guides/bathroom-renovation-cost-vancouver/', locale),
+    ...(isIndexableLocale ? {} : { robots: { index: false, follow: true } }),
+    alternates: buildAlternates('/guides/bathroom-renovation-cost-vancouver/', locale, INDEXABLE_LEAF_LOCALES),
     openGraph: {
       title: t('title'),
       description: t('description'),
@@ -120,7 +124,7 @@ export default async function Page({ params }: PageProps) {
   ];
 
   return (
-    <>
+    <ClientMessages ns={['cta', 'guides.bathroomCost', 'guides.relatedGuides', 'share']}>
       <BreadcrumbSchema items={breadcrumbs} locale={locale} />
       <FAQSchema faqs={faqs} locale={locale} />
       <ArticleSchema
@@ -150,6 +154,6 @@ export default async function Page({ params }: PageProps) {
         phone={company.phone}
         share={{ url: shareUrl, title: mt('title'), imageUrl: ogImage }}
       />
-    </>
+    </ClientMessages>
   );
 }

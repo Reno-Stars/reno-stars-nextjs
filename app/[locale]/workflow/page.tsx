@@ -6,6 +6,7 @@ import { BreadcrumbSchema, FAQSchema, HowToSchema } from '@/components/structure
 import { getBaseUrl, buildAlternates, buildOgImageUrl, SITE_NAME, buildAlternateLocales} from '@/lib/utils';
 import { getCompanyFromDb } from '@/lib/db/queries';
 import { getGoogleReviews } from '@/lib/google-reviews';
+import ClientMessages from '@/components/ClientMessages';
 
 interface PageProps {
   params: Promise<{ locale: string }>;
@@ -76,7 +77,7 @@ export default async function Page({ params }: PageProps) {
   ];
 
   return (
-    <>
+    <ClientMessages ns={['process']}>
       <BreadcrumbSchema items={breadcrumbs} locale={locale} />
       <FAQSchema faqs={faqs} locale={locale} />
       <HowToSchema
@@ -89,6 +90,6 @@ export default async function Page({ params }: PageProps) {
         locale={locale}
       />
       <ProcessPage company={company} locale={locale as Locale} googleRating={googleReviews.rating} />
-    </>
+    </ClientMessages>
   );
 }

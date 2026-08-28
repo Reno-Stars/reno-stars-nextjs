@@ -6,6 +6,7 @@ import { BreadcrumbSchema, FAQSchema, ServiceSchema } from '@/components/structu
 import { getBaseUrl, buildAlternates, buildOgImageUrl, SITE_NAME, buildAlternateLocales} from '@/lib/utils';
 import { getServiceAreasFromDb, getCompanyFromDb } from '@/lib/db/queries';
 import { getGoogleReviews } from '@/lib/google-reviews';
+import ClientMessages from '@/components/ClientMessages';
 
 interface PageProps {
   params: Promise<{ locale: string }>;
@@ -99,7 +100,7 @@ export default async function Page({ params }: PageProps) {
   const shareUrl = buildAlternates(CANONICAL_PATH, locale).canonical;
 
   return (
-    <>
+    <ClientMessages ns={['nearMe', 'share']}>
       <BreadcrumbSchema items={breadcrumbs} locale={locale} />
       <FAQSchema faqs={faqs} locale={locale} />
       <ServiceSchema
@@ -121,6 +122,6 @@ export default async function Page({ params }: PageProps) {
         share={{ url: shareUrl, title: meta.title, imageUrl: meta.ogImage }}
         shareItemId="renovation-near-me"
       />
-    </>
+    </ClientMessages>
   );
 }

@@ -1,0 +1,46 @@
+{
+  "awards": {
+    "breadcrumb": "Prix et distinctions",
+    "hero": {
+      "badge": "Reconnaissance",
+      "title": "Prix et distinctions",
+      "subtitle": "C'est ici que nous publions tout prix, certification ou distinction professionnelle obtenu par Reno Stars — avec l'organisme émetteur, l'année et un lien vers l'annonce, afin que vous puissiez le vérifier vous-même."
+    },
+    "empty": {
+      "title": "Rien à afficher pour l'instant",
+      "body": "Nous n'avons publié aucun prix sur cette page. Nous préférons la laisser vide plutôt que de la remplir de badges invérifiables. Dès qu'il y aura quelque chose de réel à ajouter, cela paraîtra ici avec l'organisme qui l'a décerné et l'année."
+    },
+    "criteria": {
+      "title": "Ce qui figurera sur cette page",
+      "issuer": "L'organisme émetteur, nommé exactement comme il se nomme lui-même.",
+      "year": "L'année d'attribution — pas de badge permanent sans date.",
+      "link": "Un lien vers l'annonce ou la liste des finalistes, lorsque l'organisme en publie une."
+    },
+    "verified": {
+      "title": "Ce que vous pouvez vérifier dès aujourd'hui",
+      "subtitle": "Un prix est la décision de quelqu'un d'autre. Voici ce que vous pouvez vérifier sur Reno Stars dès maintenant.",
+      "liability": "Assurance RCG de {amount}",
+      "liabilityNote": "Couverture de responsabilité civile générale.",
+      "wcbNote": "Couverture WorkSafeBC pour l'équipe présente sur votre chantier.",
+      "warranty": "Garantie jusqu'à {years} ans",
+      "warrantyNote": "Garantie de main-d'œuvre, précisée dans votre contrat.",
+      "yearsNote": "Années d'expérience en rénovation au sein de l'équipe.",
+      "projectsNote": "Réalisés dans le Grand Vancouver."
+    },
+    "reviews": {
+      "title": "La reconnaissance extérieure que nous avons vraiment",
+      "rating": "{rating} sur 5 sur Google, à partir de {count} avis",
+      "body": "Les avis sont rédigés par les clients et publiés par Google, pas par nous. C'est la seule forme de reconnaissance de ce site qui ne repose pas sur notre parole.",
+      "link": "Lire les avis"
+    },
+    "list": {
+      "title": "Les archives",
+      "issuedBy": "Décerné par",
+      "announcement": "Voir l'annonce"
+    },
+    "cta": {
+      "heading": "Jugez-nous plutôt sur le travail",
+      "subtitle": "Parcourez nos projets réalisés dans le Grand Vancouver, ou réservez une consultation gratuite à domicile et voyez comment nous établissons un devis."
+    }
+  }
+}

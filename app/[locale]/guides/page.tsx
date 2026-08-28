@@ -1,9 +1,10 @@
 import { Metadata } from 'next';
 import { getTranslations, setRequestLocale } from 'next-intl/server';
-import { ogLocaleMap, type Locale } from '@/i18n/config';
+import { ogLocaleMap, isIndexableLeafLocale, INDEXABLE_LEAF_LOCALES, type Locale } from '@/i18n/config';
 import GuidesIndexPage from '@/components/pages/GuidesIndexPage';
 import { BreadcrumbSchema, FAQSchema, ItemListSchema } from '@/components/structured-data';
 import { getBaseUrl, buildAlternates, buildOgImageUrl, SITE_NAME, buildAlternateLocales} from '@/lib/utils';
+import ClientMessages from '@/components/ClientMessages';
 
 interface PageProps {
   params: Promise<{ locale: string }>;
@@ -16,10 +17,13 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const baseUrl = getBaseUrl();
   const ogImage = buildOgImageUrl(t('title'), t('description'));
 
+  const isIndexableLocale = isIndexableLeafLocale(locale);
+
   return {
     title: t('title'),
     description: t('description'),
-    alternates: buildAlternates('/guides/', locale),
+    ...(isIndexableLocale ? {} : { robots: { index: false, follow: true } }),
+    alternates: buildAlternates('/guides/', locale, INDEXABLE_LEAF_LOCALES),
     openGraph: {
       title: t('title'),
       description: t('description'),
@@ -78,7 +82,7 @@ export default async function Page({ params }: PageProps) {
   }));
 
   return (
-    <>
+    <ClientMessages ns={['cta', 'guides.index']}>
       <BreadcrumbSchema items={breadcrumbs} locale={locale} />
       <ItemListSchema
         items={itemListItems}
@@ -87,6 +91,6 @@ export default async function Page({ params }: PageProps) {
       />
       <FAQSchema faqs={faqs} locale={locale} />
       <GuidesIndexPage locale={locale as Locale} />
-    </>
+    </ClientMessages>
   );
 }

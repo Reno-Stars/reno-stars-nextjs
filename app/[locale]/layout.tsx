@@ -2,6 +2,8 @@ import { NextIntlClientProvider } from 'next-intl';
 import { getMessages, getTranslations, setRequestLocale } from 'next-intl/server';
 import { notFound } from 'next/navigation';
 import { locales, type Locale, isRtl } from '@/i18n/config';
+import { SHELL_NAMESPACES } from '@/i18n/clientNamespaces';
+import { pickMessages } from '@/i18n/pickMessages';
 import { LocalBusinessSchema, WebSiteSchema } from '@/components/structured-data';
 import GoogleAnalytics from '@/components/GoogleAnalytics';
 import MicrosoftClarity from '@/components/MicrosoftClarity';
@@ -41,21 +43,6 @@ interface LocaleLayoutProps {
   params: Promise<{ locale: string }>;
 }
 
-
-// Namespaces referenced only by server components / generateMetadata. Keep in
-// sync with the 'use client' useTranslations scan (see B5, 2026-07-09).
-const SERVER_ONLY_NAMESPACES = [
-  'metadata', 'about', 'careers', 'designFaqs', 'gallery', 'hero',
-  'homeFaq', 'homePartners', 'lang', 'projectsFaqs', 'showroomPage',
-] as const;
-
-function stripServerOnly(messages: Record<string, unknown>): Record<string, unknown> {
-  const out: Record<string, unknown> = {};
-  for (const k of Object.keys(messages)) {
-    if (!(SERVER_ONLY_NAMESPACES as readonly string[]).includes(k)) out[k] = messages[k];
-  }
-  return out;
-}
 
 export default async function LocaleLayout({
   children,
@@ -163,7 +150,10 @@ export default async function LocaleLayout({
             'use client' file), so shipping them into every page's RSC stream
             and hydrating them client-side is pure waste. Verified against a
             scan of all 'use client' useTranslations() call sites. */}
-        <NextIntlClientProvider messages={stripServerOnly(messages as Record<string, unknown>)}>
+        {/* Only SHELL_NAMESPACES ship on every page. Everything else is
+            scoped to the route that renders it, via <ClientMessages>. See
+            i18n/clientNamespaces.ts. */}
+        <NextIntlClientProvider messages={pickMessages(messages as Record<string, unknown>, SHELL_NAMESPACES)}>
 
           <WebSiteSchema locale={locale} />
           <LocalBusinessSchema

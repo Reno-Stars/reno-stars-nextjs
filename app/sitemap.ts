@@ -1,7 +1,8 @@
 import type { MetadataRoute } from 'next';
-import { locales, INDEXABLE_LEAF_LOCALES } from '@/i18n/config';
+import { locales, INDEXABLE_LEAF_LOCALES, INDEXABLE_SERVICE_CITY_LOCALES } from '@/i18n/config';
 import { getBaseUrl, LOCALE_TO_DB_SUFFIX } from '@/lib/utils';
 import { resolveBlogDates } from '@/lib/blog-dates';
+import { HAS_AWARDS } from '@/lib/awards';
 import { getProjectSlugsFromDb, getSiteSlugsFromDb, getBlogPostSlugsFromDb, getServiceAreasFromDb, getCategorySlugs, getServicesFromDb, getVideoWatchEntriesFromDb } from '@/lib/db/queries';
 
 // Render per-request so a freshly published blog/project/area appears in the
@@ -141,6 +142,14 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { path: '/guides/cabinet-refinishing-cost-vancouver',      priority: PRIORITY.guide,     changeFrequency: CHANGEFREQ.monthly },
     { path: '/guides/basement-suite-cost-vancouver',           priority: PRIORITY.guide,     changeFrequency: CHANGEFREQ.monthly },
     { path: '/financing',                                      priority: PRIORITY.secondary, changeFrequency: CHANGEFREQ.yearly },
+    { path: '/transparent-pricing',                            priority: PRIORITY.secondary, changeFrequency: CHANGEFREQ.yearly },
+    // /awards/ ships as an EMPTY archive and is `robots: noindex` until it has
+    // a real entry (lib/awards.ts). Submitting a noindex URL in a sitemap is a
+    // contradiction Search Console reports as an error, so it stays out until
+    // HAS_AWARDS flips — then it appears here for all 14 locales automatically.
+    ...(HAS_AWARDS
+      ? [{ path: '/awards', priority: PRIORITY.secondary, changeFrequency: CHANGEFREQ.yearly }]
+      : []),
     { path: '/careers',                                        priority: PRIORITY.secondary, changeFrequency: CHANGEFREQ.monthly },
     // High-intent "near me" landing pages — full metadata + Service/FAQ schema,
     // indexable, but were absent from the sitemap (crawlers found them via
@@ -191,19 +200,30 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     }
   }
 
-  // Drop minor-locale × service × city — duplicate-by-content per GSC
-  // 2026-05-07 audit; only EN+ZH have organic traffic on these long-tail
-  // combos. Other 12 locales were emitting ~3,400 thin templated pages
-  // (514 stuck in "Crawled - currently not indexed") that diluted crawl
-  // budget away from EN/ZH winners.
-  const SERVICE_CITY_LOCALES = ['en', 'zh'] as const;
+  // Which locales get a service×city page is now a CONFIG fact, read from the
+  // same `indexableServiceCity` column that drives the route's robots tag and
+  // hreflang set (app/[locale]/services/[service-slug]/[city]/page.tsx).
+  //
+  // This list used to be hardcoded `['en', 'zh']` here while the page derived
+  // its noindex from `indexableLeaf`. When indexableLeaf was opened to all 14
+  // on 2026-08-07 the page stopped noindexing 1,694 URLs that this loop has
+  // never submitted — indexable, self-canonical, advertised by hreflang from
+  // every sibling, and absent from the sitemap. Reading one list in both places
+  // is what makes that class of drift impossible rather than merely unlikely.
+  //
+  // zh-Hant is IN as of 2026-08-26: 15 clicks / 237 impressions in the 17 days
+  // after the flip, more clicks than en on this route. See i18n/config.ts.
+  const SERVICE_CITY_LOCALES = INDEXABLE_SERVICE_CITY_LOCALES;
   for (const slug of serviceSlugs) {
     for (const area of serviceAreas) {
       for (const locale of SERVICE_CITY_LOCALES) {
         entries.push({
           url: `${BASE_URL}/${locale}/services/${slug}/${area.slug}/`,
           lastModified: areaLastModMap.get(area.slug) ?? staticLastModified,
-          alternates: buildAlternates(`/services/${slug}/${area.slug}`),
+          // Restricted to the indexable set — the default is all 14, which
+          // would advertise eleven URLs this loop deliberately does not submit
+          // and the page now marks noindex.
+          alternates: buildAlternates(`/services/${slug}/${area.slug}`, SERVICE_CITY_LOCALES),
           priority: PRIORITY.serviceArea,
           changeFrequency: CHANGEFREQ.monthly,
         });

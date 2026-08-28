@@ -7,6 +7,7 @@ import { localeSelfName, nativeSupportLanguageList } from '@/lib/i18n/language-n
 import { getBaseUrl, buildAlternates, buildOgImageUrl, SITE_NAME, pickLocale, buildAlternateLocales} from '@/lib/utils';
 import { getCompanyFromDb, getServiceAreasFromDb, getPropertyTypesFromDb } from '@/lib/db/queries';
 import { getGoogleReviews } from '@/lib/google-reviews';
+import ClientMessages from '@/components/ClientMessages';
 
 interface PageProps {
   params: Promise<{ locale: string }>;
@@ -91,7 +92,7 @@ export default async function Page({ params }: PageProps) {
   ];
 
   return (
-    <>
+    <ClientMessages ns={['contact', 'cta', 'form', 'locationBenefits', 'modal', 'serviceBenefits']}>
       <BreadcrumbSchema items={breadcrumbs} locale={locale} />
       <ContactPageSchema company={company} areaNames={areaNames} locale={locale} />
       <FAQSchema faqs={contactFaqs} locale={locale} />
@@ -103,6 +104,6 @@ export default async function Page({ params }: PageProps) {
         googleRating={googleReviews.rating}
         languageSupport={languageSupport}
       />
-    </>
+    </ClientMessages>
   );
 }
