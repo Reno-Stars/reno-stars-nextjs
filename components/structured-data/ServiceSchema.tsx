@@ -41,6 +41,8 @@ export default function ServiceSchema({
   const baseUrl = getBaseUrl();
   const absoluteUrl = `${baseUrl}${url}`;
   const addressParts = parseAddress(company.address);
+  const hasFullAddress = addressParts.streetAddress && addressParts.locality
+    && addressParts.region && addressParts.postalCode;
 
   const schema: Record<string, unknown> = {
     '@context': 'https://schema.org',
@@ -54,17 +56,19 @@ export default function ServiceSchema({
       name: company.name,
       url: baseUrl,
       telephone: e164(company.phone),
-      // Split address into proper PostalAddress sub-fields per Schema.org spec.
-      // Previously the full company.address string was crammed into streetAddress,
-      // which breaks structured-address parsing. Now each part lives in its own field.
-      address: {
-        '@type': 'PostalAddress',
-        streetAddress: addressParts.streetAddress,
-        addressLocality: addressParts.locality,
-        addressRegion: addressParts.region,
-        postalCode: addressParts.postalCode,
-        addressCountry: 'CA',
-      },
+      // Only emit address when all four PostalAddress sub-fields are present.
+      // A fabricated postalCode in a rated Service node suppresses stars in SERP —
+      // the same class of defect already fixed in ProjectSchema. Keep them in sync.
+      ...(hasFullAddress && {
+        address: {
+          '@type': 'PostalAddress',
+          streetAddress: addressParts.streetAddress,
+          addressLocality: addressParts.locality,
+          addressRegion: addressParts.region,
+          postalCode: addressParts.postalCode,
+          addressCountry: 'CA',
+        },
+      }),
     },
     url: absoluteUrl,
   };
