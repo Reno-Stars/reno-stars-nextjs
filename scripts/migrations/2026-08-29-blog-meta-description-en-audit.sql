@@ -1,0 +1,33 @@
+-- Migration: blog_posts — meta_description_en audit
+-- Date: 2026-08-29
+-- Status: NOT APPLIED — needs human to run after PR merge
+-- Column: blog_posts.meta_description_en
+--
+-- VERIFY CURRENT STATE (run against live DB — returns 0 or more rows):
+--   SELECT id, slug, meta_description_en
+--   FROM blog_posts
+--   WHERE (meta_description_en IS NULL OR meta_description_en = '')
+--     AND is_published
+--   ORDER BY updated_at DESC;
+--
+-- AFFECTED ROWS (2026-08-29 live DB query):
+--   id                                  | slug
+--   ------------------------------------+------------------------------------------
+--   dd064abc-db01-4588-a7a7-9738872b2ea7 | outdoor-test-half1
+--   247e6fde-08dc-4285-b5c7-bbe236069047 | outdoor-test-mtonly
+--   28386e2c-c726-41ce-95ac-e033e16d8027 | outdoor-test-fk
+--   3c0f7540-7dd4-4404-a7c5-1bd8ec3b0966 | outdoor-test-fkzh
+--   48656047-631c-4d86-afc9-722f3dfdda88 | outdoor-test-amp
+--   6b86f73f-a05d-40a3-a456-5c7d73bf87bb | outdoor-test-mt1
+--   5509a194-8509-4e6d-a201-ae271ab53bde | outdoor-test-mt2
+--   6cdfba34-5fe1-4cc2-8292-b4c2ed0007e8 | outdoor-test-mt3
+--   92ef3796-7d41-4d6c-bb09-520340f6d3b3 | outdoor-test-mt4
+--   081258dc-0351-4d9d-a3a0-e2cd2a424dd2 | outdoor-test-longexcerpt
+--
+-- These all appear to be test/draft rows based on slug naming pattern.
+-- A production meta_description_en cannot be generated without reading the
+-- actual post content to summarize it. Human author review required for each.
+--
+-- This file is a documentation artifact only. No UPDATE is encoded.
+-- To populate: open each slug, read the content, write a 155-160 char description,
+-- then apply UPDATE blog_posts SET meta_description_en = '...' WHERE id = '...';
