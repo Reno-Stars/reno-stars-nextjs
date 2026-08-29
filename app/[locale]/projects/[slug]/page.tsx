@@ -364,9 +364,9 @@ export default async function Page({ params }: PageProps) {
         />
         <ServiceSchema
           company={company}
-          serviceName={serviceTypeName || 'Vancouver Whole House Renovation'}
-          serviceDescription={localizedProject.description || ''}
-          areaServed={project.location_city ? [project.location_city] : undefined}
+          serviceName="Whole House Renovation"
+          serviceDescription={localizedSite.description || ''}
+          areaServed={['Vancouver Metro']}
           url={`/${locale}/projects/${slug}/`}
         />
         {siteBlockSchema.faqs.map((faq, i) => (
