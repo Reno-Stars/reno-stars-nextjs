@@ -43,7 +43,7 @@ export default function LocalBusinessAreaSchema({
     address: {
       '@type': 'PostalAddress',
       streetAddress: addressParts.streetAddress,
-      addressLocality: addressParts.locality,
+      addressLocality: areaName,
       addressRegion: addressParts.region,
       postalCode: addressParts.postalCode,
       addressCountry: 'CA',
