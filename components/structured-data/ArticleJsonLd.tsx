@@ -56,9 +56,10 @@ export default function ArticleJsonLd({
     ...(datePublished && { datePublished }),
     ...(dateModified && { dateModified }),
     author: {
-      '@type': 'Organization',
-      name: resolvedAuthorName,
-      url: baseUrl,
+      '@type': authorName ? 'Person' : 'Organization',
+      ...(authorName
+        ? { name: authorName }
+        : { name: resolvedAuthorName, url: baseUrl }),
     },
     publisher: {
       '@type': 'Organization',
