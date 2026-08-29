@@ -1,11 +1,14 @@
--- Migration: blog_posts — add excerpt_zh for White Rock pre-sale post
+-- Migration: 2026-08-29 blog excerpt_zh — pre-sale-renovation-white-rock-bc-2026
 -- Date: 2026-08-29
--- Status: NOT APPLIED — needs human to run
--- Target: blog_posts row with slug = 'pre-sale-renovation-white-rock-bc-2026'
--- Reason: excerpt_zh IS NULL (1 row found this tick); excerpt_en exists and is genuine English prose
--- Translation: genuine zh-Hant, not English text
+-- Status: NOT APPLIED — human action required
+-- Topic: Add missing excerpt_zh for one published blog post
+-- IDs covered: 34e43ef8-6fde-4ef9-ac66-3f46f99b9df6
+--
+-- This post has full title_zh and content_zh (3,600+ char) but excerpt_zh is NULL.
+-- Source query: SELECT id, slug FROM blog_posts WHERE excerpt_zh IS NULL;
+-- Row count: 1
 
 UPDATE blog_posts
-SET excerpt_zh = '白沙羅Presale裝修回報指南：針對Semiahmoo及Ocean Park賣家的頂級工程項目。廚房、浴室及海岸路緣升級工程，在白沙羅海濱市場的銷售中回報率高達150至300%。'
-WHERE slug = 'pre-sale-renovation-white-rock-bc-2026'
+SET excerpt_zh = '怀特罗克预售翻新2026：Morgan Creek、南素里独立屋及海滨公寓装修ROI分析。厨房浴室翻新回报160-225%，附海滩防潮材料选择与许可证攻略。'
+WHERE id = '34e43ef8-6fde-4ef9-ac66-3f46f99b9df6'
   AND excerpt_zh IS NULL;
