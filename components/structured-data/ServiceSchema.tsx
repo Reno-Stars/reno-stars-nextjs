@@ -118,25 +118,29 @@ export default function ServiceSchema({
   }
 
   if (priceRange) {
-    schema.hasOfferCatalog = {
-      '@type': 'OfferCatalog',
-      name: `${serviceName} Services`,
-      itemListElement: [
-        {
-          '@type': 'Offer',
-          itemOffered: {
-            '@type': 'Service',
-            name: location ? `${serviceName} in ${location}` : serviceName,
+    const min = Number(priceRange.min);
+    const max = Number(priceRange.max);
+    if (!isNaN(min) && !isNaN(max) && max >= min) {
+      schema.hasOfferCatalog = {
+        '@type': 'OfferCatalog',
+        name: `${serviceName} Services`,
+        itemListElement: [
+          {
+            '@type': 'Offer',
+            itemOffered: {
+              '@type': 'Service',
+              name: location ? `${serviceName} in ${location}` : serviceName,
+            },
+            priceSpecification: {
+              '@type': 'PriceSpecification',
+              priceCurrency: 'CAD',
+              minPrice: min,
+              maxPrice: max,
+            },
           },
-          priceSpecification: {
-            '@type': 'PriceSpecification',
-            priceCurrency: 'CAD',
-            minPrice: priceRange.min,
-            maxPrice: priceRange.max,
-          },
-        },
-      ],
-    };
+        ],
+      };
+    }
   }
 
   return (
