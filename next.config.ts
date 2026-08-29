@@ -658,7 +658,14 @@ const nextConfig: NextConfig = {
       { source: '/:locale(en|zh)/commercial-renovation', destination: '/:locale/services/commercial/', permanent: true },
       { source: '/:locale(en|zh)/cabinet-refacing', destination: '/:locale/services/cabinet/', permanent: true },
       { source: '/:locale(en|zh)/basement-renovation', destination: '/:locale/services/basement/', permanent: true },
-      // 9d. Old WP about-us page → about page (now a real route)
+      // 9d. Plural service URL slug (e.g. /en/services/kitchen-renovations/) → canonical DB slug (e.g. /en/services/kitchen/)
+      { source: '/:locale/services/kitchen-renovations', destination: '/:locale/services/kitchen/', permanent: true },
+      { source: '/:locale/services/bathroom-renovations', destination: '/:locale/services/bathroom/', permanent: true },
+      { source: '/:locale/services/basement-renovations', destination: '/:locale/services/basement/', permanent: true },
+      { source: '/:locale/services/whole-house-renovations', destination: '/:locale/services/whole-house/', permanent: true },
+      { source: '/:locale/services/commercial-renovations', destination: '/:locale/services/commercial/', permanent: true },
+      { source: '/:locale/services/cabinet-refacing', destination: '/:locale/services/cabinet/', permanent: true },
+      // 9e. Old WP about-us page → about page (now a real route)
       { source: '/:locale(en|zh)/about-us', destination: '/:locale/about/', permanent: true },
 
       // ================================================================
