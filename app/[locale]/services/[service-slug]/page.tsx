@@ -42,6 +42,22 @@ const SERVICE_PRICE_RANGES: Record<string, { min: number; max: number } | undefi
   painting: { min: 5000, max: 20000 },         // bumped from $3K
 };
 
+/**
+ * Service-specific OG / hero images.
+ *
+ * Used when services.image_url is NULL (e.g. heat-pump-hvac was added without
+ * a hero photo). Without an override the page falls back to siteImages.hero
+ * which is the kitchen renovation hero — wrong service context on the share card.
+ *
+ * Values are real R2 URLs confirmed present in the DB.  Keyed by service slug.
+ */
+const SERVICE_OG_IMAGES: Record<string, string> = {
+  // Dental clinic reception — clean professional interior; better context than
+  // kitchen hero for the heat pump HVAC service page share card.
+  'heat-pump-hvac':
+    'https://pub-b88db8c50fd64a9a87f60a4486a4a488.r2.dev/uploads/admin/dental-clinic-renovation-burnaby-hero-reception-mmwy4847.jpg',
+};
+
 
 // FULLY DYNAMIC — every request runs the Lambda fresh, bypassing the
 // Next 16 prerender-shell regression that was returning URL-encoded
@@ -256,7 +272,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     || (locale === 'ja' && jaServiceMetaDescriptions[serviceSlug])
     || truncateMetaDescription(localizedService.long_description || localizedService.description);
 
-  const ogImage = service.image || siteImages.hero;
+  const ogImage = service.image || SERVICE_OG_IMAGES[serviceSlug] || siteImages.hero;
 
   const title = buildServiceTitle(localizedService.title, locale as Locale);
 
@@ -339,7 +355,7 @@ export default async function Page({ params }: PageProps) {
     { question: safeFaq(`${serviceSlug}.q3`), answer: safeFaq(`${serviceSlug}.a3`) },
   ].filter((f) => f.question && f.answer);
 
-  const serviceHeroImage = service.image || siteImages.hero;
+  const serviceHeroImage = service.image || SERVICE_OG_IMAGES[serviceSlug] || siteImages.hero;
 
   // Share URL is DERIVED from the canonical (same path string generateMetadata
   // passes to buildAlternates above) rather than rebuilt, so the two cannot
@@ -398,7 +414,7 @@ export default async function Page({ params }: PageProps) {
         url={`/${locale}/services/${serviceSlug}/`}
         areaServed={areas.map((a) => a.name.en)}
         priceRange={SERVICE_PRICE_RANGES[serviceSlug]}
-        image={service.image || siteImages.hero}
+        image={service.image || SERVICE_OG_IMAGES[serviceSlug] || siteImages.hero}
         googleRating={googleReviews.rating}
         googleReviewCount={googleReviews.userRatingCount}
         serviceRadiusKm={50}
