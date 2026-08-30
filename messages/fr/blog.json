@@ -17,6 +17,10 @@
     "showingPosts": "Affichage des messages {start}-{end} sur {total}",
     "relatedServices": "Services connexes",
     "relatedAreas": "Rénovation dans votre région",
-    "faqSubtitle": "Questions courantes sur notre blog et nos guides de rénovation"
+    "faqSubtitle": "Questions courantes sur notre blog et nos guides de rénovation",
+    "faqQ1": "Quels services de rénovation Reno Stars offre-t-il ?",
+    "faqA1": "Reno Stars offre des rénovations de cuisines, salles de bains, sous-sols, maisons entières et commerciales. Les services comprennent le refinissage de cabinets, le remplacement de canalisations Poly-B, l'installation de thermopompes et les rénovations de salles de bains accessibles.",
+    "faqQ2": "Combien coûte une rénovation à Metro Vancouver ?",
+    "faqA2": "Les rénovations de cuisines à Vancouver coûtent généralement de 30 000 $ à 80 000 $+. Les rénovations de salles de bains coûtent de 20 000 $ à 60 000 $+. Les rénovations de sous-sols pour suites autonomes commencent autour de 50 000 $."
   }
 }
