@@ -19,7 +19,7 @@ WHERE id = 'aa1a98a5-46c5-4351-817a-ca82e370dd0c'
 
 -- ID 16c45fa7 (also covered for before_alt_text_zh in batch 2)
 UPDATE project_image_pairs
-SET after_alt_text_zh = "双洗手池法式风格浴室柜，配拱形天花板和香槟金色水龙头"
+SET after_alt_text_zh = '双洗手池法式风格浴室柜，配拱形天花板和香槟金色水龙头'
 WHERE id = '16c45fa7-8bb7-4ea2-99f5-bbe1b1e24092'
   AND after_alt_text_zh IS NULL
   AND after_alt_text_zh !~ '[一-鿿]';
