@@ -1,0 +1,12 @@
+-- Migration: backfill project_sites.duration_zh
+-- NOT APPLIED — needs human review and execution
+-- Target: richmond-whole-house-renovation-three-bathrooms
+--   id: 0e6748db-5c75-4c6b-91e3-179b84ebe030
+--   Both duration_en AND duration_zh are NULL; other rows use patterns like:
+--     "8–12 weeks" / "8至12周", "3–4 months" / "3至4个月"
+-- Recommended: verify against actual contract/scope docs, then populate.
+-- WHERE guard ensures idempotency.
+-- UPDATE project_sites
+-- SET duration_en = 'TBD', duration_zh = '待定'
+-- WHERE id = '0e6748db-5c75-4c6b-91e3-179b84ebe030'
+--   AND (duration_en IS NULL OR duration_en = '');
