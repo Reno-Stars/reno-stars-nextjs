@@ -1,23 +1,25 @@
 -- 2026-08-30-project-image-pairs-after-alt-zh-batch2.sql
 -- Migrate remaining English-only after_alt_text_zh entries in project_image_pairs
 -- NOT APPLIED — needs human to run
--- Idempotent: WHERE ...AND after_alt_text_zh !~ '[一-鿿]' guard prevents double-update
+-- Idempotent: WHERE Chinese-character check before UPDATE
+
+-- ID 3fd23985 (also covered for before_alt_text_zh in batch 1)
 UPDATE project_image_pairs
-SET after_alt_text_zh = CASE id
-  WHEN '48240e67-d904-426e-8846-2be0a5fbdd3f'
-    THEN '带香槟金色五金件的步入式淋浴间，配嵌入式大理石坐凳'
-  WHEN 'e7a449ad-659f-49e3-9050-0183c0c9fdeb'
-    THEN '带背光香槟金色修饰壁龛的大理石淋浴墙'
-  WHEN '9e6b9b49-0ac3-4bbe-baa6-bea86452be29'
-    THEN '温哥华西温豪华浴室中，铜质壁灯环绕拱形镜双台盆'
-  WHEN '1402cbba-2415-4435-b6ab-26aaba02830a'
-    THEN '香槟金色拱形穿衣镜配复古黄铜壁灯'
-END
-WHERE id IN (
-  '48240e67-d904-426e-8846-2be0a5fbdd3f',
-  'e7a449ad-659f-49e3-9050-0183c0c9fdeb',
-  '9e6b9b49-0ac3-4bbe-baa6-bea86452be29',
-  '1402cbba-2415-4435-b6ab-26aaba02830a'
-)
-AND after_alt_text_zh IS NOT NULL
-AND after_alt_text_zh !~ '[一-鿿]';
+SET after_alt_text_zh = '大理石浴缸上方配精致金色边框墙镜，配百叶窗'
+WHERE id = '3fd23985-91a5-47bd-bf52-b08fd93791d9'
+  AND after_alt_text_zh IS NULL
+  AND after_alt_text_zh !~ '[一-鿿]';
+
+-- ID aa1a98a5 (also covered for before_alt_text_zh in batch 1)
+UPDATE project_image_pairs
+SET after_alt_text_zh = '无框玻璃步入式淋浴间，配香槟金色雨淋花洒和编篮纹大理石马赛克地砖'
+WHERE id = 'aa1a98a5-46c5-4351-817a-ca82e370dd0c'
+  AND after_alt_text_zh IS NULL
+  AND after_alt_text_zh !~ '[一-鿿]';
+
+-- ID 16c45fa7 (also covered for before_alt_text_zh in batch 2)
+UPDATE project_image_pairs
+SET after_alt_text_zh = "双洗手池法式风格浴室柜，配拱形天花板和香槟金色水龙头"
+WHERE id = '16c45fa7-8bb7-4ea2-99f5-bbe1b1e24092'
+  AND after_alt_text_zh IS NULL
+  AND after_alt_text_zh !~ '[一-鿿]';
