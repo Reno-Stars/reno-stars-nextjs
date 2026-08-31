@@ -2,6 +2,7 @@ import { describe, it, expect } from 'vitest';
 import { e164, telHref } from '@/lib/phone';
 
 describe('phone helpers', () => {
+  // E.164 format: full North American number with country code, no masking.
   it('e164 strips punctuation and prefixes +1', () => {
     expect(e164('778-960-7999')).toBe('+17789607999');
     expect(e164('(778) 960-7999')).toBe('+17789607999');

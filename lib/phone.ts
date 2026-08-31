@@ -8,7 +8,7 @@
 /** E.164 form for schema.org telephone, e.g. "778-960-7999" → "+17789607999". */
 export function e164(phone: string): string {
   const digits = phone.replace(/\D/g, '');
-  // Assume North American (+1) when the country code is absent.
+  // Assume North American (+1) country code when not already present.
   return digits.startsWith('1') ? `+${digits}` : `+1${digits}`;
 }
 
