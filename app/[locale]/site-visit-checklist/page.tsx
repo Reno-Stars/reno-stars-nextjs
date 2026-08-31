@@ -1,4 +1,5 @@
 import { Metadata } from 'next';
+export const revalidate = 3600;
 import { getTranslations, setRequestLocale } from 'next-intl/server';
 import { getBaseUrl } from '@/lib/utils';
 import { TEXT, TEXT_MID, SURFACE_ALT } from '@/lib/theme';

@@ -1,4 +1,5 @@
 import { Metadata } from 'next';
+export const revalidate = 3600;
 import { getTranslations, setRequestLocale } from 'next-intl/server';
 import { notFound } from 'next/navigation';
 import { ogLocaleMap, hasNativeSupport, type Locale, INDEXABLE_SERVICE_CITY_LOCALES, isIndexableServiceCityLocale } from '@/i18n/config';

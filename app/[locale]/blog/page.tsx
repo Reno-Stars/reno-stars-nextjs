@@ -1,4 +1,5 @@
 import { Metadata } from 'next';
+export const revalidate = 3600;
 import { getTranslations, setRequestLocale } from 'next-intl/server';
 import { ogLocaleMap, type Locale } from '@/i18n/config';
 import BlogPage from '@/components/pages/BlogPage';

@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+export const revalidate = 3600;
 import { setRequestLocale } from 'next-intl/server';
 import { BreadcrumbSchema } from '@/components/structured-data';
 import { buildAlternates, SITE_NAME } from '@/lib/utils';
