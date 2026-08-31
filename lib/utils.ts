@@ -4,7 +4,7 @@
  */
 
 import type { Locale, Localized } from '@/lib/types';
-import { locales, ogLocaleMap, LOCALE_META } from '@/i18n/config';
+import { locales, ogLocaleMap, LOCALE_META, INDEXABLE_LEAF_LOCALES } from '@/i18n/config';
 import { LOCALE_TO_SUFFIX, hasDedicatedColumn } from '@/lib/admin/locale-keys';
 import { BRAND } from '@/lib/company-config';
 
@@ -248,7 +248,19 @@ export function buildLocalizedOptional(
  * page-level metadata so social/SEO crawlers know about every translation.
  */
 export function buildAlternateLocales(currentLocale: Locale): string[] {
-  return locales.filter((l) => l !== currentLocale).map((l) => ogLocaleMap[l]);
+  // Use INDEXABLE_LEAF_LOCALES (all 14), not locales (3 nativeSupport). The
+  // site IS translated into all 14 locales and all 14 are indexed. The og:locale
+  // alternate list must declare every indexable variant — narrowing it to
+  // nativeSupport (3) tells social/AI crawlers that 11 real translations do not
+  // exist, destroying SEO/GEO for those locales. This function is called ONLY from
+  // page-level generateMetadata (OG tags) where the page itself is always
+  // indexable; filtering by indexableLeaf is unnecessary here and would add
+  // complexity without benefit. Every call site passes a page that is
+  // definitively rendered and indexable.
+  return locales
+    .filter((l) => l !== currentLocale)
+    .filter((l) => (INDEXABLE_LEAF_LOCALES as readonly string[]).includes(l))
+    .map((l) => ogLocaleMap[l]);
 }
 
 /**
