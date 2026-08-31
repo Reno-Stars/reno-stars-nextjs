@@ -119,9 +119,13 @@ export function mapDbProjectToProject(
     hero_image: getAssetUrl(row.heroImageUrl ?? ''),
     hero_image_alt: (() => {
       const locs = row.localizations as Record<string, unknown> | null;
-      const en = typeof locs?.['heroImageAltEn'] === 'string' ? locs['heroImageAltEn'] : '';
-      const zh = typeof locs?.['heroImageAltZh'] === 'string' ? locs['heroImageAltZh'] : '';
-      const zhHant = typeof locs?.['heroImageAltZhHant'] === 'string' ? locs['heroImageAltZhHant'] : '';
+      // The admin UI saved the literal string "$undefined" when no alt was set.
+      // Treat it the same as an empty value so hero_image_alt becomes undefined.
+      const strip = (v: unknown) =>
+        typeof v === 'string' && v !== '' && v !== '$undefined' ? v : '';
+      const en = strip(locs?.['heroImageAltEn']);
+      const zh = strip(locs?.['heroImageAltZh']);
+      const zhHant = strip(locs?.['heroImageAltZhHant']);
       if (!en && !zh && !zhHant) return undefined;
       return buildLocalized('heroImageAlt', en, zh, locs as Record<string, unknown> | null);
     })(),
