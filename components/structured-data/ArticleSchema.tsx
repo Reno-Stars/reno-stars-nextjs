@@ -82,13 +82,13 @@ export default function ArticleSchema({
     // matching the blog topic. Eligibility for the Speakable rich-result
     // doesn't cost anything to assert, and matches the existing rendered
     // HTML structure of components/pages/BlogPostPage.tsx.
+    // cssSelector: marks the article's headline + lead paragraph as
+    // voice-readable. Replaces the deprecated xpath field (removed by Google
+    // in 2023). Targets the h1 + lead p rendered at the top of every blog
+    // post (see id=article-headline / id=article-lead in BlogPostPage.tsx).
     speakable: {
       '@type': 'SpeakableSpecification',
-      xpath: [
-        '/html/head/title',
-        "//*[@id='article-headline']",
-        "//*[@id='article-lead']",
-      ],
+      cssSelector: ["#article-headline", "#article-lead"],
     },
     ...(image && {
       image: {
