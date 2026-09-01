@@ -51,6 +51,7 @@ export default function JobPostingSchema({
 }: JobPostingSchemaProps) {
   const baseUrl = getBaseUrl();
   const address = parseAddress(company.address);
+  const hasFullAddress = Boolean(company.address);
   const validThrough = new Date(Date.now() + VALID_THROUGH_DAYS * 86_400_000)
     .toISOString()
     .slice(0, 10);
@@ -82,17 +83,19 @@ export default function JobPostingSchema({
       sameAs: baseUrl,
       logo: company.logo || undefined,
     },
-    jobLocation: {
-      '@type': 'Place',
-      address: {
-        '@type': 'PostalAddress',
-        streetAddress: address.streetAddress,
-        addressLocality: address.locality,
-        addressRegion: address.region,
-        postalCode: address.postalCode,
-        addressCountry: 'CA',
+    ...(hasFullAddress && {
+      jobLocation: {
+        '@type': 'Place',
+        address: {
+          '@type': 'PostalAddress',
+          streetAddress: address.streetAddress,
+          addressLocality: address.locality,
+          addressRegion: address.region,
+          postalCode: address.postalCode,
+          addressCountry: 'CA',
+        },
       },
-    },
+    }),
     skills,
     qualifications,
     directApply: true,

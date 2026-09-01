@@ -25,8 +25,8 @@ export default function LocalBusinessAreaSchema({
   googleReviewCount,
 }: LocalBusinessAreaSchemaProps): React.ReactElement {
   const baseUrl = getBaseUrl();
-
   const addressParts = parseAddress(company.address);
+  const hasFullAddress = Boolean(company.address);
 
   const schema = {
     '@context': 'https://schema.org',
@@ -40,14 +40,16 @@ export default function LocalBusinessAreaSchema({
     telephone: e164(company.phone),
     email: company.email,
     image: company.logo,
-    address: {
-      '@type': 'PostalAddress',
-      streetAddress: addressParts.streetAddress,
-      addressLocality: addressParts.locality,
-      addressRegion: addressParts.region,
-      postalCode: addressParts.postalCode,
-      addressCountry: 'CA',
-    },
+    ...(hasFullAddress && {
+      address: {
+        '@type': 'PostalAddress',
+        streetAddress: addressParts.streetAddress,
+        addressLocality: addressParts.locality,
+        addressRegion: addressParts.region,
+        postalCode: addressParts.postalCode,
+        addressCountry: 'CA',
+      },
+    }),
     geo: {
       '@type': 'GeoCoordinates',
       latitude: company.geo.latitude,
