@@ -35,6 +35,13 @@ interface LocalBusinessSchemaProps {
 
 export default function LocalBusinessSchema({ company, socialLinks, areas, googleRating, googleReviewCount, reviews, description, locale }: LocalBusinessSchemaProps): React.ReactElement {
   const addressParts = parseAddress(company.address);
+  // Emit address only when all four PostalAddress sub-fields are present.
+  // A fabricated postalCode in a rated Organization node suppresses stars in
+  // SERP — same class of defect already fixed in ProjectSchema and
+  // ServiceSchema. parseAddress('') returns blank strings for all fields,
+  // so guard the same way here.
+  const hasFullAddress = addressParts.streetAddress && addressParts.locality
+    && addressParts.region && addressParts.postalCode;
 
   // Google requires an aggregateRating on any node that carries one or more
   // Review objects — otherwise GSC flags "Multiple reviews without
@@ -67,14 +74,16 @@ export default function LocalBusinessSchema({ company, socialLinks, areas, googl
     url: BASE_URL,
     telephone: e164(company.phone),
     email: company.email,
-    address: {
-      '@type': 'PostalAddress',
-      streetAddress: addressParts.streetAddress,
-      addressLocality: addressParts.locality,
-      addressRegion: addressParts.region,
-      postalCode: addressParts.postalCode,
-      addressCountry: 'CA',
-    },
+    ...(hasFullAddress && {
+      address: {
+        '@type': 'PostalAddress',
+        streetAddress: addressParts.streetAddress,
+        addressLocality: addressParts.locality,
+        addressRegion: addressParts.region,
+        postalCode: addressParts.postalCode,
+        addressCountry: 'CA',
+      },
+    }),
     geo: {
       '@type': 'GeoCoordinates',
       latitude: company.geo.latitude,
