@@ -15,6 +15,7 @@ interface ContactPageSchemaProps {
 
 export default function ContactPageSchema({ company, areaNames, locale = 'en' }: ContactPageSchemaProps) {
   const addr = parseAddress(company.address);
+  const hasFullAddress = Boolean(company.address);
 
   // inLanguage declares the natural language of the ContactPage so Google
   // can match it to localized SERPs (e.g. show the /zh/contact/ schema
@@ -40,14 +41,16 @@ export default function ContactPageSchema({ company, areaNames, locale = 'en' }:
       url: BASE_URL,
       telephone: e164(company.phone),
       email: company.email,
-      address: {
-        '@type': 'PostalAddress',
-        streetAddress: addr.streetAddress,
-        addressLocality: addr.locality,
-        addressRegion: addr.region,
-        postalCode: addr.postalCode,
-        addressCountry: 'CA',
-      },
+      ...(hasFullAddress && {
+        address: {
+          '@type': 'PostalAddress',
+          streetAddress: addr.streetAddress,
+          addressLocality: addr.locality,
+          addressRegion: addr.region,
+          postalCode: addr.postalCode,
+          addressCountry: 'CA',
+        },
+      }),
       contactPoint: {
         '@type': 'ContactPoint',
         telephone: e164(company.phone),
