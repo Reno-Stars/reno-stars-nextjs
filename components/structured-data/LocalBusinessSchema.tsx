@@ -25,6 +25,9 @@ interface LocalBusinessSchemaProps {
    *  i18n messages. When omitted we fall back to an EN string so the
    *  schema remains valid even on pages that haven't wired this up. */
   description?: string;
+  /** Localized slogan from i18n messages (e.g. '装修从这里开始' on zh).
+   *  Falls back to company.tagline when omitted. */
+  slogan?: string;
   /** Page locale. When supplied, each Review's `reviewBody` is rendered
    *  in the matching locale via `review.translations?.[locale] ?? review.text`,
    *  keeping structured-data review text consistent with the visible
@@ -33,7 +36,7 @@ interface LocalBusinessSchemaProps {
   locale?: Locale;
 }
 
-export default function LocalBusinessSchema({ company, socialLinks, areas, googleRating, googleReviewCount, reviews, description, locale }: LocalBusinessSchemaProps): React.ReactElement {
+export default function LocalBusinessSchema({ company, socialLinks, areas, googleRating, googleReviewCount, reviews, description, slogan, locale }: LocalBusinessSchemaProps): React.ReactElement {
   const addressParts = parseAddress(company.address);
 
   // Google requires an aggregateRating on any node that carries one or more
@@ -139,7 +142,7 @@ export default function LocalBusinessSchema({ company, socialLinks, areas, googl
     // schema must use the corporate incorporation year for entity honesty.
     foundingDate: String(COMPANY_STATS.companyFoundingYear),
     numberOfEmployees: company.teamSize,
-    slogan: company.tagline,
+    slogan: slogan ?? company.tagline,
     // knowsAbout: topical-expertise signal for AI search engines (Perplexity,
     // Claude Search, ChatGPT Search, Google AI Overview). Lists the topical
     // entities this organization has demonstrated expertise in. Combined with

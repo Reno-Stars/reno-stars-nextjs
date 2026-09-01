@@ -66,6 +66,7 @@ export default async function LocaleLayout({
     getGoogleReviews(),
   ]);
   const localBusinessDescription = t('localBusinessDescription');
+  const localSlogan = t('slogan');
 
   // Strip the rich, all-locale Service/ServiceArea objects down to the minimal
   // { slug, title|name } shape the CLIENT Navbar/Footer actually render. The
@@ -164,6 +165,7 @@ export default async function LocaleLayout({
             googleReviewCount={googleReviews.userRatingCount}
             reviews={googleReviews.reviews.slice(0, 5)}
             description={localBusinessDescription}
+            slogan={localSlogan}
             locale={locale as Locale}
           />
           <a
