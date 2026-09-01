@@ -1,4 +1,4 @@
-import { getBaseUrl } from '@/lib/utils';
+import { getBaseUrl, SITE_NAME } from '@/lib/utils';
 import JsonLd from './JsonLd';
 
 interface VideoObjectSchemaProps {
@@ -54,7 +54,7 @@ export default function VideoObjectSchema({
     ...(duration && { duration }),
     publisher: {
       '@type': 'Organization',
-      name: 'Reno Stars',
+      name: SITE_NAME,
       url: baseUrl,
     },
   };
