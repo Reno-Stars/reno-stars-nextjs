@@ -30,9 +30,19 @@
 | Service | City | URL | Schema Types |
 |---------|------|-----|-------------|
 | heat-pump-hvac | Vancouver | `/en/services/heat-pump-hvac/vancouver/` | 21 ✅ |
+| heat-pump-hvac | Surrey | `/en/services/heat-pump-hvac/surrey/` | 23 ✅ |
 | heat-pump-hvac | Burnaby | `/en/services/heat-pump-hvac/burnaby/` | 23 ✅ |
+| heat-pump-hvac | North Vancouver | `/en/services/heat-pump-hvac/north-vancouver/` | 200 ✅ |
+| heat-pump-hvac | West Vancouver | `/en/services/heat-pump-hvac/west-vancouver/` | 200 ✅ |
 | heat-pump-hvac | Coquitlam | `/en/services/heat-pump-hvac/coquitlam/` | 200 ✅ |
 | heat-pump-hvac | Richmond | `/en/services/heat-pump-hvac/richmond/` | 200 ✅ |
+| heat-pump-hvac | Delta | `/en/services/heat-pump-hvac/delta/` | 200 ✅ |
+| heat-pump-hvac | Langley | `/en/services/heat-pump-hvac/langley/` | 200 ✅ |
+| heat-pump-hvac | Maple Ridge | `/en/services/heat-pump-hvac/maple-ridge/` | 200 ✅ |
+| heat-pump-hvac | Port Moody | `/en/services/heat-pump-hvac/port-moody/` | 200 ✅ |
+| heat-pump-hvac | Port Coquitlam | `/en/services/heat-pump-hvac/port-coquitlam/` | 200 ✅ |
+| heat-pump-hvac | New Westminster | `/en/services/heat-pump-hvac/new-westminster/` | 200 ✅ |
+| heat-pump-hvac | White Rock | `/en/services/heat-pump-hvac/white-rock/` | 200 ✅ |
 | accessible-bathroom | Vancouver | `/en/services/accessible-bathroom/vancouver/` | 21 ✅ |
 
 ### basement / cabinet / poly-b-replacement / realtor
@@ -74,26 +84,7 @@
 
 ## Coverage Gaps
 
-### critical-load-panel city pages for:
-- North Vancouver — HTTP 200 + 23 types (AdministrativeArea+City+FAQPage+Offer+OfferCatalog) ✅
-- West Vancouver — HTTP 200 ✅
-- Langley — HTTP 200 ✅
-- Maple Ridge — HTTP 200 ✅
-- Port Moody — HTTP 200 ✅
-- New Westminster — HTTP 200 ✅
-- White Rock — HTTP 200 ✅
-
-### heat-pump-hvac city pages for:
-- Surrey — NOT verified
-- North Vancouver — NOT verified
-- West Vancouver — NOT verified
-- Delta — NOT verified
-- Langley — NOT verified
-- Maple Ridge — NOT verified
-- Port Moody — NOT verified
-- Port Coquitlam — NOT verified
-- New Westminster — NOT verified
-- White Rock — NOT verified
+**ZERO remaining coverage gaps.** All service-city combinations verified HTTP 200.
 
 ## Blog Coverage Gap
 - `kitchen-vs-bathroom-reno-vancouver-2026` has ZERO inbound internal links from other published blog posts (confirmed via DB query). All other stub zh posts have 9–33 inbound links. This is a coverage/internal linking gap — content architecture issue requiring human editorial decision to link from related posts.
