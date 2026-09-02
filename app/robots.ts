@@ -56,6 +56,7 @@ export default function robots(): MetadataRoute.Robots {
         userAgent: ['CCBot', 'anthropic-ai', 'cohere-ai', 'Diffbot', 'omgili', 'omgilibot'],
         allow: ['/llms.txt', '/llms-full.txt'],
         disallow: '/',
+        allow: ['/llms.txt', '/llms-full.txt'],
       },
     ],
     sitemap: `${BASE_URL}/sitemap.xml`,
