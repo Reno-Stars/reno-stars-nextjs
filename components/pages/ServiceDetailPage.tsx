@@ -4,9 +4,10 @@ import { useMemo } from 'react';
 import { useTranslations } from 'next-intl';
 import OptimizedImage from '@/components/OptimizedImage';
 import type { Locale } from '@/i18n/config';
-import type { Company, Service, ServiceArea, ServiceType } from '@/lib/types';
+import type { Company, Service, ServiceAreaLink, ServiceLink, ServiceType } from '@/lib/types';
 import type { AreaReviewDisplay } from '@/lib/project-reviews';
 import { getLocalizedService, getAllProjectsLocalized } from '@/lib/data';
+import { pickLocale } from '@/lib/utils';
 import CTASection from '@/components/CTASection';
 import ZhTrustLine from '@/components/ZhTrustSignals';
 import VisualBreadcrumb from '@/components/VisualBreadcrumb';
@@ -16,7 +17,6 @@ import ServiceClientReviews from '@/components/services/ServiceClientReviews';
 import ShareBar from '@/components/share/ShareBar';
 import type { ShareContext } from '@/lib/share/types';
 import { Link } from '@/navigation';
-import { getLocalizedArea } from '@/lib/data/areas';
 import {
   NAVY, GOLD, GOLD_PALE, GOLD_ICON_FILTER, SURFACE, SURFACE_ALT, TEXT, TEXT_MID, CARD, neu,
 } from '@/lib/theme';
@@ -38,7 +38,9 @@ interface ServiceDetailPageProps {
   serviceSlug: ServiceType;
   company: Company;
   service: Service;
-  areas?: ServiceArea[];
+  /** Link chips only — see ServiceAreaLink. This is a client component, so
+   *  every field here is serialised into the page's flight payload. */
+  areas?: ServiceAreaLink[];
   faqs?: FAQ[];
   googleRating?: number;
   googleReviewCount?: number;
@@ -51,7 +53,8 @@ interface ServiceDetailPageProps {
    * links. Closes a 2026-05-31 audit finding (header was the only inbound
    * surface from each /services/<x>/ page to other services).
    */
-  allServices?: Service[];
+  /** Link chips only — see ServiceLink. Narrow for the same reason as `areas`. */
+  allServices?: ServiceLink[];
   /**
    * Verified client reviews whose linked case-study project has this
    * service_type (≤3, from getReviewsByServiceType). Mirrors AreaPage's
@@ -439,7 +442,7 @@ export default function ServiceDetailPage({ locale, serviceSlug, company, servic
                 .filter(s => s.slug !== serviceSlug && s.showOnServicesPage !== false)
                 .slice(0, 6)
                 .map((s) => {
-                  const localizedSibling = getLocalizedService(s, locale);
+                  const siblingTitle = pickLocale(s.title, locale);
                   return (
                     <Link
                       key={s.slug}
@@ -447,7 +450,7 @@ export default function ServiceDetailPage({ locale, serviceSlug, company, servic
                       className="block px-4 py-3 rounded-xl text-center text-sm font-medium transition-all duration-200 hover:shadow-md"
                       style={{ backgroundColor: CARD, boxShadow: neu(2), color: NAVY }}
                     >
-                      {localizedSibling.title}
+                      {siblingTitle}
                     </Link>
                   );
                 })}
@@ -482,7 +485,7 @@ export default function ServiceDetailPage({ locale, serviceSlug, company, servic
             </h2>
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3">
               {areas.map((area) => {
-                const localizedArea = getLocalizedArea(area, locale);
+                const areaName = pickLocale(area.name, locale);
                 return (
                   <Link
                     key={area.slug}
@@ -490,7 +493,7 @@ export default function ServiceDetailPage({ locale, serviceSlug, company, servic
                     className="block px-4 py-3 rounded-xl text-center text-sm font-medium transition-all duration-200 hover:shadow-md"
                     style={{ backgroundColor: CARD, boxShadow: neu(2), color: NAVY }}
                   >
-                    {localizedArea.name}
+                    {areaName}
                   </Link>
                 );
               })}
