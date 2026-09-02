@@ -34,6 +34,13 @@
     "renovationProcessTagline": "Посмотрите наш процесс ремонта →",
     "showroomTagline": "Посетите наш выставочный зал Burnaby →",
     "aboutTagline": "Узнать больше о Reno Stars →",
-    "realCostsTagline": "Посмотрите реальные затраты на ремонт в Ванкувере"
+    "realCostsTagline": "Посмотрите реальные затраты на ремонт в Ванкувере",
+    "planningGuidesLabel": "Бесплатные руководства по планированию ремонта",
+    "planningGuidesContractor": "Как выбрать подрядчика по ремонту",
+    "planningGuidesCosts": "Стоимость ремонта 2026",
+    "planningGuidesTimeline": "Сроки ремонта",
+    "planningGuidesPermits": "Руководство по разрешениям на ремонт",
+    "planningGuidesFinancing": "Финансирование ремонта",
+    "planningGuidesStrata": "Правила страты"
   }
 }

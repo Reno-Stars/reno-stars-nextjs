@@ -34,7 +34,14 @@
     "renovationProcessTagline": "看看我們的裝修流程 →",
     "showroomTagline": "參觀我們的 本拿比 展廳 →",
     "aboutTagline": "了解有關 Reno Stars 的更多資訊 →",
-    "realCostsTagline": "查看真實的 溫哥華 裝修成本"
+    "realCostsTagline": "查看真實的 溫哥華 裝修成本",
+    "planningGuidesLabel": "免費裝修規劃指南",
+    "planningGuidesContractor": "如何選擇裝修承包商",
+    "planningGuidesCosts": "2026年裝修費用",
+    "planningGuidesTimeline": "裝修時間表",
+    "planningGuidesPermits": "裝修許可證指南",
+    "planningGuidesFinancing": "裝修融資",
+    "planningGuidesStrata": "分契規則"
   },
   "_translation_meta": {
     "source": "translate.googleapis.com (free, no API key)",

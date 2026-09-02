@@ -13,7 +13,7 @@
     "ourServices": "Nos prestations",
     "learnMore": "Apprendre encore plus",
     "exploreService": "Explorer {service}",
-    "sendMessage": "Envoyer un message",
+    "sendMessage": "Envoyer le message",
     "submitInquiry": "Obtenez mon devis gratuit",
     "bookAppointment": "Prendre rendez-vous",
     "callNow": "Appelez maintenant",
@@ -34,6 +34,13 @@
     "renovationProcessTagline": "Voir notre processus de rénovation →",
     "showroomTagline": "Visitez notre salle d'exposition de Burnaby →",
     "aboutTagline": "En savoir plus sur Reno Stars →",
-    "realCostsTagline": "Voir les coûts réels de rénovation de Vancouver"
+    "realCostsTagline": "Voir les coûts réels de rénovation de Vancouver",
+    "planningGuidesLabel": "Guides de planification de rénovation gratuits",
+    "planningGuidesContractor": "Comment choisir un entrepreneur",
+    "planningGuidesCosts": "Coûts de rénovation 2026",
+    "planningGuidesTimeline": "Calendrier des rénovations",
+    "planningGuidesPermits": "Guide des permis de rénovation",
+    "planningGuidesFinancing": "Financement de la rénovation",
+    "planningGuidesStrata": "Règles relatives aux strates"
   }
 }

@@ -3,7 +3,7 @@
     "getQuote": "見積もりを取得する",
     "getFreeQuote": "無料見積もりを入手",
     "getYourFreeQuote": "無料お見積りを入手",
-    "freeQuoteProject": "プロジェクトの無料見積もりを入手してください!",
+    "freeQuoteProject": "プロジェクトの無料見積もりを入手してください！",
     "freeQuote": "無料見積もりを取得する",
     "startProject": "プロジェクトを開始する",
     "startProjectToday": "今すぐプロジェクトを始めましょう",
@@ -34,15 +34,13 @@
     "renovationProcessTagline": "リノベーションのプロセスをご覧ください→",
     "showroomTagline": "バーナビーショールームをご覧ください →",
     "aboutTagline": "Reno Starsについて詳しくはこちら→",
-    "realCostsTagline": "実際の バンクーバー 改修コストを見る"
-  },
-  "_translation_meta": {
-    "source": "translate.googleapis.com (free, no API key)",
-    "source_lang": "en",
-    "target_lang": "ja",
-    "target_tl_code": "ja",
-    "translated_at": "2026-05-29T23:06:17Z",
-    "tier": "machine-translation-first-pass",
-    "note": "Per Reno Stars policy §5.2 — first-pass MT to close cross-locale parity gaps. Human review/polish welcome."
+    "realCostsTagline": "実際の バンクーバー 改修コストを見る",
+    "planningGuidesLabel": "無料RENOVATION計画ガイド",
+    "planningGuidesContractor": "リノベーショ承办商の選び方",
+    "planningGuidesCosts": "2026年RENOVATION費用",
+    "planningGuidesTimeline": "RENOVATIONタイムライン",
+    "planningGuidesPermits": "RENOVATION許可證ガイド",
+    "planningGuidesFinancing": "RENOVATION資金調達",
+    "planningGuidesStrata": "分層ルール"
   }
 }

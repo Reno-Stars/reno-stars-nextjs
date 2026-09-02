@@ -34,7 +34,14 @@
     "renovationProcessTagline": "우리의 혁신 과정을 확인하세요 →",
     "showroomTagline": "버나비 쇼룸 방문하기 →",
     "aboutTagline": "Reno Stars에 대해 자세히 알아보기 →",
-    "realCostsTagline": "실제 밴쿠버 혁신 비용 확인"
+    "realCostsTagline": "실제 밴쿠버 혁신 비용 확인",
+    "planningGuidesLabel": "무료 혁신 계획 가이드",
+    "planningGuidesContractor": "혁신 계약자 선택 방법",
+    "planningGuidesCosts": "2026년 혁신 비용",
+    "planningGuidesTimeline": "혁신 타임라인",
+    "planningGuidesPermits": "혁신 허가증 가이드",
+    "planningGuidesFinancing": "혁신 자금 조달",
+    "planningGuidesStrata": "분쟁 규칙"
   },
   "_translation_meta": {
     "source": "translate.googleapis.com (free, no API key)",
