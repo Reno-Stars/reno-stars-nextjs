@@ -53,10 +53,13 @@ export default function robots(): MetadataRoute.Robots {
       // Exception: anthropic-ai and cohere-ai also perform citation retrieval.
       // Allow them to crawl the llms routes while blocking the rest of the site.
       {
-        userAgent: ['CCBot', 'anthropic-ai', 'cohere-ai', 'Diffbot', 'omgili', 'omgilibot'],
+        userAgent: ['CCBot', 'cohere-ai', 'Diffbot', 'omgili', 'omgilibot'],
+        disallow: '/',
+      },
+      {
+        userAgent: ['anthropic-ai'],
         allow: ['/llms.txt', '/llms-full.txt'],
         disallow: '/',
-        allow: ['/llms.txt', '/llms-full.txt'],
       },
     ],
     sitemap: `${BASE_URL}/sitemap.xml`,
