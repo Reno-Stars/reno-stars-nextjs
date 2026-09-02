@@ -14,10 +14,17 @@
 |---------|------|-----|-------------|
 | commercial | Vancouver | `/en/services/commercial/vancouver/` | 24 ✅ |
 | critical-load-panel | Vancouver | `/en/services/critical-load-panel/vancouver/` | 21 ✅ |
+| critical-load-panel | North Vancouver | `/en/services/critical-load-panel/north-vancouver/` | 23 ✅ |
+| critical-load-panel | West Vancouver | `/en/services/critical-load-panel/west-vancouver/` | 200 ✅ |
 | critical-load-panel | Burnaby | `/en/services/critical-load-panel/burnaby/` | 23 ✅ |
 | critical-load-panel | Coquitlam | `/en/services/critical-load-panel/coquitlam/` | 200 ✅ |
 | critical-load-panel | Surrey | `/en/services/critical-load-panel/surrey/` | 200 ✅ |
 | critical-load-panel | Richmond | `/en/services/critical-load-panel/richmond/` | 200 ✅ |
+| critical-load-panel | Langley | `/en/services/critical-load-panel/langley/` | 200 ✅ |
+| critical-load-panel | Maple Ridge | `/en/services/critical-load-panel/maple-ridge/` | 200 ✅ |
+| critical-load-panel | Port Moody | `/en/services/critical-load-panel/port-moody/` | 200 ✅ |
+| critical-load-panel | New Westminster | `/en/services/critical-load-panel/new-westminster/` | 200 ✅ |
+| critical-load-panel | White Rock | `/en/services/critical-load-panel/white-rock/` | 200 ✅ |
 
 ### heat-pump-hvac / accessible-bathroom
 | Service | City | URL | Schema Types |
@@ -67,14 +74,14 @@
 
 ## Coverage Gaps
 
-### Critical-load-panel city pages for:
-- North Vancouver — NOT verified (not checked)
-- West Vancouver — NOT verified
-- Langley — NOT verified
-- Maple Ridge — NOT verified
-- Port Moody — NOT verified
-- New Westminster — NOT verified
-- White Rock — NOT verified
+### critical-load-panel city pages for:
+- North Vancouver — HTTP 200 + 23 types (AdministrativeArea+City+FAQPage+Offer+OfferCatalog) ✅
+- West Vancouver — HTTP 200 ✅
+- Langley — HTTP 200 ✅
+- Maple Ridge — HTTP 200 ✅
+- Port Moody — HTTP 200 ✅
+- New Westminster — HTTP 200 ✅
+- White Rock — HTTP 200 ✅
 
 ### heat-pump-hvac city pages for:
 - Surrey — NOT verified
