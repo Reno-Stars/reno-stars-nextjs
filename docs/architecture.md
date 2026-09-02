@@ -43,7 +43,8 @@ app/                      # Next.js App Router
     layout.tsx            # Admin shell with sidebar
   layout.tsx              # Root layout (metadata, viewport, pass-through to locale layout)
   not-found.tsx           # Root 404 (fallback, no <html>/<body>)
-  sitemap.ts              # Dynamic async sitemap (DB + static data)
+  sitemap.xml/route.ts    # Sitemap INDEX (<sitemapindex>)
+  sitemaps/[file]/route.ts # One sitemap section per file (DB + static data)
   robots.ts               # robots.txt
   api/
     image/route.ts        # Self-hosted image optimization (sharp, WebP/AVIF, Node.js runtime)

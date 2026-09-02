@@ -2,7 +2,7 @@
 
 ## Sitemap
 
-Generated in `app/sitemap.ts` as an async function with `revalidate = 3600` (1-hour ISR). Service slugs use static `serviceTypeToCategory` mapping. Project slugs, site slugs, blog post slugs, and service areas are all fetched from the database via `getProjectSlugsFromDb()`, `getSiteSlugsFromDb()`, `getBlogPostSlugsFromDb()`, and `getServiceAreasFromDb()`. Individual project, site, and blog post entries use actual `updated_at` timestamps from the database for `lastModified` (via date maps). Static pages, service pages, service+location combo pages, category pages, and area pages all use a fixed `STATIC_LAST_MODIFIED` date constant (not `new Date()`) to avoid misleading "updated" signals on every deploy — update this constant when making significant content changes. Includes:
+Served as a **sitemap index** at `/sitemap.xml` (`app/sitemap.xml/route.ts`) pointing at per-section files at `/sitemaps/<section>-<n>.xml` (`app/sitemaps/[file]/route.ts`), built by `lib/sitemap/sections.ts`. Split on 2026-09-02: a single `force-dynamic` sitemap rebuilt all 5,825 URLs (12.3 MB of XML) per request and concurrent crawls exhausted the pod's heap, crash-looping production. Each file now builds at most 150 source items. Still rendered per request so newly published content appears immediately, with `s-maxage=300` so Cloudflare absorbs crawl bursts. `/sitemap.xml` keeps its URL, so robots.txt and Search Console are unchanged. Service slugs use static `serviceTypeToCategory` mapping. Project slugs, site slugs, blog post slugs, and service areas are all fetched from the database via `getProjectSlugsFromDb()`, `getSiteSlugsFromDb()`, `getBlogPostSlugsFromDb()`, and `getServiceAreasFromDb()`. Individual project, site, and blog post entries use actual `updated_at` timestamps from the database for `lastModified` (via date maps). Static pages, service pages, service+location combo pages, category pages, and area pages all use a fixed `STATIC_LAST_MODIFIED` date constant (not `new Date()`) to avoid misleading "updated" signals on every deploy — update this constant when making significant content changes. Includes:
 
 - Static pages (home, services, projects, blog, contact, benefits, design, workflow, areas, about, showroom, guides, reviews)
 - All service detail pages
@@ -273,7 +273,7 @@ Individual pages override with page-specific titles, descriptions, and images.
 ## Canonical URLs
 
 `NEXT_PUBLIC_BASE_URL` defines the canonical origin. `getBaseUrl()` in `lib/utils.ts` strips any trailing slashes to prevent double-slash URLs (e.g., `reno-stars.com//en/`). Used by:
-- `sitemap.ts` for absolute URLs
+- `lib/sitemap/sections.ts` for absolute URLs
 - `buildAlternates()` for hreflang links
 - Metadata generation in page components
 
