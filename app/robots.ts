@@ -49,10 +49,13 @@ export default function robots(): MetadataRoute.Robots {
           '*/contact/thank-you/',
         ],
       },
-      // Training-only crawlers — no citation/retrieval benefit. Block them.
+      // Training-only crawlers — no citation/retrieval benefit. Block them
+      // EXCEPT the llms.txt / llms-full.txt routes which exist solely for
+      // AI citation engines and must remain accessible to be useful.
       {
         userAgent: ['CCBot', 'anthropic-ai', 'cohere-ai', 'Diffbot', 'omgili', 'omgilibot'],
         disallow: '/',
+        allow: ['/llms.txt', '/llms-full.txt'],
       },
     ],
     sitemap: `${BASE_URL}/sitemap.xml`,
