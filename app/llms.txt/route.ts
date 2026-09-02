@@ -124,7 +124,7 @@ export async function GET(): Promise<Response> {
     '## Frequently Asked Questions',
     '',
     '### How much does a kitchen renovation cost in Vancouver?',
-    `Kitchen renovations in Vancouver typically range from $15,000 to $72,000+. Basic refresh runs $15K-$30K, mid-range $30K-$50K, and full custom $50K-$72K+. Pricing varies by cabinetry, countertops, appliances, and whether the layout changes. ${SITE_NAME} has completed ${COMPANY_STATS.projectsCompleted} renovation projects across Metro Vancouver.`
+    `Kitchen renovations in Vancouver typically range from $15,000 to $72,000+. Basic refresh runs $15K-$30K, mid-range $30K-$50K, and full custom $50K-$72K+. Pricing varies by cabinetry, countertops, appliances, and whether the layout changes.`,
     '',
     '### How much does a bathroom renovation cost in Vancouver?',
     'Bathroom renovations in Vancouver typically run $10,000 to $60,000+. A 3-piece basic refresh: $10K-$20K. A 4-piece mid-range with tiled shower: $20K-$40K. A 5-piece master with curbless shower and double vanity: $40K-$60K+. Includes Schluter waterproofing, vanity, fixtures, tile, and electrical.',
