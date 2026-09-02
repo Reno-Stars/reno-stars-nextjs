@@ -21,8 +21,21 @@ import { loadSitemapData, nativeLocalesFor, type SitemapData } from './data';
 
 const BASE_URL = getBaseUrl();
 
-/** Source items per file. Bounds the biggest document a single request builds. */
-const CHUNK = 150;
+/**
+ * Source items per file — bounds the biggest document a single request builds.
+ *
+ * Measured against production data (5,825 URLs) rather than guessed, because a
+ * source item expands into up to 14 locale URLs and the ratio differs per
+ * section:
+ *   CHUNK 150 ->  9 files, largest 4.30 MB
+ *   CHUNK  75 -> 11 files, largest 2.35 MB
+ *   CHUNK  50 -> 14 files, largest 1.58 MB   <- chosen
+ * 1.58 MB is 7.8x smaller than the 12.3 MB single document that exhausted the
+ * heap. Going lower trades away little: the files are already small, and each
+ * one re-reads the shared row set, so more files means more DB round trips for
+ * a full crawl.
+ */
+const CHUNK = 50;
 
 /** hreflang alternates. Identical to the former inline `buildAlternates`. */
 function buildAlternates(path: string, includeLocales: readonly string[] = locales) {
