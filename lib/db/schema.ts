@@ -808,6 +808,29 @@ export const designs = pgTable(
  * false so an un-retried row is indistinguishable from a failed one — both are
  * "nobody has seen this yet", which is what a recovery query wants.
  */
+/**
+ * TEMPORARY runtime secret store — see scripts/create-app-secrets.sql and the
+ * third tier in lib/secrets.ts.
+ *
+ * Exists only because the cluster migration left 25 of the website's runtime
+ * env vars undeliverable: a value must be in Infisical AND named in an
+ * ExternalSecret only the platform operator can edit. `DATABASE_URL` is the one
+ * credential the pod already has, so this is the sole store reachable without
+ * an operator round trip.
+ *
+ * Consulted LAST — after process.env and Infisical — so it goes dormant the
+ * moment a real credential arrives, and can then be dropped.
+ *
+ * ⚠️ Values are unencrypted, and this database's default ACL auto-grants SELECT
+ * to `agent_ro`, which is served publicly by api.reno-stars.com. The DDL
+ * REVOKEs it explicitly. Never grant this table to agent_ro.
+ */
+export const appSecrets = pgTable('app_secrets', {
+  key: varchar('key', { length: 120 }).primaryKey(),
+  value: text('value').notNull(),
+  updatedAt: timestamp('updated_at').defaultNow().notNull(),
+});
+
 export const contactSubmissions = pgTable(
   'contact_submissions',
   {
