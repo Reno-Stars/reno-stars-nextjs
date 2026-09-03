@@ -7,7 +7,7 @@ import { contactSubmissions, propertyTypes, serviceAreas } from '@/lib/db/schema
 import { isValidEmail } from '@/lib/utils';
 import { sendContactNotification } from '@/lib/email';
 import { createLeadInOdoo, type CrmPropertyType } from '@/lib/clients/odoo-lead';
-import { reportLeadDeliveryConfig, missingLeadEnv } from '@/lib/lead-delivery-config';
+import { reportLeadDeliveryConfig, missingLeadSecrets } from '@/lib/lead-delivery-config';
 import { recordCrmDeadLetter } from '@/lib/crm-deadletter';
 import { getClientIp as getTrustedClientIp } from '@/lib/get-client-ip';
 
@@ -305,7 +305,7 @@ export async function submitContactForm(
     // stop Vercel killing the serverless isolate mid-flight; the site is a
     // long-running self-hosted process now, so that reason is gone, and paying
     // one round trip is worth never silently dropping an enquiry again.
-    reportLeadDeliveryConfig();
+    await reportLeadDeliveryConfig();
 
     // DURABILITY FIRST. Persist the enquiry before attempting any delivery, on
     // the one dependency this request already has. Delivery is best-effort by
@@ -373,7 +373,7 @@ export async function submitContactForm(
             deliveryError:
               crmDelivered || emailDelivered
                 ? null
-                : `no delivery channel succeeded; missing env: ${JSON.stringify(missingLeadEnv())}`,
+                : `no delivery channel succeeded; unresolvable: ${JSON.stringify(await missingLeadSecrets())}`,
           })
           .where(eq(contactSubmissions.id, submissionId));
       } catch (err) {
@@ -388,7 +388,7 @@ export async function submitContactForm(
           message: 'Contact form submission reached no delivery channel.',
           persisted: Boolean(submissionId),
           submissionId,
-          missingEnv: missingLeadEnv(),
+          missingEnv: await missingLeadSecrets(),
           timestamp: new Date().toISOString(),
         }),
       );

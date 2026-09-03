@@ -1,3 +1,4 @@
+import { getSecret } from '@/lib/secrets';
 /**
  * Startup/first-use assertion for the contact form's delivery configuration.
  *
@@ -38,17 +39,51 @@ const CHANNEL_ENV = {
 
 export type LeadChannel = keyof typeof CHANNEL_ENV;
 
-/** Which of a channel's env vars are absent or empty. */
+/**
+ * Which of a channel's variables are absent — checking process.env ONLY.
+ *
+ * Kept for the synchronous callers, but note the limitation: since secrets can
+ * now also come from Infisical or the DB bridge (lib/secrets.ts), a name absent
+ * from process.env may still resolve. Use the async `missingSecretsFor` when
+ * the answer must reflect reality.
+ */
 export function missingEnvFor(channel: LeadChannel): string[] {
   return CHANNEL_ENV[channel].filter((name) => !process.env[name]);
 }
 
-/** True when every env var the channel needs is present. */
-export function isChannelConfigured(channel: LeadChannel): boolean {
-  return missingEnvFor(channel).length === 0;
+/**
+ * Which of a channel's variables cannot be resolved from ANY tier —
+ * process.env, then Infisical, then the DB bridge.
+ *
+ * This is the honest question. The env-only check reported the contact form as
+ * "misconfigured" on 2026-09-03 in the same request where the email was
+ * delivered successfully, because the values came from the bridge rather than
+ * the environment. A false alarm in a log is worse than no log: it trains the
+ * reader to ignore it.
+ */
+export async function missingSecretsFor(channel: LeadChannel): Promise<string[]> {
+  const missing: string[] = [];
+  for (const name of CHANNEL_ENV[channel]) {
+    if (!(await getSecret(name))) missing.push(name);
+  }
+  return missing;
 }
 
-/** Every missing variable across all channels, keyed by channel. */
+/** True when every variable the channel needs resolves from some tier. */
+export async function isChannelConfigured(channel: LeadChannel): Promise<boolean> {
+  return (await missingSecretsFor(channel)).length === 0;
+}
+
+/** Every unresolvable variable across all channels, keyed by channel. */
+export async function missingLeadSecrets(): Promise<Record<LeadChannel, string[]>> {
+  return {
+    email: await missingSecretsFor('email'),
+    crm: await missingSecretsFor('crm'),
+    alerting: await missingSecretsFor('alerting'),
+  };
+}
+
+/** Env-only view. Prefer `missingLeadSecrets()`. */
 export function missingLeadEnv(): Record<LeadChannel, string[]> {
   return {
     email: missingEnvFor('email'),
@@ -66,8 +101,8 @@ let warned = false;
  *
  * Returns true when every channel is configured.
  */
-export function reportLeadDeliveryConfig(): boolean {
-  const missing = missingLeadEnv();
+export async function reportLeadDeliveryConfig(): Promise<boolean> {
+  const missing = await missingLeadSecrets();
   const anyMissing = Object.values(missing).some((names) => names.length > 0);
 
   if (anyMissing && !warned) {
@@ -77,7 +112,7 @@ export function reportLeadDeliveryConfig(): boolean {
         event: 'lead.config.incomplete',
         message:
           'Contact-form delivery is misconfigured. Submissions may be accepted and then lost. ' +
-          'These env vars are absent from the running container.',
+          'These variables resolve from NO tier (env, Infisical, or the DB bridge).',
         missing,
         timestamp: new Date().toISOString(),
       }),
