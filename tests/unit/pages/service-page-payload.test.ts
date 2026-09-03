@@ -56,6 +56,20 @@ describe('service page flight payload', () => {
     expect(city).toMatch(/relatedProjects=\{combo\.projects\}/);
   });
 
+  it('the areas hub takes card-shaped props, not full rows', () => {
+    // /en/areas/ shipped 1.81 MB — the heaviest page on the site — because it
+    // received full ServiceArea rows (content essays, highlights, meta, in all
+    // 14 locales) to render 14 cards showing a name and a description. 0.36 MB
+    // after narrowing, which is the site's baseline floor.
+    const src = read('components/pages/AreasPage.tsx');
+    expect(src).toMatch(/areas:\s*ServiceAreaCard\[\]/);
+    expect(src).not.toMatch(/areas:\s*ServiceArea\[\]/);
+
+    const page = read('app/[locale]/areas/page.tsx');
+    expect(page).not.toMatch(/areas=\{areas\}/);
+    expect(page).toMatch(/areas=\{areas\.map\(/);
+  });
+
   it('the narrow types stay narrow', () => {
     const types = read('lib/types.ts');
     const areaLink = /export type ServiceAreaLink = \{([\s\S]*?)\};/.exec(types)?.[1] ?? '';
@@ -66,5 +80,10 @@ describe('service page flight payload', () => {
     // Widening either of these silently re-inflates every service page.
     expect(keys(areaLink)).toEqual(['id', 'name', 'slug']);
     expect(keys(serviceLink)).toEqual(['showOnServicesPage', 'slug', 'title']);
+
+    // ServiceAreaCard adds exactly one field to the link shape — a description.
+    // Anything more (content, highlights, meta) re-inflates /en/areas/.
+    const areaCard = /export type ServiceAreaCard = ServiceAreaLink & \{([\s\S]*?)\};/.exec(types)?.[1] ?? '';
+    expect(keys(areaCard)).toEqual(['description']);
   });
 });

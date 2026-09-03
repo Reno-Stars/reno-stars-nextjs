@@ -35,6 +35,15 @@ export type ServiceAreaLink = {
   name: Localized<string>;
 };
 
+/**
+ * A ServiceAreaLink plus the short description a card needs. Still deliberately
+ * excludes `content` (the area page's body prose), `highlights` and the meta
+ * fields — those are what made /en/areas/ a 1.81 MB page.
+ */
+export type ServiceAreaCard = ServiceAreaLink & {
+  description?: Localized<string>;
+};
+
 export type ServiceLink = {
   slug: string;
   title: Localized<string>;
