@@ -1,12 +1,13 @@
 'use client';
 
 import { useMemo } from 'react';
+import { pickLocale } from '@/lib/utils';
 import { useTranslations } from 'next-intl';
 import OptimizedImage from '@/components/OptimizedImage';
 import { MapPin, ArrowRight } from 'lucide-react';
 import { Link } from '@/navigation';
 import type { Locale } from '@/i18n/config';
-import type { Company, Service, ServiceType, ServiceArea, Project, LocalizedService as LocalizedServiceType } from '@/lib/types';
+import type { Company, LocalizedProject, LocalizedService as LocalizedServiceType, Project, Service, ServiceArea, ServiceAreaLink, ServiceLink, ServiceType } from '@/lib/types';
 import {
   getLocalizedService,
   getLocalizedArea,
@@ -31,7 +32,8 @@ import {
   extractServiceCitySlice,
   firstParagraph,
   summarizeProjectCosts,
-  pickComboProjects,
+  type ComboRelation,
+  type CostSummary,
 } from '@/lib/seo/combo-content';
 import { comboHeroSubtitle } from '@/lib/data/seo-overrides';
 
@@ -48,12 +50,19 @@ interface ServiceLocationPageProps {
   company: Company;
   service: Service;
   area: ServiceArea;
-  services?: Service[];
-  areas?: ServiceArea[];
+  /** Link chips only. This is a client component: whole rows here are
+   *  serialised into the page's flight payload. See ServiceLink. */
+  services?: ServiceLink[];
+  /** Link chips only — see ServiceAreaLink. */
+  areas?: ServiceAreaLink[];
   faqs?: FaqItem[];
   areaProjects?: Project[];
   /** Every published project — powers the honest related-project fallback. */
-  projectPool?: Project[];
+  /** Related projects chosen SERVER-side (was derived from a full project
+   *  pool prop; see the note in the body). Only the few that render. */
+  relatedProjects?: LocalizedProject[];
+  relation?: ComboRelation;
+  generalCostSummary?: CostSummary | null;
   /** `url` is the page canonical, derived server-side via buildAlternates so it
    *  cannot drift from the canonical the page declares. */
   share: ShareContext;
@@ -164,7 +173,7 @@ const SERVICE_CITY_BLOG: Partial<Record<string, Record<string, string>>> = {
 
 export default function ServiceLocationPage({
   locale, serviceSlug, citySlug, company, service, area,
-  services = [], areas = [], faqs = [], areaProjects = [], projectPool = [], share,
+  services = [], areas = [], faqs = [], areaProjects = [], relatedProjects = [], relation = 'none', generalCostSummary = null, share,
 }: ServiceLocationPageProps) {
   const t = useTranslations();
   const zhLoc = locale === 'zh' || locale === 'zh-Hant';
@@ -172,27 +181,18 @@ export default function ServiceLocationPage({
   const localizedService = useMemo(() => getLocalizedService(service, locale), [service, locale]);
   const localizedArea = useMemo(() => getLocalizedArea(area, locale), [area, locale]);
 
-  // Localized project pools. `localizedAreaProjects` = projects in THIS city
-  // (drives the city+service cost stat). `pool` = every published project
-  // (drives the honest related-project fallback below).
+  // Projects in THIS city, localized — drives the city+service cost stat.
   const localizedAreaProjects = useMemo(
     () => areaProjects.map((p) => getLocalizedProject(p, locale)),
     [areaProjects, locale],
   );
-  const pool = useMemo(
-    () => (projectPool.length ? projectPool : areaProjects).map((p) => getLocalizedProject(p, locale)),
-    [projectPool, areaProjects, locale],
-  );
-
-  // Honest project selection: real city×service projects if any, otherwise
-  // RELATED real projects (same-service other-city, then same-city
-  // other-service), labelled as related — never presented as local to {city}.
-  const comboProjects = useMemo(
-    () => pickComboProjects(pool, area.name.en, serviceSlug),
-    [pool, area.name.en, serviceSlug],
-  );
-  const relatedProjects = comboProjects.projects;
-  const relation = comboProjects.relation;
+  // `relatedProjects` / `relation` / `generalCostSummary` are computed on the
+  // SERVER and passed in. They used to be derived here from a `projectPool`
+  // prop holding every published project — which meant every one of those rows,
+  // in all 14 locales, was serialised into this page's flight payload for the
+  // sake of a handful of cards and one cost figure. That was the bulk of the
+  // 4.46 MB this page shipped (measured 2026-09-02). The selection logic itself
+  // is unchanged; only where it runs moved.
   const hasLocalWork = relation === 'exact';
   const featuredProject = relatedProjects[0] ?? null;
 
@@ -235,7 +235,7 @@ export default function ServiceLocationPage({
   const otherAreas = useMemo(
     () => areas
       .filter((a) => a.slug !== area.slug)
-      .map((a) => ({ slug: a.slug, name: getLocalizedArea(a, locale).name })),
+      .map((a) => ({ slug: a.slug, name: pickLocale(a.name, locale) })),
     [areas, area.slug, locale],
   );
 
@@ -243,10 +243,10 @@ export default function ServiceLocationPage({
   const cityBlogSlug: string | undefined = SERVICE_CITY_BLOG[serviceSlug]?.[citySlug];
 
   // Other services available in this area (exclude current)
-  const otherServices: LocalizedServiceType[] = useMemo(
+  const otherServices = useMemo(
     () => services
       .filter((s) => s.slug !== serviceSlug)
-      .map((s) => getLocalizedService(s, locale)),
+      .map((s) => ({ slug: s.slug, title: pickLocale(s.title, locale) })),
     [services, serviceSlug, locale],
   );
 
@@ -258,10 +258,7 @@ export default function ServiceLocationPage({
     () => summarizeProjectCosts(localizedAreaProjects.filter((p) => p.service_type === serviceSlug), 2),
     [localizedAreaProjects, serviceSlug],
   );
-  const serviceGeneralCostSummary = useMemo(
-    () => summarizeProjectCosts(pool.filter((p) => p.service_type === serviceSlug), 2),
-    [pool, serviceSlug],
-  );
+  const serviceGeneralCostSummary = generalCostSummary ?? null;
   const costSummary = cityServiceCostSummary ?? serviceGeneralCostSummary;
   const costIsCitySpecific = cityServiceCostSummary !== null;
 

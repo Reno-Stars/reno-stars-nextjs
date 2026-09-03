@@ -3,6 +3,7 @@ import { getTranslations, setRequestLocale } from 'next-intl/server';
 import { notFound } from 'next/navigation';
 import { ogLocaleMap, hasNativeSupport, type Locale, INDEXABLE_SERVICE_CITY_LOCALES, isIndexableServiceCityLocale } from '@/i18n/config';
 import { getLocalizedService } from '@/lib/data/services';
+import { getLocalizedProject } from '@/lib/data/projects';
 import { getLocalizedArea } from '@/lib/data/areas';
 import type { ServiceType } from '@/lib/types';
 import { getCompanyFromDb, getServicesFromDb, getServiceAreasFromDb, getProjectsByAreaFromDb, getProjectsFromDb, getFaqsByAreaFromDb } from '@/lib/db/queries';
@@ -11,7 +12,7 @@ import ServiceLocationPage from '@/components/pages/ServiceLocationPage';
 import { BreadcrumbSchema, LocalBusinessAreaSchema, ServiceSchema, FAQSchema } from '@/components/structured-data';
 import { getBaseUrl, buildAlternates, SITE_NAME, pickLocale, buildAlternateLocales} from '@/lib/utils';
 import { images as siteImages } from '@/lib/data';
-import { pickServiceAreaFaqs } from '@/lib/seo/combo-content';
+import { pickServiceAreaFaqs, pickComboProjects, summarizeProjectCosts } from '@/lib/seo/combo-content';
 
 interface PageProps {
   params: Promise<{ locale: string; 'service-slug': string; city: string }>;
@@ -166,6 +167,21 @@ export default async function Page({ params }: PageProps) {
     getTranslations({ locale, namespace: 'faq' }),
   ]);
 
+  // Derive the related-project selection and the general cost figure HERE, on
+  // the server. These used to be computed inside ServiceLocationPage from a
+  // `projectPool` prop carrying EVERY published project — so all of those rows,
+  // in all 14 locales, were serialised into this page's flight payload just to
+  // produce a few cards and one number. That was the bulk of the 4.46 MB this
+  // route shipped (measured 2026-09-02). Same functions, same inputs, same
+  // output; only where they run changed.
+  const localizedPool = (projectPool.length ? projectPool : areaProjects)
+    .map((p) => getLocalizedProject(p, locale as Locale));
+  const combo = pickComboProjects(localizedPool, area.name.en, serviceSlug);
+  const generalCostSummary = summarizeProjectCosts(
+    localizedPool.filter((p) => p.service_type === serviceSlug),
+    2,
+  );
+
   const localizedService = getLocalizedService(service, locale as Locale);
   const localizedArea = getLocalizedArea(area, locale as Locale);
   const loc = locale as Locale;
@@ -271,11 +287,15 @@ export default async function Page({ params }: PageProps) {
         company={company}
         service={service}
         area={area}
-        services={services}
-        areas={areas}
+        // Narrow to link chips — ServiceLocationPage is a client component, so
+        // whole rows land in this page's flight payload (4.46 MB before this).
+        services={services.map((sv) => ({ slug: sv.slug, title: sv.title }))}
+        areas={areas.map((a) => ({ id: a.id, slug: a.slug, name: a.name }))}
         faqs={faqs}
         areaProjects={areaProjects}
-        projectPool={projectPool}
+        relatedProjects={combo.projects}
+        relation={combo.relation}
+        generalCostSummary={generalCostSummary}
         share={{ url: shareUrl, title: shareTitle, imageUrl: ogImage }}
       />
     </ClientMessages>

@@ -10,6 +10,25 @@ import { withFallback } from './cache-fallback';
  */
 
 /**
+ * Default TTL for every cached query.
+ *
+ * Was 86400 (24h). That was sized for the Vercel/Neon era, where the point was
+ * to deduplicate billable Neon hits across Lambda invocations — the comments on
+ * the wrappers below still describe that world. Postgres is now in-cluster
+ * (renostars-website-pg), so a cache miss is a local round trip and the old
+ * cost argument no longer applies.
+ *
+ * It has to come down before the deployment runs more than one replica.
+ * `revalidatePath`/`updateTag` only invalidate the pod that handled the admin
+ * action; any other pod keeps serving its own cached rows until they expire on
+ * their own. At 24h that meant published content could be invisible on a pod
+ * for a day. 300s bounds that divergence to five minutes — the same window as
+ * the Cloudflare HTML edge cache the site already runs behind, so it adds no
+ * staleness a visitor could actually observe.
+ */
+export const DEFAULT_REVALIDATE_SECONDS = 300;
+
+/**
  * Wrap a layout-level / high-traffic query in BOTH layers of caching:
  * - `unstable_cache` shares the result across all Lambda invocations
  *   within the revalidate window (deduplicates Neon hits across requests).
@@ -20,10 +39,11 @@ import { withFallback } from './cache-fallback';
  * each render-pass invocation; `unstable_cache` is the INNER store
  * that persists across renders.
  *
- * Default revalidate is 1h (3600s) — appropriate for content like
- * services / areas / company info that changes via the admin a few
- * times a day. Admin server actions call `revalidatePath` which
- * invalidates the unstable_cache entries on the affected paths.
+ * Default revalidate is DEFAULT_REVALIDATE_SECONDS — see the constant.
+ * Admin server actions call `revalidatePath`, which invalidates the
+ * unstable_cache entries on the affected paths IN THE PROCESS THAT HANDLES
+ * THE ACTION — which is why the default TTL, not the invalidation, is what
+ * bounds staleness once more than one replica is running.
  */
 export function cachedQuery<T>(
   fn: () => Promise<T>,
@@ -36,7 +56,7 @@ export function cachedQuery<T>(
   // to react.cache() — single-process dedup is fine for one-shot scripts.
   if (!process.env.NEXT_RUNTIME) return withFallback(cache(fn));
   const wrapped = unstable_cache(fn, keyParts, {
-    revalidate: options.revalidate ?? 86400,
+    revalidate: options.revalidate ?? DEFAULT_REVALIDATE_SECONDS,
     tags: options.tags,
   });
   return withFallback(cache(wrapped));
@@ -55,7 +75,7 @@ export function cachedQueryWithArgs<A extends string, T>(
 ): (arg: A) => Promise<T> {
   if (!process.env.NEXT_RUNTIME) return withFallback(cache(fn));
   const wrapped = unstable_cache(fn, keyParts, {
-    revalidate: options.revalidate ?? 86400,
+    revalidate: options.revalidate ?? DEFAULT_REVALIDATE_SECONDS,
     tags: options.tags,
   });
   return withFallback(cache(wrapped));
@@ -89,7 +109,7 @@ export function cachedQueryPerSlug<T>(
       () => fn(slug),
       [baseKey, slug],
       {
-        revalidate: options.revalidate ?? 86400,
+        revalidate: options.revalidate ?? DEFAULT_REVALIDATE_SECONDS,
         tags: [
           ...(options.broadTags ?? []),
           `${options.tagPrefix ?? baseKey}:${slug}`,
@@ -125,7 +145,7 @@ export function cachedQueryPerSlugLocale<T>(
       () => fn(slug),
       [baseKey, slug, locale],
       {
-        revalidate: options.revalidate ?? 86400,
+        revalidate: options.revalidate ?? DEFAULT_REVALIDATE_SECONDS,
         tags: [`${prefix}:${slug}`, `${prefix}:${slug}:${locale}`],
       },
     );

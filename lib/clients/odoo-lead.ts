@@ -1,4 +1,5 @@
 import 'server-only';
+import { getSecret } from '@/lib/secrets';
 
 /**
  * Odoo lead-ingest client.
@@ -76,9 +77,15 @@ export async function createLeadInOdoo(lead: {
   propertyType?: string;
   notesFromForm?: string;
 }): Promise<{ lead_id: number; partner_id: number; matched: boolean }> {
-  const base = process.env.ODOO_BASE_URL;
-  const key = process.env.ODOO_API_KEY;
-  const db = process.env.ODOO_DB;
+  // Resolved through lib/secrets: process.env first, then Infisical. A value
+  // present in the vault therefore reaches this client without also needing an
+  // ExternalSecret entry — the two-system gap that silently broke CRM lead
+  // ingestion from 2026-08-14 to 2026-09-03.
+  const [base, key, db] = await Promise.all([
+    getSecret('ODOO_BASE_URL'),
+    getSecret('ODOO_API_KEY'),
+    getSecret('ODOO_DB'),
+  ]);
   if (!base || !key || !db) {
     throw new Error('ODOO_BASE_URL, ODOO_API_KEY, and ODOO_DB must all be set');
   }

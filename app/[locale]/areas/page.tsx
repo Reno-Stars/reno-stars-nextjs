@@ -71,7 +71,7 @@ export default async function Page({ params }: PageProps) {
     <ClientMessages ns={['areas', 'cta', 'projects']}>
       <BreadcrumbSchema items={breadcrumbs} locale={locale} />
       <FAQSchema faqs={areasFaqs} locale={locale} />
-      <AreasPage locale={locale as Locale} areas={areas} company={company} areasFaqs={areasFaqs} />
+      <AreasPage locale={locale as Locale} areas={areas.map((a) => ({ id: a.id, slug: a.slug, name: a.name, description: a.description }))} company={company} areasFaqs={areasFaqs} />
     </ClientMessages>
   );
 }

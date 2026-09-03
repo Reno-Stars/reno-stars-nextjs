@@ -16,6 +16,40 @@ import type { Locale } from '@/i18n/config';
  */
 export type Localized<T> = { en: T } & Partial<Record<Exclude<Locale, 'en'>, T>>;
 
+/**
+ * The ONLY fields a link chip needs from a ServiceArea / Service.
+ *
+ * These exist because `ServiceDetailPage` is a client component: every prop it
+ * receives is serialised into the RSC flight payload of every service page.
+ * Passing whole rows put the full description / content / highlights / meta
+ * essays for 14 areas and 11 services — in all 14 locales — into the HTML, for
+ * markup that renders a slug and a name. /en/services/kitchen/ shipped 2.68 MB
+ * and /en/services/kitchen/burnaby/ 4.46 MB (measured 2026-09-02) against
+ * ~0.5 MB for comparable pages.
+ *
+ * Keep these narrow. Widening them silently re-inflates every service page.
+ */
+export type ServiceAreaLink = {
+  id: string;
+  slug: string;
+  name: Localized<string>;
+};
+
+/**
+ * A ServiceAreaLink plus the short description a card needs. Still deliberately
+ * excludes `content` (the area page's body prose), `highlights` and the meta
+ * fields — those are what made /en/areas/ a 1.81 MB page.
+ */
+export type ServiceAreaCard = ServiceAreaLink & {
+  description?: Localized<string>;
+};
+
+export type ServiceLink = {
+  slug: string;
+  title: Localized<string>;
+  showOnServicesPage?: boolean;
+};
+
 // ============================================================================
 // IMAGE PAIR TYPES
 // ============================================================================
