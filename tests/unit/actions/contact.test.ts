@@ -231,3 +231,69 @@ describe('submitContactForm', () => {
     });
   });
 });
+
+/**
+ * The 2026-08-14 -> 2026-09-03 incident: the deployment carried no
+ * RESEND_API_KEY and no ODOO_* vars, so BOTH delivery channels failed on every
+ * submission — and the action still returned `success: true`. Seven visitors
+ * were told "your message has been sent successfully" while their enquiries
+ * were discarded. Nothing errored and nothing alerted.
+ *
+ * These cases pin the contract that makes that impossible to repeat silently.
+ */
+describe('submitContactForm delivery outcome', () => {
+  beforeEach(() => {
+    mockSendContactNotification.mockResolvedValue(true);
+    mockCreateLeadInOdoo.mockResolvedValue({ lead_id: 1, partner_id: 1, matched: false });
+    mockRecordCrmDeadLetter.mockResolvedValue(undefined);
+  });
+
+  const validForm = () => ({
+    name: 'Delivery Test',
+    email: 'delivery@example.com',
+    phone: uniquePhone(),
+    message: 'A message long enough to pass validation.',
+  });
+
+  it('does NOT report success when BOTH channels fail', async () => {
+    mockCreateLeadInOdoo.mockRejectedValue(
+      new Error('ODOO_BASE_URL, ODOO_API_KEY, and ODOO_DB must all be set'),
+    );
+    mockSendContactNotification.mockResolvedValue(false); // no RESEND_API_KEY
+
+    const result = await submitContactForm(validForm());
+
+    expect(result.success).toBe(false);
+    // The visitor must be given a way to reach us that does not depend on the
+    // channel that just failed.
+    expect(result.message).toMatch(/778-960-7999|info@reno-stars\.com/);
+    // and the lost lead is still dead-lettered for recovery
+    expect(mockRecordCrmDeadLetter).toHaveBeenCalled();
+  });
+
+  it('reports success when the CRM succeeds even if email fails', async () => {
+    mockSendContactNotification.mockResolvedValue(false);
+    const result = await submitContactForm(validForm());
+    expect(result.success).toBe(true);
+  });
+
+  it('reports success when email succeeds even if the CRM fails', async () => {
+    mockCreateLeadInOdoo.mockRejectedValue(new Error('odoo down'));
+    const result = await submitContactForm(validForm());
+    expect(result.success).toBe(true);
+    expect(mockRecordCrmDeadLetter).toHaveBeenCalled();
+  });
+
+  it('AWAITS delivery rather than firing and forgetting', async () => {
+    // If delivery were fire-and-forget, the action would return before these
+    // resolved and the outcome could not be reflected in the response at all.
+    let settled = false;
+    mockSendContactNotification.mockImplementation(async () => {
+      await new Promise((r) => setTimeout(r, 10));
+      settled = true;
+      return true;
+    });
+    await submitContactForm(validForm());
+    expect(settled).toBe(true);
+  });
+});
