@@ -21,6 +21,10 @@ vi.mock('next/headers', () => ({
 // NOT write to Neon since the Phase B cleanup (2026-05-28) — Twenty CRM is
 // the sole system of record. The mock returns empty result sets for both
 // SELECTs, which is the common test case (no city/propertyType passed).
+// `mockInsertReturning` is the seam for the durability tests: the action stores
+// the submission BEFORE attempting delivery, and whether that row exists is what
+// decides if an undelivered lead is "safe" or genuinely lost.
+const mockInsertReturning = vi.fn().mockResolvedValue([{ id: 'submission-1' }]);
 vi.mock('@/lib/db', () => ({
   db: {
     select: vi.fn().mockReturnValue({
@@ -30,12 +34,19 @@ vi.mock('@/lib/db', () => ({
         }),
       }),
     }),
+    insert: vi.fn().mockReturnValue({
+      values: vi.fn().mockReturnValue({ returning: mockInsertReturning }),
+    }),
+    update: vi.fn().mockReturnValue({
+      set: vi.fn().mockReturnValue({ where: vi.fn().mockResolvedValue(undefined) }),
+    }),
   },
 }));
 
 vi.mock('@/lib/db/schema', () => ({
   propertyTypes: {},
   serviceAreas: {},
+  contactSubmissions: { id: 'id' },
 }));
 
 // Mock the email module
@@ -229,5 +240,85 @@ describe('submitContactForm', () => {
       city: null,
       propertyType: null,
     });
+  });
+});
+
+/**
+ * The 2026-08-14 -> 2026-09-03 incident: the deployment carried no
+ * RESEND_API_KEY and no ODOO_* vars, so BOTH delivery channels failed on every
+ * submission — and the action still returned `success: true`. Seven visitors
+ * were told "your message has been sent successfully" while their enquiries
+ * were discarded. Nothing errored and nothing alerted.
+ *
+ * These cases pin the contract that makes that impossible to repeat silently.
+ */
+describe('submitContactForm delivery outcome', () => {
+  beforeEach(() => {
+    mockSendContactNotification.mockResolvedValue(true);
+    mockCreateLeadInOdoo.mockResolvedValue({ lead_id: 1, partner_id: 1, matched: false });
+    mockRecordCrmDeadLetter.mockResolvedValue(undefined);
+    mockInsertReturning.mockResolvedValue([{ id: 'submission-1' }]);
+  });
+
+  const validForm = () => ({
+    name: 'Delivery Test',
+    email: 'delivery@example.com',
+    phone: uniquePhone(),
+    message: 'A message long enough to pass validation.',
+  });
+
+  it('still reports success when delivery fails but the lead WAS stored', async () => {
+    // The durable row is the point: nothing is lost, a human will see it, so
+    // telling the visitor it failed would be wrong.
+    mockInsertReturning.mockResolvedValue([{ id: 'submission-1' }]);
+    mockCreateLeadInOdoo.mockRejectedValue(
+      new Error('ODOO_BASE_URL, ODOO_API_KEY, and ODOO_DB must all be set'),
+    );
+    mockSendContactNotification.mockResolvedValue(false); // no RESEND_API_KEY
+
+    const result = await submitContactForm(validForm());
+
+    expect(result.success).toBe(true);
+    expect(mockRecordCrmDeadLetter).toHaveBeenCalled();
+  });
+
+  it('reports FAILURE only when the lead could not even be stored', async () => {
+    // Storage is the last line of defence. If it is gone too, the enquiry is
+    // genuinely lost and the visitor must be told, with a route to us that does
+    // not depend on anything that just failed.
+    mockInsertReturning.mockRejectedValue(new Error('database unavailable'));
+    mockCreateLeadInOdoo.mockRejectedValue(new Error('odoo down'));
+    mockSendContactNotification.mockResolvedValue(false);
+
+    const result = await submitContactForm(validForm());
+
+    expect(result.success).toBe(false);
+    expect(result.message).toMatch(/778-960-7999|info@reno-stars\.com/);
+  });
+
+  it('reports success when the CRM succeeds even if email fails', async () => {
+    mockSendContactNotification.mockResolvedValue(false);
+    const result = await submitContactForm(validForm());
+    expect(result.success).toBe(true);
+  });
+
+  it('reports success when email succeeds even if the CRM fails', async () => {
+    mockCreateLeadInOdoo.mockRejectedValue(new Error('odoo down'));
+    const result = await submitContactForm(validForm());
+    expect(result.success).toBe(true);
+    expect(mockRecordCrmDeadLetter).toHaveBeenCalled();
+  });
+
+  it('AWAITS delivery rather than firing and forgetting', async () => {
+    // If delivery were fire-and-forget, the action would return before these
+    // resolved and the outcome could not be reflected in the response at all.
+    let settled = false;
+    mockSendContactNotification.mockImplementation(async () => {
+      await new Promise((r) => setTimeout(r, 10));
+      settled = true;
+      return true;
+    });
+    await submitContactForm(validForm());
+    expect(settled).toBe(true);
   });
 });

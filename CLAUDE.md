@@ -112,7 +112,7 @@ pnpm site-visit:check     # Verify committed catalog against authored copy (CI-s
   modifier to the quoting system surfaces as a loud sync/test failure rather than a
   checklist that silently omits the new work. Committed artifact — no runtime
   dependency on the invoice service. The route is deliberately absent from
-  `app/sitemap.ts` and carries `robots: {index:false}`; it is intentionally **not** in
+  `lib/sitemap/sections.ts` and carries `robots: {index:false}`; it is intentionally **not** in
   `robots.ts` disallow, because a disallow would stop crawlers reading the noindex.
   Chinese trade terms are repaired post-translation by
   `scripts/fix-site-visit-zh-glossary.mjs` (gtx renders "vanity" as 虚荣 and "paint" as 画).
@@ -139,7 +139,7 @@ pnpm site-visit:check     # Verify committed catalog against authored copy (CI-s
 ## Known Issues
 
 - `DATABASE_URL` required at build time (layout.tsx fetches from DB during pre-rendering).
-- `app/sitemap.ts` requires DB connection for dynamic slugs.
+- The sitemap requires a DB connection for dynamic slugs (`lib/sitemap/data.ts`).
 
 ## Detailed Documentation
 
