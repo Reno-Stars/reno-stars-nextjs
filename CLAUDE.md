@@ -154,6 +154,25 @@ pnpm site-visit:check     # Verify committed catalog against authored copy (CI-s
 > around it and self-retires once tier 1 or 2 can answer.
 > Asks: `reno-stars-infra#184`, `molecule-ai/operator-config#812`.
 
+**Boot-time hydration makes sync readers work.** `getSecret` is async, but plenty
+of code reads secrets synchronously, some of it at MODULE LOAD
+(`lib/cloudflare-purge.ts` does `const API_TOKEN = process.env.CLOUDFLARE_API_TOKEN`
+at import). So `register()` in `instrumentation.ts` calls `hydrateEnvFromSecrets()`
+once at startup, copying every resolvable secret into `process.env` — without ever
+overwriting a variable that is already set.
+
+> ⚠️ **Do not "simplify" this away.** Before it existed, `/api/health/config`
+> reported `cachePurge: ok` (the token is in the bridge) while the code that
+> actually purges read `process.env` and no-opped. **The monitor and the runtime
+> resolved secrets differently, so the monitor certified a broken deployment as
+> healthy** — the same failure as the lost-leads incident, one layer up. Hydration
+> is what makes the two agree by construction.
+>
+> Hydrated keys are treated as a CACHE, not a source: `getSecret` still checks
+> Infisical first for them, so **rotating a key reaches a running pod** instead of
+> being frozen until a restart nobody knows to perform. Cover:
+> `tests/unit/lib/secrets-hydration.test.ts`.
+
 **`NEXT_PUBLIC_*` cannot come from any tier** — Next inlines them at BUILD time.
 Their production values are `Dockerfile` ARG defaults (lines 53-58), which is why
 GA4, Google Ads conversion and Clarity kept working through the outage.

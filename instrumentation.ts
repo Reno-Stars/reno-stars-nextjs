@@ -15,8 +15,13 @@ import { logEvent, localeFromPath } from '@/lib/log';
 export async function register(): Promise<void> {
   if (process.env.NEXT_RUNTIME !== 'nodejs') return;
   try {
-    const { hydrateEnvFromSecrets } = await import('@/lib/secrets');
-    await hydrateEnvFromSecrets();
+    const { hydrateEnvWithRetry } = await import('@/lib/secrets');
+    // Retries past the pod's boot-time connection race — see hydrateEnvWithRetry.
+    // Awaited: a request served before hydration reads an empty environment and
+    // silently no-ops, which is the failure this whole mechanism exists to stop.
+    // The retry gives up after ~15s, and only ever spends that when NO source is
+    // reachable — a state in which the database-backed site is already down.
+    await hydrateEnvWithRetry();
   } catch (err) {
     console.error(
       JSON.stringify({
