@@ -37,3 +37,19 @@ CREATE TABLE IF NOT EXISTS "contact_submissions" (
 	"created_at" timestamp DEFAULT now() NOT NULL
 );
 CREATE INDEX IF NOT EXISTS "contact_submissions_created_at_idx" ON "contact_submissions" USING btree ("created_at");
+
+-- OWNERSHIP AND GRANTS — not optional, and easy to miss.
+--
+-- Applying this file as the `postgres` superuser leaves the table owned by
+-- postgres with no grants, and the application role then gets
+-- "permission denied for table contact_submissions" on INSERT. The durable
+-- store is silently non-functional: the row is never written, the lead falls
+-- through to the delivery channels, and if those are also down it is lost —
+-- exactly the failure this table exists to prevent. That happened on
+-- 2026-09-03 and was caught only by submitting the live form and reading the
+-- `lead.not_persisted` log line.
+--
+-- Every other application table (e.g. property_types) is owned by `renostars`
+-- with SELECT granted to `agent_ro`. Match that.
+ALTER TABLE contact_submissions OWNER TO renostars;
+GRANT SELECT ON contact_submissions TO agent_ro;
