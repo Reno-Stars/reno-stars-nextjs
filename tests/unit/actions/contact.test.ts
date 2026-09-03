@@ -21,6 +21,10 @@ vi.mock('next/headers', () => ({
 // NOT write to Neon since the Phase B cleanup (2026-05-28) — Twenty CRM is
 // the sole system of record. The mock returns empty result sets for both
 // SELECTs, which is the common test case (no city/propertyType passed).
+// `mockInsertReturning` is the seam for the durability tests: the action stores
+// the submission BEFORE attempting delivery, and whether that row exists is what
+// decides if an undelivered lead is "safe" or genuinely lost.
+const mockInsertReturning = vi.fn().mockResolvedValue([{ id: 'submission-1' }]);
 vi.mock('@/lib/db', () => ({
   db: {
     select: vi.fn().mockReturnValue({
@@ -30,12 +34,19 @@ vi.mock('@/lib/db', () => ({
         }),
       }),
     }),
+    insert: vi.fn().mockReturnValue({
+      values: vi.fn().mockReturnValue({ returning: mockInsertReturning }),
+    }),
+    update: vi.fn().mockReturnValue({
+      set: vi.fn().mockReturnValue({ where: vi.fn().mockResolvedValue(undefined) }),
+    }),
   },
 }));
 
 vi.mock('@/lib/db/schema', () => ({
   propertyTypes: {},
   serviceAreas: {},
+  contactSubmissions: { id: 'id' },
 }));
 
 // Mock the email module
@@ -246,6 +257,7 @@ describe('submitContactForm delivery outcome', () => {
     mockSendContactNotification.mockResolvedValue(true);
     mockCreateLeadInOdoo.mockResolvedValue({ lead_id: 1, partner_id: 1, matched: false });
     mockRecordCrmDeadLetter.mockResolvedValue(undefined);
+    mockInsertReturning.mockResolvedValue([{ id: 'submission-1' }]);
   });
 
   const validForm = () => ({
@@ -255,7 +267,10 @@ describe('submitContactForm delivery outcome', () => {
     message: 'A message long enough to pass validation.',
   });
 
-  it('does NOT report success when BOTH channels fail', async () => {
+  it('still reports success when delivery fails but the lead WAS stored', async () => {
+    // The durable row is the point: nothing is lost, a human will see it, so
+    // telling the visitor it failed would be wrong.
+    mockInsertReturning.mockResolvedValue([{ id: 'submission-1' }]);
     mockCreateLeadInOdoo.mockRejectedValue(
       new Error('ODOO_BASE_URL, ODOO_API_KEY, and ODOO_DB must all be set'),
     );
@@ -263,12 +278,22 @@ describe('submitContactForm delivery outcome', () => {
 
     const result = await submitContactForm(validForm());
 
-    expect(result.success).toBe(false);
-    // The visitor must be given a way to reach us that does not depend on the
-    // channel that just failed.
-    expect(result.message).toMatch(/778-960-7999|info@reno-stars\.com/);
-    // and the lost lead is still dead-lettered for recovery
+    expect(result.success).toBe(true);
     expect(mockRecordCrmDeadLetter).toHaveBeenCalled();
+  });
+
+  it('reports FAILURE only when the lead could not even be stored', async () => {
+    // Storage is the last line of defence. If it is gone too, the enquiry is
+    // genuinely lost and the visitor must be told, with a route to us that does
+    // not depend on anything that just failed.
+    mockInsertReturning.mockRejectedValue(new Error('database unavailable'));
+    mockCreateLeadInOdoo.mockRejectedValue(new Error('odoo down'));
+    mockSendContactNotification.mockResolvedValue(false);
+
+    const result = await submitContactForm(validForm());
+
+    expect(result.success).toBe(false);
+    expect(result.message).toMatch(/778-960-7999|info@reno-stars\.com/);
   });
 
   it('reports success when the CRM succeeds even if email fails', async () => {

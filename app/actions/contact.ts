@@ -3,7 +3,7 @@
 
 import { eq } from 'drizzle-orm';
 import { db } from '@/lib/db';
-import { propertyTypes, serviceAreas } from '@/lib/db/schema';
+import { contactSubmissions, propertyTypes, serviceAreas } from '@/lib/db/schema';
 import { isValidEmail } from '@/lib/utils';
 import { sendContactNotification } from '@/lib/email';
 import { createLeadInOdoo, type CrmPropertyType } from '@/lib/clients/odoo-lead';
@@ -307,6 +307,36 @@ export async function submitContactForm(
     // one round trip is worth never silently dropping an enquiry again.
     reportLeadDeliveryConfig();
 
+    // DURABILITY FIRST. Persist the enquiry before attempting any delivery, on
+    // the one dependency this request already has. Delivery is best-effort by
+    // nature; this row is what makes a lead impossible to lose when it fails.
+    // If the INSERT itself fails we have nowhere to put the lead, and that —
+    // not a delivery failure — is the case the visitor must be told about.
+    let submissionId: string | null = null;
+    try {
+      const [row] = await db
+        .insert(contactSubmissions)
+        .values({
+          name: sanitizedName,
+          email: sanitizedEmail,
+          phone: sanitizedPhone,
+          message: sanitizedMessage,
+          city: cityNameEn,
+          propertyType: propertyTypeNameEn,
+        })
+        .returning({ id: contactSubmissions.id });
+      submissionId = row?.id ?? null;
+    } catch (err) {
+      console.error(
+        JSON.stringify({
+          event: 'lead.not_persisted',
+          message: 'Could not store the contact submission. The lead is at risk.',
+          error: err instanceof Error ? err.message : String(err),
+          timestamp: new Date().toISOString(),
+        }),
+      );
+    }
+
     const [crmDelivered, emailDelivered] = await Promise.all([
       createLeadInOdoo(crmPayload)
         .then(() => true)
@@ -330,21 +360,50 @@ export async function submitContactForm(
     // One channel succeeding is enough: the lead is recorded somewhere a human
     // will see it. Only when BOTH fail has the enquiry actually been lost, and
     // that is the one case the visitor must not be told was a success.
+    // Record the outcome against the stored row so a recovery query can find
+    // exactly the enquiries nobody has seen: `WHERE NOT delivered_crm AND NOT
+    // delivered_email`.
+    if (submissionId) {
+      try {
+        await db
+          .update(contactSubmissions)
+          .set({
+            deliveredCrm: crmDelivered,
+            deliveredEmail: emailDelivered,
+            deliveryError:
+              crmDelivered || emailDelivered
+                ? null
+                : `no delivery channel succeeded; missing env: ${JSON.stringify(missingLeadEnv())}`,
+          })
+          .where(eq(contactSubmissions.id, submissionId));
+      } catch (err) {
+        console.error('Failed to record contact delivery outcome:', err);
+      }
+    }
+
     if (!crmDelivered && !emailDelivered) {
       console.error(
         JSON.stringify({
           event: 'lead.undeliverable',
           message: 'Contact form submission reached no delivery channel.',
+          persisted: Boolean(submissionId),
+          submissionId,
           missingEnv: missingLeadEnv(),
           timestamp: new Date().toISOString(),
         }),
       );
-      return {
-        success: false,
-        message:
-          'Sorry — we could not deliver your message. Please call 778-960-7999 or ' +
-          'email info@reno-stars.com and we will get straight back to you.',
-      };
+
+      // Stored but undelivered is NOT a failure for the visitor: the enquiry is
+      // safe and a human will see it. Only tell them it failed when we could
+      // not even store it, because then it really is gone.
+      if (!submissionId) {
+        return {
+          success: false,
+          message:
+            'Sorry — we could not record your message. Please call 778-960-7999 or ' +
+            'email info@reno-stars.com and we will get straight back to you.',
+        };
+      }
     }
 
     return {
