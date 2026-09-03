@@ -49,9 +49,16 @@ export default function robots(): MetadataRoute.Robots {
           '*/contact/thank-you/',
         ],
       },
-      // Training-only crawlers — no citation/retrieval benefit. Block them.
+      // Exception: anthropic-ai and cohere-ai also perform citation retrieval.
+      // Allow them to crawl the llms routes while blocking training use.
       {
-        userAgent: ['CCBot', 'anthropic-ai', 'cohere-ai', 'Diffbot', 'omgili', 'omgilibot'],
+        userAgent: ['anthropic-ai', 'cohere-ai'],
+        allow: ['/llms.txt', '/llms-full.txt'],
+        disallow: [],
+      },
+      // Genuine training-only bots — block outright.
+      {
+        userAgent: ['CCBot', 'Diffbot', 'omgili', 'omgilibot'],
         disallow: '/',
       },
     ],
