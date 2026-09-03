@@ -73,7 +73,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   }
 
   // Project/site LEAF pages: only EN and ZH have native copy — the sitemap
-  // restricts this route to en+zh (PROJECT_LEAF_LOCALES in app/sitemap.ts).
+  // restricts this route to en+zh (PROJECT_LEAF_LOCALES in lib/sitemap/sections.ts).
   // Noindex the other 12 locales and restrict hreflang to en/zh so Google
   // stops re-crawling ~750 duplicate leaf URLs ("Crawled - currently not
   // indexed", GSC 2026-07-07). Category pages above keep all locales.
@@ -368,8 +368,6 @@ export default async function Page({ params }: PageProps) {
           serviceDescription={localizedSite.description || ''}
           areaServed={['Vancouver Metro']}
           url={`/${locale}/projects/${slug}/`}
-          googleRating={googleReviews.rating}
-          googleReviewCount={googleReviews.userRatingCount}
         />
         {siteBlockSchema.faqs.map((faq, i) => (
           <FAQSchema key={`site-faq-${i}`} faqs={faq.faqs} locale={faq.locale} />

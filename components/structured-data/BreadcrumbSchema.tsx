@@ -41,7 +41,7 @@ export default function BreadcrumbSchema({ items }: BreadcrumbSchemaProps): Reac
       '@type': 'ListItem',
       position: index + 1,
       name: item.name,
-      item: `${baseUrl}${item.url}`,
+      item: `${baseUrl}${item.url ?? ''}`,
     })),
   };
 

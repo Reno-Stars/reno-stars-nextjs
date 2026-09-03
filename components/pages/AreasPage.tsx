@@ -1,12 +1,12 @@
 'use client';
 
 import { useMemo } from 'react';
+import { pickLocale } from '@/lib/utils';
 import { useTranslations } from 'next-intl';
 import { MapPin, ChevronRight, BookOpen } from 'lucide-react';
 import { Link } from '@/navigation';
 import type { Locale } from '@/i18n/config';
-import { getLocalizedArea } from '@/lib/data';
-import type { Company, ServiceArea } from '@/lib/types';
+import type { Company, ServiceAreaCard } from '@/lib/types';
 import CTASection from '@/components/CTASection';
 import VisualBreadcrumb from '@/components/VisualBreadcrumb';
 import FaqSection from '@/components/home/FaqSection';
@@ -17,7 +17,9 @@ import {
 
 interface AreasPageProps {
   locale: Locale;
-  areas: ServiceArea[];
+  /** Card-shaped, not full rows: this is a client component, so whole rows
+   *  land in the flight payload. See ServiceAreaCard. */
+  areas: ServiceAreaCard[];
   company: Company;
   areasFaqs?: { question: string; answer: string }[];
 }
@@ -26,7 +28,11 @@ export default function AreasPage({ locale, areas, company, areasFaqs }: AreasPa
   const t = useTranslations();
 
   const localizedAreas = useMemo(
-    () => areas.map((area) => ({ ...getLocalizedArea(area, locale), slug: area.slug })),
+    () => areas.map((area) => ({
+      slug: area.slug,
+      name: pickLocale(area.name, locale),
+      description: area.description ? pickLocale(area.description, locale) : undefined,
+    })),
     [areas, locale],
   );
 

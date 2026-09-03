@@ -132,7 +132,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
   // hreflang must only list indexable variants: en/zh always, minor locales
   // only once a native body exists. Must stay in sync with the sitemap's
-  // nativeLocales filter (app/sitemap.ts) and the noindex condition above.
+  // nativeLocales filter (nativeLocalesFor in lib/sitemap/data.ts) and the noindex condition above.
   const nativeLocales = locales.filter(
     loc => loc === 'en' || loc === 'zh' || Boolean(contentMap?.[loc] && contentMap[loc] !== contentMap.en),
   );

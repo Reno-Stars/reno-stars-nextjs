@@ -3,23 +3,14 @@
 
 import { eq } from 'drizzle-orm';
 import { db } from '@/lib/db';
-import { propertyTypes, serviceAreas } from '@/lib/db/schema';
+import { contactSubmissions, propertyTypes, serviceAreas } from '@/lib/db/schema';
 import { isValidEmail } from '@/lib/utils';
 import { sendContactNotification } from '@/lib/email';
 import { createLeadInOdoo, type CrmPropertyType } from '@/lib/clients/odoo-lead';
+import { reportLeadDeliveryConfig, missingLeadEnv } from '@/lib/lead-delivery-config';
 import { recordCrmDeadLetter } from '@/lib/crm-deadletter';
 import { getClientIp as getTrustedClientIp } from '@/lib/get-client-ip';
 
-/**
- * Run a background task after the response is sent. On the self-hosted
- * long-running `next start` process the floating promise completes on its own
- * (unlike a serverless isolate, which froze after responding — the original
- * reason this used @vercel/functions waitUntil). Errors are logged, never
- * thrown into the request.
- */
-function fireAndForget(promise: Promise<unknown>): void {
-  void promise.catch((err) => console.error('[contact] background task failed:', err));
-}
 
 
 /** Contact form input data */
@@ -305,21 +296,54 @@ export async function submitContactForm(
       propertyType: mapPropertyTypeSlugToCrm(propertyTypeSlug),
       notesFromForm: sanitizedMessage,
     };
-    fireAndForget(
-      (async () => {
-        try {
-          await createLeadInOdoo(crmPayload);
-        } catch (err) {
-          await recordCrmDeadLetter(crmPayload, err);
-        }
-      })()
-    );
+    // Both deliveries are AWAITED, and the visitor is told the truth about the
+    // outcome. They used to be fire-and-forget with an unconditional
+    // `success: true`, which is how the form reported success to 7 visitors
+    // between 2026-08-14 and 2026-09-03 while every one of their leads was
+    // discarded (the deployment carried no RESEND_API_KEY and no ODOO_* vars;
+    // see lib/lead-delivery-config.ts). Fire-and-forget was originally there to
+    // stop Vercel killing the serverless isolate mid-flight; the site is a
+    // long-running self-hosted process now, so that reason is gone, and paying
+    // one round trip is worth never silently dropping an enquiry again.
+    reportLeadDeliveryConfig();
 
-    // Send email notification in the background. Wrapped in fireAndForget() so
-    // Vercel keeps the serverless isolate alive until the HTTP call to Resend
-    // completes — without it, the fire-and-forget promise was being dropped
-    // mid-flight (~30% silent failure rate observed in production).
-    fireAndForget(
+    // DURABILITY FIRST. Persist the enquiry before attempting any delivery, on
+    // the one dependency this request already has. Delivery is best-effort by
+    // nature; this row is what makes a lead impossible to lose when it fails.
+    // If the INSERT itself fails we have nowhere to put the lead, and that —
+    // not a delivery failure — is the case the visitor must be told about.
+    let submissionId: string | null = null;
+    try {
+      const [row] = await db
+        .insert(contactSubmissions)
+        .values({
+          name: sanitizedName,
+          email: sanitizedEmail,
+          phone: sanitizedPhone,
+          message: sanitizedMessage,
+          city: cityNameEn,
+          propertyType: propertyTypeNameEn,
+        })
+        .returning({ id: contactSubmissions.id });
+      submissionId = row?.id ?? null;
+    } catch (err) {
+      console.error(
+        JSON.stringify({
+          event: 'lead.not_persisted',
+          message: 'Could not store the contact submission. The lead is at risk.',
+          error: err instanceof Error ? err.message : String(err),
+          timestamp: new Date().toISOString(),
+        }),
+      );
+    }
+
+    const [crmDelivered, emailDelivered] = await Promise.all([
+      createLeadInOdoo(crmPayload)
+        .then(() => true)
+        .catch(async (err) => {
+          await recordCrmDeadLetter(crmPayload, err);
+          return false;
+        }),
       sendContactNotification({
         name: sanitizedName,
         email: sanitizedEmail,
@@ -328,9 +352,59 @@ export async function submitContactForm(
         city: cityNameEn,
         propertyType: propertyTypeNameEn,
       }).catch((err) => {
-        console.error('Background email notification failed:', err);
-      })
-    );
+        console.error('Contact email notification failed:', err);
+        return false;
+      }),
+    ]);
+
+    // One channel succeeding is enough: the lead is recorded somewhere a human
+    // will see it. Only when BOTH fail has the enquiry actually been lost, and
+    // that is the one case the visitor must not be told was a success.
+    // Record the outcome against the stored row so a recovery query can find
+    // exactly the enquiries nobody has seen: `WHERE NOT delivered_crm AND NOT
+    // delivered_email`.
+    if (submissionId) {
+      try {
+        await db
+          .update(contactSubmissions)
+          .set({
+            deliveredCrm: crmDelivered,
+            deliveredEmail: emailDelivered,
+            deliveryError:
+              crmDelivered || emailDelivered
+                ? null
+                : `no delivery channel succeeded; missing env: ${JSON.stringify(missingLeadEnv())}`,
+          })
+          .where(eq(contactSubmissions.id, submissionId));
+      } catch (err) {
+        console.error('Failed to record contact delivery outcome:', err);
+      }
+    }
+
+    if (!crmDelivered && !emailDelivered) {
+      console.error(
+        JSON.stringify({
+          event: 'lead.undeliverable',
+          message: 'Contact form submission reached no delivery channel.',
+          persisted: Boolean(submissionId),
+          submissionId,
+          missingEnv: missingLeadEnv(),
+          timestamp: new Date().toISOString(),
+        }),
+      );
+
+      // Stored but undelivered is NOT a failure for the visitor: the enquiry is
+      // safe and a human will see it. Only tell them it failed when we could
+      // not even store it, because then it really is gone.
+      if (!submissionId) {
+        return {
+          success: false,
+          message:
+            'Sorry — we could not record your message. Please call 778-960-7999 or ' +
+            'email info@reno-stars.com and we will get straight back to you.',
+        };
+      }
+    }
 
     return {
       success: true,

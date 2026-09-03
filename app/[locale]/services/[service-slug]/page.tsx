@@ -425,11 +425,18 @@ export default async function Page({ params }: PageProps) {
         serviceSlug={serviceSlug as ServiceType}
         company={company}
         service={service}
-        areas={areas}
+        // Narrow to link chips: ServiceDetailPage is a client component, so
+        // whole rows here would be serialised into this page's flight payload
+        // (2.68 MB before this). See ServiceAreaLink / ServiceLink in lib/types.
+        areas={areas.map((a) => ({ id: a.id, slug: a.slug, name: a.name }))}
         faqs={faqs}
         googleRating={googleReviews.rating}
         googleReviewCount={googleReviews.userRatingCount}
-        allServices={services}
+        allServices={services.map((sv) => ({
+          slug: sv.slug,
+          title: sv.title,
+          showOnServicesPage: sv.showOnServicesPage,
+        }))}
         clientReviews={clientReviews}
         h1Override={getServiceH1Override(serviceSlug, locale as Locale)}
         share={{
