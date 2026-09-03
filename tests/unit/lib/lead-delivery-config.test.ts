@@ -3,9 +3,18 @@ import {
   missingEnvFor,
   isChannelConfigured,
   missingLeadEnv,
+  missingLeadSecrets,
+  missingSecretsFor,
   reportLeadDeliveryConfig,
   resetLeadConfigWarningForTests,
 } from '@/lib/lead-delivery-config';
+
+// The config check now resolves through lib/secrets (env -> Infisical -> DB).
+// Stub it to env-only so these cases test the reporting logic, not the tiers —
+// the tier ordering has its own suite in secrets-db-tier.test.ts.
+vi.mock('@/lib/secrets', () => ({
+  getSecret: async (name: string) => process.env[name],
+}));
 
 /**
  * These tests encode the production incident of 2026-08-14 → 2026-09-03, when
@@ -42,15 +51,15 @@ afterEach(() => {
 });
 
 describe('lead delivery config', () => {
-  it('reports exactly the production configuration that lost the leads', () => {
+  it('reports exactly the production configuration that lost the leads', async () => {
     // Nothing set — the state ns/reno-stars was actually in for ~20 days.
-    expect(missingLeadEnv()).toEqual({
+    expect(await missingLeadSecrets()).toEqual({
       email: ['RESEND_API_KEY', 'EMAIL_FROM'],
       crm: ['ODOO_BASE_URL', 'ODOO_API_KEY', 'ODOO_DB'],
       alerting: ['TELEGRAM_BOT_TOKEN'],
     });
-    expect(isChannelConfigured('email')).toBe(false);
-    expect(isChannelConfigured('crm')).toBe(false);
+    expect(await isChannelConfigured('email')).toBe(false);
+    expect(await isChannelConfigured('crm')).toBe(false);
   });
 
   it('treats an empty string as missing, not as configured', () => {
@@ -59,17 +68,17 @@ describe('lead delivery config', () => {
     expect(missingEnvFor('email')).toEqual(['RESEND_API_KEY', 'EMAIL_FROM']);
   });
 
-  it('reports a PARTIALLY configured channel — the subtler failure', () => {
+  it('reports a PARTIALLY configured channel — the subtler failure', async () => {
     // A key without a verified sender still cannot deliver.
     process.env.RESEND_API_KEY = 're_test';
-    expect(missingEnvFor('email')).toEqual(['EMAIL_FROM']);
-    expect(isChannelConfigured('email')).toBe(false);
+    expect(await missingSecretsFor('email')).toEqual(['EMAIL_FROM']);
+    expect(await isChannelConfigured('email')).toBe(false);
   });
 
-  it('logs one structured error naming the missing vars, and only once', () => {
+  it('logs one structured error naming the missing vars, and only once', async () => {
     const err = vi.spyOn(console, 'error').mockImplementation(() => {});
 
-    expect(reportLeadDeliveryConfig()).toBe(false);
+    expect(await reportLeadDeliveryConfig()).toBe(false);
     expect(err).toHaveBeenCalledTimes(1);
 
     const payload = JSON.parse(err.mock.calls[0][0] as string);
@@ -78,20 +87,20 @@ describe('lead delivery config', () => {
     expect(payload.missing.crm).toContain('ODOO_BASE_URL');
 
     // Called on every submission; must not flood the log.
-    reportLeadDeliveryConfig();
-    reportLeadDeliveryConfig();
+    await reportLeadDeliveryConfig();
+    await reportLeadDeliveryConfig();
     expect(err).toHaveBeenCalledTimes(1);
   });
 
-  it('stays silent and returns true when everything is configured', () => {
+  it('stays silent and returns true when everything is configured', async () => {
     const err = vi.spyOn(console, 'error').mockImplementation(() => {});
     for (const k of LEAD_VARS) process.env[k] = 'set';
 
-    expect(reportLeadDeliveryConfig()).toBe(true);
+    expect(await reportLeadDeliveryConfig()).toBe(true);
     expect(err).not.toHaveBeenCalled();
   });
 
-  it('does not throw — a mail misconfiguration must not take the site down', () => {
-    expect(() => reportLeadDeliveryConfig()).not.toThrow();
+  it('does not throw — a mail misconfiguration must not take the site down', async () => {
+    await expect(reportLeadDeliveryConfig()).resolves.toBe(false);
   });
 });

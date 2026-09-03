@@ -6,15 +6,33 @@ This file provides essential context for AI assistants. For detailed docs, see `
 
 Bilingual (EN/ZH) renovation company website built with Next.js 16 App Router.
 
-**Self-hosted (since mid-2026, migrated off Vercel).** Production runs as
-`next start` on this Mac (launchd `com.renostars.reno-stars-web`, port 3000)
-behind a Cloudflare Tunnel, backed by a **local PostgreSQL** instance
-(`127.0.0.1:5435` — Neon retired). Local dev uses Docker (Postgres + MinIO).
+**Runs on the Enter OS k3s cluster (`ns/reno-stars`) since 2026-08-15.** NOT on
+this Mac. The launchd service `com.renostars.reno-stars-web` is booted out and
+`127.0.0.1:3000` / `127.0.0.1:5435` are dead — anything still pointing there is
+broken. Postgres is `renostars-website-pg-0` in-cluster; www is served through
+the cluster Cloudflare tunnel `f6974f01-…`. Local dev still uses Docker.
 
-**Deploy = rebuild + restart** (no Vercel git-push auto-deploy anymore):
-`git pull` on `main` → `pnpm build` → `launchctl kickstart -k
-gui/$(id -u)/com.renostars.reno-stars-web`, then verify HTTP 200 on
-`http://127.0.0.1:3000/en/` and `https://www.reno-stars.com/en/`.
+**Deploy = merge → Gitea builds → merge the deploy PR → CD applies.**
+Push to `main` on GitHub → the Gitea mirror picks it up (`mirror-sync` to skip
+the ≤10 min poll) → `.gitea/workflows/build.yml` builds and pushes
+`registry.enteros.ai/reno-stars/reno-stars-web:<sha12>` → `propose-deploy` opens
+a PR on `Reno-Stars/reno-stars-infra` → **merge it** → `cronjob/reno-stars-cd`
+(*/5) applies. Merging your own deploy PR is expected; no human gate.
+
+> ⚠️ **A merged deploy PR can be a SILENT NO-OP.** The namespace runs at ~99% of
+> its ResourceQuota, and with `replicas: 2` the default rollingUpdate values
+> deadlock (maxSurge 25% rounds UP to 1, maxUnavailable 25% rounds DOWN to 0), so
+> a rollout needs a third pod the quota refuses. Git says the tag moved, the
+> Deployment reports `Available=True`, the old pods keep serving, and nothing
+> alerts. The manifest now pins `maxSurge: 0, maxUnavailable: 1`. **Always finish
+> a deploy with `kubectl rollout status` and confirm
+> `updatedReplicas == spec.replicas`, then read a byte back off the live site.**
+
+> ⚠️ **Cloudflare caches HTML at the edge (`s-maxage=300`).** After a deploy the
+> cached page carries a stale Server Action id and form submissions fail with
+> *"Failed to find Server Action"* until it expires or is purged. Purging needs
+> `CLOUDFLARE_API_TOKEN`; verify it resolves after any deploy that changes a
+> server action.
 
 > **Self-hosting enables server-side background work.** Because production is a
 > long-running Node process (not serverless), fire-and-forget promises actually
@@ -31,7 +49,7 @@ exists; the Vercel-specific costs no longer apply, but the designs remain sound.
 
 - **Framework:** Next.js 16, React 19, TypeScript 5.7
 - **Styling:** Tailwind CSS 4 with neumorphic design system
-- **Database:** Drizzle ORM → pg Pool against local PostgreSQL (`127.0.0.1:5435`) in prod and local dev. (Neon HTTP driver is retired but still auto-selected if `DATABASE_URL` contains `neon.tech` — see "Dual DB driver" below.)
+- **Database:** Drizzle ORM → pg Pool. Production is `renostars-website-pg-0` in-cluster; local dev is Docker on `127.0.0.1:5435`. (Neon HTTP driver is retired but still auto-selected if `DATABASE_URL` contains `neon.tech` — see "Dual DB driver" below.)
 - **i18n:** next-intl 4 — locales: `en`, `zh`, prefix: `always`
 - **Testing:** Vitest (unit), Playwright (e2e)
 - **Storage:** Production images on Cloudflare R2, local dev on MinIO (S3-compatible)
@@ -117,6 +135,34 @@ pnpm site-visit:check     # Verify committed catalog against authored copy (CI-s
   Chinese trade terms are repaired post-translation by
   `scripts/fix-site-visit-zh-glossary.mjs` (gtx renders "vanity" as 虚荣 and "paint" as 画).
 
+## Secrets — how a value reaches the running app
+
+`lib/secrets.ts` `getSecret(name)` resolves in THREE tiers, in order:
+
+1. **`process.env`** — whatever the ExternalSecret maps in. Wins always, so an
+   operator can override anything and local dev/CI need no vault access.
+2. **Infisical** (`key.enteros.ai`, project `reno-stars-2p-t5`, env `prod`, path
+   `/web`) — needs `INFISICAL_CLIENT_ID` / `INFISICAL_CLIENT_SECRET` in the pod.
+   Cached 5 min, 30s failure backoff, serves stale during an outage.
+3. **`app_secrets` table** — TEMPORARY bridge, see `scripts/create-app-secrets.sql`.
+
+> ⚠️ **Writing a value into Infisical does NOT deliver it to the pod** unless the
+> key is named in the `reno-stars-web-secrets` ExternalSecret, which only the
+> platform operator can edit. That two-system gap is why the 2026-08-14 migration
+> left **25 of 34 runtime variables undeliverable** and the contact form silently
+> discarded 7 customer enquiries for 20 days. Tier 3 exists solely to route
+> around it and self-retires once tier 1 or 2 can answer.
+> Asks: `reno-stars-infra#184`, `molecule-ai/operator-config#812`.
+
+**`NEXT_PUBLIC_*` cannot come from any tier** — Next inlines them at BUILD time.
+Their production values are `Dockerfile` ARG defaults (lines 53-58), which is why
+GA4, Google Ads conversion and Clarity kept working through the outage.
+
+**Is the deployment actually configured?** `GET /api/health/config` → 200, or 503
+naming the degraded capabilities. Add `Authorization: Bearer $REVALIDATE_SECRET`
+for the specific variable names. The blackbox probe checks it every 300s.
+A missing variable fails at FIRST USE, not at boot, so liveness cannot see it.
+
 ## Environment Variables
 
 | Variable | Required | Description |
@@ -128,7 +174,13 @@ pnpm site-visit:check     # Verify committed catalog against authored copy (CI-s
 | `GOOGLE_PLACES_API_KEY` | No | Google Places API for reviews |
 | `GOOGLE_PLACE_ID` | No | Google Place ID |
 | `NEXT_PUBLIC_GA_MEASUREMENT_ID` | No | GA4 Measurement ID |
-| `RESEND_API_KEY` | No | Contact form email |
+| `RESEND_API_KEY` | **Yes (prod)** | Contact form email. Absent = leads accepted and never delivered. |
+| `ODOO_BASE_URL` / `ODOO_API_KEY` / `ODOO_DB` | **Yes (prod)** | CRM lead ingestion (`crm.lead/ingest_web_lead`). |
+| `CLOUDFLARE_API_TOKEN` / `CLOUDFLARE_ZONE_ID` | **Yes (prod)** | Edge cache purge. Absent = purge is a silent no-op and post-deploy HTML goes stale. |
+| `INFISICAL_CLIENT_ID` / `INFISICAL_CLIENT_SECRET` | Prod | Machine identity for the vault tier of `lib/secrets.ts`. |
+| `BLOG_API_SECRET` | Prod | Blog publish API. |
+| `S3_ACCESS_KEY` / `S3_SECRET_KEY` / `S3_BUCKET` / `S3_ENDPOINT` | Prod | Admin image uploads. |
+| `TELEGRAM_BOT_TOKEN` | Prod | Dead-letter alerts when a lead reaches no channel. |
 | `EMAIL_FROM` / `EMAIL_TO` | No | Email sender/recipient (TO supports comma-separated list) |
 | `EMAIL_CC` | No | Comma-separated CC list. Defaults to `renostars.sylvia@gmail.com` so Sylvia sees new leads. Set to empty string to disable CC. |
 | `OPENAI_API_KEY` | No | AI content optimization |
@@ -140,6 +192,19 @@ pnpm site-visit:check     # Verify committed catalog against authored copy (CI-s
 
 - `DATABASE_URL` required at build time (layout.tsx fetches from DB during pre-rendering).
 - The sitemap requires a DB connection for dynamic slugs (`lib/sitemap/data.ts`).
+- **The apex `reno-stars.com` returns 530 on every path except `/`** — its DNS
+  record still points at the retired Mac tunnel `aa755801-…`. A root-only
+  Cloudflare redirect rule masks it at `/`. Needs a `DNS:Edit` token or the
+  dashboard; neither the Argo tunnel token nor `CLOUDFLARE_API_TOKEN`
+  (cache-purge scope) can change it. Use `www.` for anything that must work.
+- **`ns/reno-stars` is at ~99% of its ResourceQuota** (40704Mi/40Gi,
+  31750m/32 CPU across 28 pods). Deploys fit only because the web deployment
+  rolls by replacement. Raising replicas or adding a service needs a quota
+  increase (`reno-stars-infra#181`).
+- **The database default ACL auto-grants `agent_ro` SELECT on every new table**
+  created by `renostars` (`renostars | r | {agent_ro=r/renostars}`), and
+  `agent_ro` is served publicly by `api.reno-stars.com`. **Any new table holding
+  secrets or customer PII must `REVOKE ALL ... FROM agent_ro` explicitly.**
 
 ## Detailed Documentation
 

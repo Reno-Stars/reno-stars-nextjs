@@ -277,3 +277,56 @@ const results = await db.select().from(services);
 ```
 
 The `db` proxy detects the driver at initialization time and uses `require()` to conditionally load either the Neon or pg driver, keeping the initialization synchronous.
+
+## contact_submissions — durable lead capture
+
+Every contact-form submission is written here **before** any delivery is
+attempted, then the outcome is recorded against the row. Recovery of anything
+nobody has seen is one query:
+
+```sql
+SELECT * FROM contact_submissions WHERE NOT delivered_crm AND NOT delivered_email;
+```
+
+It exists because delivery is best-effort by nature: between 2026-08-14 and
+2026-09-03 both channels were dead and 7 enquiries were accepted and lost, with
+the only copy in pod stderr. Stored-but-undelivered is a SUCCESS for the
+visitor — the lead is safe. The form reports failure only when the row itself
+could not be written.
+
+DDL: `scripts/create-app-secrets.sql`'s sibling `scripts/create-contact-submissions.sql`.
+
+## app_secrets — TEMPORARY secret bridge
+
+See `lib/secrets.ts` tier 3 and `scripts/create-app-secrets.sql`. Route-around
+for 25 runtime variables the migration left undeliverable; self-retires once the
+ExternalSecret or Infisical can answer.
+
+## ⚠️ Default ACL: new tables are readable by the PUBLIC gateway
+
+This database carries `renostars | r | {agent_ro=r/renostars}` — **every table
+created by `renostars` automatically grants SELECT to `agent_ro`**, and that
+role is served publicly by `api.reno-stars.com` (the read-only SQL gateway used
+by remote agents).
+
+Any new table holding secrets or customer PII **must** revoke it explicitly:
+
+```sql
+REVOKE ALL ON <table> FROM agent_ro;
+REVOKE ALL ON <table> FROM PUBLIC;
+```
+
+Both `contact_submissions` (customer PII) and `app_secrets` (API keys) were
+caught by this on 2026-09-03 and are now revoked. Verify with a real query as
+`agent_ro`, not by reading the grant table.
+
+## DDL vs data migrations — they live in different places
+
+- `scripts/migrations/` is **auto-applied** and is for guarded data `UPDATE`s
+  only. `tests/unit/migrations-are-safe.test.ts` rejects `CREATE`/`ALTER`/`DROP`
+  there so nothing unattended can reshape the schema.
+- **DDL goes in `scripts/`** beside `create-admin-credentials.sql`, and is run
+  by a human.
+- Applying DDL as the `postgres` superuser leaves the table owned by postgres
+  with no grants, and the app then gets `permission denied`. Always finish with
+  `ALTER TABLE <t> OWNER TO renostars;`.
