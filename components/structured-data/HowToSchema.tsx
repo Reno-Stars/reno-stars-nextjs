@@ -1,8 +1,8 @@
 import JsonLd from './JsonLd';
 
 interface HowToStep {
-  name: string;
-  text: string;
+  name?: string;
+  text?: string;
   url?: string;
   image?: string;
 }
@@ -55,8 +55,8 @@ export default function HowToSchema({
       const stepObj: Record<string, unknown> = {
         '@type': 'HowToStep',
         position: index + 1,
-        name: step.name,
-        text: step.text,
+        ...(step.name && { name: step.name }),
+        ...(step.text && { text: step.text }),
       };
       if (step.url) stepObj.url = step.url;
       if (step.image) stepObj.image = step.image;

@@ -38,7 +38,7 @@ export default function ItemListSchema({
     itemListElement: items.map((item, index) => ({
       '@type': 'ListItem',
       position: index + 1,
-      url: item.url.startsWith('http') ? item.url : `${baseUrl}${item.url}`,
+      url: (item.url ?? '').startsWith('http') ? item.url : `${baseUrl}${item.url ?? ''}`,
       name: item.name,
       ...(item.image && { image: item.image }),
     })),

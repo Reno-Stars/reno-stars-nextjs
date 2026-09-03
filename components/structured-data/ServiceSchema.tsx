@@ -107,7 +107,11 @@ export default function ServiceSchema({
   }
 
   if (googleRating && googleReviewCount) {
-    (schema.provider as Record<string, unknown>).aggregateRating = {
+    // aggregateRating lives on the Service node itself, not on provider.
+    // GSC flags "Rating distribution is invalid" when aggregateRating sits on
+    // HomeAndConstructionBusiness inside provider — it must be a direct property
+    // of the Service entity for the sitelink-ratings rich result to render.
+    schema.aggregateRating = {
       '@type': 'AggregateRating',
       ratingValue: googleRating,
       bestRating: 5,
