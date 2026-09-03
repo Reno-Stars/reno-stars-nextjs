@@ -1,0 +1,57 @@
+-- Migration: service_areas — seo_keywords_zh audit
+-- Date: 2026-08-24
+-- Status: NOT APPLIED — needs human to run against production DB
+-- Topic: Audit & translation gap for service_areas.seo_keywords_zh
+-- Source: service_areas table (id, slug, name_en, name_zh, is_active)
+-- Context: No migration has ever targeted service_areas.seo_keywords_zh.
+--   service_areas has 14 rows (Metro Vancouver cities).
+--   Per ladder item 1, this is a fresh column never audited.
+--
+-- QUERY TO VERIFY CURRENT STATE (run against live DB):
+--   SELECT id, slug, name_en, name_zh,
+--          CASE WHEN seo_keywords_zh IS NOT NULL AND seo_keywords_zh != '' THEN 1 ELSE 0 END as has_zh
+--   FROM service_areas
+--   WHERE is_active = true
+--   ORDER BY display_order;
+--
+-- RECOMMENDED TRANSLATIONS (Mandarin Chinese — human translator or AI review required):
+--   vancouver          → 温哥华装修,大温哥华,温哥华房屋翻新
+--   richmond           → 列治文装修,列治文翻新,温哥华列治文
+--   burnaby            → 本拿比装修,本拿比翻新,大温哥华本拿比
+--   surrey             → 素里装修,素里翻新,南素里
+--   coquitlam          → 高贵林装修,高贵林翻新,科奎特拉姆
+--   west-vancouver     → 西温哥华装修,西温,温哥华西
+--   north-vancouver    → 北温哥华装修,北温,温哥华北
+--   new-westminster    → 新西敏装修,新西敏翻新
+--   delta              → 三角洲装修,Delta,温哥华三角洲
+--   langley            → 兰里装修,兰里,大温哥华南
+--   port-moody         → 满地宝装修,高贵林满地宝
+--   maple-ridge        → 枫树岭装修,菲沙河谷
+--   white-rock         → 白石装修,白石,南素里白石
+--   port-coquitlam     → 高贵林港装修,满地宝,科奎特兰港
+--
+-- MIGRATION (replace existing seo_keywords_zh values):
+-- UPDATE service_areas
+-- SET seo_keywords_zh = CASE slug
+--   WHEN 'vancouver'         THEN '温哥华装修,大温哥华装修,温哥华房屋翻新,温哥华装修公司,温哥华装修费用'
+--   WHEN 'richmond'          THEN '列治文装修,列治文翻新,列治文装修公司,温哥华列治文装修,列治文装修费用'
+--   WHEN 'burnaby'           THEN '本拿比装修,本拿比翻新,本拿比装修公司,大温哥华本拿比装修,本拿比装修费用'
+--   WHEN 'surrey'            THEN '素里装修,素里翻新,南素里装修,素里装修公司,大温哥华南素里装修'
+--   WHEN 'coquitlam'         THEN '高贵林装修,高贵林翻新,科奎特兰装修,高贵林装修费用,大温哥华高贵林'
+--   WHEN 'west-vancouver'    THEN '西温哥华装修,西温装修,温哥华西区装修,西温翻新,西温哥华装修费用'
+--   WHEN 'north-vancouver'   THEN '北温哥华装修,北温装修,温哥华北温装修,北温翻新,北温哥华装修费用'
+--   WHEN 'new-westminster'   THEN '新西敏装修,新西敏翻新,二埠装修,新西敏装修费用'
+--   WHEN 'delta'             THEN '三角洲装修,Delta装修,温哥华三角洲装修,三角洲翻新'
+--   WHEN 'langley'           THEN '兰里装修,兰里翻新,大温哥华南兰里装修,兰里装修费用'
+--   WHEN 'port-moody'        THEN '满地宝装修,高贵林满地宝装修,满地宝翻新,科奎特兰港装修'
+--   WHEN 'maple-ridge'       THEN '枫树岭装修,枫树岭翻新,菲沙河谷装修,枫树岭装修费用'
+--   WHEN 'white-rock'        THEN '白石装修,白石翻新,南素里白石装修,白石装修费用,白石房屋翻新'
+--   WHEN 'port-coquitlam'    THEN '高贵林港装修,科奎特兰港装修,满地宝装修,高贵林港翻新'
+--   ELSE seo_keywords_zh
+-- END
+-- WHERE is_active = true
+--   AND slug IN ('vancouver','richmond','burnaby','surrey','coquitlam',
+--                 'west-vancouver','north-vancouver','new-westminster','delta',
+--                 'langley','port-moody','maple-ridge','white-rock','port-coquitlam');
+--
+-- NOT APPLIED — needs human review before execution.
