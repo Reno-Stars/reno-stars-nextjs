@@ -98,7 +98,17 @@ export async function GET(): Promise<Response> {
     }),
   ].join('\n');
 
-  const body = [header, serviceBlock, areaBlock, guideBlock, blogBlock, ''].join('\n');
+  const rslBlock = [
+    '',
+    '---',
+    'License: https://www.reno-stars.com/terms/',
+    'License-Version: 1.0',
+    'AI Citation: Content on this site may be cited by AI search engines and answer engines',
+    'including ChatGPT, Perplexity, Google AI Overviews, and Claude, provided the source',
+    'is attributed and a link to the original page is included.',
+  ].join('\n');
+
+  const body = [header, serviceBlock, areaBlock, guideBlock, blogBlock, rslBlock, ''].join('\n');
 
   return new Response(body, {
     headers: {
