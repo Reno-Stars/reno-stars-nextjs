@@ -43,6 +43,12 @@ const CACHE_TTL_MS = 5 * 60_000;
 /** After a failed load, wait this long before hammering the vault again. */
 const FAILURE_BACKOFF_MS = 30_000;
 
+/** What one hydration pass did, and whether it could reach a source at all. */
+export interface HydrationResult {
+  hydrated: string[];
+  reachedASource: boolean;
+}
+
 interface VaultState {
   values: Map<string, string>;
   loadedAt: number;
@@ -263,7 +269,7 @@ export async function getSecret(name: string): Promise<string | undefined> {
  * this pod have to fetch at boot" is exactly what you want in the log the
  * morning something is inert.
  */
-export async function hydrateEnvFromSecrets(): Promise<string[]> {
+export async function hydrateEnvFromSecrets(): Promise<HydrationResult> {
   const [vault, bridge] = await Promise.all([loadVault(), loadDbSecrets()]);
 
   const merged = new Map<string, string>();
@@ -280,16 +286,66 @@ export async function hydrateEnvFromSecrets(): Promise<string[]> {
     hydrated.push(name);
   }
 
+  const vaultCount = vault?.values.size ?? 0;
+  const bridgeCount = bridge?.values.size ?? 0;
+
   console.log(
     JSON.stringify({
       event: 'secrets.hydrated',
       count: hydrated.length,
       keys: hydrated.sort(),
-      sources: { vault: vault?.values.size ?? 0, bridge: bridge?.values.size ?? 0 },
+      sources: { vault: vaultCount, bridge: bridgeCount },
     }),
   );
 
-  return hydrated;
+  // `reachedASource` is the signal that separates "nothing to do" from "could
+  // not ask". Hydrating 0 keys is perfectly healthy when process.env already
+  // holds everything; it is a FAILURE when neither tier answered at all.
+  return { hydrated, reachedASource: vaultCount + bridgeCount > 0 };
+}
+
+/**
+ * Hydrate, retrying while no source can be reached.
+ *
+ * A pod's first outbound connection can be refused because the network path is
+ * still coming up — `connect ECONNREFUSED <svc-ip>:5432` a few hundred ms into
+ * boot is a startup race, not a NetworkPolicy denial. `register()` runs early
+ * enough to lose that race, and the first deploy of boot-time hydration did:
+ * every pod logged `{"count":0,"sources":{"vault":0,"bridge":0}}` and the fix
+ * shipped INERT while looking deployed.
+ *
+ * Only retries when nothing answered. A successful load that hydrates zero keys
+ * is a finished job, not a failure, so a fully-configured pod does not spin.
+ */
+export async function hydrateEnvWithRetry(
+  attempts = 6,
+  baseDelayMs = 500,
+  sleep: (ms: number) => Promise<void> = (ms) => new Promise((r) => setTimeout(r, ms)),
+): Promise<HydrationResult> {
+  let last: HydrationResult = { hydrated: [], reachedASource: false };
+
+  for (let i = 0; i < attempts; i++) {
+    if (i > 0) {
+      await sleep(baseDelayMs * 2 ** (i - 1));
+      // The per-tier failure backoff would otherwise short-circuit the retry
+      // into an instant no-op, making the whole loop decorative.
+      lastFailureAt = 0;
+      dbFailureAt = 0;
+    }
+    last = await hydrateEnvFromSecrets();
+    if (last.reachedASource) return last;
+  }
+
+  console.error(
+    JSON.stringify({
+      event: 'secrets.hydrate.no_source',
+      message:
+        'No secret source answered after ' +
+        attempts +
+        ' attempts; synchronous readers will see only the ambient environment.',
+    }),
+  );
+  return last;
 }
 
 /** Resolve several secrets in one pass (a single vault load covers them all). */

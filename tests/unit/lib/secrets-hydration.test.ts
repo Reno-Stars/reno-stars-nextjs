@@ -77,7 +77,7 @@ describe('boot-time secret hydration', () => {
     process.env.OPERATOR_SET = 'from-operator';
     vi.stubGlobal('fetch', mockVault({ OPERATOR_SET: 'from-vault' }));
 
-    const hydrated = await secrets.hydrateEnvFromSecrets();
+    const { hydrated } = await secrets.hydrateEnvFromSecrets();
 
     expect(process.env.OPERATOR_SET).toBe('from-operator');
     expect(hydrated).not.toContain('OPERATOR_SET');
@@ -117,6 +117,70 @@ describe('boot-time secret hydration', () => {
     vi.spyOn(console, 'error').mockImplementation(() => {});
     vi.stubGlobal('fetch', vi.fn(async () => new Response('nope', { status: 500 })));
 
-    await expect(secrets.hydrateEnvFromSecrets()).resolves.toEqual([]);
+    await expect(secrets.hydrateEnvFromSecrets()).resolves.toEqual({
+      hydrated: [],
+      reachedASource: false,
+    });
+  });
+});
+
+describe('boot-race retry', () => {
+  /**
+   * The first production deploy of hydration was INERT. Every pod logged
+   *   {"event":"secrets.hydrated","count":0,"sources":{"vault":0,"bridge":0}}
+   * with `connect ECONNREFUSED 10.43.143.182:5432` beside it: `register()` runs
+   * early enough to lose the pod's boot-time connection race, so the one and
+   * only hydration attempt reached nothing. The rollout was green, the health
+   * endpoint was 200, and the fix did nothing at all.
+   */
+  it('recovers when the FIRST attempt loses the pod boot race', async () => {
+    let call = 0;
+    vi.stubGlobal(
+      'fetch',
+      vi.fn(async (url: string | URL) => {
+        const u = String(url);
+        if (u.includes('/auth/universal-auth/login')) {
+          // First boot attempt: connection refused, exactly as in production.
+          if (call++ === 0) throw new Error('connect ECONNREFUSED 10.43.143.182:5432');
+          return new Response(JSON.stringify({ accessToken: 'tok' }), { status: 200 });
+        }
+        return new Response(
+          JSON.stringify({ secrets: [{ secretKey: 'CLOUDFLARE_API_TOKEN', secretValue: 'cf-live' }] }),
+          { status: 200 },
+        );
+      }),
+    );
+    vi.spyOn(console, 'error').mockImplementation(() => {});
+
+    const noSleep = async () => {};
+    const result = await secrets.hydrateEnvWithRetry(6, 0, noSleep);
+
+    expect(result.reachedASource).toBe(true);
+    expect(process.env.CLOUDFLARE_API_TOKEN).toBe('cf-live');
+  });
+
+  it('does NOT keep retrying when a source answered and there was simply nothing to add', async () => {
+    process.env.CLOUDFLARE_API_TOKEN = 'already-in-env';
+    const fetchMock = mockVault({ CLOUDFLARE_API_TOKEN: 'from-vault' });
+    vi.stubGlobal('fetch', fetchMock);
+
+    const result = await secrets.hydrateEnvWithRetry(6, 0, async () => {});
+
+    // Zero hydrated, but the vault DID answer — that is a finished job.
+    expect(result.hydrated).toEqual([]);
+    expect(result.reachedASource).toBe(true);
+    // login + read, once. A retry loop here would spin on every healthy pod.
+    expect(fetchMock).toHaveBeenCalledTimes(2);
+  });
+
+  it('gives up after the configured attempts and says so, without throwing', async () => {
+    const err = vi.spyOn(console, 'error').mockImplementation(() => {});
+    vi.stubGlobal('fetch', vi.fn(async () => { throw new Error('ECONNREFUSED'); }));
+
+    const result = await secrets.hydrateEnvWithRetry(3, 0, async () => {});
+
+    expect(result.reachedASource).toBe(false);
+    const line = err.mock.calls.map((c) => String(c[0])).find((l) => l.includes('no_source'));
+    expect(line).toBeDefined();
   });
 });
