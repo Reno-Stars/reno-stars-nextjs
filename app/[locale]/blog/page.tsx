@@ -55,10 +55,11 @@ export default async function Page({ params, searchParams }: PageProps) {
 
   const currentPage = Math.max(1, parseInt(page || '1', 10) || 1);
 
-  const [t, mt, ft, company, paginatedPosts, allPosts] = await Promise.all([
+  const [t, mt, ft, bt, company, paginatedPosts, allPosts] = await Promise.all([
     getTranslations({ locale, namespace: 'nav' }),
     getTranslations({ locale, namespace: 'metadata.blog' }),
     getTranslations({ locale, namespace: 'faq' }),
+    getTranslations({ locale, namespace: 'blog' }),
     getCompanyFromDb(),
     getBlogPostsPaginatedFromDb(currentPage, BLOG_POSTS_PER_PAGE),
     getBlogPostsFromDb(),
@@ -73,19 +74,19 @@ export default async function Page({ params, searchParams }: PageProps) {
   const blogFaqs = [
     {
       id: 'blog-faq-1',
-      question: 'What renovation services does Reno Stars offer?',
-      answer: 'Reno Stars offers kitchen, bathroom, basement, whole-house, and commercial renovations. Services include cabinet refacing, Poly-B pipe replacement, heat pump installation, and accessible bathroom renovations.',
+      question: t('blog.faqQ1'),
+      answer: t('blog.faqA1'),
     },
     {
       id: 'blog-faq-2',
-      question: 'How much does a renovation cost in Metro Vancouver?',
-      answer: 'Kitchen renovations in Vancouver typically range from $30,000-$80,000+. Bathroom renovations range from $20,000-$60,000+. Basement renovations for legal suites start around $50,000.',
+      question: t('blog.faqQ2'),
+      answer: t('blog.faqA2'),
     },
   ];
 
   const blogFaqTranslations = {
     title: ft('title'),
-    subtitle: t('blog.faqSubtitle'),
+    subtitle: bt('faqSubtitle'),
   };
 
   return (

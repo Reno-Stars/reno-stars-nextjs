@@ -17,6 +17,10 @@
     "showingPosts": "Showing {start}-{end} of {total} posts",
     "relatedServices": "Related Services",
     "relatedAreas": "Renovation in Your Area",
-    "faqSubtitle": "Common questions about our blog and renovation guides"
+    "faqSubtitle": "Common questions about our blog and renovation guides",
+    "faqQ1": "What renovation services does Reno Stars offer?",
+    "faqA1": "Reno Stars offers kitchen, bathroom, basement, whole-house, and commercial renovations. Services include cabinet refacing, Poly-B pipe replacement, heat pump installation, and accessible bathroom renovations.",
+    "faqQ2": "How much does a renovation cost in Metro Vancouver?",
+    "faqA2": "Kitchen renovations in Vancouver typically range from $30,000\u2013$80,000+. Bathroom renovations range from $20,000\u2013$60,000+. Basement renovations for legal suites start around $50,000."
   }
 }

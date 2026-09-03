@@ -17,7 +17,11 @@
     "showingPosts": "顯示 {start}-{end} 個貼文（共 {total} 個）",
     "relatedServices": "相關服務",
     "relatedAreas": "Renovation in Your Area",
-    "faqSubtitle": "有關我們部落格和裝修指南的常見問題"
+    "faqSubtitle": "有關我們部落格和裝修指南的常見問題",
+    "faqQ1": "Reno Stars 提供哪些裝修服務？",
+    "faqA1": "Reno Stars 提供廚房、浴室、地下室、全屋及商業裝修服務。服務包括櫃檯翻新、Poly-B 管道更換、熱泵安裝及無障礙浴室改造。",
+    "faqQ2": "大溫哥華裝修費用是多少？",
+    "faqA2": "溫哥華廚房裝修費用通常在 $30,000 至 $80,000 加元以上。浴室裝修費用在 $20,000 至 $60,000 加元以上。合法套間地下室裝修起價約 $50,000 加元。"
   },
   "_translation_meta": {
     "source": "translate.googleapis.com (free, no API key)",

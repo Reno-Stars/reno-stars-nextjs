@@ -17,7 +17,11 @@
     "showingPosts": "显示 {start}-{end} 个帖子（共 {total} 个）",
     "relatedServices": "相关服务",
     "relatedAreas": "您所在地区的装修",
-    "faqSubtitle": "有关我们博客和装修指南的常见问题"
+    "faqSubtitle": "有关我们博客和装修指南的常见问题",
+    "faqQ1": "Reno Stars 提供哪些装修服务？",
+    "faqA1": "Reno Stars 提供厨房、浴室、地基、全屋及商业装修服务。服务包括橱柜翻新、Poly-B管道更换、热泵安装及无障碍浴室改造。",
+    "faqQ2": "大温哥华装修费用是多少？",
+    "faqA2": "温哥华厨房装修费用通常在 $30,000 至 $80,000 加元以上。浴室装修费用在 $20,000 至 $60,000 加元以上。合法套间地下室装修起价约 $50,000 加元。"
   },
   "_translation_meta": {
     "source": "translate.googleapis.com (free, no API key)",

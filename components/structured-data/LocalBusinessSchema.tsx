@@ -164,6 +164,14 @@ export default function LocalBusinessSchema({ company, socialLinks, areas, googl
       'Energy-Efficient Home Renovation',
       'Renovation Cost Estimation',
       'Renovation Financing',
+      // Additional services from DB (accessible-bathroom, poly-b-replacement,
+      // critical-load-panel, heat-pump-hvac, flooring — confirmed via
+      // services table slugs, 2026-08-30 audit)
+      'Accessible Bathroom Renovation',
+      'Poly-B Pipe Replacement',
+      'Critical Load Panel Upgrade',
+      'Heat Pump HVAC',
+      'Flooring Installation',
     ],
     // contactPoint: explicit "how to reach customer service" entry for AI
     // engines + Google knowledge-graph. Distinct from the top-level
