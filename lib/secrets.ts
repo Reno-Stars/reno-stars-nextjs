@@ -1,7 +1,8 @@
 import 'server-only';
 
 /**
- * Runtime secret resolution: process.env first, then Infisical.
+ * Runtime secret resolution: process.env, then Infisical, then a database
+ * bridge table (temporary — see TIER 3 below).
  *
  * WHY
  * ---
@@ -22,10 +23,12 @@ import 'server-only';
  * if the machine identity is absent or rejected, that is one obvious error, not
  * a feature quietly returning false forever.
  *
- * PRECEDENCE — process.env wins, deliberately:
+ * PRECEDENCE — process.env, then Infisical, then the DB bridge:
  *   - anything the ExternalSecret already provides keeps working unchanged
  *   - local dev and CI keep using .env / test env with no vault access
  *   - an operator can always override the vault in an emergency
+ *   - the DB bridge is LAST, so it self-retires the moment either real source
+ *     can answer. It exists only because the operator ask is still pending.
  *
  * Egress was verified from ns/reno-stars before adopting this:
  * `curl https://key.enteros.ai/api/status` -> HTTP 200 from an in-namespace pod.
@@ -145,14 +148,74 @@ async function loadVault(): Promise<VaultState | null> {
 }
 
 /**
- * Resolve one secret. `process.env` wins; the vault is the fallback.
- * Returns undefined when neither has it — callers decide how loud that is.
+ * TIER 3 — the database bridge.
+ *
+ * TEMPORARY. The migration left 25 runtime vars undeliverable, and the only
+ * store this pod can reach without an operator is the database its
+ * `DATABASE_URL` already points at. Consulted LAST, so it goes dormant the
+ * moment process.env or Infisical can answer, and the table can then be
+ * dropped. See scripts/create-app-secrets.sql for the security trade-off and
+ * the mandatory REVOKE.
+ *
+ * Loaded lazily and cached like the vault. A failure here is logged once and
+ * treated as "no value" — the database being unavailable must not turn a
+ * missing optional secret into a crash.
+ */
+let dbState: VaultState | null = null;
+let dbFailureAt = 0;
+let dbInFlight: Promise<VaultState | null> | null = null;
+
+async function loadDbSecrets(): Promise<VaultState | null> {
+  const now = Date.now();
+  if (dbState && now - dbState.loadedAt < CACHE_TTL_MS) return dbState;
+  if (!dbState && now - dbFailureAt < FAILURE_BACKOFF_MS) return null;
+  if (dbInFlight) return dbInFlight;
+
+  dbInFlight = (async () => {
+    try {
+      // Imported lazily so a module that only needs env never pulls in the DB
+      // client, and so this file stays safe to import from scripts.
+      const [{ db }, { appSecrets }] = await Promise.all([
+        import('@/lib/db'),
+        import('@/lib/db/schema'),
+      ]);
+      const rows = await db.select({ key: appSecrets.key, value: appSecrets.value }).from(appSecrets);
+      const values = new Map<string, string>();
+      for (const r of rows) if (r.value) values.set(r.key, r.value);
+      dbState = { values, loadedAt: Date.now() };
+      return dbState;
+    } catch (err) {
+      dbFailureAt = Date.now();
+      console.error(
+        JSON.stringify({
+          event: 'secrets.db.unavailable',
+          message: 'Could not read the app_secrets bridge table.',
+          error: err instanceof Error ? err.message : String(err),
+        }),
+      );
+      return dbState;
+    } finally {
+      dbInFlight = null;
+    }
+  })();
+
+  return dbInFlight;
+}
+
+/**
+ * Resolve one secret: `process.env`, then Infisical, then the database bridge.
+ * Returns undefined when none has it — callers decide how loud that is.
  */
 export async function getSecret(name: string): Promise<string | undefined> {
   const fromEnv = process.env[name];
   if (fromEnv) return fromEnv;
+
   const vault = await loadVault();
-  return vault?.values.get(name);
+  const fromVault = vault?.values.get(name);
+  if (fromVault) return fromVault;
+
+  const fromDb = await loadDbSecrets();
+  return fromDb?.values.get(name);
 }
 
 /** Resolve several secrets in one pass (a single vault load covers them all). */
@@ -170,4 +233,7 @@ export function resetSecretsCacheForTests(): void {
   lastFailureAt = 0;
   inFlight = null;
   missingIdentityLogged = false;
+  dbState = null;
+  dbFailureAt = 0;
+  dbInFlight = null;
 }
