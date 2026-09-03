@@ -17,6 +17,10 @@
     "showingPosts": "Mostrando {start}-{end} de {total} publicaciones",
     "relatedServices": "Servicios relacionados",
     "relatedAreas": "Remodelación en su área",
-    "faqSubtitle": "Preguntas comunes sobre nuestro blog y guías de renovación"
+    "faqSubtitle": "Preguntas comunes sobre nuestro blog y guías de renovación",
+    "faqQ1": "¿Qué servicios de renovación ofrece Reno Stars?",
+    "faqA1": "Reno Stars ofrece renovaciones de cocinas, baños, sótanos, viviendas completas y locales comerciales. Los servicios incluyen el revestimiento de gabinetes, el reemplazo de tuberías Poly-B, la instalación de bombas de calor y baños accesibles.",
+    "faqQ2": "¿Cuánto cuesta una renovación en Metro Vancouver?",
+    "faqA2": "Las renovaciones de cocina en Vancouver suelen costar entre $30,000 y $80,000+. Las de baño, entre $20,000 y $60,000+. Las de sótano para suites legales comienzan alrededor de $50,000."
   }
 }

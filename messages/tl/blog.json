@@ -17,6 +17,10 @@
     "showingPosts": "Pinapakita ang {start}-{end} ng {total} posts",
     "relatedServices": "Kaugnay na Serbisyo",
     "relatedAreas": "Renovation sa Iyong Lugar",
-    "faqSubtitle": "Mga karaniwang tanong tungkol sa aming blog at mga gabay sa pagsasaayos"
+    "faqSubtitle": "Mga karaniwang tanong tungkol sa aming blog at mga gabay sa pagsasaayos",
+    "faqQ1": "Anong mga serbisyo sa renovation ang inaalok ng Reno Stars?",
+    "faqA1": "Nag-aalok ang Reno Stars ng renovation para sa kusina, banyo, basement, buong bahay, at komersyal na espasyo. Kabilang sa mga serbisyo ang cabinet refacing, pagpapalit ng Poly-B na tubo, pag-install ng heat pump, at accessible na banyo.",
+    "faqQ2": "Magkano ang gastos sa renovation sa Metro Vancouver?",
+    "faqA2": "Ang renovation ng kusina sa Vancouver ay karaniwang nasa $30,000–$80,000+. Ang banyo ay nasa $20,000–$60,000+. Ang basement para sa legal na suite ay nagsisimula sa humigit-kumulang $50,000."
   }
 }
