@@ -368,8 +368,6 @@ export default async function Page({ params }: PageProps) {
           serviceDescription={localizedSite.description || ''}
           areaServed={['Vancouver Metro']}
           url={`/${locale}/projects/${slug}/`}
-          googleRating={googleReviews.rating}
-          googleReviewCount={googleReviews.userRatingCount}
         />
         {siteBlockSchema.faqs.map((faq, i) => (
           <FAQSchema key={`site-faq-${i}`} faqs={faq.faqs} locale={faq.locale} />
