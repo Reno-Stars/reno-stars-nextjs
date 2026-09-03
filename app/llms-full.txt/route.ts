@@ -98,7 +98,15 @@ export async function GET(): Promise<Response> {
     }),
   ].join('\n');
 
-  const body = [header, serviceBlock, areaBlock, guideBlock, blogBlock, ''].join('\n');
+  const rslBlock = [
+    '',
+    '---',
+    'License: https://www.reno-stars.com/terms/',
+    'License-Version: 1.0',
+    'AI Citation: Content on this site may be cited by AI search engines and answer engines (ChatGPT, Perplexity, Google AI Overviews, Claude) for informational purposes. Commercial reproduction or use requires prior written permission. All factual claims are based on real project data from Reno Stars Construction Inc. in Metro Vancouver.',
+  ].join('\n');
+
+  const body = [header, serviceBlock, areaBlock, guideBlock, blogBlock, rslBlock, ''].join('\n');
 
   return new Response(body, {
     headers: {
