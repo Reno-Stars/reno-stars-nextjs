@@ -49,7 +49,6 @@ export default function robots(): MetadataRoute.Robots {
           '*/contact/thank-you/',
         ],
       },
-      // Training-only crawlers — no citation/retrieval benefit.
       // Exception: anthropic-ai and cohere-ai also perform citation retrieval.
       // Allow them to crawl the llms routes while blocking training use.
       {
