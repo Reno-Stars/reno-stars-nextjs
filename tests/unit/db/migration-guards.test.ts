@@ -22,15 +22,17 @@ import { join } from 'node:path';
 const DIRS = ['scripts/migrations', 'scripts/migrations/pending'];
 
 /** Split a SET clause on top-level commas, respecting '' escapes inside literals. */
-function splitAssignments(setPart: string): string[] {
+export function splitAssignments(setPart: string): string[] {
   const out: string[] = [];
-  let buf = '', inQuote = false;
+  let buf = '', inQuote = false, depth = 0;
   for (let i = 0; i < setPart.length; i++) {
     const ch = setPart[i];
     if (ch === "'") {
       if (inQuote && setPart[i + 1] === "'") { buf += "''"; i++; continue; }
       inQuote = !inQuote; buf += ch;
-    } else if (ch === ',' && !inQuote) { out.push(buf); buf = ''; }
+    } else if (ch === '(' && !inQuote) { depth++; buf += ch; }
+    else if (ch === ')' && !inQuote) { depth--; buf += ch; }
+    else if (ch === ',' && !inQuote && depth === 0) { out.push(buf); buf = ''; }
     else buf += ch;
   }
   if (buf.trim()) out.push(buf);
@@ -79,5 +81,30 @@ describe('data migrations: every written column is guarded', () => {
     }
 
     expect(offenders, `\n${offenders.join('\n')}\n`).toEqual([]);
+  });
+});
+
+describe('splitAssignments', () => {
+  it('does not treat commas inside a function call as column separators', () => {
+    // The 2026-09-03 false positive: a CASE/regexp_replace migration was reported
+    // as a multi-column UPDATE because regexp_replace's arguments were parsed as
+    // extra assignments, blocking a correct PR.
+    const setPart = `duration_zh = case
+        when duration_en ~* 'month' then regexp_replace(duration_en, 'month[s]?', '个月', 'i')
+        else duration_en
+      end`;
+    expect(splitAssignments(setPart).map((a) => a.split('=')[0].trim())).toEqual(['duration_zh']);
+  });
+
+  it('still splits genuine multi-column assignments', () => {
+    expect(
+      splitAssignments("meta_title_zh = 'a', meta_description_zh = 'b'").map((a) =>
+        a.split('=')[0].trim(),
+      ),
+    ).toEqual(['meta_title_zh', 'meta_description_zh']);
+  });
+
+  it('ignores commas inside string literals', () => {
+    expect(splitAssignments("seo_keywords_zh = '\u5382\u623f, \u6d74\u5ba4, \u5730\u4e0b\u5ba4'")).toHaveLength(1);
   });
 });
