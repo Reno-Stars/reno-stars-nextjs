@@ -33,7 +33,7 @@ export default function ProjectCategorySchema({
       '@type': 'ListItem',
       position: index + 1,
       url: `${baseUrl}/${locale}/projects/${project.slug}/`,
-      name: project.title[locale] ?? project.title.en ?? project.slug,
+      name: project.title?.[locale] ?? project.title?.en ?? project.slug,
     })),
   };
 

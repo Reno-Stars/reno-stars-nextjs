@@ -653,9 +653,11 @@ const nextConfig: NextConfig = {
       // 9c. Old WP root-level service page slugs
       // ================================================================
       { source: '/:locale(en|zh)/kitchen-renovation', destination: '/:locale/services/kitchen/', permanent: true },
+      { source: '/:locale(en|zh)/bathroom-renovation', destination: '/:locale/services/bathroom/', permanent: true },
       { source: '/:locale(en|zh)/bathroom-remodel', destination: '/:locale/services/bathroom/', permanent: true },
       { source: '/:locale(en|zh)/whole-house-renovation', destination: '/:locale/services/whole-house/', permanent: true },
       { source: '/:locale(en|zh)/commercial-renovation', destination: '/:locale/services/commercial/', permanent: true },
+      { source: '/:locale(en|zh)/cabinet-renovation', destination: '/:locale/services/cabinet/', permanent: true },
       { source: '/:locale(en|zh)/cabinet-refacing', destination: '/:locale/services/cabinet/', permanent: true },
       { source: '/:locale(en|zh)/basement-renovation', destination: '/:locale/services/basement/', permanent: true },
       // 9d. Old WP about-us page → about page (now a real route)
@@ -719,9 +721,11 @@ const nextConfig: NextConfig = {
       },
       // Old WP service page slugs (non-localized, 1 fewer redirect hop)
       { source: '/kitchen-renovation', destination: '/en/services/kitchen/', permanent: true },
+      { source: '/bathroom-renovation', destination: '/en/services/bathroom/', permanent: true },
       { source: '/bathroom-remodel', destination: '/en/services/bathroom/', permanent: true },
       { source: '/whole-house-renovation', destination: '/en/services/whole-house/', permanent: true },
       { source: '/commercial-renovation', destination: '/en/services/commercial/', permanent: true },
+      { source: '/cabinet-renovation', destination: '/en/services/cabinet/', permanent: true },
       { source: '/cabinet-refacing', destination: '/en/services/cabinet/', permanent: true },
       { source: '/basement-renovation', destination: '/en/services/basement/', permanent: true },
       // Old about-us (non-localized)

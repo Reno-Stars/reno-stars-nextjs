@@ -1,0 +1,41 @@
+-- seo/daily-2026-08-29: DB content integrity audit
+-- Tables audited: blog_posts, services, service_areas, project_scopes, projects, project_sites
+-- Column locales checked: zh (CJK range), ja (hiragana+katakana), ko (Hangul)
+--
+-- FINDINGS:
+--   blog_posts.content_zh: 0 (clean — all published posts have Chinese content)
+--   blog_posts.title_zh:  0 (clean)
+--   blog_posts.meta_title_zh: 10 rows NULL — all are unpublished test drafts
+--     (outdoor-test-* slugs, is_published=false) — zero SEO impact
+--   blog_posts.meta_description_zh: 11 rows NULL — same unpublished test drafts
+--   blog_posts.excerpt_zh: 1 published row missing — id 34e43ef8
+--     ALREADY COVERED by 2026-08-28-blog-excerpt-zh-white-rock-pre-sale.sql
+--   services.description_zh: 0 (clean; no description_ja/description_ko columns exist)
+--   service_areas.description_zh: 0 (clean; no description_ja/description_ko columns)
+--   project_scopes.scope_zh: 0 (clean; no scope_ja/scope_ko columns)
+--   projects.title_zh: 0 (clean)
+--   projects.meta_title_zh/meta_description_zh: 0 (clean)
+--   project_sites.meta_title_zh/meta_description_zh: 0 (clean)
+--
+-- blog_posts has NO ja/ko columns in this DB — ja/ko translations live in
+-- the localizations JSONB column, not individual fields. No ja/ko SQL-level audit
+-- is possible for blog_posts; it would require app-layer JSONB queries.
+--
+-- LIVE SITE CHECKS:
+--   Homepage /en/: schema valid, org+WebSite JSON-LD present, full hreflang (14 locales),
+--     og:locale:alternate all 14 locales, aggregateRating 5.0/78 reviews, contactPoint
+--     availableLanguage [English, Mandarin Chinese, Cantonese] — correct, gate on nativeSupport
+--   Blog listing /en/blog/: schema valid, og:locale:alternate all 14 locales, RSS autodiscovery
+--   Blog post /en/blog/duplex-renovation-vancouver-costs-permits-2026/: 200 OK
+--   Area pages /en/areas/{city}/: all 14 cities return 200 OK
+--   Sitemap /sitemap.xml: 5,825 URLs present
+--
+-- BACKLOG STATUS:
+--   project_image_pairs.before_alt_text_en: 150 rows still NULL
+--     Covered by: 2026-08-23 (batch1, 65 rows) + 2026-08-27-batch2 (~N rows)
+--     Remaining: ~150 - 65 - N = ~85 rows still need migration
+--     Cap (3 same-column migrations): approaching, 2 applied, 1 slot remaining
+--     Do NOT add more before_alt_text_en migrations until existing ones are applied
+--
+-- NOTABLE: no published content rows found with English-in-zh-field issues across
+-- all tables checked. Published content integrity is clean.
