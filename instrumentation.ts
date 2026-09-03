@@ -1,6 +1,34 @@
 import { logEvent, localeFromPath } from '@/lib/log';
 
 /**
+ * Runs once per server process, before the first request is handled.
+ *
+ * Pulls every secret we can resolve (Infisical, then the DB bridge) into
+ * `process.env`, so that synchronous and module-load-time readers see the same
+ * values `getSecret` sees. Without this, `/api/health/config` reports a
+ * capability healthy while the code implementing it silently no-ops — see
+ * `hydrateEnvFromSecrets` for the full reasoning.
+ *
+ * Deliberately non-fatal: a vault outage must degrade features, not refuse to
+ * boot the website. Per-request `getSecret` calls retry on their own.
+ */
+export async function register(): Promise<void> {
+  if (process.env.NEXT_RUNTIME !== 'nodejs') return;
+  try {
+    const { hydrateEnvFromSecrets } = await import('@/lib/secrets');
+    await hydrateEnvFromSecrets();
+  } catch (err) {
+    console.error(
+      JSON.stringify({
+        event: 'secrets.hydrate.failed',
+        message: 'Boot-time secret hydration failed; features may be inert.',
+        error: err instanceof Error ? err.message : String(err),
+      }),
+    );
+  }
+}
+
+/**
  * Next.js error instrumentation. `onRequestError` fires for every server-side
  * render/route error with the request path + route context. We persist them to
  * Neon `app_log` (see lib/log.ts) because Vercel does not retain runtime logs —
