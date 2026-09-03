@@ -788,6 +788,44 @@ export const designs = pgTable(
  *  (House / Condo / Townhouse / Commercial …). Admins can add new types
  *  without a code change — the contact form fetches active rows ordered by
  *  displayOrder. */
+/**
+ * Every contact-form submission, stored BEFORE any delivery is attempted.
+ *
+ * This table exists because of the 2026-08-14 -> 2026-09-03 incident: the
+ * deployment carried no RESEND_API_KEY and no ODOO_* vars, so both delivery
+ * channels failed on every submission, the dead-letter's Telegram alert also
+ * no-opped (no token), and the form told 7 visitors their message had been
+ * sent. The enquiries existed only as JSON lines in pod stderr, and pods are
+ * replaced constantly — six of them were unrecoverable.
+ *
+ * Delivery is best-effort by nature: Resend can be down, Odoo can be down, a
+ * key can be missing. Durability must not be. A row lands here first, on the
+ * one dependency the request already has (DATABASE_URL is what renders the
+ * page), and the delivery outcome is recorded against it afterwards. A lead can
+ * then be lost only if the database itself is unavailable.
+ *
+ * `deliveredCrm` / `deliveredEmail` are nullable-free booleans defaulting to
+ * false so an un-retried row is indistinguishable from a failed one — both are
+ * "nobody has seen this yet", which is what a recovery query wants.
+ */
+export const contactSubmissions = pgTable(
+  'contact_submissions',
+  {
+    id: uuid('id').defaultRandom().primaryKey(),
+    name: varchar('name', { length: 200 }).notNull(),
+    email: varchar('email', { length: 320 }),
+    phone: varchar('phone', { length: 50 }),
+    message: text('message').notNull(),
+    city: varchar('city', { length: 120 }),
+    propertyType: varchar('property_type', { length: 60 }),
+    deliveredCrm: boolean('delivered_crm').default(false).notNull(),
+    deliveredEmail: boolean('delivered_email').default(false).notNull(),
+    deliveryError: text('delivery_error'),
+    createdAt: timestamp('created_at').defaultNow().notNull(),
+  },
+  (table) => [index('contact_submissions_created_at_idx').on(table.createdAt)]
+);
+
 export const propertyTypes = pgTable(
   'property_types',
   {
