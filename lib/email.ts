@@ -1,14 +1,26 @@
 import { Resend } from 'resend';
+import { getSecret } from '@/lib/secrets';
 
 // Initialize Resend client (lazy - only when needed)
 let resendClient: Resend | null = null;
+let resendClientKey: string | null = null;
 
-function getResendClient(): Resend | null {
-  if (!process.env.RESEND_API_KEY) {
-    return null;
-  }
-  if (!resendClient) {
-    resendClient = new Resend(process.env.RESEND_API_KEY);
+/**
+ * Resolves the key through lib/secrets (process.env first, then Infisical), so
+ * a key present in the vault reaches this code without also needing an
+ * ExternalSecret entry. That two-system gap is what silently disabled email
+ * from 2026-08-14 to 2026-09-03.
+ *
+ * The cached client is keyed on the resolved value so a rotated secret is
+ * picked up when the vault cache refreshes, instead of pinning the old key for
+ * the life of the process.
+ */
+async function getResendClient(): Promise<Resend | null> {
+  const apiKey = await getSecret('RESEND_API_KEY');
+  if (!apiKey) return null;
+  if (!resendClient || resendClientKey !== apiKey) {
+    resendClient = new Resend(apiKey);
+    resendClientKey = apiKey;
   }
   return resendClient;
 }
@@ -17,21 +29,28 @@ function getResendClient(): Resend | null {
 let emailConfigWarningsLogged = false;
 
 /** Email configuration - logs warning once if using fallback values */
-function getEmailConfig() {
-  const from = process.env.EMAIL_FROM || 'Contact Form <onboarding@resend.dev>';
-  const to = process.env.EMAIL_TO || 'info@reno-stars.com';
+async function getEmailConfig() {
+  const from = (await getSecret('EMAIL_FROM')) || 'Contact Form <onboarding@resend.dev>';
+  const to = (await getSecret('EMAIL_TO')) || 'info@reno-stars.com';
   // CC Sylvia by default so she sees new leads alongside the main inbox.
   // Override with EMAIL_CC=email1,email2 (comma-separated) or set to empty
   // string to disable CC entirely.
-  const cc = process.env.EMAIL_CC ?? 'renostars.sylvia@gmail.com';
+  // EMAIL_CC has meaningful EMPTY semantics — "set to empty string to disable CC
+  // entirely" — so it cannot go through getSecret(), which treats empty as
+  // unset (correct for credentials: RESEND_API_KEY='' must fall through to the
+  // vault, not disable email). Read the env var directly when it is DEFINED,
+  // and only consult the vault when it is not.
+  const ccEnv = process.env.EMAIL_CC;
+  const cc =
+    ccEnv !== undefined ? ccEnv : (await getSecret('EMAIL_CC')) ?? 'renostars.sylvia@gmail.com';
 
   // Warn once if using fallback values (the Resend test sender won't deliver in production)
   if (!emailConfigWarningsLogged) {
     emailConfigWarningsLogged = true;
-    if (!process.env.EMAIL_FROM) {
+    if (!from || from.includes('onboarding@resend.dev')) {
       console.warn('EMAIL_FROM not set, using default: onboarding@resend.dev');
     }
-    if (!process.env.EMAIL_TO) {
+    if (to === 'info@reno-stars.com' && !process.env.EMAIL_TO) {
       console.warn('EMAIL_TO not set, using default: info@reno-stars.com');
     }
   }
@@ -57,7 +76,7 @@ export interface ContactEmailData {
  * Fails silently if Resend is not configured (no API key).
  */
 export async function sendContactNotification(data: ContactEmailData): Promise<boolean> {
-  const resend = getResendClient();
+  const resend = await getResendClient();
 
   // Skip if Resend is not configured
   if (!resend) {
@@ -123,7 +142,7 @@ export async function sendContactNotification(data: ContactEmailData): Promise<b
     `;
 
     // Get email config (logs warning in dev if using defaults)
-    const emailConfig = getEmailConfig();
+    const emailConfig = await getEmailConfig();
 
     // Parse recipients (supports comma-separated list)
     const recipients = emailConfig.to.split(',').map((e) => e.trim()).filter(Boolean);
