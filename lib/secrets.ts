@@ -48,6 +48,9 @@ interface VaultState {
   loadedAt: number;
 }
 
+/** Keys THIS module wrote into process.env; they are a cache, not a source. */
+const hydratedKeys = new Set<string>();
+
 let state: VaultState | null = null;
 let lastFailureAt = 0;
 let inFlight: Promise<VaultState | null> | null = null;
@@ -207,7 +210,11 @@ async function loadDbSecrets(): Promise<VaultState | null> {
  * Returns undefined when none has it — callers decide how loud that is.
  */
 export async function getSecret(name: string): Promise<string | undefined> {
-  const fromEnv = process.env[name];
+  // A value we hydrated into process.env ourselves is a CACHE, not a source.
+  // Letting it win tier 1 would freeze it for the life of the process and
+  // silently destroy the "write it to Infisical and the app picks it up"
+  // property that is the whole point of reading the vault at runtime.
+  const fromEnv = hydratedKeys.has(name) ? undefined : process.env[name];
   if (fromEnv) return fromEnv;
 
   const vault = await loadVault();
@@ -215,7 +222,74 @@ export async function getSecret(name: string): Promise<string | undefined> {
   if (fromVault) return fromVault;
 
   const fromDb = await loadDbSecrets();
-  return fromDb?.values.get(name);
+  const fromBridge = fromDb?.values.get(name);
+  if (fromBridge) return fromBridge;
+
+  // Last resort for a hydrated key: both remote tiers are down, so serve the
+  // value we hydrated at boot rather than reporting the secret as missing.
+  return hydratedKeys.has(name) ? process.env[name] : undefined;
+}
+
+/**
+ * Copy every resolvable secret into `process.env` once, at server startup.
+ *
+ * WHY THIS IS NECESSARY
+ * ---------------------
+ * `getSecret` is async, so only async callers can use it. Much of the codebase
+ * reads secrets synchronously, and some reads happen at MODULE LOAD:
+ *
+ *     // lib/cloudflare-purge.ts
+ *     const API_TOKEN = process.env.CLOUDFLARE_API_TOKEN;   // frozen at import
+ *
+ * Those readers cannot await anything, so routing them through the vault would
+ * mean converting a long chain of call sites to async — including React render
+ * paths, where it is not always possible.
+ *
+ * The consequence, before this existed, was worse than inconvenient: it made
+ * the health endpoint LIE. `/api/health/config` resolves through `getSecret`,
+ * so it reported `cachePurge: ok` because the token is in the bridge — while
+ * the code that actually purges read `process.env` and got `undefined`, and
+ * no-opped. A monitor that measures a different thing than the runtime does is
+ * the exact failure that let the contact form drop 7 leads while every signal
+ * showed green.
+ *
+ * Hydrating at boot makes the two agree BY CONSTRUCTION: one resolution path,
+ * one answer, for sync and async readers alike.
+ *
+ * Never overwrites a variable that is already set — an operator's explicit
+ * value, and local dev's `.env`, still win.
+ *
+ * Logs the KEY NAMES it hydrated (never values), because "which secrets did
+ * this pod have to fetch at boot" is exactly what you want in the log the
+ * morning something is inert.
+ */
+export async function hydrateEnvFromSecrets(): Promise<string[]> {
+  const [vault, bridge] = await Promise.all([loadVault(), loadDbSecrets()]);
+
+  const merged = new Map<string, string>();
+  // Bridge first, vault second: the vault is the more authoritative source, so
+  // it overwrites the temporary bridge on conflict.
+  for (const [k, v] of bridge?.values ?? []) merged.set(k, v);
+  for (const [k, v] of vault?.values ?? []) merged.set(k, v);
+
+  const hydrated: string[] = [];
+  for (const [name, value] of merged) {
+    if (process.env[name]) continue; // an explicit env var always wins
+    process.env[name] = value;
+    hydratedKeys.add(name);
+    hydrated.push(name);
+  }
+
+  console.log(
+    JSON.stringify({
+      event: 'secrets.hydrated',
+      count: hydrated.length,
+      keys: hydrated.sort(),
+      sources: { vault: vault?.values.size ?? 0, bridge: bridge?.values.size ?? 0 },
+    }),
+  );
+
+  return hydrated;
 }
 
 /** Resolve several secrets in one pass (a single vault load covers them all). */
@@ -236,4 +310,6 @@ export function resetSecretsCacheForTests(): void {
   dbState = null;
   dbFailureAt = 0;
   dbInFlight = null;
+  for (const k of hydratedKeys) delete process.env[k];
+  hydratedKeys.clear();
 }
