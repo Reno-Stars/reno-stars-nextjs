@@ -255,10 +255,18 @@ export default function AwardsPage({
           <h2 className="text-xl font-bold mb-3" style={{ color: NAVY }}>
             {t('reviews.title')}
           </h2>
-          <p className="inline-flex items-center gap-2 font-semibold mb-2" style={{ color: TEXT }}>
-            <Star className="w-5 h-5" style={{ color: GOLD }} aria-hidden="true" />
-            {t('reviews.rating', { rating: googleRating, count: googleReviewCount })}
-          </p>
+          {/* Guarded like every other consumer (ReviewsPage, TestimonialsSection,
+              AreaPage, NearMePage): getGoogleReviews() returns rating 0 / count 0
+              when the Places key is absent AND the cache row is empty — the exact
+              state the 2026-08-14 migration produced. Unguarded, a section headed
+              "recognition we do have" would publicly advertise "0 out of 5 on
+              Google, from 0 reviews". */}
+          {googleReviewCount > 0 && (
+            <p className="inline-flex items-center gap-2 font-semibold mb-2" style={{ color: TEXT }}>
+              <Star className="w-5 h-5" style={{ color: GOLD }} aria-hidden="true" />
+              {t('reviews.rating', { rating: googleRating, count: googleReviewCount })}
+            </p>
+          )}
           <p className="text-sm mb-4" style={{ color: TEXT_MID }}>
             {t('reviews.body')}
           </p>
