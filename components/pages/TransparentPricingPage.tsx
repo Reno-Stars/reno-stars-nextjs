@@ -58,7 +58,15 @@ const MILESTONE_KEYS = ['s1', 's2', 's3', 's4', 's5'] as const;
 const GETTING_KEYS = ['s1', 's2', 's3'] as const;
 const GETTING_ICONS = { s1: Ruler, s2: FileSignature, s3: ListChecks } as const;
 
-const FAQ_KEYS = ['1', '2', '3', '4'] as const;
+/**
+ * The FAQ entries this page RENDERS. Exported because
+ * `app/[locale]/transparent-pricing/page.tsx` builds the FAQPage JSON-LD from
+ * the same list: Google requires marked-up FAQ content to be visible on the
+ * page, so a second hand-kept copy in the route could silently emit an answer
+ * the visitor never sees (policy violation) or drop one from the rich result.
+ * One list, both consumers.
+ */
+export const FAQ_KEYS = ['1', '2', '3', '4'] as const;
 
 export default function TransparentPricingPage({ locale }: TransparentPricingPageProps) {
   const t = useTranslations('transparentPricing');
@@ -131,6 +139,9 @@ export default function TransparentPricingPage({ locale }: TransparentPricingPag
           >
             {t('milestones.commonLabel')}
           </p>
+          <p className="mb-5 text-sm" style={{ color: TEXT_MID }}>
+            {t('milestones.note')}
+          </p>
           <ol className="grid sm:grid-cols-2 lg:grid-cols-5 gap-4">
             {MILESTONE_KEYS.map((k, i) => (
               <li key={k} className="rounded-xl p-4" style={{ backgroundColor: SURFACE_ALT }}>
@@ -150,9 +161,6 @@ export default function TransparentPricingPage({ locale }: TransparentPricingPag
               </li>
             ))}
           </ol>
-          <p className="mt-5 text-sm" style={{ color: TEXT_MID }}>
-            {t('milestones.note')}
-          </p>
           <p className="mt-4 inline-flex items-center gap-2 text-sm font-medium" style={{ color: TEXT_MUTED }}>
             <CreditCard className="w-4 h-4 shrink-0" style={{ color: GOLD }} aria-hidden="true" />
             {t('milestones.methods')}

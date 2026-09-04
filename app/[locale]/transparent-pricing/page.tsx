@@ -1,7 +1,7 @@
 import { Metadata } from 'next';
 import { getTranslations, setRequestLocale } from 'next-intl/server';
 import { ogLocaleMap, type Locale } from '@/i18n/config';
-import TransparentPricingPage from '@/components/pages/TransparentPricingPage';
+import TransparentPricingPage, { FAQ_KEYS } from '@/components/pages/TransparentPricingPage';
 import { BreadcrumbSchema, FAQSchema } from '@/components/structured-data';
 import JsonLd from '@/components/structured-data/JsonLd';
 import { getBaseUrl, buildAlternates, buildOgImageUrl, SITE_NAME, buildAlternateLocales } from '@/lib/utils';
@@ -10,7 +10,6 @@ interface PageProps {
   params: Promise<{ locale: string }>;
 }
 
-const FAQ_KEYS = [1, 2, 3, 4] as const;
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { locale } = await params;
