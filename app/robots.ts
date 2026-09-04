@@ -36,6 +36,8 @@ export default function robots(): MetadataRoute.Robots {
           'ClaudeBot',
           'Claude-Web',
           'Claude-SearchBot',
+          'anthropic-ai',
+          'cohere-ai',
           'Google-Extended',
           'Applebot-Extended',
           'Bingbot',
@@ -51,7 +53,7 @@ export default function robots(): MetadataRoute.Robots {
       },
       // Training-only crawlers — no citation/retrieval benefit. Block them.
       {
-        userAgent: ['CCBot', 'anthropic-ai', 'cohere-ai', 'Diffbot', 'omgili', 'omgilibot'],
+        userAgent: ['CCBot', 'Diffbot', 'omgili', 'omgilibot'],
         disallow: '/',
       },
     ],
