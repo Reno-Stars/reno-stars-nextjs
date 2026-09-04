@@ -10,6 +10,8 @@ const ok = {
   metaTitleEn: 'Heat Pump Installation Vancouver 2026',
   metaTitleZh: '温哥华热泵安装 2026',
   metaDescriptionEn: 'x', metaDescriptionZh: 'x',
+  seoKeywordsEn: 'kitchen renovation Vancouver, kitchen remodel cost',
+  seoKeywordsZh: '温哥华厨房装修, 厨房翻新费用',
 };
 
 describe('validateDraft', () => {
@@ -45,5 +47,14 @@ describe('validateDraft', () => {
 
   it('accepts the correct Chinese trade name', () => {
     expect(validateDraft({ ...ok, contentZh: '<p>聚星装修為您服務</p>' })).toEqual([]);
+  });
+});
+
+describe('seo keywords are required at insert', () => {
+  it('rejects a draft with no seo_keywords', () => {
+    const { seoKeywordsEn, seoKeywordsZh, ...without } = ok;
+    const fields = validateDraft(without).map((p) => p.field);
+    expect(fields).toContain('seoKeywordsEn');
+    expect(fields).toContain('seoKeywordsZh');
   });
 });

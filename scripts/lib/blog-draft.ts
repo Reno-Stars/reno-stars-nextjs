@@ -28,6 +28,11 @@ export const REQUIRED = [
   'slug', 'titleEn', 'titleZh', 'contentEn', 'contentZh',
   'excerptEn', 'excerptZh', 'metaTitleEn', 'metaTitleZh',
   'metaDescriptionEn', 'metaDescriptionZh',
+  // seo_keywords are required at insert, not backfilled later. Two posts went
+  // live on 2026-09-04 without them and each had to be patched by hand
+  // afterwards; a field that is always fixed after the fact belongs in the
+  // gate, or it just becomes recurring manual work.
+  'seoKeywordsEn', 'seoKeywordsZh',
 ] as const;
 
 export interface DraftProblem {
