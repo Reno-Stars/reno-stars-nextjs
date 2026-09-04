@@ -5,7 +5,7 @@
 -- idempotent WHERE guard: only updates if the field is still NULL
 
 UPDATE blog_posts
-SET meta_description_en = 'Vancouver homeowners transforming backyards into year-round living spaces with decks and patios. This guide covers 2026 costs and permit requirements in Metro Vancouver.'
+SET meta_description_en = 'Transform your Vancouver backyard into a year-round living space. This guide covers 2026 deck and patio costs plus permit requirements in Metro Vancouver.'
 WHERE
   slug IN (
     'outdoor-test-mt1',
