@@ -124,6 +124,30 @@ const PUBLISH_LIMITS: Record<string, number> = {
   focusKeywordEn: 50, focusKeywordZh: 50,
 };
 
+/**
+ * Chinese substance, measured in CJK codepoints rather than words.
+ *
+ * wordCount() splits on whitespace, and Chinese does not use it — a complete
+ * 2,000-character article scores about 1 word. So the publish gate has always
+ * measured contentEn only, and a post with a long English body and a 20-character
+ * Chinese body published cleanly. Eleven live posts have under 300 CJK chars,
+ * one has 14: those /zh/ pages are blank to a Chinese reader while the English
+ * page reads fine, so nothing looks broken from the outside.
+ *
+ * 300 is deliberately below the floor of real content: across published posts the
+ * median is ~1,514 CJK chars and the 5th percentile is ~415. This rejects a stub,
+ * not a short article.
+ */
+const MIN_CJK_PUBLISHED = 300;
+
+function cjkCount(html: string): number {
+  const text = html
+    .replace(/<script[\s\S]*?<\/script>/gi, ' ')
+    .replace(/<style[\s\S]*?<\/style>/gi, ' ')
+    .replace(/<[^>]+>/g, ' ');
+  return (text.match(/[\u4e00-\u9fff]/g) ?? []).length;
+}
+
 function wordCount(html: string): number {
   const text = html
     .replace(/<script[\s\S]*?<\/script>/gi, ' ')
@@ -278,6 +302,20 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
     if (tooLong.length > 0) {
       return NextResponse.json(
         { error: `Field(s) exceed their column: ${tooLong.join('; ')}` },
+        { status: 400 },
+      );
+    }
+
+    const cjk = cjkCount(body.contentZh as string);
+    if (cjk < MIN_CJK_PUBLISHED) {
+      return NextResponse.json(
+        {
+          error:
+            `contentZh has ~${cjk} Chinese characters; a published post needs at ` +
+            `least ${MIN_CJK_PUBLISHED}. The English page can read fine while the ` +
+            `/zh/ page is blank, so this is checked separately. Send the translated ` +
+            `article, or pass "isPublished": false to stage a draft.`,
+        },
         { status: 400 },
       );
     }
