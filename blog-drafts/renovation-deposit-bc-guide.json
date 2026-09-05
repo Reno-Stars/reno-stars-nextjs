@@ -9,35 +9,59 @@
   "excerptZh": "卑诗省对装修定金没有法定上限。这一法律空白让业主损失惨重。以下是真正通行的行业惯例、需要警惕的危险信号，以及签署合同前如何保护自己。",
   "metaTitleEn": "Renovation Deposit in BC: What's Normal & What's a Red Flag (2026)",
   "metaTitleZh": "卑诗省装修定金：正常金额与危险信号（2026）",
-  "metaDescriptionEn": "BC sets no maximum on renovation deposits. Reno Stars explains what is standard, what the red flags are, and how to structure payments so your money is protected.",
+  "metaDescriptionEn": "BC sets no maximum on renovation deposits. Reno Stars explains what is standard, the red flags, and how to structure payments to stay protected.",
   "metaDescriptionZh": "卑诗省对装修定金没有设定上限。Reno Stars 为您解释行业标准、危险信号以及如何安排付款以保障您的资金安全。",
   "focusKeywordEn": "renovation deposit bc",
   "focusKeywordZh": "卑诗省装修定金",
   "readingTimeMinutes": 7,
   "localizations": {
-    "titleKo": "BC 리노베이션 계약금 가이드 2026: 정상 금액과 위험 신호",
-    "metaDescriptionKo": "BC 리노베이션 계약금 2026: 정상 금액, 위험 신호 및 보호 방법.",
-    "titleJa": "バンクーバー リノベーション デポジット BC 2026: 正常金額と危険信号",
-    "metaDescriptionJa": "BCリノベーションデポジット2026：正常金額、危険信号、保護方法。",
-    "titleHi": "BC रेनोवेशन जमा राशि गाइड 2026: सामान्य और खतरे के संकेत",
-    "metaDescriptionHi": "BC रेनोवेशन जमा राशि 2026: सामान्य राशि, खतरे के संकेत, सुरक्षा.",
-    "titleAr": "دليل إيداع التجديد في CB 2026: ما هو طبيعي وما هو علامة تحذير",
-    "metaDescriptionAr": "دليل إيداع التجديد في CB 2026: المبلغ الطبيعي، علامات التحذير، الحماية.",
-    "titleFr": "Guide du dépôt de rénovation BC 2026: Ce qui est normal et les signaux d'alarme",
-    "metaDescriptionFr": "Guide du dépôt de rénovation BC 2026. Montant normal, signaux d'alarme, protection.",
-    "titleEs": "Guía de depósito de renovación BC 2026: Lo normal y las señales de alerta",
-    "metaDescriptionEs": "Guía de depósito de renovación BC 2026. Monto normal, alertas, protección.",
-    "titleTh": "คู่มือเงินมัดจำตกแต่ง BC 2026: ปกติและสัญญาณเตือน",
-    "metaDescriptionTh": "คู่มือเงินมัดจำตกแต่ง BC 2026: ปกติ สัญญาณเตือน วิธีป้องกัน",
-    "titleVi": "Hướng dẫn tiền đặt cọc cải tạo BC 2026: Bình thường và cờ đỏ",
-    "metaDescriptionVi": "Hướng dẫn tiền đặt cọc cải tạo BC 2026. Bình thường, cờ đỏ, bảo vệ.",
-    "titleTl": "Gabay sa Deposit ng Renovation BC 2026: Normal at Red Flag",
-    "metaDescriptionTl": "Gabay sa deposit ng renovation BC 2026. Normal na halaga, red flag, proteksyon.",
-    "titleId": "Panduan Deposit Renovasi BC 2026: Normal dan Tanda Bahaya",
-    "metaDescriptionId": "Panduan deposit renovasi BC 2026. Jumlah normal, tanda bahaya, perlindungan.",
-    "titleMs": "Panduan Deposit Pembaikan BC 2026: Biasa dan Tanda Bahaya",
-    "metaDescriptionMs": "Panduan deposit pembaikan BC 2026. Amaun biasa, tanda bahaya, perlindungan.",
-    "titleZhHant": "BC裝修定金指南（2026）：正常金額與危險信號",
-    "metaDescriptionZhHant": "BC裝修定金2026：正常金額標準與危險信號自保方法。"
+    "ja": {
+      "title": "Renovation Deposit in BC: What's Normal, What's a Red Flag & How to Protect Yourself",
+      "metaDescription": "BC sets no maximum on renovation deposits. Reno Stars explains what is standard, the red flags, and how to structure payments to stay protected."
+    },
+    "ko": {
+      "title": "Renovation Deposit in BC: What's Normal, What's a Red Flag & How to Protect Yourself",
+      "metaDescription": "BC sets no maximum on renovation deposits. Reno Stars explains what is standard, the red flags, and how to structure payments to stay protected."
+    },
+    "es": {
+      "title": "Renovation Deposit in BC: What's Normal, What's a Red Flag & How to Protect Yourself",
+      "metaDescription": "BC sets no maximum on renovation deposits. Reno Stars explains what is standard, the red flags, and how to structure payments to stay protected."
+    },
+    "pa": {
+      "title": "Renovation Deposit in BC: What's Normal, What's a Red Flag & How to Protect Yourself",
+      "metaDescription": "BC sets no maximum on renovation deposits. Reno Stars explains what is standard, the red flags, and how to structure payments to stay protected."
+    },
+    "tl": {
+      "title": "Renovation Deposit in BC: What's Normal, What's a Red Flag & How to Protect Yourself",
+      "metaDescription": "BC sets no maximum on renovation deposits. Reno Stars explains what is standard, the red flags, and how to structure payments to stay protected."
+    },
+    "fa": {
+      "title": "Renovation Deposit in BC: What's Normal, What's a Red Flag & How to Protect Yourself",
+      "metaDescription": "BC sets no maximum on renovation deposits. Reno Stars explains what is standard, the red flags, and how to structure payments to stay protected."
+    },
+    "vi": {
+      "title": "Renovation Deposit in BC: What's Normal, What's a Red Flag & How to Protect Yourself",
+      "metaDescription": "BC sets no maximum on renovation deposits. Reno Stars explains what is standard, the red flags, and how to structure payments to stay protected."
+    },
+    "ru": {
+      "title": "Renovation Deposit in BC: What's Normal, What's a Red Flag & How to Protect Yourself",
+      "metaDescription": "BC sets no maximum on renovation deposits. Reno Stars explains what is standard, the red flags, and how to structure payments to stay protected."
+    },
+    "ar": {
+      "title": "Renovation Deposit in BC: What's Normal, What's a Red Flag & How to Protect Yourself",
+      "metaDescription": "BC sets no maximum on renovation deposits. Reno Stars explains what is standard, the red flags, and how to structure payments to stay protected."
+    },
+    "hi": {
+      "title": "Renovation Deposit in BC: What's Normal, What's a Red Flag & How to Protect Yourself",
+      "metaDescription": "BC sets no maximum on renovation deposits. Reno Stars explains what is standard, the red flags, and how to structure payments to stay protected."
+    },
+    "fr": {
+      "title": "Renovation Deposit in BC: What's Normal, What's a Red Flag & How to Protect Yourself",
+      "metaDescription": "BC sets no maximum on renovation deposits. Reno Stars explains what is standard, the red flags, and how to structure payments to stay protected."
+    },
+    "zh-Hant": {
+      "title": "BC 装修定金指南：正常金额、危险信号与自我保护方法",
+      "metaDescription": "卑诗省对装修定金没有设定上限。Reno Stars 为您解释行业标准、危险信号以及如何安排付款以保障您的资金安全。"
+    }
   }
 }
