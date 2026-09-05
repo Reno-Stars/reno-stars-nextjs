@@ -1,7 +1,8 @@
--- Migration: scripts/migrations/2026-09-05-blog-featured-image-url-null.sql
+-- Migration: 2026-09-05-blog-featured-image-url-null.sql
 -- Target: 7 published blog_posts with NULL featured_image_url
 -- NOT APPLIED — needs human to run against live database
 -- Uses real hero_image_url values from the projects table (confirmed via DB query this run)
+-- Deduplication guard: each UPDATE targets slug AND (NULL or empty) to prevent re-application
 
 UPDATE blog_posts
 SET featured_image_url =
