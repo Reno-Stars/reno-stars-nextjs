@@ -14,5 +14,30 @@
   "metaDescriptionEn": "Step-by-step guide to filing a home renovation insurance claim in British Columbia. Covers BC Insurance Act deadlines, what is covered, disputes, and your rights.",
   "metaDescriptionZh": "不列颠哥伦比亚省装修保险理赔分步指南。涵盖BC省《保险法》时效、承保范围、争议处理及房主权利。",
   "readingTimeMinutes": 8,
-  "localizations": {}
+  "localizations": {
+    "titleKo": "BC 리노베이션 보험 청구 가이드 2026: 절차와 권리",
+    "metaDescriptionKo": "BC 리노베이션 보험 청구 2026: 절차, 보험 적용 범위 및 권리 가이드.",
+    "titleJa": "バンクーバー リノベーション保険クレーム BC 2026: 完全ガイド",
+    "metaDescriptionJa": "BCリノベージュ保険クレーム2026：手順、適用範囲、権利の完全ガイド。",
+    "titleHi": "BC रेनोवेशन बीमा दावा गाइड 2026: प्रक्रिया और अधिकार",
+    "metaDescriptionHi": "BC रेनोवेशन बीमा दावा 2026: प्रक्रिया, कवरेज और अधिकार गाइड.",
+    "titleAr": "دليل مطالبة تأمين التجديد في كولومبيا البريطانية 2026",
+    "metaDescriptionAr": "دليل مطالبة تأمين التجديد في كولومبيا البريطانية 2026: الإجراءات والحقوق والتغطية.",
+    "titleFr": "Guide des réclamations d'assurance rénovation BC 2026",
+    "metaDescriptionFr": "Guide des réclamations d'assurance rénovation BC 2026. Procédure, couverture, droits.",
+    "titleEs": "Guía de reclamaciones de seguro de renovación BC 2026",
+    "metaDescriptionEs": "Guía de reclamaciones de seguro de renovación BC 2026. Procedimiento, cobertura, derechos.",
+    "titleTh": "คู่มือการเรียกร้องประกันการตกแต่ง BC 2026",
+    "metaDescriptionTh": "คู่มือการเรียกร้องประกันการตกแต่ง BC 2026 ขั้นตอน ความครอบคลุม สิทธิ์",
+    "titleVi": "Hướng dẫn yêu cầu bảo hiểm cải tạo BC 2026",
+    "metaDescriptionVi": "Hướng dẫn yêu cầu bảo hiểm cải tạo BC 2026. Thủ tục, phạm vi, quyền.",
+    "titleTl": "Gabay sa Insurance Claim ng Renovation BC 2026",
+    "metaDescriptionTl": "Gabay sa insurance claim ng renovation BC 2026. Proseso, coverage, karapatan.",
+    "titleId": "Panduan Klaim Asuransi Renovasi BC 2026",
+    "metaDescriptionId": "Panduan klaim asuransi renovasi BC 2026. Prosedur, cakupan, hak.",
+    "titleMs": "Panduan Tuntutan Insurans Pembaikan BC 2026",
+    "metaDescriptionMs": "Panduan tuntutan insurans pembaikan BC 2026. Prosedur, liputan, hak.",
+    "titleZhHant": "BC省裝修保險理賠指南（2026）：流程與權利",
+    "metaDescriptionZhHant": "BC省裝修保險理賠2026完整指南。流程、承保範圍及權利。"
+  }
 }

@@ -14,5 +14,30 @@
   "focusKeywordEn": "renovation deposit bc",
   "focusKeywordZh": "卑诗省装修定金",
   "readingTimeMinutes": 7,
-  "localizations": {}
+  "localizations": {
+    "titleKo": "BC 리노베이션 계약금 가이드 2026: 정상 금액과 위험 신호",
+    "metaDescriptionKo": "BC 리노베이션 계약금 2026: 정상 금액, 위험 신호 및 보호 방법.",
+    "titleJa": "バンクーバー リノベーション デポジット BC 2026: 正常金額と危険信号",
+    "metaDescriptionJa": "BCリノベーションデポジット2026：正常金額、危険信号、保護方法。",
+    "titleHi": "BC रेनोवेशन जमा राशि गाइड 2026: सामान्य और खतरे के संकेत",
+    "metaDescriptionHi": "BC रेनोवेशन जमा राशि 2026: सामान्य राशि, खतरे के संकेत, सुरक्षा.",
+    "titleAr": "دليل إيداع التجديد في CB 2026: ما هو طبيعي وما هو علامة تحذير",
+    "metaDescriptionAr": "دليل إيداع التجديد في CB 2026: المبلغ الطبيعي، علامات التحذير، الحماية.",
+    "titleFr": "Guide du dépôt de rénovation BC 2026: Ce qui est normal et les signaux d'alarme",
+    "metaDescriptionFr": "Guide du dépôt de rénovation BC 2026. Montant normal, signaux d'alarme, protection.",
+    "titleEs": "Guía de depósito de renovación BC 2026: Lo normal y las señales de alerta",
+    "metaDescriptionEs": "Guía de depósito de renovación BC 2026. Monto normal, alertas, protección.",
+    "titleTh": "คู่มือเงินมัดจำตกแต่ง BC 2026: ปกติและสัญญาณเตือน",
+    "metaDescriptionTh": "คู่มือเงินมัดจำตกแต่ง BC 2026: ปกติ สัญญาณเตือน วิธีป้องกัน",
+    "titleVi": "Hướng dẫn tiền đặt cọc cải tạo BC 2026: Bình thường và cờ đỏ",
+    "metaDescriptionVi": "Hướng dẫn tiền đặt cọc cải tạo BC 2026. Bình thường, cờ đỏ, bảo vệ.",
+    "titleTl": "Gabay sa Deposit ng Renovation BC 2026: Normal at Red Flag",
+    "metaDescriptionTl": "Gabay sa deposit ng renovation BC 2026. Normal na halaga, red flag, proteksyon.",
+    "titleId": "Panduan Deposit Renovasi BC 2026: Normal dan Tanda Bahaya",
+    "metaDescriptionId": "Panduan deposit renovasi BC 2026. Jumlah normal, tanda bahaya, perlindungan.",
+    "titleMs": "Panduan Deposit Pembaikan BC 2026: Biasa dan Tanda Bahaya",
+    "metaDescriptionMs": "Panduan deposit pembaikan BC 2026. Amaun biasa, tanda bahaya, perlindungan.",
+    "titleZhHant": "BC裝修定金指南（2026）：正常金額與危險信號",
+    "metaDescriptionZhHant": "BC裝修定金2026：正常金額標準與危險信號自保方法。"
+  }
 }
