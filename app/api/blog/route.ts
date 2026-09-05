@@ -22,9 +22,11 @@ import { refreshBlogPost } from '@/lib/seo/blog-revalidate';
  * 401 on mismatch, compared timing-safely (a plain !== leaks the secret's
  * length and prefix through response latency on a stable-path origin).
  *
- * Posts are created UNPUBLISHED by default. `isPublished` must be passed
- * explicitly, so an automated writer cannot put content in front of customers
- * as a side effect of a successful call — publishing stays a separate decision.
+ * Posts PUBLISH by default (owner decision, 2026-08-07): this endpoint's own
+ * validation is the gate, not a human review step. Pass `isPublished: false`
+ * to stage a draft. Because a successful call is immediately customer-facing,
+ * the publish gate checks substance AND SEO completeness — a live page with no
+ * meta title or excerpt is a defect the caller has no way to notice.
  *
  * Idempotent on `slug`: a repeat call updates in place rather than creating a
  * duplicate. A retry after a network timeout is therefore safe, which matters
@@ -102,6 +104,25 @@ function htmlProblem(value: unknown, field: string): string | null {
  * A genuine article clears it by an order of magnitude.
  */
 const MIN_WORDS_PUBLISHED = 150;
+
+/**
+ * What a PUBLISHED post must carry beyond REQUIRED. Drafts are exempt.
+ * These are the fields that make a page describable in search results; a post
+ * missing them renders fine, which is exactly why nothing catches it.
+ */
+const PUBLISH_REQUIRED = [
+  'excerptEn', 'excerptZh',
+  'metaTitleEn', 'metaTitleZh',
+  'metaDescriptionEn', 'metaDescriptionZh',
+  'seoKeywordsEn', 'seoKeywordsZh',
+] as const;
+
+/** varchar limits in blog_posts — over-length is a Postgres error at insert. */
+const PUBLISH_LIMITS: Record<string, number> = {
+  metaTitleEn: 70, metaTitleZh: 70,
+  metaDescriptionEn: 155, metaDescriptionZh: 155,
+  focusKeywordEn: 50, focusKeywordZh: 50,
+};
 
 function wordCount(html: string): number {
   const text = html
@@ -232,6 +253,35 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
   // Only gate what goes live. A deliberate draft (isPublished:false) may be any
   // length — that is a legitimate way to stage work in progress.
   if (isPublished) {
+    // A live post with no meta title, excerpt or keywords still renders, so
+    // nothing fails — it just quietly ships a page search engines cannot
+    // describe. Three went live on 2026-09-04/05 that way and each was
+    // backfilled by hand afterwards. Publishing incomplete is the thing worth
+    // refusing, because the caller cannot see the omission.
+    const incomplete = PUBLISH_REQUIRED.filter(
+      (k) => typeof body[k] !== 'string' || (body[k] as string).trim() === '',
+    );
+    if (incomplete.length > 0) {
+      return NextResponse.json(
+        {
+          error:
+            `A published post needs: ${incomplete.join(', ')}. Send them, or ` +
+            `pass "isPublished": false to stage a draft and fill them later.`,
+        },
+        { status: 400 },
+      );
+    }
+
+    const tooLong = Object.entries(PUBLISH_LIMITS)
+      .filter(([k, max]) => typeof body[k] === 'string' && (body[k] as string).length > max)
+      .map(([k, max]) => `${k} is ${(body[k] as string).length} chars (max ${max})`);
+    if (tooLong.length > 0) {
+      return NextResponse.json(
+        { error: `Field(s) exceed their column: ${tooLong.join('; ')}` },
+        { status: 400 },
+      );
+    }
+
     const words = wordCount(body.contentEn as string);
     if (words < MIN_WORDS_PUBLISHED) {
       return NextResponse.json(
