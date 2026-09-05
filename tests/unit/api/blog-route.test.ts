@@ -48,6 +48,17 @@ const valid = {
   // endpoint must now refuse.
   contentEn: '<p>' + 'renovation cost estimate vancouver kitchen '.repeat(40) + '</p>',
   contentZh: '<p>' + '温哥华 厨房 装修 费用 预算 '.repeat(40) + '</p>',
+  // A publishable payload also has to be SEO-complete: a live page with no meta
+  // title or excerpt renders fine and is invisible to search. Tests that publish
+  // need these; the ones that assert a REJECTION delete a field from this base.
+  excerptEn: 'What a Vancouver kitchen renovation costs in 2026.',
+  excerptZh: '2026年温哥华厨房装修费用概览。',
+  metaTitleEn: 'Kitchen Renovation Cost Vancouver 2026',
+  metaTitleZh: '温哥华厨房装修费用 2026',
+  metaDescriptionEn: 'What a kitchen renovation costs in Vancouver in 2026, by scope.',
+  metaDescriptionZh: '2026年温哥华厨房装修的费用区间，按工程量分级。',
+  seoKeywordsEn: 'kitchen renovation cost vancouver, kitchen remodel vancouver',
+  seoKeywordsZh: '温哥华厨房装修费用, 温哥华厨房翻新',
 };
 
 beforeEach(() => {
@@ -287,3 +298,33 @@ describe('POST /api/blog — a published post must have substance', () => {
   });
 });
 
+describe('POST /api/blog — a published post must be SEO-complete', () => {
+  it.each([
+    'excerptEn', 'excerptZh',
+    'metaTitleEn', 'metaTitleZh',
+    'metaDescriptionEn', 'metaDescriptionZh',
+    'seoKeywordsEn', 'seoKeywordsZh',
+  ])('refuses to publish without %s', async (field) => {
+    const body: Record<string, unknown> = { ...valid };
+    delete body[field];
+    const res = await post(body);
+    expect(res.status).toBe(400);
+    expect((await res.json()).error).toContain(field);
+  });
+
+  it('allows a DRAFT to omit them — staging work in progress is legitimate', async () => {
+    const body: Record<string, unknown> = { ...valid, isPublished: false };
+    for (const f of ['excerptEn', 'metaTitleEn', 'seoKeywordsZh']) delete body[f];
+    expect((await post(body)).status).toBe(200);
+  });
+
+  it('refuses a meta title longer than its varchar(70) column', async () => {
+    const res = await post({ ...valid, metaTitleEn: 'x'.repeat(71) });
+    expect(res.status).toBe(400);
+    expect((await res.json()).error).toContain('max 70');
+  });
+
+  it('accepts a complete published post', async () => {
+    expect((await post(valid)).status).toBe(200);
+  });
+});
