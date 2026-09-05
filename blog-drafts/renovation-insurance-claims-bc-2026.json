@@ -11,8 +11,57 @@
   "focusKeywordZh": "BC省装修保险理赔",
   "metaTitleEn": "How to File a Renovation Insurance Claim in BC | Reno Stars",
   "metaTitleZh": "BC省装修保险理赔完整指南 | Reno Stars",
-  "metaDescriptionEn": "Step-by-step guide to filing a home renovation insurance claim in British Columbia. Covers BC Insurance Act deadlines, what is covered, disputes, and your rights.",
+  "metaDescriptionEn": "Step-by-step guide to filing a home renovation insurance claim in BC. Covers BC Insurance Act deadlines, what is covered, disputes, and your rights.",
   "metaDescriptionZh": "不列颠哥伦比亚省装修保险理赔分步指南。涵盖BC省《保险法》时效、承保范围、争议处理及房主权利。",
   "readingTimeMinutes": 8,
-  "localizations": {}
+  "localizations": {
+    "ja": {
+      "title": "How to File a Renovation Insurance Claim in British Columbia",
+      "metaDescription": "Step-by-step guide to filing a home renovation insurance claim in BC. Covers BC Insurance Act deadlines, what is covered, disputes, and your rights."
+    },
+    "ko": {
+      "title": "How to File a Renovation Insurance Claim in British Columbia",
+      "metaDescription": "Step-by-step guide to filing a home renovation insurance claim in BC. Covers BC Insurance Act deadlines, what is covered, disputes, and your rights."
+    },
+    "es": {
+      "title": "How to File a Renovation Insurance Claim in British Columbia",
+      "metaDescription": "Step-by-step guide to filing a home renovation insurance claim in BC. Covers BC Insurance Act deadlines, what is covered, disputes, and your rights."
+    },
+    "pa": {
+      "title": "How to File a Renovation Insurance Claim in British Columbia",
+      "metaDescription": "Step-by-step guide to filing a home renovation insurance claim in BC. Covers BC Insurance Act deadlines, what is covered, disputes, and your rights."
+    },
+    "tl": {
+      "title": "How to File a Renovation Insurance Claim in British Columbia",
+      "metaDescription": "Step-by-step guide to filing a home renovation insurance claim in BC. Covers BC Insurance Act deadlines, what is covered, disputes, and your rights."
+    },
+    "fa": {
+      "title": "How to File a Renovation Insurance Claim in British Columbia",
+      "metaDescription": "Step-by-step guide to filing a home renovation insurance claim in BC. Covers BC Insurance Act deadlines, what is covered, disputes, and your rights."
+    },
+    "vi": {
+      "title": "How to File a Renovation Insurance Claim in British Columbia",
+      "metaDescription": "Step-by-step guide to filing a home renovation insurance claim in BC. Covers BC Insurance Act deadlines, what is covered, disputes, and your rights."
+    },
+    "ru": {
+      "title": "How to File a Renovation Insurance Claim in British Columbia",
+      "metaDescription": "Step-by-step guide to filing a home renovation insurance claim in BC. Covers BC Insurance Act deadlines, what is covered, disputes, and your rights."
+    },
+    "ar": {
+      "title": "How to File a Renovation Insurance Claim in British Columbia",
+      "metaDescription": "Step-by-step guide to filing a home renovation insurance claim in BC. Covers BC Insurance Act deadlines, what is covered, disputes, and your rights."
+    },
+    "hi": {
+      "title": "How to File a Renovation Insurance Claim in British Columbia",
+      "metaDescription": "Step-by-step guide to filing a home renovation insurance claim in BC. Covers BC Insurance Act deadlines, what is covered, disputes, and your rights."
+    },
+    "fr": {
+      "title": "How to File a Renovation Insurance Claim in British Columbia",
+      "metaDescription": "Step-by-step guide to filing a home renovation insurance claim in BC. Covers BC Insurance Act deadlines, what is covered, disputes, and your rights."
+    },
+    "zh-Hant": {
+      "title": "不列颠哥伦比亚省装修保险理赔完整流程指南",
+      "metaDescription": "不列颠哥伦比亚省装修保险理赔分步指南。涵盖BC省《保险法》时效、承保范围、争议处理及房主权利。"
+    }
+  }
 }
