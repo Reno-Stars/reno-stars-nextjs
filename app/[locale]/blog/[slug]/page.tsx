@@ -1,7 +1,7 @@
 import { Metadata } from 'next';
 import { getTranslations, setRequestLocale } from 'next-intl/server';
 import { notFound } from 'next/navigation';
-import { locales, ogLocaleMap, type Locale } from '@/i18n/config';
+import { locales, ogLocaleMap, INDEXABLE_LEAF_LOCALES, type Locale } from '@/i18n/config';
 import { getLocalizedBlogPost } from '@/lib/data';
 import BlogPostPage from '@/components/pages/BlogPostPage';
 import { getLocalizedService, getLocalizedArea } from '@/lib/data';
@@ -162,7 +162,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       ...(post.focus_keyword?.[locale as Locale] ? [post.focus_keyword[locale as Locale]] as string[] : []),
     ])].filter(Boolean) as string[],
     ...(hasNativeBody ? {} : { robots: { index: false, follow: true } }),
-    alternates: buildAlternates(`/blog/${slug}/`, locale, nativeLocales),
+    alternates: buildAlternates(`/blog/${slug}/`, locale, INDEXABLE_LEAF_LOCALES),
     openGraph: {
       title: metaTitle,
       description: metaDescription,
