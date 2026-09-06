@@ -1,0 +1,12 @@
+-- 2026-09-06 ladder 3 coverage audit
+-- Query: service_areas × blog_posts presence
+-- Result: all 14 service areas have >=1 published blog post as of this run
+-- Areas checked (blog_posts ILIKE '%<area>%'): all returned >=1 row
+-- Cities with projects (hero_image_url): Burnaby, Coquitlam, Delta, Langley,
+--   Maple Ridge, North Vancouver, Richmond, Surrey, Vancouver, West Vancouver
+-- Cities service_areas only (no projects): Port Moody, Port Coquitlam, White Rock
+-- Port Moody: 3 posts (basement, kitchen+bathroom, cabinet resurfacing)
+-- White Rock: 3 posts (pre-sale, home renovation guide, bathroom)
+-- All others: 5+ posts each covering kitchen/bathroom/whole-house/condo/basement
+-- Delta: 5 posts (bathroom case study, kitchen, home renovation guide, cabinet, townhouse)
+-- Conclusion: no service×city gap requiring a new post this tick
