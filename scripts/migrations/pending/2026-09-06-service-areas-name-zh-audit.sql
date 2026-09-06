@@ -1,0 +1,16 @@
+-- Migration: service_areas — name_zh content integrity audit
+-- Date: 2026-09-06
+-- Status: NOT APPLIED — needs human to run
+-- Topic: audit — service_areas.name_zh NULL or empty (English-only area names)
+-- Cred: agent_ro (SELECT-only — no writes possible from this credential)
+--
+-- QUERY TO CHECK CURRENT STATE (run manually against live DB):
+--   SELECT id, name_en, name_zh
+--   FROM service_areas
+--   WHERE name_zh IS NULL OR name_zh = ''
+--   ORDER BY display_order;
+--
+-- Background: service_areas has 14 rows total. If any lack name_zh, a
+-- translation migration is needed. The service area schema (LocalBusinessAreaSchema)
+-- uses name_zh in JSON-LD areaServed for zh locale pages — missing names create
+-- thin/empty JSON-LD for the zh locale.

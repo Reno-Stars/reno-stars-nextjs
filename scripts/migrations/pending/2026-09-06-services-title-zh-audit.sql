@@ -1,0 +1,18 @@
+-- Migration: services — title_zh content integrity audit
+-- Date: 2026-09-06
+-- Status: NOT APPLIED — needs human to run
+-- Topic: audit — services.title_zh NULL or empty (English-only content)
+-- Cred: agent_ro (SELECT-only — no writes possible from this credential)
+--
+-- QUERY TO CHECK CURRENT STATE (run manually against live DB):
+--   SELECT slug, title_en, title_zh, show_on_services_page
+--   FROM services
+--   WHERE title_zh IS NULL OR title_zh = ''
+--   ORDER BY display_order;
+--
+-- Finding as of 2026-08-24: 3 of 11 services had seo_keywords_zh populated.
+-- title_zh is a separate column — if any services lack title_zh, a separate
+-- migration file is needed for it (distinct from the seo_keywords_zh file).
+-- Run the query above; if it returns rows, draft an UPDATE migration following
+-- the pattern in scripts/migrations/2026-08-24-services-seo-keywords-zh.sql
+-- (which is for seo_keywords_zh, NOT title_zh — keep them separate).
