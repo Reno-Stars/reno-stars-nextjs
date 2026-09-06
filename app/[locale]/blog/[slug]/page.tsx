@@ -49,44 +49,43 @@ function extractFaqsFromContent(content: string | null | undefined): { question:
 
   const FAQ_LABEL = '(?:Frequently Asked Questions|FAQs?|常见问题|常見問題)';
 
-  // Markdown: the '## FAQ' section, then '### Q' or '**Q**' pairs.
-  const mdHeading = content.match(new RegExp(`##\\s*${FAQ_LABEL}\\s*\\n([\\s\\S]*?)(?=\\n##\\s|$)`, 'i'));
-  if (mdHeading) {
-    const block = mdHeading[1];
+  // 1) HTML: match any <h2> whose text contains "FAQ" (handles
+  //    "Langley Bathroom Renovation Cost FAQ", "Frequently Asked Questions",
+  //    "Kitchen Renovation FAQ", "常见问题", etc.) then parse <h3>/<p> pairs.
+  const htmlHeading =
+    content.match(/<h2[^>]*>\s*[^<]*FAQ[^<]*<\/h2>([\s\S]*?)(?=<h2[\s>]|$)/i)
+    || content.match(new RegExp(`<h2[^>]*>\\s*${FAQ_LABEL}[^<]*</h2>([\\s\\S]*?)(?=<h2[\\s>]|$)`, 'i'))
+    || content.match(/<h2[^>]*\sid=["']faq["'][^>]*>[\s\S]*?<\/h2>([\s\S]*?)(?=<h2[\s>]|$)/i);
+  if (htmlHeading) {
+    const block = htmlHeading[1];
+    const reHtml = /<h3[^>]*>([\s\S]*?)<\/h3>\s*([\s\S]*?)(?=<h3[\s>]|<h2[\s>]|$)/gi;
     let m: RegExpExecArray | null;
-    const reH3 = /###\s+(.+?)\n+([\s\S]*?)(?=\n###\s|\n##\s|$)/g;
-    while ((m = reH3.exec(block)) !== null) {
-      const question = m[1].trim();
+    while ((m = reHtml.exec(block)) !== null) {
+      const question = cleanAnswer(m[1]);
       const answer = cleanAnswer(m[2]);
       if (question && answer) out.push({ question, answer });
     }
-    if (out.length === 0) {
-      const reBold = /^\*\*(.+?)\*\*\n([\s\S]*?)(?=\n\*\*|$)/gm;
-      while ((m = reBold.exec(block)) !== null) {
+  }
+
+  // 2) Markdown: "## FAQ" / "## 常见问题" section, then "### Q" or "**Q**" pairs.
+  if (out.length === 0) {
+    const mdHeading = content.match(new RegExp(`##\\s*${FAQ_LABEL}\\s*\\n([\\s\\S]*?)(?=\\n##\\s|$)`, 'i'));
+    if (mdHeading) {
+      const block = mdHeading[1];
+      let m: RegExpExecArray | null;
+      const reH3 = /###\s+(.+?)\n+([\s\S]*?)(?=\n###\s|\n##\s|$)/g;
+      while ((m = reH3.exec(block)) !== null) {
         const question = m[1].trim();
         const answer = cleanAnswer(m[2]);
         if (question && answer) out.push({ question, answer });
       }
-    }
-  }
-
-  // HTML: the FAQ <h2> section, then each <h3>Q</h3> + following answer block
-  // (everything up to the next <h3>/<h2> — handles multi-<p> answers). Match the
-  // heading by TEXT label (en/zh) OR by a translation-invariant id="faq" anchor:
-  // machine translation rewrites the heading text away on ja/ko/es/… but keeps
-  // the id attribute, so id="faq" keeps FAQPage schema working on every locale.
-  if (out.length === 0) {
-    const htmlHeading =
-      content.match(new RegExp(`<h2[^>]*>\\s*${FAQ_LABEL}[^<]*</h2>([\\s\\S]*?)(?=<h2[\\s>]|$)`, 'i'))
-      || content.match(/<h2[^>]*\bid=["']faq["'][^>]*>[\s\S]*?<\/h2>([\s\S]*?)(?=<h2[\s>]|$)/i);
-    if (htmlHeading) {
-      const block = htmlHeading[1];
-      const reHtml = /<h3[^>]*>([\s\S]*?)<\/h3>\s*([\s\S]*?)(?=<h3[\s>]|<h2[\s>]|$)/gi;
-      let m: RegExpExecArray | null;
-      while ((m = reHtml.exec(block)) !== null) {
-        const question = cleanAnswer(m[1]);
-        const answer = cleanAnswer(m[2]);
-        if (question && answer) out.push({ question, answer });
+      if (out.length === 0) {
+        const reBold = /^\*\*(.+?)\*\*\n([\s\S]*?)(?=\n\*\*|$)/gm;
+        while ((m = reBold.exec(block)) !== null) {
+          const question = m[1].trim();
+          const answer = cleanAnswer(m[2]);
+          if (question && answer) out.push({ question, answer });
+        }
       }
     }
   }
