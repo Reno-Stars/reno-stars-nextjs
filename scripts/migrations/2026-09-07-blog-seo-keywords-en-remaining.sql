@@ -15,14 +15,12 @@
 --   focus_keyword_en: "vancouver renovation cost november 2023"
 --   seo_keywords_zh: "大温哥华,装修成本,指数,2023年11月,装修费用,成本报告"
 
+-- NOTE: metro-vancouver-renovation-cost-index-november-2023 is already covered
+--       by 2026-09-07-blog-content-integrity.sql (lines 27-33).
+--       This file only handles truly remaining rows.
+
 -- ── Post 1 ──────────────────────────────────────────────────────────────────
 UPDATE blog_posts SET
   seo_keywords_en = 'townhouse renovation vancouver,metro vancouver townhouse renovation,strata renovation rules vancouver,townhouse renovation permits bc,vancouver strata renovation cost,townhouse renovation 2026,vancouver renovation strata rules'
 WHERE slug = 'townhouse-reno-vancouver-2026'
-  AND (seo_keywords_en IS NULL OR seo_keywords_en = '');
-
--- ── Post 2 ──────────────────────────────────────────────────────────────────
-UPDATE blog_posts SET
-  seo_keywords_en = 'vancouver renovation cost index,metro vancouver reno cost index,november 2023 renovation prices,vancouver remodeling cost,vancouver construction cost 2023,vancouver renovation cost tracker,reno cost data vancouver'
-WHERE slug = 'metro-vancouver-renovation-cost-index-november-2023'
   AND (seo_keywords_en IS NULL OR seo_keywords_en = '');
