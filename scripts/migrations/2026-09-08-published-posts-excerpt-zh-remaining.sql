@@ -27,8 +27,8 @@ WHERE id = '27dd8051-1198-4c2f-97f2-b058b9ba7247'
 
 -- ── Post 2: excerpt_en + remaining English SEO metadata ──────────────────────
 UPDATE blog_posts SET
-  excerpt_en = 'Detached house, condo, or townhouse in Metro Vancouver — each renovation type has different rules, costs, and strata requirements. Here is what actually differs in 2026.',
-  meta_description_en = 'Metro Vancouver homeowners in 2026 face different renovation rules for houses, condos, and townhouses. This guide breaks down what actually differs and what it costs.',
+  excerpt_en = 'Detached house, condo, or townhouse in Metro Vancouver — each renovation type has different rules, costs, and strata requirements in 2026.',
+  meta_description_en = 'Metro Vancouver homeowners in 2026 face different renovation rules for houses, condos, and townhouses. This guide breaks down the differences and costs.',
   focus_keyword_en = 'Vancouver property type renovation',
   seo_keywords_en = 'Vancouver house renovation,condo renovation Vancouver,townhouse renovation Vancouver,strata renovation Vancouver,property type renovation Metro Vancouver,2026 renovation rules Vancouver'
 WHERE id = '625cdf1c-8733-470c-9198-f56de2a152c6'
