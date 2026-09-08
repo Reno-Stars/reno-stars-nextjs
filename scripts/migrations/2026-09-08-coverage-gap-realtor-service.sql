@@ -1,0 +1,25 @@
+-- NOT APPLIED — needs human review and execution
+-- File: scripts/migrations/2026-09-08-coverage-gap-realtor-service.sql
+-- Topic: Realtor Consultation service page coverage note
+-- Status: NO MIGRATION NEEDED — service page is well-covered; no blog post required
+-- Found during: Ladder 3 coverage gap check, 2026-09-08 tick
+--
+-- The "realtor" (Realtor Consultation) service is the only service without a
+-- dedicated blog post. Its service page at /en/services/realtor/ is comprehensive
+-- and well-covered with meta tags, JSON-LD (Service, Organization, FAQPage),
+-- 14 hreflang alternates, and real project data. No blog post is needed.
+--
+-- Full service coverage audit (2026-09-08):
+-- kitchen          -> blog post exists
+-- bathroom         -> blog post exists
+-- whole-house      -> blog post exists
+-- basement         -> blog post exists
+-- cabinet          -> blog post exists
+-- commercial       -> blog post exists
+-- poly-b-replacement -> blog post exists
+-- heat-pump-hvac   -> blog post exists
+-- accessible-bathroom -> blog post exists
+-- critical-load-panel -> blog post added 2026-09-08 (critical-load-panel-installation-vancouver-2026)
+-- realtor          -> service page well-covered; no blog post needed
+--
+-- Action: No DB migration required. Service page coverage is sufficient.
