@@ -328,3 +328,30 @@ describe('POST /api/blog — a published post must be SEO-complete', () => {
     expect((await post(valid)).status).toBe(200);
   });
 });
+
+describe('POST /api/blog — a published post needs Chinese substance', () => {
+  // wordCount() splits on whitespace and Chinese does not use it, so contentZh
+  // was never gated: a long English body plus a 20-character Chinese body
+  // published cleanly, leaving a blank /zh/ page behind a healthy /en/ one.
+  it('refuses to publish a Chinese stub behind a full English article', async () => {
+    const res = await post({ ...valid, contentZh: '<p>温哥华厨房装修</p>' });
+    expect(res.status).toBe(400);
+    const { error } = await res.json();
+    expect(error).toContain('Chinese characters');
+  });
+
+  it('allows a stub as an explicit DRAFT', async () => {
+    const res = await post({ ...valid, contentZh: '<p>温哥华厨房装修</p>', isPublished: false });
+    expect(res.status).toBe(200);
+  });
+
+  it('accepts a genuine Chinese article', async () => {
+    expect((await post(valid)).status).toBe(200);
+  });
+
+  it('counts characters, not whitespace-delimited words', async () => {
+    // 400 CJK chars with no spaces at all — wordCount() would score this 1.
+    const res = await post({ ...valid, contentZh: `<p>${'温哥华厨房装修费用预算'.repeat(40)}</p>` });
+    expect(res.status).toBe(200);
+  });
+});
