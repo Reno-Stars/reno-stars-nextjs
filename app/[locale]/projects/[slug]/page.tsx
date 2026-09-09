@@ -109,7 +109,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
         siteName: SITE_NAME,
         locale: ogLocaleMap[locale as Locale],
         alternateLocale: buildAlternateLocales(locale as Locale),
-        type: 'article',
+        type: 'website',
         images: [{ url: project.hero_image, width: 1200, height: 630, alt: localizedProject.title }],
       },
       twitter: {
@@ -147,7 +147,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
         siteName: SITE_NAME,
         locale: ogLocaleMap[locale as Locale],
         alternateLocale: buildAlternateLocales(locale as Locale),
-        type: 'article',
+        type: 'website',
         images: siteData.hero_image
           ? [{ url: siteData.hero_image, width: 1200, height: 630, alt: siteData.title[locale as Locale] }]
           : [{ url: siteImages.hero, width: 1200, height: 630, alt: siteData.title[locale as Locale] }],
@@ -157,8 +157,8 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
         title: metaTitle,
         description: metaDescription,
         images: siteData.hero_image
-          ? [{ url: siteData.hero_image, alt: siteData.title[locale as Locale] }]
-          : [{ url: siteImages.hero, alt: siteData.title[locale as Locale] }],
+          ? [siteData.hero_image]
+          : [siteImages.hero],
       },
     };
   }
