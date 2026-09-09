@@ -24,7 +24,7 @@
 -- ── Post 1 ──────────────────────────────────────────────────────────────────
 UPDATE blog_posts SET
   excerpt_zh = '本文涵蓋溫哥華裝修的每一步流程，包含2026年真實成本、BC省許可規則，以及首次裝修業主必讀的完整清單。',
-  meta_description_en = 'A practical step-by-step guide for first-time Vancouver renovators. Covers 2026 costs, BC permit rules, and the Reno Stars milestone process from start to finish.',
+  meta_description_en = 'A practical step-by-step guide for first-time Vancouver renovators. Covers 2026 costs, BC permit rules, and the Reno Stars milestone process from start to',
   meta_description_zh = '溫哥華首次裝修必讀指南。涵蓋2026年真實成本、BC省許可規則，以及聚星裝修的完整流程與時間線。',
   focus_keyword_en = 'Vancouver home renovation guide',
   focus_keyword_zh = '溫哥華裝修指南',
@@ -45,7 +45,7 @@ WHERE id = '27dd8051-1198-4c2f-97f2-b058b9ba7247'
 UPDATE blog_posts SET
   excerpt_en = 'Detached house, condo, or townhouse in Metro Vancouver — each renovation type has different rules, costs, and strata requirements. Here is what actually differs in 2026.',
   excerpt_zh = '大溫哥華獨立屋、公寓、聯排別墅——三種房產類型的裝修規則、成本和業主委員會要求各不相同。2026年的實際差異如下。',
-  meta_description_en = 'Metro Vancouver homeowners in 2026 face different renovation rules for houses, condos, and townhouses. This guide breaks down what actually differs and what it costs.',
+  meta_description_en = 'Metro Vancouver homeowners in 2026 face different renovation rules for houses, condos, and townhouses. This guide breaks down what actually differs and',
   meta_description_zh = '2026年大溫哥華獨立屋、共管公寓和聯排別墅的裝修規則差異詳解。含真實成本、審批流程和聚星裝修實例。',
   focus_keyword_en = 'Vancouver property type renovation',
   focus_keyword_zh = '溫哥華房產類型裝修',
