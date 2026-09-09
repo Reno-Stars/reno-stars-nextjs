@@ -16,5 +16,5 @@
   "seoKeywordsZh": "素里厨房装修费用, 素里厨房装修, 温哥华厨房装修",
   "featuredImageUrl": "https://pub-b88db8c50fd64a9a87f60a4486a4a488.r2.dev/uploads/admin/social-ready-hero-mmnzas1t.jpg",
   "readingTimeMinutes": 8,
-  "localizations": {}
+  "localizations": ["en", "zh", "zh-Hant", "ja", "ko", "es", "pa", "tl", "fa", "vi", "ru", "ar", "hi", "fr"]
 }
