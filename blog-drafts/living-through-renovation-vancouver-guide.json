@@ -16,5 +16,5 @@
   "seoKeywordsZh": "温哥华装修,装修生存指南,灰尘隔断,临时厨房,装修付款安排",
   "featuredImageUrl": "https://pub-b88db8c50fd64a9a87f60a4486a4a488.r2.dev/uploads/admin/5531-rmd-hero-mmwo13gi.jpg",
   "readingTimeMinutes": 8,
-  "localizations": {}
+  "localizations": ["en", "zh", "zh-Hant", "ja", "ko", "es", "pa", "tl", "fa", "vi", "ru", "ar", "hi", "fr"]
 }
