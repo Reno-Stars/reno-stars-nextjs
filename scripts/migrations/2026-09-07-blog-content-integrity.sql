@@ -22,7 +22,7 @@ UPDATE blog_posts
 SET excerpt_zh = '测试富文本格式与中文内容长度验证：确保发布的文章满足最低字数要求。'
 WHERE id = '76e1c252-b1ed-4268-89c5-20958dbb7cbd'
   AND excerpt_zh = 'Test ZH'
-  AND (SELECT LENGTH(excerpt_zh) FILTER (WHERE excerpt_zh = 'Test ZH') = 7); -- guard: only if still placeholder
+  AND excerpt_zh = 'Test ZH'; -- guard: only if still the placeholder
 
 -- 2. metro-vancouver-renovation-cost-index-november-2023 — seo_keywords_en missing
 --    title_en: "Metro Vancouver Renovation Cost Index — November 2023"
