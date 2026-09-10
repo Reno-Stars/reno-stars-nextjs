@@ -14,5 +14,18 @@
   "metaDescriptionEn": "Step-by-step guide to filing a home renovation insurance claim in British Columbia. Covers BC Insurance Act deadlines, what is covered, disputes, and your rights.",
   "metaDescriptionZh": "不列颠哥伦比亚省装修保险理赔分步指南。涵盖BC省《保险法》时效、承保范围、争议处理及房主权利。",
   "readingTimeMinutes": 8,
-  "localizations": {}
+  "localizations": {
+    "ja": { "title": "BC州装修保険クレーム完全ガイド2026", "description": "BC州では2026年に装修保険クレームの申請方法、注意点、および請求額を説明します。" },
+    "ko": { "title": "BC 전환금 보험 청구 가이드 2026：방법 및 주의사항", "description": "BC에서 2026년 전환금 보험 청구의 방법, 주의사항 및 보험금 청구액에 대해 설명합니다." },
+    "es": { "title": "Reclamaciones de seguro de renovación en CB 2026：Guía completa", "description": "Todo lo que necesita saber sobre las reclamaciones de seguro de renovación en CB en 2026：proceso, consejos y montos." },
+    "pa": { "title": "BC ਰੀਨੋਵੇਸ਼ਨ ਇੰਸ਼ੋਰੈਂਸ ਕਲੇਮ 2026：ਪੂਰਨ ਗਾਈਡ", "description": "2026 ਵਿੱਚ BC ਰੀਨੋਵੇਸ਼ਨ ਇੰਸ਼ੋਰੈਂਸ ਕਲੇਮ ਦੀ ਪ੍ਰਕਿਰਿਆ, ਸੁਝਾਵਾਂ ਅਤੇ ਦਾਵਤੀ ਰਕਮ ਬਾਰੇ ਜਾਣੋ।" },
+    "tl": { "title": "Mga Insurance Claim sa Renovation sa BC 2026：Kompletong Gabay", "description": "Ang kailangan mong malaman tungkol sa mga insurance claim sa renovation sa BC noong 2026：proseso, mga tip, at halaga ng claim." },
+    "fa": { "title": "ادعای بیمه نوسازی در بریتیش کلمبیا 2026：راهنمای کامل", "description": "هر آنچه درباره ادعاهای بیمه نوسازی در بریتیش کلمبیا در سال 2026 نیاز دارید بدانید." },
+    "vi": { "title": "Khiếu nại bảo hiểm cải tạo tại BC 2026：Hướng dẫn đầy đủ", "description": "Tất cả những gì bạn cần biết về khiếu nại bảo hiểm cải tạo tại BC vào năm 2026：quy trình, mẹo và số tiền." },
+    "ru": { "title": "Страховые случаи ремонта в Британской Колумбии 2026：Полный гид", "description": "Всё, что нужно знать о страховых случаях ремонта в Британской Колумбии в 2026 году：процесс, советы и суммы." },
+    "ar": { "title": "مطالبات التأمين على التجديد في كولومبيا البريطانية 2026：دليل كامل", "description": "كل ما تحتاج لمعرفته حول مطالبات التأمين على التجديد في CB في عام 2026." },
+    "hi": { "title": "BC में रिनोवेशन इंश्योरेंस क्लेम 2026：पूर्ण गाइड", "description": "2026 में BC में रिनोवेशन इंश्योरेंस क्लेम के बारे में आपको जानने की जरूरत है：प्रक्रिया, सुझाव और राशि।" },
+    "fr": { "title": "Réclamations d'assurance rénovation CB 2026：Guide complet", "description": "Tout ce que vous devez savoir sur les réclamations d'assurance rénovation au CB en 2026：processus, conseils et montants." },
+    "zhHant": { "title": "BC省裝修保險理賠完整指南（2026年版）", "description": "2026年BC省裝修保險理賠的流程、注意事項及理賠金額完整指南。" }
+  }
 }

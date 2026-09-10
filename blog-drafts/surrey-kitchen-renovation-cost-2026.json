@@ -16,5 +16,18 @@
   "seoKeywordsZh": "素里厨房装修费用, 素里厨房装修, 温哥华厨房装修",
   "featuredImageUrl": "https://pub-b88db8c50fd64a9a87f60a4486a4a488.r2.dev/uploads/admin/social-ready-hero-mmnzas1t.jpg",
   "readingTimeMinutes": 8,
-  "localizations": {}
+  "localizations": {
+    "ja": { "title": "サレー厨房改装費用2026：実測価格は25,000ドルから", "description": "サレーの厨房改装の実際の費用と、2026年の予算計画について説明。" },
+    "ko": { "title": "서리 키친 리모델링 비용 2026：실제 가격 25,000달러부터", "description": "서리의 키친 리모델링 실제 비용과 2026년 예산 계획에 대해 설명합니다." },
+    "es": { "title": "Costo de renovación de cocina en Surrey 2026：Precios reales desde $25,000", "description": "Los precios reales de renovación de cocina en Surrey y cómo planificar su presupuesto en 2026." },
+    "pa": { "title": "ਸੁਰੇ ਕੁਕੀਨ ਰੀਨੋਵੇਸ਼ਨ ਲਾਗਤ 2026：25,000 ਡਾਲਰ ਤੋਂ ਅਸਲ ਕੀਮਤਾਂ", "description": "ਸੁਰੇ ਵਿੱਚ ਕੁਕੀਨ ਰੀਨੋਵੇਸ਼ਨ ਦੀਆਂ ਅਸਲ ਲਾਗਤਾਂ ਅਤੇ 2026 ਦੇ ਬਜਟ ਬਾਰੇ ਜਾਣੋ।" },
+    "tl": { "title": "Halaga ng Renovation ng Kitchen sa Surrey 2026：Tunay na Presyo mula $25,000", "description": "Ang mga tunay na halaga ng kitchen renovation sa Surrey at kung paano mag-plano ng budget sa 2026." },
+    "fa": { "title": "هزینه بازسازی آشپزخانه در ساری 2026：قیمت واقعی از 25,000 دلار", "description": "قیمت واقعی بازسازی آشپزخانه در ساری و نحوه برنامه‌ریزی بودجه در سال 2026." },
+    "vi": { "title": "Chi phí cải tạo bếp Surrey 2026：Giá thực tế từ $25,000", "description": "Giá thực tế của cải tạo bếp ở Surrey và cách lập kế hoạch ngân sách năm 2026." },
+    "ru": { "title": "Стоимость ремонта кухни в Суррее 2026：Реальные цены от $25,000", "description": "Реальная стоимость ремонта кухни в Суррее и как спланировать бюджет в 2026 году." },
+    "ar": { "title": "تكلفة تجديد المطبخ في ساري 2026：أسعار حقيقية من 25,000 دولار", "description": "تكلفة تجديد المطبخ في ساري وكيفية التخطيط للميزانية في عام 2026." },
+    "hi": { "title": "सरे किचन रिनोवेशन लागत 2026：25,000 डॉलर से वास्तविक कीमतें", "description": "सरे में किचन रिनोवेशन की वास्तविक लागत और 2026 में बजट की योजना कैसे बनाएं。" },
+    "fr": { "title": "Coût de rénovation de cuisine à Surrey 2026：Prix réels à partir de 25 000 $", "description": "Les prix réels de rénovation de cuisine à Surrey et comment planifier votre budget en 2026." },
+    "zhHant": { "title": "素里廚房裝修費用2026：真實價格從$25,000起", "description": "素里廚房裝修的真實費用及2026年的預算規劃。" }
+  }
 }
