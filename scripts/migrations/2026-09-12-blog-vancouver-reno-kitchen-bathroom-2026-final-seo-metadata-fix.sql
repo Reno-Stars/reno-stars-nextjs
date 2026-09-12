@@ -25,3 +25,19 @@ WHERE slug = 'vancouver-reno-kitchen-bathroom-2026-final'
   );
 
 COMMIT;
+
+-- Also fix townhouse test post placeholder zh meta
+-- Target: blog_posts.slug = 'townhouse-renovation-strata-rules-vancouver-2026'
+-- Issue: meta_title_zh = 'Test ZH' (placeholder), meta_title_en = 'Test EN'
+-- NOT applied — needs human to run.
+
+BEGIN;
+
+UPDATE blog_posts
+SET
+  meta_title_zh   = CASE WHEN meta_title_zh = 'Test ZH' THEN '温哥华联排别墅翻新：strata 规则、审批与费用指南 2026' ELSE meta_title_zh END,
+  focus_keyword_zh = CASE WHEN focus_keyword_zh = '测试' THEN '温哥华联排别墅装修strata' ELSE focus_keyword_zh END
+WHERE slug = 'townhouse-renovation-strata-rules-vancouver-2026'
+  AND meta_title_zh = 'Test ZH';
+
+COMMIT;
