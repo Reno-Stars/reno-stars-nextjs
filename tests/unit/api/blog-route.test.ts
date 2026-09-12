@@ -355,3 +355,40 @@ describe('POST /api/blog — a published post needs Chinese substance', () => {
     expect(res.status).toBe(200);
   });
 });
+
+describe('POST /api/blog — a published post needs a real featured image', () => {
+  // Two posts went live on 2026-09-11 with featuredImageUrl pointing at objects
+  // that were never uploaded. A bad URL is still a well-formed string, so every
+  // other check passed and the blog listing rendered broken-image placeholders.
+  const realFetch = globalThis.fetch;
+  afterEach(() => { globalThis.fetch = realFetch; });
+
+  it('refuses to publish when the image 404s', async () => {
+    globalThis.fetch = (async () => new Response(null, { status: 404 })) as typeof fetch;
+    const res = await post({ ...valid, featuredImageUrl: 'https://cdn.example.com/missing.jpg' });
+    expect(res.status).toBe(400);
+    expect((await res.json()).error).toContain('404');
+  });
+
+  it('accepts a published post whose image resolves', async () => {
+    globalThis.fetch = (async () => new Response(null, { status: 200 })) as typeof fetch;
+    expect((await post({ ...valid, featuredImageUrl: 'https://cdn.example.com/ok.jpg' })).status).toBe(200);
+  });
+
+  it('FAILS OPEN when the image host is unreachable — an R2 outage must not block publishing', async () => {
+    globalThis.fetch = (async () => { throw new Error('ECONNREFUSED'); }) as typeof fetch;
+    expect((await post({ ...valid, featuredImageUrl: 'https://down.example.com/x.jpg' })).status).toBe(200);
+  });
+
+  it('still publishes with no featured image at all', async () => {
+    const body: Record<string, unknown> = { ...valid };
+    delete body.featuredImageUrl;
+    expect((await post(body)).status).toBe(200);
+  });
+
+  it('rejects a non-https image URL', async () => {
+    const res = await post({ ...valid, featuredImageUrl: 'http://cdn.example.com/x.jpg' });
+    expect(res.status).toBe(400);
+    expect((await res.json()).error).toContain('https');
+  });
+});

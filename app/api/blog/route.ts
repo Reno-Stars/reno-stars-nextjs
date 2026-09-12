@@ -140,6 +140,47 @@ const PUBLISH_LIMITS: Record<string, number> = {
  */
 const MIN_CJK_PUBLISHED = 300;
 
+/**
+ * A published post's featured image must actually exist.
+ *
+ * Two posts went live on 2026-09-11 with featuredImageUrl pointing at objects
+ * that were never uploaded — one 404, one at a malformed bucket host that 401s.
+ * Both render as a broken-image placeholder on /blog, and nothing catches it:
+ * a bad URL is still a well-formed string, so every other check passes.
+ * (A separate sweep found 75 of 313 existing images were 404 for a related
+ * reason — see migration 2026-09-11-featured-image-404s.sql.)
+ *
+ * FAILS OPEN on a network error. If R2 is unreachable or slow, publishing must
+ * not be blocked by this check — an outage in an image host is not a reason to
+ * stop the agent shipping content. Only a definitive 4xx/5xx from the origin
+ * rejects the post.
+ */
+async function featuredImageProblem(value: unknown): Promise<string | null> {
+  if (typeof value !== 'string' || value.trim() === '') return null;
+  const url = value.trim();
+
+  let parsed: URL;
+  try {
+    parsed = new URL(url);
+  } catch {
+    return `featuredImageUrl is not a valid absolute URL: ${url}`;
+  }
+  if (parsed.protocol !== 'https:') return 'featuredImageUrl must be https';
+
+  try {
+    const res = await fetch(url, {
+      method: 'HEAD',
+      signal: AbortSignal.timeout(6000),
+    });
+    if (!res.ok) {
+      return `featuredImageUrl returned ${res.status} — the image does not exist at that URL, so the post would publish with a broken image. Upload it first, or omit featuredImageUrl to publish without one.`;
+    }
+  } catch {
+    return null; // unreachable host or timeout: fail open, do not block publishing
+  }
+  return null;
+}
+
 function cjkCount(html: string): number {
   const text = html
     .replace(/<script[\s\S]*?<\/script>/gi, ' ')
@@ -318,6 +359,11 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
         },
         { status: 400 },
       );
+    }
+
+    const imageProblem = await featuredImageProblem(body.featuredImageUrl);
+    if (imageProblem) {
+      return NextResponse.json({ error: imageProblem }, { status: 400 });
     }
 
     const words = wordCount(body.contentEn as string);
