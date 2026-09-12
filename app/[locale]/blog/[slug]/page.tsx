@@ -225,6 +225,16 @@ export default async function Page({ params }: PageProps) {
   // drift apart when a routing rule changes.
   const shareUrl = buildAlternates(`/blog/${slug}/`, locale).canonical;
 
+  // Derive articleSection from the URL slug — first one-to-two capitalized
+  // words give the Schema.org articleSection category (e.g. "Kitchen Renovation",
+  // "Bathroom Remodel", "Pre-Sale Renovation"). This improves AI search
+  // topical-clustering for Perplexity, Claude Search, and Google AI Overviews.
+  const articleSection = slug
+    .split('-')
+    .slice(0, 2)
+    .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
+    .join(' ');
+
   return (
     <ClientMessages ns={['blog', 'costGuidesSection', 'cta', 'projects', 'share']}>
       <BreadcrumbSchema items={breadcrumbs} locale={locale} />
@@ -240,6 +250,7 @@ export default async function Page({ params }: PageProps) {
         image={ogImage}
         locale={locale}
         keywords={post.seo_keywords?.[locale as Locale]?.split(',').map(k => k.trim()).filter(Boolean)}
+        articleSection={articleSection}
       />
       <ArticleJsonLd
         company={company}
@@ -252,6 +263,7 @@ export default async function Page({ params }: PageProps) {
         image={ogImage}
         locale={locale}
         keywords={post.seo_keywords?.[locale as Locale]?.split(',').map(k => k.trim()).filter(Boolean)}
+        articleSection={articleSection}
       />
       <BlogPostPage
         locale={locale as Locale}

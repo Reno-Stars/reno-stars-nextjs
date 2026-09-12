@@ -20,6 +20,14 @@ interface ArticleJsonLdProps {
    * tag (fed from the same source on this page) is ignored by Google itself.
    */
   keywords?: string[];
+  /**
+   * Optional articleSection for the Article node — same semantic signal as
+   * BlogPosting.articleSection: the high-level content category (e.g.
+   * "Kitchen Renovation", "Bathroom Remodel", "Pre-Sale Renovation").
+   * AI search engines use it for topical-clustering. Pass the same value
+   * as the BlogPosting articleSection prop on this page.
+   */
+  articleSection?: string;
 }
 
 /**
@@ -42,6 +50,7 @@ export default function ArticleJsonLd({
   image,
   locale,
   keywords,
+  articleSection,
 }: ArticleJsonLdProps): React.ReactElement {
   const resolvedAuthorName = authorName ?? `${company.name} Team`;
   const baseUrl = getBaseUrl();
@@ -88,6 +97,7 @@ export default function ArticleJsonLd({
     }),
     ...(locale && { inLanguage: locale }),
     ...(keywords && keywords.length > 0 && { keywords }),
+    ...(articleSection && { articleSection }),
   };
 
   return <JsonLd data={schema} />;
