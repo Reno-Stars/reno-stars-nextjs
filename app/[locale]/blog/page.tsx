@@ -74,13 +74,13 @@ export default async function Page({ params, searchParams }: PageProps) {
   const blogFaqs = [
     {
       id: 'blog-faq-1',
-      question: t('blog.faqQ1'),
-      answer: t('blog.faqA1'),
+      question: ft('faqQ1'),
+      answer: ft('faqA1'),
     },
     {
       id: 'blog-faq-2',
-      question: t('blog.faqQ2'),
-      answer: t('blog.faqA2'),
+      question: ft('faqQ2'),
+      answer: ft('faqA2'),
     },
   ];
 
