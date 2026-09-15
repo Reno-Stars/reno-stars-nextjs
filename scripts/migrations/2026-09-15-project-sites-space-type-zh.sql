@@ -13,7 +13,7 @@ BEGIN
     FOR r IN
         SELECT id, title_en, title_zh, slug
         FROM project_sites
-        WHERE space_type_zh IS NULL OR space_type_zh = ''::text
+        WHERE (space_type_zh IS NULL OR space_type_zh = ''::text)
           AND id IS NOT NULL
     LOOP
         RAISE NOTICE '[DRY RUN] Would set space_type_zh for id=% (% / %)',
@@ -32,8 +32,8 @@ END $$;
 --     WHEN '251a78d6-53dc-4fce-abba-163192389c67' THEN '独立屋'
 --     WHEN '6d5050fa-48ec-43c4-8187-ecd814dbb947' THEN '办公室'
 --   END
--- WHERE space_type_zh IS NULL OR space_type_zh = ''::text
---   AND id IN (
+WHERE (space_type_zh IS NULL OR space_type_zh = ''::text)
+  AND id IN (
 --     '64f0f111-4920-434f-ab7e-0c2c411e6633',
 --     '251a78d6-53dc-4fce-abba-163192389c67',
 --     '6d5050fa-48ec-43c4-8187-ecd814dbb947'
