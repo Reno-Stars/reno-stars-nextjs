@@ -55,7 +55,7 @@ export default async function Page({ params, searchParams }: PageProps) {
 
   const currentPage = Math.max(1, parseInt(page || '1', 10) || 1);
 
-  const [t, mt, ft, bt, company, paginatedPosts, allPosts] = await Promise.all([
+  const [t, mt, t_faq, t_blog, company, paginatedPosts, allPosts] = await Promise.all([
     getTranslations({ locale, namespace: 'nav' }),
     getTranslations({ locale, namespace: 'metadata.blog' }),
     getTranslations({ locale, namespace: 'faq' }),
@@ -74,19 +74,19 @@ export default async function Page({ params, searchParams }: PageProps) {
   const blogFaqs = [
     {
       id: 'blog-faq-1',
-      question: t('blog.faqQ1'),
-      answer: t('blog.faqA1'),
+      question: t_blog('faqQ1'),
+      answer: t_blog('faqA1'),
     },
     {
       id: 'blog-faq-2',
-      question: t('blog.faqQ2'),
-      answer: t('blog.faqA2'),
+      question: t_blog('faqQ2'),
+      answer: t_blog('faqA2'),
     },
   ];
 
   const blogFaqTranslations = {
-    title: ft('title'),
-    subtitle: bt('faqSubtitle'),
+    title: t_faq('title'),
+    subtitle: t_blog('faqSubtitle'),
   };
 
   return (
