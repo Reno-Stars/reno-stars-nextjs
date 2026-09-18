@@ -1,1 +1,1 @@
-seo tick: 2026-09-18 UTC - gh blocked, 99 migrations cap, no valid topics, nothing to ship
+seo tick 2026-09-18 UTC: gh blocked, 99 migrations cap, no valid topics
