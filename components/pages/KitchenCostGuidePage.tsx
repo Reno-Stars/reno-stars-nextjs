@@ -404,7 +404,7 @@ export default function KitchenCostGuidePage({ locale, projects, phone, share }:
           <p className="text-sm" style={{ color: TEXT_MID }}>
             Searching &ldquo;kitchen renovation near me&rdquo;?{' '}
             <Link
-              href="/kitchen-renovation-near-me"
+              href={`/${locale}/kitchen-renovation-near-me`}
               className="font-semibold underline hover:no-underline"
               style={{ color: GOLD }}
             >
@@ -420,7 +420,7 @@ export default function KitchenCostGuidePage({ locale, projects, phone, share }:
           <p className="text-sm mt-2" style={{ color: TEXT_MID }}>
             Just need backsplash pricing?{' '}
             <Link
-              href="/blog/kitchen-backsplash-cost-vancouver-2026"
+              href={`/${locale}/blog/kitchen-backsplash-cost-vancouver-2026`}
               className="font-semibold underline hover:no-underline"
               style={{ color: GOLD }}
             >
@@ -451,33 +451,33 @@ export default function KitchenCostGuidePage({ locale, projects, phone, share }:
               cost" queries. Top 8 cities by organic search volume listed. */}
           <p className="text-sm mt-4" style={{ color: TEXT_MID }}>
             <strong>City-specific kitchen renovation guides:</strong>{' '}
-            <Link href="/blog/kitchen-renovation-vancouver-bc-2026" className="underline hover:no-underline" style={{ color: GOLD }}>Vancouver</Link>
+            <Link href={`/${locale}/blog/kitchen-renovation-vancouver-bc-2026`} className="underline hover:no-underline" style={{ color: GOLD }}>Vancouver</Link>
             {' · '}
-            <Link href="/blog/kitchen-renovation-burnaby-2026" className="underline hover:no-underline" style={{ color: GOLD }}>Burnaby</Link>
+            <Link href={`/${locale}/blog/kitchen-renovation-burnaby-2026`} className="underline hover:no-underline" style={{ color: GOLD }}>Burnaby</Link>
             {' · '}
-            <Link href="/blog/kitchen-renovation-richmond-bc-2026" className="underline hover:no-underline" style={{ color: GOLD }}>Richmond</Link>
+            <Link href={`/${locale}/blog/kitchen-renovation-richmond-bc-2026`} className="underline hover:no-underline" style={{ color: GOLD }}>Richmond</Link>
             {' · '}
-            <Link href="/blog/kitchen-renovation-surrey-bc-2026" className="underline hover:no-underline" style={{ color: GOLD }}>Surrey</Link>
+            <Link href={`/${locale}/blog/kitchen-renovation-surrey-bc-2026`} className="underline hover:no-underline" style={{ color: GOLD }}>Surrey</Link>
             {' · '}
-            <Link href="/blog/kitchen-renovation-coquitlam-bc-2026" className="underline hover:no-underline" style={{ color: GOLD }}>Coquitlam</Link>
+            <Link href={`/${locale}/blog/kitchen-renovation-coquitlam-bc-2026`} className="underline hover:no-underline" style={{ color: GOLD }}>Coquitlam</Link>
             {' · '}
-            <Link href="/blog/kitchen-renovation-north-vancouver-2026" className="underline hover:no-underline" style={{ color: GOLD }}>North Vancouver</Link>
+            <Link href={`/${locale}/blog/kitchen-renovation-north-vancouver-2026`} className="underline hover:no-underline" style={{ color: GOLD }}>North Vancouver</Link>
             {' · '}
-            <Link href="/blog/kitchen-renovation-langley-bc-2026" className="underline hover:no-underline" style={{ color: GOLD }}>Langley</Link>
+            <Link href={`/${locale}/blog/kitchen-renovation-langley-bc-2026`} className="underline hover:no-underline" style={{ color: GOLD }}>Langley</Link>
             {' · '}
-            <Link href="/blog/kitchen-renovation-west-vancouver-2026" className="underline hover:no-underline" style={{ color: GOLD }}>West Vancouver</Link>
+            <Link href={`/${locale}/blog/kitchen-renovation-west-vancouver-2026`} className="underline hover:no-underline" style={{ color: GOLD }}>West Vancouver</Link>
             {' · '}
-            <Link href="/blog/kitchen-renovation-delta-bc-2026" className="underline hover:no-underline" style={{ color: GOLD }}>Delta</Link>
+            <Link href={`/${locale}/blog/kitchen-renovation-delta-bc-2026`} className="underline hover:no-underline" style={{ color: GOLD }}>Delta</Link>
             {' · '}
-            <Link href="/blog/kitchen-renovation-port-coquitlam-bc-2026" className="underline hover:no-underline" style={{ color: GOLD }}>Port Coquitlam</Link>
+            <Link href={`/${locale}/blog/kitchen-renovation-port-coquitlam-bc-2026`} className="underline hover:no-underline" style={{ color: GOLD }}>Port Coquitlam</Link>
             {' · '}
-            <Link href="/blog/kitchen-renovation-port-moody-bc-2026" className="underline hover:no-underline" style={{ color: GOLD }}>Port Moody</Link>
+            <Link href={`/${locale}/blog/kitchen-renovation-port-moody-bc-2026`} className="underline hover:no-underline" style={{ color: GOLD }}>Port Moody</Link>
             {' · '}
-            <Link href="/blog/kitchen-renovation-maple-ridge-bc-2026" className="underline hover:no-underline" style={{ color: GOLD }}>Maple Ridge</Link>
+            <Link href={`/${locale}/blog/kitchen-renovation-maple-ridge-bc-2026`} className="underline hover:no-underline" style={{ color: GOLD }}>Maple Ridge</Link>
             {' · '}
-            <Link href="/blog/kitchen-renovation-white-rock-2026" className="underline hover:no-underline" style={{ color: GOLD }}>White Rock</Link>
+            <Link href={`/${locale}/blog/kitchen-renovation-white-rock-2026`} className="underline hover:no-underline" style={{ color: GOLD }}>White Rock</Link>
             {' · '}
-            <Link href="/blog/kitchen-renovation-new-westminster-bc-2026" className="underline hover:no-underline" style={{ color: GOLD }}>New Westminster</Link>
+            <Link href={`/${locale}/blog/kitchen-renovation-new-westminster-bc-2026`} className="underline hover:no-underline" style={{ color: GOLD }}>New Westminster</Link>
           </p>
         </div>
       </section>
@@ -489,15 +489,15 @@ export default function KitchenCostGuidePage({ locale, projects, phone, share }:
         <div className="max-w-4xl mx-auto text-center">
           <p className="text-sm" style={{ color: TEXT_MID }}>
             <strong>Planning your renovation?</strong>{' '}
-            <Link href="/blog/how-to-choose-renovation-contractor-vancouver" className="underline hover:no-underline" style={{ color: GOLD }}>How to Choose a Contractor</Link>
+            <Link href={`/${locale}/blog/how-to-choose-renovation-contractor-vancouver`} className="underline hover:no-underline" style={{ color: GOLD }}>How to Choose a Contractor</Link>
             {' · '}
-            <Link href="/blog/renovation-timeline-how-long-does-each-project-take" className="underline hover:no-underline" style={{ color: GOLD }}>Renovation Timeline</Link>
+            <Link href={`/${locale}/blog/renovation-timeline-how-long-does-each-project-take`} className="underline hover:no-underline" style={{ color: GOLD }}>Renovation Timeline</Link>
             {' · '}
-            <Link href="/blog/renovation-permits-bc-guide" className="underline hover:no-underline" style={{ color: GOLD }}>BC Renovation Permits</Link>
+            <Link href={`/${locale}/blog/renovation-permits-bc-guide`} className="underline hover:no-underline" style={{ color: GOLD }}>BC Renovation Permits</Link>
             {' · '}
-            <Link href="/blog/renovation-financing-vancouver-heloc" className="underline hover:no-underline" style={{ color: GOLD }}>Renovation Financing</Link>
+            <Link href={`/${locale}/blog/renovation-financing-vancouver-heloc`} className="underline hover:no-underline" style={{ color: GOLD }}>Renovation Financing</Link>
             {' · '}
-            <Link href="/guides/whole-house-renovation-cost-vancouver" className="underline hover:no-underline" style={{ color: GOLD }}>Full Cost Guide 2026</Link>
+            <Link href={`/${locale}/guides/whole-house-renovation-cost-vancouver`} className="underline hover:no-underline" style={{ color: GOLD }}>Full Cost Guide 2026</Link>
           </p>
         </div>
       </section>

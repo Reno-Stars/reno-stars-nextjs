@@ -264,7 +264,7 @@ export default function BasementCostGuidePage({ locale, projects, phone, share }
           <p className="text-sm" style={{ color: TEXT_MID }}>
             Searching &ldquo;basement renovation near me&rdquo;?{' '}
             <Link
-              href="/basement-renovation-near-me"
+              href={`/${locale}/basement-renovation-near-me`}
               className="font-semibold underline hover:no-underline"
               style={{ color: GOLD }}
             >
@@ -277,33 +277,33 @@ export default function BasementCostGuidePage({ locale, projects, phone, share }
               renovation" queries. Top 8 cities listed. */}
           <p className="text-sm mt-4" style={{ color: TEXT_MID }}>
             <strong>City-specific basement renovation guides:</strong>{' '}
-            <Link href="/blog/basement-renovations-burnaby-2026" className="underline hover:no-underline" style={{ color: GOLD }}>Burnaby</Link>
+            <Link href={`/${locale}/blog/basement-renovations-burnaby-2026`} className="underline hover:no-underline" style={{ color: GOLD }}>Burnaby</Link>
             {' · '}
-            <Link href="/blog/basement-renovation-richmond-bc-2026" className="underline hover:no-underline" style={{ color: GOLD }}>Richmond</Link>
+            <Link href={`/${locale}/blog/basement-renovation-richmond-bc-2026`} className="underline hover:no-underline" style={{ color: GOLD }}>Richmond</Link>
             {' · '}
-            <Link href="/blog/basement-renovations-surrey" className="underline hover:no-underline" style={{ color: GOLD }}>Surrey</Link>
+            <Link href={`/${locale}/blog/basement-renovations-surrey`} className="underline hover:no-underline" style={{ color: GOLD }}>Surrey</Link>
             {' · '}
-            <Link href="/blog/basement-renovations-coquitlam-2026" className="underline hover:no-underline" style={{ color: GOLD }}>Coquitlam</Link>
+            <Link href={`/${locale}/blog/basement-renovations-coquitlam-2026`} className="underline hover:no-underline" style={{ color: GOLD }}>Coquitlam</Link>
             {' · '}
-            <Link href="/blog/basement-renovations-north-vancouver" className="underline hover:no-underline" style={{ color: GOLD }}>North Vancouver</Link>
+            <Link href={`/${locale}/blog/basement-renovations-north-vancouver`} className="underline hover:no-underline" style={{ color: GOLD }}>North Vancouver</Link>
             {' · '}
-            <Link href="/blog/basement-renovations-langley" className="underline hover:no-underline" style={{ color: GOLD }}>Langley</Link>
+            <Link href={`/${locale}/blog/basement-renovations-langley`} className="underline hover:no-underline" style={{ color: GOLD }}>Langley</Link>
             {' · '}
-            <Link href="/blog/basement-renovation-west-vancouver-2026" className="underline hover:no-underline" style={{ color: GOLD }}>West Vancouver</Link>
+            <Link href={`/${locale}/blog/basement-renovation-west-vancouver-2026`} className="underline hover:no-underline" style={{ color: GOLD }}>West Vancouver</Link>
             {' · '}
-            <Link href="/blog/basement-renovations-port-coquitlam-2026" className="underline hover:no-underline" style={{ color: GOLD }}>Port Coquitlam</Link>
+            <Link href={`/${locale}/blog/basement-renovations-port-coquitlam-2026`} className="underline hover:no-underline" style={{ color: GOLD }}>Port Coquitlam</Link>
             {' · '}
-            <Link href="/blog/basement-renovations-port-moody" className="underline hover:no-underline" style={{ color: GOLD }}>Port Moody</Link>
+            <Link href={`/${locale}/blog/basement-renovations-port-moody`} className="underline hover:no-underline" style={{ color: GOLD }}>Port Moody</Link>
             {' · '}
-            <Link href="/blog/basement-renovations-maple-ridge" className="underline hover:no-underline" style={{ color: GOLD }}>Maple Ridge</Link>
+            <Link href={`/${locale}/blog/basement-renovations-maple-ridge`} className="underline hover:no-underline" style={{ color: GOLD }}>Maple Ridge</Link>
             {' · '}
-            <Link href="/blog/basement-renovation-delta-bc" className="underline hover:no-underline" style={{ color: GOLD }}>Delta</Link>
+            <Link href={`/${locale}/blog/basement-renovation-delta-bc`} className="underline hover:no-underline" style={{ color: GOLD }}>Delta</Link>
             {' · '}
-            <Link href="/blog/basement-renovation-new-westminster-2026" className="underline hover:no-underline" style={{ color: GOLD }}>New Westminster</Link>
+            <Link href={`/${locale}/blog/basement-renovation-new-westminster-2026`} className="underline hover:no-underline" style={{ color: GOLD }}>New Westminster</Link>
             {' · '}
-            <Link href="/blog/basement-renovation-white-rock-2026" className="underline hover:no-underline" style={{ color: GOLD }}>White Rock</Link>
+            <Link href={`/${locale}/blog/basement-renovation-white-rock-2026`} className="underline hover:no-underline" style={{ color: GOLD }}>White Rock</Link>
             {' · '}
-            <Link href="/blog/basement-renovation-vancouver-complete-guide" className="underline hover:no-underline" style={{ color: GOLD }}>Vancouver</Link>
+            <Link href={`/${locale}/blog/basement-renovation-vancouver-complete-guide`} className="underline hover:no-underline" style={{ color: GOLD }}>Vancouver</Link>
           </p>
         </div>
       </section>
@@ -315,15 +315,15 @@ export default function BasementCostGuidePage({ locale, projects, phone, share }
         <div className="max-w-4xl mx-auto text-center">
           <p className="text-sm" style={{ color: TEXT_MID }}>
             <strong>Planning your renovation?</strong>{' '}
-            <Link href="/blog/how-to-choose-renovation-contractor-vancouver" className="underline hover:no-underline" style={{ color: GOLD }}>How to Choose a Contractor</Link>
+            <Link href={`/${locale}/blog/how-to-choose-renovation-contractor-vancouver`} className="underline hover:no-underline" style={{ color: GOLD }}>How to Choose a Contractor</Link>
             {' · '}
-            <Link href="/blog/renovation-timeline-how-long-does-each-project-take" className="underline hover:no-underline" style={{ color: GOLD }}>Renovation Timeline</Link>
+            <Link href={`/${locale}/blog/renovation-timeline-how-long-does-each-project-take`} className="underline hover:no-underline" style={{ color: GOLD }}>Renovation Timeline</Link>
             {' · '}
-            <Link href="/blog/renovation-permits-bc-guide" className="underline hover:no-underline" style={{ color: GOLD }}>BC Renovation Permits</Link>
+            <Link href={`/${locale}/blog/renovation-permits-bc-guide`} className="underline hover:no-underline" style={{ color: GOLD }}>BC Renovation Permits</Link>
             {' · '}
-            <Link href="/blog/renovation-financing-vancouver-heloc" className="underline hover:no-underline" style={{ color: GOLD }}>Renovation Financing</Link>
+            <Link href={`/${locale}/blog/renovation-financing-vancouver-heloc`} className="underline hover:no-underline" style={{ color: GOLD }}>Renovation Financing</Link>
             {' · '}
-            <Link href="/guides/whole-house-renovation-cost-vancouver" className="underline hover:no-underline" style={{ color: GOLD }}>Full Cost Guide 2026</Link>
+            <Link href={`/${locale}/guides/whole-house-renovation-cost-vancouver`} className="underline hover:no-underline" style={{ color: GOLD }}>Full Cost Guide 2026</Link>
           </p>
         </div>
       </section>
