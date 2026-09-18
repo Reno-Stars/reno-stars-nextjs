@@ -1,1 +1,1 @@
-seo tick 2026-09-18 UTC: homepage schema audit - 16 JSON-LD types, 14 hreflang locales, contactPoint filtered to nativeSupport, 5 reviews in schema, no issues found
+seo tick 2026-09-18 UTC: services listing schema audit - 18 JSON-LD types, blog 362 posts, no gaps, nothing to ship
