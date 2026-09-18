@@ -1,1 +1,1 @@
-seo tick 2026-09-18 UTC: services listing schema audit - 18 JSON-LD types, blog 362 posts, no gaps, nothing to ship
+seo tick 2026-09-18 UTC: gh blocked, 99 migrations cap, 362 posts, no work
