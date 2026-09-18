@@ -16,5 +16,8 @@
   "seoKeywordsZh": "溫哥華裝修, 如何聘請裝修師傅, BC省持證裝修, 裝修危險信號, 大溫哥華裝修",
   "featuredImageUrl": "https://pub-b88db8c50fd64a9a87f60a4486a4a488.r2.dev/uploads/admin/vancouver-custom-whole-house-renovation-hero-mmtwqbrf.jpg",
   "readingTimeMinutes": 9,
-  "localizations": {}
+  "localizations": [
+    "en",
+    "zh"
+  ]
 }
