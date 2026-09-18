@@ -1,1 +1,1 @@
-seo: kitchen/bathroom meta title intentional - Google ~60-char cap forces shared title
+2026-09-19: migration backlog 99 (cap exceeded); all blog topic gaps exhausted or not-service; no new commits possible
