@@ -287,7 +287,7 @@ export default function BathroomCostGuidePage({ locale, projects, phone, share }
           </div>
           <p className="text-xs text-center mt-6" style={{ color: TEXT_MUTED }}>
             {t('showerCost.note')}
-            <Link href="/blog/shower-renovation-cost-vancouver-2026/" className="font-semibold underline hover:no-underline" style={{ color: GOLD }}>
+            <Link href={`/${locale}/blog/shower-renovation-cost-vancouver-2026/`} className="font-semibold underline hover:no-underline" style={{ color: GOLD }}>
               Shower Renovation Cost Vancouver 2026 →
             </Link>
           </p>
@@ -316,7 +316,7 @@ export default function BathroomCostGuidePage({ locale, projects, phone, share }
           </h2>
           <p className="text-center max-w-2xl mx-auto text-sm leading-relaxed" style={{ color: TEXT_MID }}>
             {t('bathtubCost.description')}
-            <Link href="/blog/bathtub-renovation-cost-vancouver/" className="font-bold text-base underline hover:no-underline" style={{ color: GOLD }}>
+            <Link href={`/${locale}/blog/bathtub-renovation-cost-vancouver/`} className="font-bold text-base underline hover:no-underline" style={{ color: GOLD }}>
               {t('bathtubCost.linkText')} →
             </Link>
           </p>
@@ -345,7 +345,7 @@ export default function BathroomCostGuidePage({ locale, projects, phone, share }
           </div>
           <p className="text-xs text-center mt-6" style={{ color: TEXT_MUTED }}>
             {t('toiletCost.note')}
-            <Link href="/blog/toilet-renovation-cost-vancouver/" className="font-semibold underline hover:no-underline" style={{ color: GOLD }}>
+            <Link href={`/${locale}/blog/toilet-renovation-cost-vancouver/`} className="font-semibold underline hover:no-underline" style={{ color: GOLD }}>
               Toilet Renovation Cost Vancouver 2026 →
             </Link>
           </p>
@@ -373,7 +373,7 @@ export default function BathroomCostGuidePage({ locale, projects, phone, share }
           </div>
           <p className="text-xs text-center mt-6" style={{ color: TEXT_MUTED }}>
             {t('vanityCost.note')}
-            <Link href="/blog/vanity-renovation-cost-vancouver/" className="font-semibold underline hover:no-underline" style={{ color: GOLD }}>
+            <Link href={`/${locale}/blog/vanity-renovation-cost-vancouver/`} className="font-semibold underline hover:no-underline" style={{ color: GOLD }}>
               Vanity Renovation Cost Vancouver →
             </Link>
           </p>
@@ -636,33 +636,33 @@ export default function BathroomCostGuidePage({ locale, projects, phone, share }
         <div className="max-w-4xl mx-auto text-center">
           <p className="text-sm" style={{ color: '#8c8c8c' }}>
             <strong>City-specific bathroom renovation guides:</strong>{' '}
-            <Link href="/blog/burnaby-bathroom-renovation-guide-2026" className="underline hover:no-underline" style={{ color: '#c9a84c' }}>Burnaby</Link>
+            <Link href={`/${locale}/blog/burnaby-bathroom-renovation-guide-2026`} className="underline hover:no-underline" style={{ color: '#c9a84c' }}>Burnaby</Link>
             {' · '}
-            <Link href="/blog/bathroom-renovation-cost-richmond-bc-2026" className="underline hover:no-underline" style={{ color: '#c9a84c' }}>Richmond</Link>
+            <Link href={`/${locale}/blog/bathroom-renovation-cost-richmond-bc-2026`} className="underline hover:no-underline" style={{ color: '#c9a84c' }}>Richmond</Link>
             {' · '}
-            <Link href="/blog/bathroom-renovation-surrey-bc-2026" className="underline hover:no-underline" style={{ color: '#c9a84c' }}>Surrey</Link>
+            <Link href={`/${locale}/blog/bathroom-renovation-surrey-bc-2026`} className="underline hover:no-underline" style={{ color: '#c9a84c' }}>Surrey</Link>
             {' · '}
-            <Link href="/blog/bathroom-renovation-coquitlam-bc-2026" className="underline hover:no-underline" style={{ color: '#c9a84c' }}>Coquitlam</Link>
+            <Link href={`/${locale}/blog/bathroom-renovation-coquitlam-bc-2026`} className="underline hover:no-underline" style={{ color: '#c9a84c' }}>Coquitlam</Link>
             {' · '}
-            <Link href="/blog/bathroom-renovations-north-vancouver-2026" className="underline hover:no-underline" style={{ color: '#c9a84c' }}>North Vancouver</Link>
+            <Link href={`/${locale}/blog/bathroom-renovations-north-vancouver-2026`} className="underline hover:no-underline" style={{ color: '#c9a84c' }}>North Vancouver</Link>
             {' · '}
-            <Link href="/blog/bathroom-renovation-langley-2026" className="underline hover:no-underline" style={{ color: '#c9a84c' }}>Langley</Link>
+            <Link href={`/${locale}/blog/bathroom-renovation-langley-2026`} className="underline hover:no-underline" style={{ color: '#c9a84c' }}>Langley</Link>
             {' · '}
-            <Link href="/blog/bathroom-renovations-west-vancouver-2026" className="underline hover:no-underline" style={{ color: '#c9a84c' }}>West Vancouver</Link>
+            <Link href={`/${locale}/blog/bathroom-renovations-west-vancouver-2026`} className="underline hover:no-underline" style={{ color: '#c9a84c' }}>West Vancouver</Link>
             {' · '}
-            <Link href="/blog/bathroom-renovation-maple-ridge-bc-2026" className="underline hover:no-underline" style={{ color: '#c9a84c' }}>Maple Ridge</Link>
+            <Link href={`/${locale}/blog/bathroom-renovation-maple-ridge-bc-2026`} className="underline hover:no-underline" style={{ color: '#c9a84c' }}>Maple Ridge</Link>
             {' · '}
-            <Link href="/blog/bathroom-renovation-delta-bc-2026" className="underline hover:no-underline" style={{ color: '#c9a84c' }}>Delta</Link>
+            <Link href={`/${locale}/blog/bathroom-renovation-delta-bc-2026`} className="underline hover:no-underline" style={{ color: '#c9a84c' }}>Delta</Link>
             {' · '}
-            <Link href="/blog/bathroom-renovation-port-coquitlam-2026" className="underline hover:no-underline" style={{ color: '#c9a84c' }}>Port Coquitlam</Link>
+            <Link href={`/${locale}/blog/bathroom-renovation-port-coquitlam-2026`} className="underline hover:no-underline" style={{ color: '#c9a84c' }}>Port Coquitlam</Link>
             {' · '}
-            <Link href="/blog/bathroom-renovation-port-moody-2026" className="underline hover:no-underline" style={{ color: '#c9a84c' }}>Port Moody</Link>
+            <Link href={`/${locale}/blog/bathroom-renovation-port-moody-2026`} className="underline hover:no-underline" style={{ color: '#c9a84c' }}>Port Moody</Link>
             {' · '}
-            <Link href="/blog/bathroom-renovations-white-rock-bc-2026" className="underline hover:no-underline" style={{ color: '#c9a84c' }}>White Rock</Link>
+            <Link href={`/${locale}/blog/bathroom-renovations-white-rock-bc-2026`} className="underline hover:no-underline" style={{ color: '#c9a84c' }}>White Rock</Link>
             {' · '}
-            <Link href="/blog/bathroom-renovation-new-westminster-2026" className="underline hover:no-underline" style={{ color: '#c9a84c' }}>New Westminster</Link>
+            <Link href={`/${locale}/blog/bathroom-renovation-new-westminster-2026`} className="underline hover:no-underline" style={{ color: '#c9a84c' }}>New Westminster</Link>
             {' · '}
-            <Link href="/blog/average-bathroom-renovation-cost-vancouver" className="underline hover:no-underline" style={{ color: '#c9a84c' }}>Vancouver</Link>
+            <Link href={`/${locale}/blog/average-bathroom-renovation-cost-vancouver`} className="underline hover:no-underline" style={{ color: '#c9a84c' }}>Vancouver</Link>
           </p>
         </div>
       </section>
@@ -674,13 +674,13 @@ export default function BathroomCostGuidePage({ locale, projects, phone, share }
         <div className="max-w-4xl mx-auto text-center">
           <p className="text-sm" style={{ color: TEXT_MID }}>
             <strong>Planning your renovation?</strong>{' '}
-            <Link href="/blog/how-to-choose-renovation-contractor-vancouver" className="underline hover:no-underline" style={{ color: GOLD }}>How to Choose a Contractor</Link>
+            <Link href={`/${locale}/blog/how-to-choose-renovation-contractor-vancouver`} className="underline hover:no-underline" style={{ color: GOLD }}>How to Choose a Contractor</Link>
             {' · '}
-            <Link href="/blog/renovation-timeline-how-long-does-each-project-take" className="underline hover:no-underline" style={{ color: GOLD }}>Renovation Timeline</Link>
+            <Link href={`/${locale}/blog/renovation-timeline-how-long-does-each-project-take`} className="underline hover:no-underline" style={{ color: GOLD }}>Renovation Timeline</Link>
             {' · '}
-            <Link href="/blog/renovation-permits-bc-guide" className="underline hover:no-underline" style={{ color: GOLD }}>BC Renovation Permits</Link>
+            <Link href={`/${locale}/blog/renovation-permits-bc-guide`} className="underline hover:no-underline" style={{ color: GOLD }}>BC Renovation Permits</Link>
             {' · '}
-            <Link href="/blog/renovation-financing-vancouver-heloc" className="underline hover:no-underline" style={{ color: GOLD }}>Renovation Financing</Link>
+            <Link href={`/${locale}/blog/renovation-financing-vancouver-heloc`} className="underline hover:no-underline" style={{ color: GOLD }}>Renovation Financing</Link>
             {' · '}
             <Link href="/guides/whole-house-renovation-cost-vancouver" className="underline hover:no-underline" style={{ color: GOLD }}>Full Cost Guide 2026</Link>
           </p>
