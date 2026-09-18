@@ -14,5 +14,10 @@
   "metaDescriptionEn": "BC renovation insurance claims: what is covered, how to file, common pitfalls, and what to do if your claim is underpaid or denied in Metro Vancouver.",
   "metaDescriptionZh": "不列颠哥伦比亚省装修保险理赔分步指南。涵盖BC省《保险法》时效、承保范围、争议处理及房主权利。",
   "readingTimeMinutes": 8,
-  "localizations": {}
+  "localizations": [
+    "en",
+    "zh"
+  ],
+  "seoKeywordsEn": "renovation insurance claim BC, home renovation insurance BC, renovation contractor insurance BC, renovation damage insurance BC",
+  "seoKeywordsZh": "BC装修保险索赔, 卑诗省家居装修保险, BC装修承包商保险, 装修损坏保险索赔"
 }
