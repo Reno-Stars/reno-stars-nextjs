@@ -1,1 +1,1 @@
-2026-09-20: gh blocked, 99 migrations cap, all blog gaps exhausted, no new work
+seo tick: 2026-09-18 UTC - gh blocked, 99 migrations cap, no valid topics, nothing to ship
