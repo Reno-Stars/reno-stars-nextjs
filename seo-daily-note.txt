@@ -1,1 +1,1 @@
-seo tick 2026-09-18 UTC: gh blocked, 99 migrations cap, nothing to ship
+seo tick 2026-09-18 UTC: gh blocked, 90 migrations cap (blog_seo_keywords_zh:8 files, blog_excerpt_zh:8 files — saturated), no GSC data, no live-fetch available, nothing to ship.
