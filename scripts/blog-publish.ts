@@ -71,7 +71,7 @@ async function main(): Promise<void> {
     for (const [column, key] of COLUMNS) {
       if (draft[key] === undefined || draft[key] === null) continue;
       cols.push(column);
-      vals.push(key === 'localizations' ? JSON.stringify(draft[key]) : draft[key]);
+      vals.push(key === 'localizations' ? draft[key] : draft[key]);
     }
     cols.push('is_published', 'created_at', 'updated_at');
     const placeholders = vals.map((_, i) => `$${i + 1}`).join(', ');
