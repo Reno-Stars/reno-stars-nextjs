@@ -1,0 +1,17 @@
+-- Notes: blog_posts with null or empty featured_image_url (published posts only)
+-- verified 2026-09-20 via DB query on live DB
+--
+-- id                                  | slug                                   | issue
+-- ------------------------------------|----------------------------------------|---------------
+-- 094434be-7021-470b-a0c5-13fc680bd92d | heat-pump-installation-vancouver-2026 | featured_image_url IS NULL
+-- (one confirmed null)                |                                        |
+--
+-- Also detected: before-after-renovation-vancouver has featured_image_url = '' (empty string, not null)
+--
+-- No heat-pump/HVAC project images exist in the projects table as of 2026-09-20.
+-- Possible fixes:
+--   1. Upload a heat pump / HVAC installation photo and use its R2 URL
+--   2. Use a generic hero image (needs site-owner decision — do not invent URL)
+--
+-- NOT covered by 2026-09-11-featured-image-404s.sql (that migration handles
+-- the duplicated "/reno-stars" path segment case only).
