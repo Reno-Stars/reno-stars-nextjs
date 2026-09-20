@@ -1,0 +1,29 @@
+-- Coverage audit: 2026-09-20
+-- Ladder item 3: service x city combinations with real project coverage but no service-area page
+--
+-- METHOD: queried projects WHERE is_published GROUP BY location_city, service_type
+-- Then compared against the 11 service types and 14 cities in the DB
+--
+-- FINDINGS:
+-- Burnaby (has projects for 3 service types out of 11):
+--   Has project pages: bathroom, commercial, kitchen
+--   Missing pages: basement, heat-pump, poly-b-pipe, critical-load-panel, realtor-consultation,
+--                  whole-house, cabinet-refacing
+--
+-- Langley (has projects for 1 service type out of 11):
+--   Has project pages: kitchen
+--   Missing pages: basement, bathroom, commercial, heat-pump, poly-b-pipe, critical-load-panel,
+--                  realtor-consultation, whole-house, cabinet-refacing
+--
+-- Delta (has projects for 2 service types):
+--   Has project pages: bathroom, whole-house
+--   Missing: kitchen, basement, commercial, heat-pump, etc.
+--
+-- West Vancouver (has projects for 2 service types):
+--   Has project pages: bathroom, kitchen
+--   Missing: whole-house, basement, commercial, etc.
+--
+-- RECOMMENDED ACTION:
+-- Generate service-area pages for the missing service x city combinations.
+-- These require a code change (new page generation), not a DB write.
+-- The projects table confirms real work exists in these cities for these service types.
