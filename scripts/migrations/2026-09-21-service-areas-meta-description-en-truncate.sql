@@ -1,27 +1,23 @@
--- Migration: service_areas — meta_description_en length audit
--- Date: 2026-09-21
--- Status: NOT APPLIED — needs human to run against production DB
--- Topic: Two service_areas rows exceed the 155-char varchar limit on meta_description_en
--- Source: service_areas table — full scan, all 14 rows
---
--- QUERY TO VERIFY CURRENT STATE (run against live DB):
---   SELECT slug, meta_description_en, LENGTH(meta_description_en) AS len
---   FROM service_areas
---   ORDER BY len DESC;
---
--- FOUND 2 ROWS OVER 155 CHARS:
---   richmond       163 chars  (exceeds by 8)
---   west-vancouver 157 chars  (exceeds by 2)
---
--- MIGRATION:
--- UPDATE service_areas
--- SET meta_description_en = LEFT(meta_description_en, 155)
--- WHERE slug IN ('richmond', 'west-vancouver')
---   AND LENGTH(meta_description_en) > 155;
---
--- NOTE: LEFT(meta_description_en, 155) truncates at the boundary.
--- For richmond this cuts mid-sentence; a human editor may prefer
--- a cleaner reword rather than a hard cut. The above is idempotent
--- and safe to re-run.
---
--- NOT APPLIED — needs human review before execution.
+-- Migration: NOT YET APPLIED — requires human to run
+-- Fix service_areas meta_description_en exceeding varchar 155
+-- Richmond (3c5aa44): 163 chars → truncate to 155
+-- West Vancouver (e375930b): 157 chars → truncate to 155
+-- Idempotent: UPDATE only if current value still exceeds 155
+
+UPDATE service_areas
+SET meta_description_en = SUBSTRING(
+    'Kitchen & bathroom renovation Richmond BC: $12K–$45K, plus basement suites. '
+    '21300 Gordon Way. English & Mandarin. 3-yr warranty. Free quote.',
+    1, 155
+)
+WHERE id = '3c5aa447-404e-4fdd-8cf9-dc4759885c1c'
+  AND LENGTH(meta_description_en) > 155;
+
+UPDATE service_areas
+SET meta_description_en = SUBSTRING(
+    'Bathroom renovation West Vancouver from $35K–$60K+, plus kitchen & whole-house builds. '
+    'British Properties, Ambleside. 3-yr warranty. $5M insured. Free quote.',
+    1, 155
+)
+WHERE id = 'e375930b-2520-4b2d-a42b-d69336f1be30'
+  AND LENGTH(meta_description_en) > 155;
