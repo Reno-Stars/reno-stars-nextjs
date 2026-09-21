@@ -82,7 +82,7 @@ export default function LocalBusinessSchema({ company, socialLinks, areas, googl
     },
     areaServed: areas.map((area) => ({
       '@type': 'City',
-      name: area.name.en,
+      name: area.name,
     })),
     priceRange: '$$',
     // Hours SSOT lives in lib/company-config.ts and must mirror the GBP listing.
