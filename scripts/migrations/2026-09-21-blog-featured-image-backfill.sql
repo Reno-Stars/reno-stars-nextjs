@@ -1,74 +1,37 @@
--- Migration: backfill featured_image_url for 10 published blog posts that have none.
--- NOT APPLIED — needs human to run after PR merge.
--- Images sourced from the projects table matching each post's topic.
--- Slugs verified in the projects table with hero_image_url IS NOT NULL.
-
--- Post: mid-century-rancher-renovation-vancouver-2026
--- Image: modern-kitchen-renovation-richmond (modern/century aesthetic match)
+-- Migration: backfill featured_image_url for 9 published posts with NULL
+-- Ticket: 9 blog posts confirmed NULL via DB query 2026-09-21
+-- Reason: 98%% of posts have a hero image; these posts are missing theirs
+-- Status: NOT APPLIED — needs human to run
 UPDATE blog_posts
-SET featured_image_url = 'https://pub-b88db8c50fd64a9a87f60a4486a4a488.r2.dev/uploads/admin/modern-kitchen-renovation-richmond-hero-mmms482z.jpg'
-WHERE slug = 'mid-century-rancher-renovation-vancouver-2026'
-  AND (featured_image_url IS NULL OR featured_image_url = '');
-
--- Post: vancouver-house-renovation_step-by-step-guide-2026
--- Image: vancouver-custom-whole-house-renovation
-UPDATE blog_posts
-SET featured_image_url = 'https://pub-b88db8c50fd64a9a87f60a4486a4a488.r2.dev/uploads/admin/vancouver-custom-whole-house-renovation-hero-mmtwqbrf.jpg'
-WHERE slug = 'vancouver-house-renovation_step-by-step-guide-2026'
-  AND (featured_image_url IS NULL OR featured_image_url = '');
-
--- Post: adu-renovation-vancouver-2026
--- Image: ensuite-bathroom-renovation-richmond (secondary suite context)
-UPDATE blog_posts
-SET featured_image_url = 'https://pub-b88db8c50fd64a9a87f60a4486a4a488.r2.dev/uploads/admin/richmond-whole-house-renovation-three-bathrooms-p11-after-v3.jpg'
-WHERE slug = 'adu-renovation-vancouver-2026'
-  AND (featured_image_url IS NULL OR featured_image_url = '');
-
--- Post: split-level-home-renovation-burnaby-coquitlam-2026
--- Image: modern-kitchen-renovation-langley (generic whole-home renovation, no split-level match exists)
-UPDATE blog_posts
-SET featured_image_url = 'https://pub-b88db8c50fd64a9a87f60a4486a4a488.r2.dev/uploads/admin/modern-kitchen-renovation-langley-hero-mmnv5g4a.jpg'
-WHERE slug = 'split-level-home-renovation-burnaby-coquitlam-2026'
-  AND (featured_image_url IS NULL OR featured_image_url = '');
-
--- Post: vancouver-infill-development-cost-2026
--- Image: modern-kitchen-renovation-surrey (generic renovation for infill context)
-UPDATE blog_posts
-SET featured_image_url = 'https://pub-b88db8c50fd64a9a87f60a4486a4a488.r2.dev/uploads/admin/modern-kitchen-renovation-surrey-hero-mmnzas1t.jpg'
-WHERE slug = 'vancouver-infill-development-cost-2026'
-  AND (featured_image_url IS NULL OR featured_image_url = '');
-
--- Post: vancouver-stair-renovation-cost-2026
--- Image: vancouver-whole-house-bathroom-renovation (entry/stair context from a whole-house project)
-UPDATE blog_posts
-SET featured_image_url = 'https://pub-b88db8c50fd64a9a87f60a4486a4a488.r2.dev/uploads/admin/social-media-hero-mmtznddu.jpg'
-WHERE slug = 'vancouver-stair-renovation-cost-2026'
-  AND (featured_image_url IS NULL OR featured_image_url = '');
-
--- Post: heat-pump-installation-vancouver-2026
--- Image: modern-kitchen-renovation-langley-2 (generic renovation for mechanical scope)
-UPDATE blog_posts
-SET featured_image_url = 'https://pub-b88db8c50fd64a9a87f60a4486a4a488.r2.dev/uploads/admin/social-ready-hero-mmo1xa2q.jpeg'
-WHERE slug = 'heat-pump-installation-vancouver-2026'
-  AND (featured_image_url IS NULL OR featured_image_url = '');
-
--- Post: heritage-home-renovation-vancouver-2026
--- Image: vancouver-whole-house-renovation-bathroom-updates (heritage character context)
-UPDATE blog_posts
-SET featured_image_url = 'https://pub-b88db8c50fd64a9a87f60a4486a4a488.r2.dev/uploads/admin/vancouver-whole-house-renovation-bathroom-updates-hero-mmwil5gf.jpg'
-WHERE slug = 'heritage-home-renovation-vancouver-2026'
-  AND (featured_image_url IS NULL OR featured_image_url = '');
-
--- Post: how-much-does-kitchen-renovation-cost-vancouver-2026
--- Image: vancouver-white-shaker-kitchen-renovation (direct kitchen topic match)
-UPDATE blog_posts
-SET featured_image_url = 'https://pub-b88db8c50fd64a9a87f60a4486a4a488.r2.dev/uploads/admin/social-media-hero-mmtznef3.jpg'
-WHERE slug = 'how-much-does-kitchen-renovation-cost-vancouver-2026'
-  AND (featured_image_url IS NULL OR featured_image_url = '');
-
--- Post: before-after-renovation-vancouver
--- Image: two-bathroom-renovation-burnaby-2 (before/after showcase context)
-UPDATE blog_posts
-SET featured_image_url = 'https://pub-b88db8c50fd64a9a87f60a4486a4a488.r2.dev/uploads/admin/social-ready-hero-mmv4zlks.jpg'
-WHERE slug = 'before-after-renovation-vancouver'
-  AND (featured_image_url IS NULL OR featured_image_url = '');
+SET featured_image_url = CASE slug
+  -- 1. heat-pump-installation-vancouver-2026
+  WHEN 'heat-pump-installation-vancouver-2026'    THEN 'https://pub-b88db8c50fd64a9a87f60a4486a4a488.r2.dev/uploads/admin/toystore-renovation-metrotown-burnaby-hero-mmwsir74.jpg'
+  -- 2. mid-century-rancher-renovation-vancouver-2026
+  WHEN 'mid-century-rancher-renovation-vancouver-2026' THEN 'https://pub-b88db8c50fd64a9a87f60a4486a4a488.r2.dev/uploads/admin/vancouver-whole-house-renovation-bathroom-updates-hero-mmwil5gf.jpg'
+  -- 3. vancouver-house-renovation-step-by-step-guide-2026
+  WHEN 'vancouver-house-renovation-step-by-step-guide-2026' THEN 'https://pub-b88db8c50fd64a9a87f60a4486a4a488.r2.dev/uploads/admin/richmond-condo-flooring-renovation-p01-after-v1.jpg'
+  -- 4. adu-renovation-vancouver-2026
+  WHEN 'adu-renovation-vancouver-2026'             THEN 'https://pub-b88db8c50fd64a9a87f60a4486a4a488.r2.dev/uploads/admin/social-ready-hero-mmv4zlks.jpg'
+  -- 5. split-level-home-renovation-burnaby-coquitlam-2026
+  WHEN 'split-level-home-renovation-burnaby-coquitlam-2026' THEN 'https://pub-b88db8c50fd64a9a87f60a4486a4a488.r2.dev/uploads/admin/social-media-hero-mmtznddu.jpg'
+  -- 6. vancouver-infill-development-cost-2026
+  WHEN 'vancouver-infill-development-cost-2026'  THEN 'https://pub-b88db8c50fd64a9a87f60a4486a4a488.r2.dev/uploads/admin/5531-rmd-hero-mmwo13gi.jpg'
+  -- 7. vancouver-stair-renovation-cost-2026
+  WHEN 'vancouver-stair-renovation-cost-2026'   THEN 'https://pub-b88db8c50fd64a9a87f60a4486a4a488.r2.dev/uploads/admin/daughter-bath-renovation-richmond-gray-tile-hero-mmnwygwq.jpg'
+  -- 8. heritage-home-renovation-vancouver-2026
+  WHEN 'heritage-home-renovation-vancouver-2026'  THEN 'https://pub-b88db8c50fd64a9a87f60a4486a4a488.r2.dev/uploads/admin/social-ready-hero-mmmnqlc8.jpg'
+  -- 9. how-much-does-kitchen-renovation-cost-vancouver-2026
+  WHEN 'how-much-does-kitchen-renovation-cost-vancouver-2026' THEN 'https://pub-b88db8c50fd64a9a87f60a4486a4a488.r2.dev/uploads/admin/vancouver-custom-whole-house-renovation-hero-mmtwqbrf.jpg'
+END
+WHERE slug IN (
+  'heat-pump-installation-vancouver-2026',
+  'mid-century-rancher-renovation-vancouver-2026',
+  'vancouver-house-renovation-step-by-step-guide-2026',
+  'adu-renovation-vancouver-2026',
+  'split-level-home-renovation-burnaby-coquitlam-2026',
+  'vancouver-infill-development-cost-2026',
+  'vancouver-stair-renovation-cost-2026',
+  'heritage-home-renovation-vancouver-2026',
+  'how-much-does-kitchen-renovation-cost-vancouver-2026'
+)
+  AND featured_image_url IS NULL;
