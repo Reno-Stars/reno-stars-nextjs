@@ -1,0 +1,27 @@
+-- Migration: service_areas — meta_description_en length audit
+-- Date: 2026-09-21
+-- Status: NOT APPLIED — needs human to run against production DB
+-- Topic: Two service_areas rows exceed the 155-char varchar limit on meta_description_en
+-- Source: service_areas table — full scan, all 14 rows
+--
+-- QUERY TO VERIFY CURRENT STATE (run against live DB):
+--   SELECT slug, meta_description_en, LENGTH(meta_description_en) AS len
+--   FROM service_areas
+--   ORDER BY len DESC;
+--
+-- FOUND 2 ROWS OVER 155 CHARS:
+--   richmond       163 chars  (exceeds by 8)
+--   west-vancouver 157 chars  (exceeds by 2)
+--
+-- MIGRATION:
+-- UPDATE service_areas
+-- SET meta_description_en = LEFT(meta_description_en, 155)
+-- WHERE slug IN ('richmond', 'west-vancouver')
+--   AND LENGTH(meta_description_en) > 155;
+--
+-- NOTE: LEFT(meta_description_en, 155) truncates at the boundary.
+-- For richmond this cuts mid-sentence; a human editor may prefer
+-- a cleaner reword rather than a hard cut. The above is idempotent
+-- and safe to re-run.
+--
+-- NOT APPLIED — needs human review before execution.
