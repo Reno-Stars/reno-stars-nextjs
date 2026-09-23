@@ -14,5 +14,5 @@
   "focusKeywordEn": "poly-b pipe replacement Vancouver",
   "focusKeywordZh": "温哥华Poly-B管道更换",
   "readingTimeMinutes": 9,
-  "localizations": {}
+  "localizations": ["en", "zh"]
 }
