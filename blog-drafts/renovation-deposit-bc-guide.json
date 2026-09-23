@@ -14,5 +14,5 @@
   "focusKeywordEn": "renovation deposit bc",
   "focusKeywordZh": "卑诗省装修定金",
   "readingTimeMinutes": 7,
-  "localizations": {}
+  "localizations": ["en", "zh"]
 }
