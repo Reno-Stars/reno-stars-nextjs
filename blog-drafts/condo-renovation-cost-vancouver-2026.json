@@ -14,14 +14,5 @@
   "focusKeywordZh": "溫哥華公寓裝修費用",
   "featuredImageUrl": "https://pub-b88db8c50fd64a9a87f60a4486a4a488.r2.dev/uploads/admin/social-ready-hero-mn3v6dib65ec88ce-8.jpg",
   "readingTimeMinutes": 9,
-  "localizations": {
-    "titleJa": "バンクーバー公寓改修費用2026：実際の予算 $15K〜$90K以上 | 聚星裝修",
-    "titleKo": "밴쿠버 아파트 리노베이션 비용 2026: 실제 예산 $15K~$90K+ | 聚星裝修",
-    "titleEs": "Costo de Renovación de Condominio Vancouver 2026 — Presupuestos Reales $15K–$90K+ | 聚星裝修",
-    "titleHi": "वैंकूवर कॉन्डो रिनोवेशन लागत 2026: वास्तविक बजट $15K-$90K+ | 聚星裝修",
-    "titleAr": "تكلفة تجديد الشقق في فانكوفر 2026: ميزانيات حقيقية 15 ألف دولار - 90 ألف دولار+",
-    "titleRu": "Стоимость ремонта квартиры в Ванкувере 2026: реальные бюджеты $15K–$90K+",
-    "titleFr": "Coût de rénovation de condo à Vancouver 2026 — Budjets réels $15K–$90K+ | 聚星裝修",
-    "titleTl": "Halaga ng Reno ng Condo sa Vancouver 2026: Tunay na Budget $15K-$90K+"
-  }
+  "localizations": ["en", "zh"]
 }
