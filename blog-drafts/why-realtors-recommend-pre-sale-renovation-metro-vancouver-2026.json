@@ -16,11 +16,5 @@
   "seoKeywordsZh": "售前裝修溫哥華, 地產經紀推薦裝修, 溫哥華房屋上市準備, 低陸地區裝修回報, 房產裝修承包商",
   "featuredImageUrl": "https://pub-b88db8c50fd64a9a87f60a4486a4a488.r2.dev/uploads/admin/toystore-renovation-metrotown-burnaby-hero-mmwsir74.jpg",
   "readingTimeMinutes": 7,
-  "localizations": {
-    "titleKo": "밴쿠버 부동산 중개인들이 프리세일 리노베이션을 권하는 이유 2026",
-    "titleJa": "バンクーバー不動産店がプレセールニュージレーションを推奨する理由 2026",
-    "titleEs": "Por qué los agentes inmobiliarios de Vancouver recomiendan renovaciones previas a la venta en 2026",
-    "metaTitleKo": "밴쿠버 부동산 중개인의 프리세일 리노베이션 권유 2026",
-    "metaDescriptionKo": "밴쿠버 프리세일 리노베이션 비용 $15K~$80K, 추가 재판매 가치 $50K~$200K. 2026년 중개인과 판매자 가이드."
-  }
+  "localizations": ["en", "zh"]
 }
