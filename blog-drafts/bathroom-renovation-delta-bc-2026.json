@@ -14,5 +14,5 @@
   "focusKeywordEn": "bathroom renovation cost delta bc",
   "focusKeywordZh": "Delta浴室装修费用",
   "readingTimeMinutes": 9,
-  "localizations": {}
+  "localizations": ["en", "zh"]
 }
