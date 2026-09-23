@@ -16,5 +16,5 @@
   "seoKeywordsZh": "家庭辦公室裝修費用, 大溫哥華裝修, 居家辦公室, 溫哥華裝修承包商",
   "featuredImageUrl": "https://pub-b88db8c50fd64a9a87f60a4486a4a488.r2.dev/uploads/admin/po12051-glass-office-img_3171-g3ob4999.jpg",
   "readingTimeMinutes": 8,
-  "localizations": {}
+  "localizations": ["en", "zh"]
 }
