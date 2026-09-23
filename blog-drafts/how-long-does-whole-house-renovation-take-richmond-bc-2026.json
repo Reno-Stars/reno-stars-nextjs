@@ -16,5 +16,5 @@
   "seoKeywordsZh": "列治文整屋装修, 装修工期列治文, 列治文装修许可, strata审批列治文",
   "featuredImageUrl": "https://pub-b88db8c50fd64a9a87f60a4486a4a488.r2.dev/uploads/admin/social-ready-hero-mmmph4q7.png",
   "readingTimeMinutes": 9,
-  "localizations": {}
+  "localizations": ["en", "zh"]
 }
