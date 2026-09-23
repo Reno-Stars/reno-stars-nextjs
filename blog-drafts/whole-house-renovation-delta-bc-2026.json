@@ -16,14 +16,5 @@
   "metaDescriptionZh": "三角洲整体装修案例，涵盖厨房和两间浴室翻新。2026年真实成本、翻新前后对比及Reno Stars项目详情。",
   "featuredImageUrl": "https://pub-b88db8c50fd64a9a87f60a4486a4a488.r2.dev/uploads/admin/delta-kitchen-renovation-apron-sink-quartz-p01-after-v1.jpg",
   "readingTimeMinutes": 7,
-  "localizations": {
-    "titleJa": "Delta（デルタ）BC州の全家装修2026年：キッチンと2つのバスルームのTransformation",
-    "excerptJa": "Deltaの家族がシングルプロジェクトでキッチンと2つのバスルームを同時改装。2026年の実際のコスト、ビフォー・アフター写真、Deltaでの全家装修の事例。",
-    "focusKeywordJa": "Delta whole house renovation",
-    "contentJa": "<p>Deltaの家族が2026年に全家装修を実現。キッチンと2つのバスルームを единыйプロジェクトで改装しました。Reno Starsの実際のプロジェクトデータと成本內訳を開示します。</p><h2>プロジェクトの対象範囲</h2><p>Deltaの全家装修は3つの主要エリアをカバー：メインキッチン、プライマリバスルーム、セカンダリバースルーム。Reno Starsは解体，大工，配管、仕上げすべての業種を一括管理します。</p><h2>Deltaのキッチン：Before ＆ After</h2><p>白いShakerカップボードが床から天井まで設置。石英岩のウォーターフォールペニンシュラが空間の中核に。Deep apronsinkと真鍮フィレットが採用されました。</p><h2>2つのバスルームの同時改装</h2><p>プライマリバスルームにはソフトグレーバニティとブラックフレームミラー，大理石風タイルバスタブ surroundを採用。セカンダリバスはプライマリと同じマテリアルパレットで統一。</p><h2>2026年のDelta全家装修コスト</h2><p>2026年GVAの全家装修プロジェクトデータに基づき、Deltaのキッチン＋2バスルーム改装は$85,000~$145,000の範囲。</p>",
-    "titleKo": "Delta BC 주방 및 욕실 전체 주택 리노베이션 2026",
-    "excerptKo": "Delta 가정에서 주방과 욕실 2개를 단일 프로젝트로 동시에 리노베이션했습니다. 2026년 실제 비용, Before/After 사진 및 Delta 전체 주택 리노베이션 사례.",
-    "focusKeywordKo": "Delta whole house renovation",
-    "contentKo": "<p>Delta의 한 가족이 2026년 전체 주택 리노베이션을 완료했으며 주방과 욕실 2개를 единый 프로젝트로改装했습니다.</p><h2>프로젝트 범위</h2><p>Delta 전체 주택 리노베이션은 3개 주요 영역을 포함합니다: 메인 키친, 프라이머리 욕실, セ컨达尔리 욕실. Reno Stars는 모든 공종을 단일 프로젝트 관리자가 조정합니다.</p><h2>Delta 키친: Before ＆ After</h2><p>화이트 Shaker 캐비닛이 바닥에서 천장까지 설치되었고, кварцев waterfall펜insula가 공간의 중심이 되었습니다.</p><h2>2개 욕실 동시 리노베이션</h2><p>프라이머리 욕실에는 소프트 그레이 바니티와 블랙 프레임 미러, 대리석 문양 타일 욕조帅주가採用됐습니다.</p><h2>2026년 Delta 전체 주택 리노베이션 비용</h2><p>2026년 GVA 전체 주택 리노베이션 프로젝트 데이터를 기반으로 Delta의 키친+2 욕실改装는 $85,000~$145,000 범위입니다.</p>"
-  }
+  "localizations": ["en", "zh"]
 }
