@@ -16,5 +16,5 @@
   "seoKeywordsZh": "装修前检查 温哥华 清单, 验屋 装修 BC, 温哥华装修规划",
   "featuredImageUrl": "https://pub-b88db8c50fd64a9a87f60a4486a4a488.r2.dev/uploads/admin/toystore-renovation-metrotown-burnaby-hero-mmwsir74.jpg",
   "readingTimeMinutes": 9,
-  "localizations": {}
+  "localizations": ["en", "zh"]
 }
