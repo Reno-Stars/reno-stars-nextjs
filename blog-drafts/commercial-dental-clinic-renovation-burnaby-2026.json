@@ -8,7 +8,7 @@
   "excerptZh": "计划在高贵林或大温地区进行牙科诊所装修？以下是一份位于高贵林的真实2026年项目费用数据，以及适用于医疗商铺装修的BC省建筑规范要求。",
   "metaTitleEn": "Dental Clinic Renovation Cost Burnaby BC 2026 | Reno Stars",
   "metaTitleZh": "高贵林牙科诊所装修费用 2026 | 聚星裝修",
-  "metaDescriptionEn": "How much does a dental clinic renovation cost in Burnaby BC? Real 2026 project data, BC building code requirements, and what Metro Vancouver dentists actually paid.",
+  "metaDescriptionEn": "How much does a dental clinic renovation cost in Burnaby BC? Real 2026 project data, BC building code requirements, and what dentists actually paid.",
   "metaDescriptionZh": "高贵林牙科诊所装修费用是多少？2026年真实项目数据、BC建筑规范与温哥华牙医实际支出。",
   "focusKeywordEn": "dental clinic renovation Burnaby",
   "focusKeywordZh": "牙科诊所装修 高贵林",
@@ -16,5 +16,5 @@
   "seoKeywordsZh": "牙科诊所装修 高贵林, BC牙科诊所装修费用, 医疗商铺装修, Fraser Health许可, 牙科诊所通风要求",
   "featuredImageUrl": "https://pub-b88db8c50fd64a9a87f60a4486a4a488.r2.dev/uploads/admin/dental-clinic-renovation-burnaby-hero-reception-mmwy4847.jpg",
   "readingTimeMinutes": 7,
-  "localizations": {}
+  "localizations": ["en", "zh"]
 }
