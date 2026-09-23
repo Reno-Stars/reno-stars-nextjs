@@ -53,6 +53,6 @@ WHERE slug = 'heritage-home-renovation-vancouver-2026'
   AND featured_image_url IS NULL;
 
 UPDATE blog_posts
-SET featured_image_url = 'https://pub-b88db8c50fd64a9a87f60a4486a4a488.r2.dev/uploads/admin/socail-ready-hero-mmwlwyk0.jpg'
+SET featured_image_url = 'https://pub-b88db8c50fd64a9a87f60a4486a4a488.r2.dev/uploads/admin/social-ready-hero-mmwlwyk0.jpg'
 WHERE slug = 'how-much-does-kitchen-renovation-cost-vancouver-2026'
   AND featured_image_url IS NULL;
