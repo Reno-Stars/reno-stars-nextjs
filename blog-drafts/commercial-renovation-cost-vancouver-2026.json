@@ -14,5 +14,5 @@
   "focusKeywordEn": "commercial renovation cost Vancouver 2026",
   "focusKeywordZh": "温哥华商业装修费用 2026",
   "readingTimeMinutes": 9,
-  "localizations": {}
+  "localizations": ["en", "zh"]
 }
