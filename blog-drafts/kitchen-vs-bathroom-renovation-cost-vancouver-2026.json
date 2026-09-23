@@ -14,5 +14,5 @@
   "focusKeywordZh": "溫哥華廚房浴室裝修費用",
   "featuredImageUrl": "https://www.reno-stars.com/uploads/projects/kitchen-renovation-burnaby-2025/hero.jpg",
   "readingTimeMinutes": 9,
-  "localizations": {}
+  "localizations": ["en", "zh"]
 }
