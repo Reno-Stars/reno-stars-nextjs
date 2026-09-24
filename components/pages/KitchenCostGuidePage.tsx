@@ -18,6 +18,7 @@ import {
   STEP_TEAL, STEP_TEAL_LIGHT, STEP_ORANGE, STEP_ORANGE_LIGHT,
   STEP_GREEN, STEP_GREEN_LIGHT,
 } from '@/lib/theme';
+import { formatPriceRange, formatPriceTier } from '@/lib/pricing';
 
 interface KitchenCostGuidePageProps {
   locale: Locale;
@@ -73,9 +74,9 @@ export default function KitchenCostGuidePage({ locale, projects, phone, share }:
   }, [projects]);
 
   const costTiers = [
-    { key: 'budget', icon: DollarSign, accent: STEP_GREEN, accentLight: STEP_GREEN_LIGHT, range: '$15,000 – $27,000' },
-    { key: 'midRange', icon: Home, accent: STEP_TEAL, accentLight: STEP_TEAL_LIGHT, range: '$28,000 – $38,000' },
-    { key: 'highEnd', icon: TrendingUp, accent: STEP_ORANGE, accentLight: STEP_ORANGE_LIGHT, range: '$40,000 – $72,000+' },
+    { key: 'budget', icon: DollarSign, accent: STEP_GREEN, accentLight: STEP_GREEN_LIGHT, range: formatPriceTier('kitchen', 'budget', 'long') },
+    { key: 'midRange', icon: Home, accent: STEP_TEAL, accentLight: STEP_TEAL_LIGHT, range: formatPriceTier('kitchen', 'mid', 'long') },
+    { key: 'highEnd', icon: TrendingUp, accent: STEP_ORANGE, accentLight: STEP_ORANGE_LIGHT, range: formatPriceTier('kitchen', 'high', 'long') },
   ];
 
   const costFactors = [
@@ -98,36 +99,39 @@ export default function KitchenCostGuidePage({ locale, projects, phone, share }:
     const range = `${formatCurrency(stats.min)}–${formatCurrency(stats.max)}+`;
     const avg = formatCurrency(stats.avg);
     const n = stats.count;
+    const budgetTier = formatPriceTier('kitchen', 'budget');
+    const midTier = formatPriceTier('kitchen', 'mid');
+    const highTier = formatPriceTier('kitchen', 'high');
     switch (locale) {
       case 'zh':
         return {
           label: '快速回答',
-          body: `2026 年温哥华厨房装修费用为 ${range}，平均约 ${avg}。基于 Reno Stars 已完工的 ${n} 个真实厨房项目：经济型 $15K–$27K（保留布局、成品橱柜、层压台面）；中端 $28K–$38K（半定制 Shaker 橱柜、石英石台面、新地砖 + 灯光）；高端 $40K+（全定制橱柜、瀑布岛、高端电器、可能改动布局）。施工周期通常 3–6 周。`,
+          body: `2026 年温哥华厨房装修费用为 ${range}，平均约 ${avg}。基于 Reno Stars 已完工的 ${n} 个真实厨房项目：经济型 ${budgetTier}（保留布局、成品橱柜、层压台面）；中端 ${midTier}（半定制 Shaker 橱柜、石英石台面、新地砖 + 灯光）；高端 ${highTier}（全定制橱柜、瀑布岛、高端电器、可能改动布局）。施工周期通常 3–6 周。`,
         };
       case 'zh-Hant':
         return {
           label: '快速回答',
-          body: `2026 年溫哥華廚房裝修費用為 ${range}，平均約 ${avg}。基於 Reno Stars 已完工的 ${n} 個真實廚房項目：經濟型 $15K–$27K（保留佈局、成品櫥櫃、層壓台面）；中端 $28K–$38K（半定製 Shaker 櫥櫃、石英石台面、新地磚 + 燈光）；高端 $40K+（全定製櫥櫃、瀑布島、高端電器、可能改動佈局）。施工週期通常 3–6 週。`,
+          body: `2026 年溫哥華廚房裝修費用為 ${range}，平均約 ${avg}。基於 Reno Stars 已完工的 ${n} 個真實廚房項目：經濟型 ${budgetTier}（保留佈局、成品櫥櫃、層壓台面）；中端 ${midTier}（半定製 Shaker 櫥櫃、石英石台面、新地磚 + 燈光）；高端 ${highTier}（全定製櫥櫃、瀑布島、高端電器、可能改動佈局）。施工週期通常 3–6 週。`,
         };
       case 'ja':
         return {
           label: 'クイックアンサー',
-          body: `2026年バンクーバーのキッチン改装費用は ${range}、平均は約 ${avg} です。Reno Stars が完了した ${n} 件の実プロジェクトに基づく：エコノミー $15K–$27K（既存レイアウト、ストックキャビネット、ラミネート天板）／ミッドレンジ $28K–$38K（セミカスタム Shaker キャビネット、クォーツ天板、新規床タイル＋照明）／ハイエンド $40K+（フルカスタム造作、ウォーターフォールアイランド、ハイエンド家電、レイアウト変更可能）。工期は通常 3〜6 週間。`,
+          body: `2026年バンクーバーのキッチン改装費用は ${range}、平均は約 ${avg} です。Reno Stars が完了した ${n} 件の実プロジェクトに基づく：エコノミー ${budgetTier}（既存レイアウト、ストックキャビネット、ラミネート天板）／ミッドレンジ ${midTier}（セミカスタム Shaker キャビネット、クォーツ天板、新規床タイル＋照明）／ハイエンド ${highTier}（フルカスタム造作、ウォーターフォールアイランド、ハイエンド家電、レイアウト変更可能）。工期は通常 3〜6 週間。`,
         };
       case 'ko':
         return {
           label: '빠른 답변',
-          body: `2026년 밴쿠버 주방 리노베이션 비용은 ${range}이며 평균 약 ${avg}입니다. Reno Stars가 완료한 ${n}개 실제 주방 프로젝트 기준: 예산형 $15K–$27K (기존 레이아웃 유지, 기성 캐비닛, 라미네이트 상판) / 중급 $28K–$38K (세미커스텀 셰이커 캐비닛, 쿼츠 상판, 신규 바닥 타일 + 조명) / 고급 $40K+ (풀커스텀 캐비닛, 워터폴 아일랜드, 고급 가전, 레이아웃 변경 가능). 공사 기간은 보통 3–6주.`,
+          body: `2026년 밴쿠버 주방 리노베이션 비용은 ${range}이며 평균 약 ${avg}입니다. Reno Stars가 완료한 ${n}개 실제 주방 프로젝트 기준: 예산형 ${budgetTier} (기존 레이아웃 유지, 기성 캐비닛, 라미네이트 상판) / 중급 ${midTier} (세미커스텀 셰이커 캐비닛, 쿼츠 상판, 신규 바닥 타일 + 조명) / 고급 ${highTier} (풀커스텀 캐비닛, 워터폴 아일랜드, 고급 가전, 레이아웃 변경 가능). 공사 기간은 보통 3–6주.`,
         };
       case 'es':
         return {
           label: 'Respuesta rápida',
-          body: `Una renovación de cocina en Vancouver en 2026 cuesta ${range}, con un promedio de ${avg}. Basado en ${n} proyectos reales de cocina de Reno Stars: económico $15K–$27K (layout existente, gabinetes de stock, encimera laminada); gama media $28K–$38K (gabinetes Shaker semipersonalizados, encimera de cuarzo, piso nuevo + iluminación); alta gama $40K+ (gabinetería a medida, isla con cascada, electrodomésticos premium, posible cambio de layout). La obra dura normalmente 3–6 semanas.`,
+          body: `Una renovación de cocina en Vancouver en 2026 cuesta ${range}, con un promedio de ${avg}. Basado en ${n} proyectos reales de cocina de Reno Stars: económico ${budgetTier} (layout existente, gabinetes de stock, encimera laminada); gama media ${midTier} (gabinetes Shaker semipersonalizados, encimera de cuarzo, piso nuevo + iluminación); alta gama ${highTier} (gabinetería a medida, isla con cascada, electrodomésticos premium, posible cambio de layout). La obra dura normalmente 3–6 semanas.`,
         };
       default:
         return {
           label: 'Quick Answer',
-          body: `A kitchen renovation in Vancouver costs ${range} in 2026, with an average kitchen remodel running about ${avg}. Based on ${n} completed Reno Stars kitchen projects: budget-friendly runs $15K–$27K (keep existing layout, stock cabinets, laminate counters); mid-range $28K–$38K (semi-custom Shaker cabinets, quartz counters, new floor tile + lighting); high-end $40K+ (fully custom cabinetry, waterfall island, premium appliances, possible layout changes). Most projects take 3–6 weeks.`,
+          body: `A kitchen renovation in Vancouver costs ${range} in 2026, with an average kitchen remodel running about ${avg}. Based on ${n} completed Reno Stars kitchen projects: budget-friendly runs ${budgetTier} (keep existing layout, stock cabinets, laminate counters); mid-range ${midTier} (semi-custom Shaker cabinets, quartz counters, new floor tile + lighting); high-end ${highTier} (fully custom cabinetry, waterfall island, premium appliances, possible layout changes). Most projects take 3–6 weeks.`,
         };
     }
   })();
@@ -375,10 +379,10 @@ export default function KitchenCostGuidePage({ locale, projects, phone, share }:
           </h2>
           <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-4">
             {[
-              { href: '/guides/bathroom-renovation-cost-vancouver', label: tGuides('bathroomGuide'), range: '$10K–$60K+' },
-              { href: '/guides/whole-house-renovation-cost-vancouver', label: tGuides('wholeHouse'), range: '$50K–$300K+' },
-              { href: '/guides/basement-renovation-cost-vancouver', label: tGuides('basement'), range: '$20K–$80K' },
-              { href: '/guides/cabinet-refinishing-cost-vancouver', label: tGuides('cabinetRefinishing'), range: '$4K–$30K+' },
+              { href: '/guides/bathroom-renovation-cost-vancouver', label: tGuides('bathroomGuide'), range: formatPriceRange('bathroom') },
+              { href: '/guides/whole-house-renovation-cost-vancouver', label: tGuides('wholeHouse'), range: formatPriceRange('whole-house') },
+              { href: '/guides/basement-renovation-cost-vancouver', label: tGuides('basement'), range: formatPriceRange('basement') },
+              { href: '/guides/cabinet-refinishing-cost-vancouver', label: tGuides('cabinetRefinishing'), range: formatPriceRange('cabinet-refinishing') },
             ].map((guide) => (
               <Link key={guide.href} href={guide.href} className="rounded-xl p-5 flex flex-col gap-2 transition-transform hover:scale-[1.02]" style={{ backgroundColor: CARD, boxShadow: neu() }}>
                 <span className="font-bold" style={{ color: TEXT }}>{guide.label}</span>

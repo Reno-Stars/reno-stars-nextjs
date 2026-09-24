@@ -14,6 +14,7 @@ import {
 import type { Locale } from "@/i18n/config";
 import { Link } from "@/navigation";
 import CTASection from "@/components/CTASection";
+import { formatMedian, formatPriceRange } from "@/lib/pricing";
 import {
   NAVY,
   GOLD,
@@ -80,11 +81,11 @@ export default function FinancingPage({ locale: _locale }: FinancingPageProps) {
   ];
 
   const costRanges = [
-    { key: "bathroom", range: "$10,000 – $60,000" },
-    { key: "kitchen", range: "$15,000 – $72,000" },
-    { key: "basement", range: "$25,000 – $80,000" },
-    { key: "wholeHouse", range: "$50,000 – $200,000+" },
-    { key: "commercial", range: "$8,000 – $360,000+" },
+    { key: "bathroom", range: formatPriceRange("bathroom", undefined, "long") },
+    { key: "kitchen", range: formatPriceRange("kitchen", undefined, "long") },
+    { key: "basement", range: formatPriceRange("basement", undefined, "long") },
+    { key: "wholeHouse", range: formatPriceRange("whole-house", undefined, "long") },
+    { key: "commercial", range: formatPriceRange("commercial", undefined, "long") },
   ];
 
   return (
@@ -160,8 +161,8 @@ export default function FinancingPage({ locale: _locale }: FinancingPageProps) {
           </p>
           <div className="grid grid-cols-2 md:grid-cols-3 gap-4 max-w-2xl mx-auto">
             {[
-              { label: t("stats.avgKitchen"), value: "$30K" },
-              { label: t("stats.avgBathroom"), value: "$25K" },
+              { label: t("stats.avgKitchen"), value: formatMedian("kitchen") ?? "" },
+              { label: t("stats.avgBathroom"), value: formatMedian("bathroom") ?? "" },
               { label: t("stats.financingOptions"), value: "4+" },
             ].map((stat) => (
               <div

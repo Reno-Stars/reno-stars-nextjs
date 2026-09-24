@@ -4,7 +4,7 @@
       "q1": "Gaano katagal ang typical na kitchen renovation?",
       "a1": "Karaniwang 4-8 na linggo ang typical na kitchen renovation depende sa scope. Ang simpleng update tulad ng cabinet refacing ay maaaring tumagal ng 1-2 linggo, habang ang complete gut renovation na may custom cabinetry ay maaaring tumagal ng 8-12 linggo.",
       "q2": "Ano ang average na cost ng kitchen renovation sa {area}?",
-      "a2": "Ang kitchen renovation sa {area} ay karaniwang $15,000 hanggang $75,000+ depende sa laki at finishes. Nagbibigay kami ng libreng detalyadong quote pagkatapos ng in-home consultation.",
+      "a2": "Ang kitchen renovation sa {area} ay karaniwang {kitchenRangeLong} depende sa laki at finishes. Nagbibigay kami ng libreng detalyadong quote pagkatapos ng in-home consultation.",
       "q3": "Kailangan ko ba ng permit para sa kitchen renovation?",
       "a3": "Kailangan ng permit para sa electrical, plumbing, at structural changes. Aming hinahawakan ang lahat ng permit applications at sinisigurong tumutugma ang iyong renovation sa {area} building codes."
     },

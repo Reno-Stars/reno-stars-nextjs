@@ -8,14 +8,15 @@ import { getServiceAreasFromDb, getCompanyFromDb, getProjectsListFromDb } from '
 import { getGoogleReviews } from '@/lib/google-reviews';
 import { selectNearbyProjects } from '@/lib/near-me-projects';
 import ClientMessages from '@/components/ClientMessages';
+import { formatPriceRange, priceRangeForSchema } from '@/lib/pricing';
 
 interface PageProps { params: Promise<{ locale: string }>; }
 
-// Single source for this page's price band (finding #9/#24). Used by the meta
+// Single source for this page's price band (finding #9/#24): lib/pricing.ts. Used by the meta
 // description, the ServiceSchema serviceDescription, and the ServiceSchema
 // priceRange prop so the three can never drift. Do NOT re-type the band inline.
-const PRICE_RANGE = { min: 15000, max: 72000 } as const;
-const PRICE_BAND = `$${PRICE_RANGE.min / 1000}K-$${PRICE_RANGE.max / 1000}K`;
+const PRICE_RANGE = priceRangeForSchema('kitchen');
+const PRICE_BAND = formatPriceRange('kitchen');
 
 // This page canonicalizes onto /services/kitchen/ (see generateMetadata) — it is
 // NOT self-canonical. Single source for that path so the declared canonical and

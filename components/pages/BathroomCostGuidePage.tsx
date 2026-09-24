@@ -18,6 +18,7 @@ import {
   STEP_TEAL, STEP_TEAL_LIGHT, STEP_ORANGE, STEP_ORANGE_LIGHT,
   STEP_GREEN, STEP_GREEN_LIGHT,
 } from '@/lib/theme';
+import { formatPriceRange, formatPriceTier } from '@/lib/pricing';
 
 interface BathroomCostGuidePageProps {
   locale: Locale;
@@ -72,9 +73,9 @@ export default function BathroomCostGuidePage({ locale, projects, phone, share }
   }, [projects]);
 
   const costTiers = [
-    { key: 'budget', icon: DollarSign, accent: STEP_GREEN, accentLight: STEP_GREEN_LIGHT, range: '$10,000 – $20,000' },
-    { key: 'midRange', icon: Droplets, accent: STEP_TEAL, accentLight: STEP_TEAL_LIGHT, range: '$20,000 – $35,000' },
-    { key: 'highEnd', icon: TrendingUp, accent: STEP_ORANGE, accentLight: STEP_ORANGE_LIGHT, range: '$40,000 – $60,000+' },
+    { key: 'budget', icon: DollarSign, accent: STEP_GREEN, accentLight: STEP_GREEN_LIGHT, range: formatPriceTier('bathroom', 'budget', 'long') },
+    { key: 'midRange', icon: Droplets, accent: STEP_TEAL, accentLight: STEP_TEAL_LIGHT, range: formatPriceTier('bathroom', 'mid', 'long') },
+    { key: 'highEnd', icon: TrendingUp, accent: STEP_ORANGE, accentLight: STEP_ORANGE_LIGHT, range: formatPriceTier('bathroom', 'high', 'long') },
   ];
 
   const costFactors = [
@@ -95,36 +96,39 @@ export default function BathroomCostGuidePage({ locale, projects, phone, share }
     const range = `${formatCurrency(stats.min)}–${formatCurrency(stats.max)}+`;
     const avg = formatCurrency(stats.avg);
     const n = stats.count;
+    const budgetTier = formatPriceTier('bathroom', 'budget');
+    const midTier = formatPriceTier('bathroom', 'mid');
+    const highTier = formatPriceTier('bathroom', 'high');
     switch (locale) {
       case 'zh':
         return {
           label: '快速回答',
-          body: `2026 年温哥华浴室装修费用为 ${range}，平均约 ${avg}。基于 Reno Stars 已完工的 ${n} 个真实项目：经济型 $10K–$20K（保留水电布局、标准瓷砖+成品梳妆台）；中端 $20K–$35K（定制梳妆台、无框玻璃淋浴、地暖）；高端或多浴室 $40K+（无门槛淋浴、独立浴缸、定制柜体）。施工周期通常 2–8 周。`,
+          body: `2026 年温哥华浴室装修费用为 ${range}，平均约 ${avg}。基于 Reno Stars 已完工的 ${n} 个真实项目：经济型 ${budgetTier}（保留水电布局、标准瓷砖+成品梳妆台）；中端 ${midTier}（定制梳妆台、无框玻璃淋浴、地暖）；高端或多浴室 ${highTier}（无门槛淋浴、独立浴缸、定制柜体）。施工周期通常 2–8 周。`,
         };
       case 'zh-Hant':
         return {
           label: '快速回答',
-          body: `2026 年溫哥華浴室裝修費用為 ${range}，平均約 ${avg}。基於 Reno Stars 已完工的 ${n} 個真實項目：經濟型 $10K–$20K（保留水電佈局、標準磁磚+成品梳妝台）；中端 $20K–$35K（定製梳妝台、無框玻璃淋浴、地暖）；高端或多浴室 $40K+（無門檻淋浴、獨立浴缸、定製櫃體）。施工週期通常 2–8 週。`,
+          body: `2026 年溫哥華浴室裝修費用為 ${range}，平均約 ${avg}。基於 Reno Stars 已完工的 ${n} 個真實項目：經濟型 ${budgetTier}（保留水電佈局、標準磁磚+成品梳妝台）；中端 ${midTier}（定製梳妝台、無框玻璃淋浴、地暖）；高端或多浴室 ${highTier}（無門檻淋浴、獨立浴缸、定製櫃體）。施工週期通常 2–8 週。`,
         };
       case 'ja':
         return {
           label: 'クイックアンサー',
-          body: `2026年バンクーバーのバスルーム改装費用は ${range}、平均は約 ${avg} です。Reno Stars が完了した ${n} 件の実プロジェクトに基づく：エコノミー $10K–$20K（既存配管維持、標準タイル+完成バニティ）／ミッドレンジ $20K–$35K（カスタムバニティ、フレームレスガラスシャワー、床暖房）／ハイエンド・複数バスルーム $40K+（カーブレスシャワー、独立浴槽、造作キャビネット）。工期は通常 2〜8 週間。`,
+          body: `2026年バンクーバーのバスルーム改装費用は ${range}、平均は約 ${avg} です。Reno Stars が完了した ${n} 件の実プロジェクトに基づく：エコノミー ${budgetTier}（既存配管維持、標準タイル+完成バニティ）／ミッドレンジ ${midTier}（カスタムバニティ、フレームレスガラスシャワー、床暖房）／ハイエンド・複数バスルーム ${highTier}（カーブレスシャワー、独立浴槽、造作キャビネット）。工期は通常 2〜8 週間。`,
         };
       case 'ko':
         return {
           label: '빠른 답변',
-          body: `2026년 밴쿠버 욕실 리노베이션 비용은 ${range}이며 평균 약 ${avg}입니다. Reno Stars가 완료한 ${n}개 실제 프로젝트 기준: 예산형 $10K–$20K (기존 배관 유지, 표준 타일+기성 바니티) / 중급 $20K–$35K (맞춤 바니티, 프레임리스 유리 샤워, 바닥 난방) / 고급·다중 욕실 $40K+ (커브리스 샤워, 독립형 욕조, 맞춤 캐비닛). 공사 기간은 보통 2–8주.`,
+          body: `2026년 밴쿠버 욕실 리노베이션 비용은 ${range}이며 평균 약 ${avg}입니다. Reno Stars가 완료한 ${n}개 실제 프로젝트 기준: 예산형 ${budgetTier} (기존 배관 유지, 표준 타일+기성 바니티) / 중급 ${midTier} (맞춤 바니티, 프레임리스 유리 샤워, 바닥 난방) / 고급·다중 욕실 ${highTier} (커브리스 샤워, 독립형 욕조, 맞춤 캐비닛). 공사 기간은 보통 2–8주.`,
         };
       case 'es':
         return {
           label: 'Respuesta rápida',
-          body: `Una renovación de baño en Vancouver en 2026 cuesta ${range}, con un promedio de ${avg}. Basado en ${n} proyectos reales de Reno Stars: económico $10K–$20K (plomería existente, azulejo estándar + mueble prefabricado); gama media $20K–$35K (mueble a medida, ducha de vidrio sin marco, piso radiante); alta gama o varios baños $40K+ (ducha sin escalón, bañera exenta, gabinetería a medida). La obra dura normalmente 2–8 semanas.`,
+          body: `Una renovación de baño en Vancouver en 2026 cuesta ${range}, con un promedio de ${avg}. Basado en ${n} proyectos reales de Reno Stars: económico ${budgetTier} (plomería existente, azulejo estándar + mueble prefabricado); gama media ${midTier} (mueble a medida, ducha de vidrio sin marco, piso radiante); alta gama o varios baños ${highTier} (ducha sin escalón, bañera exenta, gabinetería a medida). La obra dura normalmente 2–8 semanas.`,
         };
       default:
         return {
           label: 'Quick Answer',
-          body: `A bathroom renovation in Vancouver costs ${range} in 2026, averaging ${avg}. Based on ${n} completed Reno Stars projects: budget-friendly runs $10K–$20K (existing plumbing, standard tile + stock vanity); mid-range $20K–$35K (custom vanity, frameless glass shower, heated floor); high-end or multi-bathroom $40K+ (curbless shower, freestanding tub, custom cabinetry). Most projects take 2–8 weeks.`,
+          body: `A bathroom renovation in Vancouver costs ${range} in 2026, averaging ${avg}. Based on ${n} completed Reno Stars projects: budget-friendly runs ${budgetTier} (existing plumbing, standard tile + stock vanity); mid-range ${midTier} (custom vanity, frameless glass shower, heated floor); high-end or multi-bathroom ${highTier} (curbless shower, freestanding tub, custom cabinetry). Most projects take 2–8 weeks.`,
         };
     }
   })();
@@ -572,11 +576,11 @@ export default function BathroomCostGuidePage({ locale, projects, phone, share }
           </h2>
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
             {[
-              { href: '/guides/kitchen-renovation-cost-vancouver', label: tGuides('kitchen'), range: '$15K–$80K' },
-              { href: '/guides/whole-house-renovation-cost-vancouver', label: tGuides('wholeHouse'), range: '$50K–$300K+' },
-              { href: '/guides/basement-renovation-cost-vancouver', label: tGuides('basement'), range: '$20K–$80K' },
+              { href: '/guides/kitchen-renovation-cost-vancouver', label: tGuides('kitchen'), range: formatPriceRange('kitchen') },
+              { href: '/guides/whole-house-renovation-cost-vancouver', label: tGuides('wholeHouse'), range: formatPriceRange('whole-house') },
+              { href: '/guides/basement-renovation-cost-vancouver', label: tGuides('basement'), range: formatPriceRange('basement') },
               { href: '/blog/average-bathroom-renovation-cost-vancouver', label: tGuides('bathroom'), range: '$18K–$45K+' },
-              { href: '/guides/cabinet-refinishing-cost-vancouver', label: tGuides('cabinetRefinishing'), range: '$4K–$30K+' },
+              { href: '/guides/cabinet-refinishing-cost-vancouver', label: tGuides('cabinetRefinishing'), range: formatPriceRange('cabinet-refinishing') },
             ].map((guide) => (
               <Link key={guide.href} href={guide.href} className="rounded-xl p-5 flex flex-col gap-2 transition-transform hover:scale-[1.02]" style={{ backgroundColor: CARD, boxShadow: neu() }}>
                 <span className="font-bold" style={{ color: TEXT }}>{guide.label}</span>

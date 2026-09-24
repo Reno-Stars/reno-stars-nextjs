@@ -34,15 +34,15 @@
       "learnMore": "Apprendre encore plus",
       "kitchen": {
         "title": "Rénovation de cuisine à proximité",
-        "desc": "Armoires, comptoirs de quartz, dosseret, plancher, électricité. Actualisation économique pour une personnalisation complète. Typique 4 à 8 semaines, 15 000 $ à 72 000 $."
+        "desc": "Armoires, comptoirs de quartz, dosseret, plancher, électricité. Actualisation économique pour une personnalisation complète. Typique 4 à 8 semaines, {kitchenRange}."
       },
       "bathroom": {
         "title": "Rénovation de salle de bain à proximité",
-        "desc": "Murs carrelés, imperméabilisation Schluter, douches carrelées ou conversions baignoire-douche, vanités, luminaires. 3 à 6 semaines typiques, 10 000 $ à 60 000 $."
+        "desc": "Murs carrelés, imperméabilisation Schluter, douches carrelées ou conversions baignoire-douche, vanités, luminaires. 3 à 6 semaines typiques, {bathroomRange}."
       },
       "wholeHouse": {
         "title": "Rénovation de toute la maison à proximité",
-        "desc": "Rénovations intérieures complètes – cuisine, salles de bains, revêtements de sol, peinture, éclairage, parfois structurels. 2 à 6 mois, 50 000 $ à 200 000 $+."
+        "desc": "Rénovations intérieures complètes – cuisine, salles de bains, revêtements de sol, peinture, éclairage, parfois structurels. 2 à 6 mois, {wholeHouseRange}."
       },
       "basement": {
         "title": "Rénovation de sous-sol à proximité",
@@ -50,7 +50,7 @@
       },
       "cabinet": {
         "title": "Réfection d'armoire à proximité",
-        "desc": "Alternative moins coûteuse au remplacement complet des armoires : nouvelles portes, quincaillerie et quartz pour le même encombrement. 1 à 2 semaines, 8 000 $ à 20 000 $."
+        "desc": "Alternative moins coûteuse au remplacement complet des armoires : nouvelles portes, quincaillerie et quartz pour le même encombrement. 1 à 2 semaines, {cabinetRefinishingRange}."
       },
       "commercial": {
         "title": "Rénovation commerciale à proximité",
@@ -85,7 +85,7 @@
       "q1": "Comment trouver une entreprise de rénovation de confiance près de chez moi à Vancouver ?",
       "a1": "Vérifiez trois choses : licence + assurance (demandez des certificats, pas des promesses), de vrais avis Google en volume (100+ est significatif, 10 ne l'est pas) et un portefeuille de votre quartier. Reno Stars compte des avis Google cinq étoiles, une assurance responsabilité civile de 5 millions de dollars, une couverture WCB et un portefeuille de projets dans chaque ville de la région métropolitaine de Vancouver que nous servons.",
       "q2": "Quel est le coût d'une rénovation de salle de bain ou de cuisine près de chez moi ?",
-      "a2": "Dans la région métropolitaine de Vancouver, les rénovations de salles de bains coûtent généralement entre 10 000 et 60 000 $ et les cuisines, entre 15 000 et 72 000 $. Le prix exact dépend de la superficie en pieds carrés, du niveau de finition et du déplacement éventuel des murs. Chaque devis de Reno Stars est détaillé (main-d'œuvre, matériaux, permis) afin que vous voyiez où va chaque dollar.",
+      "a2": "Dans la région métropolitaine de Vancouver, les rénovations de salles de bains coûtent généralement {bathroomRange} et les cuisines, {kitchenRange}. Le prix exact dépend de la superficie en pieds carrés, du niveau de finition et du déplacement éventuel des murs. Chaque devis de Reno Stars est détaillé (main-d'œuvre, matériaux, permis) afin que vous voyiez où va chaque dollar.",
       "q3": "Combien de temps prend une rénovation près de chez moi ?",
       "a3": "Salles de bains : 3 à 6 semaines entre la démonstration et la livraison. Cuisines : 4 à 8 semaines. Maison entière : 2 à 6 mois selon la portée. Refaçage du meuble : 1 à 2 semaines. Nous vous fournissons un calendrier semaine par semaine lors de la signature du contrat et des mises à jour textuelles au fur et à mesure que les étapes franchies.",
       "q4": "Gérez-vous les permis de rénovation près de chez moi ?",

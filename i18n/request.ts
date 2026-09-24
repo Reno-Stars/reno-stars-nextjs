@@ -3,6 +3,7 @@ import { IntlErrorCode } from 'next-intl';
 import { locales, defaultLocale, type Locale } from './config';
 import { namespaces } from './namespaces';
 import { guideSections } from './guideSections';
+import { applyPriceTokensDeep } from '@/lib/pricing';
 
 // Module-level cache: each Lambda instance pays the dynamic-import cost
 // once per locale, then serves subsequent requests from the in-memory
@@ -32,7 +33,13 @@ async function loadMessagesUncached(locale: Locale): Promise<Record<string, unkn
     }),
   );
   merged.guides = guidesMerged;
-  return merged;
+  // Service price ranges are NOT literals in the catalogue: strings carry
+  // tokens like {kitchenRange}, resolved here from lib/pricing.ts so every
+  // locale and every call site (server, client, metadata) states the same
+  // number. Resolving at load time — rather than asking ~30 call sites to pass
+  // the values — means a new caller cannot forget to. Non-price ICU args
+  // ({area}, {count}) are left untouched.
+  return applyPriceTokensDeep(merged);
 }
 
 function loadMessages(locale: Locale): Promise<Record<string, unknown>> {

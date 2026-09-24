@@ -6,6 +6,7 @@ import { BreadcrumbSchema, FAQSchema } from '@/components/structured-data';
 import { getBaseUrl, buildAlternates, buildOgImageUrl, SITE_NAME, buildAlternateLocales} from '@/lib/utils';
 import { getCompanyFromDb, getServiceAreasFromDb } from '@/lib/db/queries';
 import ClientMessages from '@/components/ClientMessages';
+import { formatPriceRange } from '@/lib/pricing';
 
 interface PageProps {
   params: Promise<{ locale: string }>;
@@ -63,7 +64,7 @@ export default async function Page({ params }: PageProps) {
     },
     {
       question: 'How much does a renovation cost in Metro Vancouver?',
-      answer: 'Kitchen renovations in Vancouver typically range from $30,000-$80,000+. Bathroom renovations range from $20,000-$60,000+. Basement renovations start around $50,000 for legal suites.',
+      answer: `Kitchen renovations in Vancouver typically cost ${formatPriceRange('kitchen', 'en', 'long')}. Bathroom renovations cost ${formatPriceRange('bathroom', 'en', 'long')}. Legal basement suites cost ${formatPriceRange('basement-suite', 'en', 'long')}.`,
     },
   ];
 

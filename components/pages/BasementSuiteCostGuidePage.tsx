@@ -18,6 +18,7 @@ import {
   STEP_TEAL, STEP_TEAL_LIGHT, STEP_ORANGE, STEP_ORANGE_LIGHT,
   STEP_GREEN, STEP_GREEN_LIGHT,
 } from '@/lib/theme';
+import { formatPriceTier } from '@/lib/pricing';
 
 interface BasementSuiteCostGuidePageProps {
   locale: Locale;
@@ -51,9 +52,9 @@ export default function BasementSuiteCostGuidePage({ locale, projects, phone, sh
   }, [projects]);
 
   const costTiers = [
-    { key: 'budget', icon: DollarSign, accent: STEP_GREEN, accentLight: STEP_GREEN_LIGHT, range: '$30,000 – $50,000' },
-    { key: 'midRange', icon: Home, accent: STEP_TEAL, accentLight: STEP_TEAL_LIGHT, range: '$50,000 – $80,000' },
-    { key: 'highEnd', icon: TrendingUp, accent: STEP_ORANGE, accentLight: STEP_ORANGE_LIGHT, range: '$80,000 – $120,000+' },
+    { key: 'budget', icon: DollarSign, accent: STEP_GREEN, accentLight: STEP_GREEN_LIGHT, range: formatPriceTier('basement-suite', 'budget', 'long') },
+    { key: 'midRange', icon: Home, accent: STEP_TEAL, accentLight: STEP_TEAL_LIGHT, range: formatPriceTier('basement-suite', 'mid', 'long') },
+    { key: 'highEnd', icon: TrendingUp, accent: STEP_ORANGE, accentLight: STEP_ORANGE_LIGHT, range: formatPriceTier('basement-suite', 'high', 'long') },
   ];
 
   const costFactors = [

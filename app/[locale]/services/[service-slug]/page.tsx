@@ -11,35 +11,15 @@ import { BreadcrumbSchema, ServiceSchema, FAQSchema } from '@/components/structu
 import { getBaseUrl, buildAlternates, SITE_NAME, truncateMetaDescription, buildAlternateLocales} from '@/lib/utils';
 import { images as siteImages } from '@/lib/data';
 import ClientMessages from '@/components/ClientMessages';
+import { formatPriceTier, priceRangeForSchema } from '@/lib/pricing';
 
 interface PageProps {
   params: Promise<{ locale: string; 'service-slug': string }>;
 }
 
-/**
- * Price ranges in CAD per service slug — fed into ServiceSchema's
- * `hasOfferCatalog.priceSpecification` so Google can render a price snippet
- * on SERP listings.
- *
- * 2026-05-04 update: bumped minimums to defensible Vancouver Metro 2026
- * floors. Old numbers (kitchen $14K, whole-house $50K) were below real
- * project minimums — risked customer expectation mismatch and underbid
- * leads. Sourced from current BC contractor labour rates ($85–150/hr
- * trades + WSBC/insurance overhead), 2026 material costs, and competitor
- * floor pricing on HomeStars / RenovationFind / Houzz Vancouver.
- *
- * Per-tier breakdowns live in long_description (cost-guide tables).
- */
-const SERVICE_PRICE_RANGES: Record<string, { min: number; max: number } | undefined> = {
-  kitchen: { min: 25000, max: 150000 },        // refresh→luxury; high-end can hit $300K+
-  bathroom: { min: 20000, max: 80000 },        // powder→luxury ensuite; spa builds $120K+
-  basement: { min: 50000, max: 200000 },       // basic finish→legal suite + premium ensuite
-  'whole-house': { min: 150000, max: 800000 }, // smallest meaningful reno→full-home; luxury $1.5M+
-  commercial: { min: 50000, max: 500000 },     // small refresh→full restaurant/clinic build-out
-  cabinet: { min: 4000, max: 30000 },          // spray refinish→full custom replacement
-  flooring: { min: 8000, max: 35000 },         // bumped from $5K
-  painting: { min: 5000, max: 20000 },         // bumped from $3K
-};
+// Price ranges for ServiceSchema's hasOfferCatalog.priceSpecification come
+// from lib/pricing.ts (the single source of truth for every service price the
+// site states). Do NOT re-add a local price table here.
 
 /**
  * Service-specific OG / hero images.
@@ -110,7 +90,7 @@ const enServiceH1Overrides: Partial<Record<string, string>> = {
   'whole-house': 'Whole-House Renovation Vancouver — Kitchens, Bathrooms & Full Home Remodels',
   commercial: 'Commercial Renovation Vancouver — Offices, Retail & Restaurant Build-Outs',
   // Cabinet refacing H1 "Cabinet Refacing" is bare — add geo + differentiator.
-  cabinet: 'Cabinet Refacing Vancouver — Refinishing, Resurfacing & Hardware Upgrades',
+  cabinet: `Cabinet Refacing Vancouver — Refinishing, Resurfacing & Hardware Upgrades`,
   // 2026-06-24: H1 "Heat Pump Installation" is bare — scanner flagged missing
   // descriptive context and geo signal (op-34b0f8ce1f). Override adds service
   // detail + Vancouver geo to match meta title "Heat Pump Installation Vancouver".
@@ -170,7 +150,7 @@ const zhServiceMetaDescriptions: Partial<Record<string, string>> = {
   // heat-pump-hvac: 200 zh imp / 1.5% CTR (worst). cabinet: 79 imp truncated to "...翻新 8K-18K 加元，完全定制更换 20K...".
   // poly-b-replacement: 49 imp / 4.1% CTR, short zh description. Prices from services.description_zh DB column.
   'heat-pump-hvac':    '温哥华热泵安装与空调升级 — 告别燃气炉，冬暖夏凉，符合BC Hydro退税资格，代办申请全程跟进。500万保险，3年保修，Metro Vancouver全区上门。免费报价。',
-  cabinet:             '温哥华橱柜翻新 — 喷漆整修$4K–$8K，换门板$8K–$18K，全定制更换$20K–$50K。一站式设计安装，500万保险，3年工艺保修。免费报价。',
+  cabinet:             `温哥华橱柜翻新 — 喷漆整修${formatPriceTier('cabinet-refinishing', 'budget')}，换门板${formatPriceTier('cabinet-refinishing', 'mid')}，全定制更换${formatPriceTier('cabinet-refinishing', 'high')}。一站式设计安装，500万保险，3年工艺保修。免费报价。`,
   'poly-b-replacement':'Metro Vancouver Poly-B水管更换 — 1985–1997年BC省住宅常见，管道老化漏水风险高。全屋换PEX管道，含许可证验收，多数BC保险公司要求更换。免费报价。',
 };
 
@@ -190,7 +170,7 @@ const zhHantServiceMetaDescriptions: Partial<Record<string, string>> = {
   basement:      'Metro Vancouver地下室翻新 — 娛樂室、合法套間、家庭影院一條龍。代辦許可證申請。500萬保險，3年保固。免費報價。',
   'whole-house': '溫哥華全屋翻新 — 廚房、浴室、地板及各工種統一合約，單一專案經理統籌全程。500萬保險，3年保固。Metro Vancouver全區。免費報價。',
   commercial:     '溫哥華商業裝修 — 辦公室、零售、餐廳及診所裝修。BC建築規範合規，500萬保險。免費估價。',
-  cabinet:       '溫哥華橱櫃翻新 — 噴漆整修$4K–$8K，換門板$8K–$18K，全定製更換$20K–$50K。500萬保險，3年工藝保固。免費報價。',
+  cabinet:       `溫哥華橱櫃翻新 — 噴漆整修${formatPriceTier('cabinet-refinishing', 'budget')}，換門板${formatPriceTier('cabinet-refinishing', 'mid')}，全定製更換${formatPriceTier('cabinet-refinishing', 'high')}。500萬保險，3年工藝保固。免費報價。`,
   'heat-pump-hvac':    '溫哥華熱泵安裝與空調升級 — 符合BC Hydro退稅資格，全程代辦申請。500萬保險，3年保固，Metro Vancouver全區。免費報價。',
   'poly-b-replacement':'Metro Vancouver Poly-B水管更換 — 1985–1997年BC省住宅常見，全屋換PEX管道，含許可證驗收，多數BC保險公司要求更換。免費報價。',
 };
@@ -209,7 +189,7 @@ const koServiceMetaDescriptions: Partial<Record<string, string>> = {
   bathroom:            '밴쿠버 욕실 리노베이션 — 방수 공사, 맞춤형 타일, 샤워부스·욕조 설치. 500만 보험, 3년 공법 보증. Metro Vancouver 전 지역. 무료 견적.',
   basement:            'Metro Vancouver 지하실 리노베이션 — 엔터테인먼트 룸, 합법 스위트, 홈시어터 일괄 시공. 허가 대행. 500만 보험, 3년 보증. 무료 견적.',
   'whole-house':       '밴쿠버 전체 주택 리노베이션 — 주방·욕실·바닥재 공사를 단일 계약으로 진행, 전담 PM 배치. 500만 보험, 3년 보증. Metro Vancouver 전 지역. 무료 견적.',
-  cabinet:             '밴쿠버 캐비닛 리노베이션 — 도장 $4K–$8K, 도어 교체 $8K–$18K, 맞춤 제작 $20K–$50K. 500만 보험, 3년 공법 보증. 무료 견적.',
+  cabinet:             `밴쿠버 캐비닛 리노베이션 — 도장 ${formatPriceTier('cabinet-refinishing', 'budget')}, 도어 교체 ${formatPriceTier('cabinet-refinishing', 'mid')}, 맞춤 제작 ${formatPriceTier('cabinet-refinishing', 'high')}. 500만 보험, 3년 공법 보증. 무료 견적.`,
   commercial:          'Metro Vancouver 상업용 리노베이션 — 사무실, 소매점, 식당, 클리닉. BC 건축법 준수. 500만 보험. 무료 견적.',
   'heat-pump-hvac':    '밴쿠버 열펌프 설치 — BC Hydro 보조금 신청 대행. 500만 보험, 3년 보증. Metro Vancouver 전 지역. 무료 견적.',
   'poly-b-replacement':'Metro Vancouver Poly-B 배관 교체 — 1985–1997년 BC 주택 다수 해당, PEX 전체 재배관·허가·검사 포함. BC 보험사 요건. 무료 견적.',
@@ -228,7 +208,7 @@ const jaServiceMetaDescriptions: Partial<Record<string, string>> = {
   bathroom:            'バンクーバーのバスルームリノベーション — 防水工事、カスタムタイル、シャワー・バスタブ設置。500万保険、3年工事保証。Metro Vancouver全域。無料見積もり。',
   basement:            'Metro Vancouverの地下室リノベーション — エンターテイメントルーム、合法スイート、ホームシアターを一括施工。許可証代行。500万保険、3年保証。無料見積もり。',
   'whole-house':       'バンクーバーの全体リノベーション — キッチン・バスルーム・フローリングをワンコントラクトで、専任PMが統括。500万保険、3年保証。Metro Vancouver全域。無料見積もり。',
-  cabinet:             'バンクーバーのキャビネットリノベーション — 塗装仕上げ$4K〜$8K、ドア交換$8K〜$18K、完全カスタム$20K〜$50K。500万保険、3年工事保証。無料見積もり。',
+  cabinet:             `バンクーバーのキャビネットリノベーション — 塗装仕上げ${formatPriceTier('cabinet-refinishing', 'budget')}、ドア交換${formatPriceTier('cabinet-refinishing', 'mid')}、完全カスタム${formatPriceTier('cabinet-refinishing', 'high')}。500万保険、3年工事保証。無料見積もり。`,
   commercial:          'Metro Vancouver商業用リノベーション — 事務所、小売店、レストラン、医院。BC建築法準拠、500万保険対応。無料見積もり。',
   'heat-pump-hvac':    'バンクーバーのヒートポンプ設置 — BC Hydro還付金の申請代行。500万保険、3年保証。Metro Vancouver全域。無料見積もり。',
   'poly-b-replacement':'Metro Vancouver Poly-B配管交換 — 1985〜1997年のBC住宅に多い、PEX全体再配管・許可・検査込み。BC保険会社の要件。無料見積もり。',
@@ -388,7 +368,7 @@ export default async function Page({ params }: PageProps) {
           : {})} 
         url={`/${locale}/services/${serviceSlug}/`}
         areaServed={areas.map((a) => a.name.en)}
-        priceRange={SERVICE_PRICE_RANGES[serviceSlug]}
+        priceRange={priceRangeForSchema(serviceSlug)}
         image={service.image || SERVICE_OG_IMAGES[serviceSlug] || siteImages.hero}
         serviceRadiusKm={50}
       />

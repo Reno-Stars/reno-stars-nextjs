@@ -4,7 +4,7 @@
       "q1": "¿Cuánto tarda normalmente una remodelación de cocina?",
       "a1": "Una remodelación típica de cocina toma 4-8 semanas dependiendo del alcance. Actualizaciones simples como renovar gabinetes pueden tomar 1-2 semanas, mientras que remodelaciones completas con gabinetes a medida pueden tomar 8-12 semanas.",
       "q2": "¿Cuál es el costo promedio de una remodelación de cocina en {area}?",
-      "a2": "Las remodelaciones de cocina en {area} típicamente van de $15,000 a $75,000+ según tamaño y acabados. Proporcionamos cotizaciones detalladas gratis después de una consulta a domicilio.",
+      "a2": "Las remodelaciones de cocina en {area} típicamente cuestan {kitchenRangeLong} según tamaño y acabados. Proporcionamos cotizaciones detalladas gratis después de una consulta a domicilio.",
       "q3": "¿Necesito permisos para mi remodelación de cocina?",
       "a3": "Se requieren permisos para cambios eléctricos, de plomería y estructurales. Manejamos todas las solicitudes de permisos y aseguramos que su remodelación cumpla con los códigos de construcción de {area}."
     },

@@ -4,7 +4,7 @@
       "q1": "Combien de temps dure généralement une rénovation de cuisine ?",
       "a1": "Une rénovation de cuisine typique prend 4 à 8 semaines selon l'ampleur. Des mises à jour simples comme la rénovation des armoires peuvent prendre 1 à 2 semaines, tandis que des rénovations complètes avec des armoires personnalisées peuvent prendre 8 à 12 semaines.",
       "q2": "Quel est le coût moyen d'une rénovation de cuisine à {area} ?",
-      "a2": "Les rénovations de cuisine dans {area} varient généralement entre 15 000 $ et plus de 75 000 $ selon la taille et les finitions. Nous fournissons des devis détaillés gratuits après une consultation à domicile.",
+      "a2": "Les rénovations de cuisine dans {area} coûtent généralement {kitchenRangeLong} selon la taille et les finitions. Nous fournissons des devis détaillés gratuits après une consultation à domicile.",
       "q3": "Ai-je besoin d’un permis pour rénover ma cuisine ?",
       "a3": "Des permis sont requis pour les modifications électriques, de plomberie et structurelles. Nous traitons toutes les demandes de permis et veillons à ce que votre rénovation soit conforme aux codes du bâtiment {area}."
     },
