@@ -53,8 +53,8 @@ export default function ArticleJsonLd({
     headline,
     description,
     url: absoluteUrl,
-    ...(datePublished && { datePublished }),
-    ...(dateModified && { dateModified }),
+    ...(datePublished && { datePublished: new Date(datePublished).toISOString() }),
+    ...(dateModified && { dateModified: new Date(dateModified).toISOString() }),
     author: {
       '@type': authorName ? 'Person' : 'Organization',
       ...(authorName
