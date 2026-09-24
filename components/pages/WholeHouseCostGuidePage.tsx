@@ -18,6 +18,7 @@ import {
   STEP_TEAL, STEP_TEAL_LIGHT, STEP_ORANGE, STEP_ORANGE_LIGHT,
   STEP_GREEN, STEP_GREEN_LIGHT,
 } from '@/lib/theme';
+import { formatPriceRange, formatPriceTier } from '@/lib/pricing';
 
 interface WholeHouseCostGuidePageProps {
   locale: Locale;
@@ -60,9 +61,9 @@ export default function WholeHouseCostGuidePage({ locale, projects, phone, share
   }, [projects]);
 
   const costTiers = [
-    { key: 'budget', icon: DollarSign, accent: STEP_GREEN, accentLight: STEP_GREEN_LIGHT, range: '$50,000 – $80,000' },
-    { key: 'midRange', icon: Home, accent: STEP_TEAL, accentLight: STEP_TEAL_LIGHT, range: '$80,000 – $120,000' },
-    { key: 'highEnd', icon: TrendingUp, accent: STEP_ORANGE, accentLight: STEP_ORANGE_LIGHT, range: '$120,000 – $200,000+' },
+    { key: 'budget', icon: DollarSign, accent: STEP_GREEN, accentLight: STEP_GREEN_LIGHT, range: formatPriceTier('whole-house', 'budget', 'long') },
+    { key: 'midRange', icon: Home, accent: STEP_TEAL, accentLight: STEP_TEAL_LIGHT, range: formatPriceTier('whole-house', 'mid', 'long') },
+    { key: 'highEnd', icon: TrendingUp, accent: STEP_ORANGE, accentLight: STEP_ORANGE_LIGHT, range: formatPriceTier('whole-house', 'high', 'long') },
   ];
 
   const costFactors = [
@@ -247,10 +248,10 @@ export default function WholeHouseCostGuidePage({ locale, projects, phone, share
           </h2>
           <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-4">
             {[
-              { href: '/guides/bathroom-renovation-cost-vancouver', label: tGuides('bathroomGuide'), range: '$10K–$60K+' },
-              { href: '/guides/kitchen-renovation-cost-vancouver', label: tGuides('kitchen'), range: '$15K–$80K' },
-              { href: '/guides/basement-renovation-cost-vancouver', label: tGuides('basement'), range: '$20K–$80K' },
-              { href: '/guides/cabinet-refinishing-cost-vancouver', label: tGuides('cabinetRefinishing'), range: '$4K–$30K+' },
+              { href: '/guides/bathroom-renovation-cost-vancouver', label: tGuides('bathroomGuide'), range: formatPriceRange('bathroom') },
+              { href: '/guides/kitchen-renovation-cost-vancouver', label: tGuides('kitchen'), range: formatPriceRange('kitchen') },
+              { href: '/guides/basement-renovation-cost-vancouver', label: tGuides('basement'), range: formatPriceRange('basement') },
+              { href: '/guides/cabinet-refinishing-cost-vancouver', label: tGuides('cabinetRefinishing'), range: formatPriceRange('cabinet-refinishing') },
             ].map((guide) => (
               <Link key={guide.href} href={guide.href} className="rounded-xl p-5 flex flex-col gap-2 transition-transform hover:scale-[1.02]" style={{ backgroundColor: CARD, ...neu }}>
                 <span className="font-bold" style={{ color: TEXT }}>{guide.label}</span>

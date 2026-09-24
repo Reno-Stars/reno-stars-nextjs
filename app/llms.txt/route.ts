@@ -8,6 +8,7 @@ import { COMPANY_STATS, getYearsExperience } from '@/lib/company-config';
 import { buildCompanyFactLines, legalName as buildLegalName } from '@/lib/seo/llms-shared';
 import { getGoogleReviews } from '@/lib/google-reviews';
 import { COST_GUIDES } from '@/lib/seo/cost-guides';
+import { formatPriceRange, formatPriceTier, type PriceSlug } from '@/lib/pricing';
 
 /**
  * /llms.txt — the short, curated index for AI answer engines (the llms.txt
@@ -62,18 +63,21 @@ export async function GET(): Promise<Response> {
     ...buildCompanyFactLines(company, areas.length, googleRating, base),
   ].join('\n');
 
-  // Hand-written price ranges — no DB source for per-service pricing (kept verbatim).
+  // Service price ranges come from lib/pricing.ts — the single source every
+  // price-bearing surface reads. Never type a price literal here.
+  const svc = (label: string, slug: PriceSlug) => `- ${label}: ${formatPriceRange(slug, 'en', 'long')}`;
   const servicesBlock = [
     '',
     '## Services',
-    '- Kitchen Renovation: $15,000-$72,000+',
-    '- Bathroom Renovation: $10,000-$60,000+',
-    '- Whole House Renovation: $50,000-$200,000+',
-    '- Basement Renovation: $30,000-$120,000+',
-    '- Basement Suite (legal): $60,000-$150,000',
-    '- Commercial Renovation: $50,000-$1,000,000+',
-    '- Cabinet Refacing/Refinishing: $4,000-$15,000',
-    '- Flooring, Painting, Electrical, Plumbing',
+    svc('Kitchen Renovation', 'kitchen'),
+    svc('Bathroom Renovation', 'bathroom'),
+    svc('Whole House Renovation', 'whole-house'),
+    svc('Basement Renovation', 'basement'),
+    svc('Basement Suite (legal)', 'basement-suite'),
+    svc('Commercial Renovation', 'commercial'),
+    svc('Cabinet Refacing/Refinishing', 'cabinet-refinishing'),
+    svc('Flooring', 'flooring'),
+    '- Painting, Electrical, Plumbing',
   ].join('\n');
 
   const areasBlock = [
@@ -124,13 +128,13 @@ export async function GET(): Promise<Response> {
     '## Frequently Asked Questions',
     '',
     '### How much does a kitchen renovation cost in Vancouver?',
-    `Kitchen renovations in Vancouver typically range from $15,000 to $72,000+ based on 16 completed ${SITE_NAME} projects. Basic refresh runs $15K-$30K, mid-range $30K-$50K, and full custom $50K-$72K+. Pricing varies by cabinetry, countertops, appliances, and whether the layout changes.`,
+    `Kitchen renovations in Vancouver typically cost ${formatPriceRange('kitchen', 'en', 'long')}. Basic refresh runs ${formatPriceTier('kitchen', 'budget')}, mid-range ${formatPriceTier('kitchen', 'mid')}, and full custom ${formatPriceTier('kitchen', 'high')}. Pricing varies by cabinetry, countertops, appliances, and whether the layout changes.`,
     '',
     '### How much does a bathroom renovation cost in Vancouver?',
-    'Bathroom renovations in Vancouver typically run $10,000 to $60,000+. A 3-piece basic refresh: $10K-$20K. A 4-piece mid-range with tiled shower: $20K-$40K. A 5-piece master with curbless shower and double vanity: $40K-$60K+. Includes Schluter waterproofing, vanity, fixtures, tile, and electrical.',
+    `Bathroom renovations in Vancouver typically run ${formatPriceRange('bathroom', 'en', 'long')}. A basic refresh: ${formatPriceTier('bathroom', 'budget')}. A mid-range remodel with tiled shower: ${formatPriceTier('bathroom', 'mid')}. A high-end ensuite with curbless shower and double vanity: ${formatPriceTier('bathroom', 'high')}. Includes Schluter waterproofing, vanity, fixtures, tile, and electrical.`,
     '',
     '### How much does a whole-house renovation cost in Vancouver?',
-    'Whole-house renovations in Metro Vancouver run $50,000 to $200,000+ depending on scope. A cosmetic refresh (paint, flooring, hardware) is $50K-$100K. Mid-scope (kitchen + baths + flooring): $100K-$200K. Full structural with kitchen, bathrooms, and layout changes: $200K-$400K+.',
+    `Whole-house renovations in Metro Vancouver run ${formatPriceRange('whole-house', 'en', 'long')} depending on scope. A lighter refresh: ${formatPriceTier('whole-house', 'budget')}. Mid-scope (kitchen + baths + flooring): ${formatPriceTier('whole-house', 'mid')}. Larger scopes with layout changes: ${formatPriceTier('whole-house', 'high')}.`,
     '',
     '### Are you licensed and insured?',
     `Yes. ${SITE_NAME} carries up to ${COMPANY_STATS.liabilityCoverage} in CGL (Commercial General Liability) insurance and active WCB (WorkSafeBC) coverage on every job. We can share certificates before work begins. We also offer up to a ${COMPANY_STATS.warrantyYears}-year workmanship warranty.`,
@@ -145,7 +149,7 @@ export async function GET(): Promise<Response> {
     `Yes — free in-home consultation and itemized written quote within 2-3 business days across all ${areas.length} Metro Vancouver cities we serve. No deposit required to quote.`,
     '',
     `### Does ${SITE_NAME} build legal basement suites in Vancouver?`,
-    'Yes. Legal secondary suite conversions in Metro Vancouver typically cost $60,000-$150,000 including permits, separate entrance, fire separation, egress windows, kitchen, bathroom, and inspections.',
+    `Yes. Legal secondary suite conversions in Metro Vancouver typically cost ${formatPriceRange('basement-suite', 'en', 'long')} including permits, separate entrance, fire separation, egress windows, kitchen, bathroom, and inspections.`,
   ].join('\n');
 
   const body = [

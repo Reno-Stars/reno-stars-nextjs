@@ -7,6 +7,8 @@
  * `{years}` is interpolated at call time from company.yearsExperience.
  * EN and ZH keyword sets differ (Chinese search terms are not EN translations).
  */
+import { formatPriceRange } from '@/lib/pricing';
+
 export interface SeoOverride {
   title: string;
   description: string;
@@ -47,11 +49,20 @@ export function serviceCityOverrides(years: number | string): {
   en: Record<string, SeoOverride>;
   zh: Record<string, SeoOverride>;
 } {
+  // Headline service ranges come from lib/pricing.ts (single source of truth).
+  // Per-city copy used to carry its own hand-typed band (kitchen alone had 14
+  // different ranges across cities); never re-type a range here.
+  const R = {
+    kitchen: formatPriceRange('kitchen'),
+    bathroom: formatPriceRange('bathroom'),
+    wholeHouse: formatPriceRange('whole-house'),
+    basement: formatPriceRange('basement'),
+  };
   const en: Record<string, SeoOverride> = {
     // Highest-volume term, currently rank ~15 (page 2) with +5 weekly trend.
     'whole-house/vancouver': {
       title: 'Home Renovations Vancouver: Real Projects & Costs (2026)',
-      description: `Home renovations in Vancouver BC with real project pricing from $50K to $200K+. ${years}+ years experience, $5M CGL insurance, 3-year workmanship warranty. See completed Vancouver projects + get a free quote.`,
+      description: `Home renovations in Vancouver BC with real project pricing from ${R.wholeHouse}. ${years}+ years experience, $5M CGL insurance, 3-year workmanship warranty. See completed Vancouver projects + get a free quote.`,
     },
     // Currently NOT RANKING in Local Finder for "Coquitlam Home renovation company".
     'whole-house/coquitlam': {
@@ -74,16 +85,16 @@ export function serviceCityOverrides(years: number | string): {
     // specific landing page for bathroom renovation queries. Real project pricing
     // from DB: bathroom $15K–$35K. Source: GSC 2026-06-26.
     'bathroom/maple-ridge': {
-      title: 'Bathroom Renovation Maple Ridge | $15K–$35K | Reno Stars',
-      description: 'Bathroom renovation Maple Ridge: $15K–$35K. Tile, showers & vanities. Albion, Cottonwood, Silver Valley & Haney. $5M insured, 3-yr warranty. Free quote.',
+      title: `Bathroom Renovation Maple Ridge | ${R.bathroom} | Reno Stars`,
+      description: `Bathroom renovation Maple Ridge: ${R.bathroom}. Tile, showers & vanities. Albion, Cottonwood, Silver Valley & Haney. $5M insured, 3-yr warranty. Free quote.`,
     },
     // Richmond: 392 imp/28d for "bathroom renovation richmond" at pos 14.2 (area page
     // is primary, but adding svc-location override for the dedicated bathroom+city page).
     // Richmond showroom at 21300 Gordon Way — English & Mandarin team.
     // Real project pricing from DB: bathroom $12K–$45K. Source: GSC 2026-06-26.
     'bathroom/richmond': {
-      title: 'Bathroom Renovation Richmond BC | $12K–$45K | Reno Stars',
-      description: 'Bathroom renovation Richmond BC: $12K–$45K. Showroom 21300 Gordon Way — English & Mandarin. Steveston, Brighouse. $5M insured, 3-yr warranty. Free quote.',
+      title: `Bathroom Renovation Richmond BC | ${R.bathroom} | Reno Stars`,
+      description: `Bathroom renovation Richmond BC: ${R.bathroom}. Showroom 21300 Gordon Way — English & Mandarin. Steveston, Brighouse. $5M insured, 3-yr warranty. Free quote.`,
     },
     // 118 imp pos 31.3 — top queries: "reno port coquitlam" (53 imp pos 22.8), "reno coquitlam" (42 imp pos 48.2).
     'whole-house/port-coquitlam': {
@@ -299,20 +310,20 @@ export function serviceCityOverrides(years: number | string): {
     // Kitchen — high-volume cities
     'kitchen/west-vancouver': {
       title: 'Kitchen Renovation West Vancouver | Luxury Kitchens | Reno Stars',
-      description: 'West Vancouver kitchen renovation — custom cabinets, quartz islands, premium appliances. Caulfeild, Dundarave, Ambleside. $30K–$90K+. Free quote.',
+      description: `West Vancouver kitchen renovation — custom cabinets, quartz islands, premium appliances. Caulfeild, Dundarave, Ambleside. ${R.kitchen}. Free quote.`,
     },
     'kitchen/north-vancouver': {
-      title: 'Kitchen Renovation North Vancouver | $25K–$80K | Reno Stars',
+      title: `Kitchen Renovation North Vancouver | ${R.kitchen} | Reno Stars`,
       description: 'North Vancouver kitchen renovation — Lynn Valley, Lonsdale, Deep Cove. Custom cabinets, quartz countertops, full layout redesign. Free quote.',
     },
     // Basement — near-page-1 opportunities
     'basement/surrey': {
       title: 'Basement Renovation Surrey | Legal Suites | Reno Stars',
-      description: 'Surrey basement renovation & legal suite conversion. $35K–$130K+. Permits handled, fire separation, separate entrance. Fleetwood, Newton, Cloverdale.',
+      description: `Surrey basement renovation & legal suite conversion. ${R.basement}. Permits handled, fire separation, separate entrance. Fleetwood, Newton, Cloverdale.`,
     },
     'basement/north-vancouver': {
       title: 'Basement Renovation North Vancouver | Waterproofing | Reno Stars',
-      description: 'North Vancouver basement renovation with waterproofing guarantee. $35K–$80K. Lynn Valley, Lonsdale, Deep Cove. Permits handled. Free quote.',
+      description: `North Vancouver basement renovation with waterproofing guarantee. ${R.basement}. Lynn Valley, Lonsdale, Deep Cove. Permits handled. Free quote.`,
     },
     // Commercial — near-page-1
     'commercial/west-vancouver': {
@@ -434,200 +445,200 @@ export function serviceCityOverrides(years: number | string): {
     },
     // Bathroom — high impressions
     'bathroom/burnaby': {
-      title: 'Bathroom Renovation Burnaby | $15K–$45K | Reno Stars',
-      description: 'Burnaby bathroom renovation — tiled showers, tub conversions, custom vanities. Metrotown to Heights. $15K–$45K, 3–6 weeks. Free quote.',
+      title: `Bathroom Renovation Burnaby | ${R.bathroom} | Reno Stars`,
+      description: `Burnaby bathroom renovation — tiled showers, tub conversions, custom vanities. Metrotown to Heights. ${R.bathroom}, 3–6 weeks. Free quote.`,
     },
     // Q7 (64 imp pos 5.2) "bathroom reno vancouver" + Q10 (57 imp pos 1.5) "bathroom remodel vancouver".
     // Page is already ranking — entire fix is snippet attractiveness, not rank.
     'bathroom/vancouver': {
-      title: 'Bathroom Remodel Vancouver | $15K–$45K | Reno Stars',
-      description: `Vancouver bathroom remodel from $15K–$45K — walk-in showers, tub conversions, custom vanities. 3–6 wks. ${years}+ yrs, $5M insured, 3-yr warranty. Free quote.`,
+      title: `Bathroom Remodel Vancouver | ${R.bathroom} | Reno Stars`,
+      description: `Vancouver bathroom remodel from ${R.bathroom} — walk-in showers, tub conversions, custom vanities. 3–6 wks. ${years}+ yrs, $5M insured, 3-yr warranty. Free quote.`,
     },
     // 2026-04-30 GSC pass: missing high-impression combos. Each one targets
     // a specific city+service query Google was matching to a less-relevant
     // URL (cannibalization). Distinct H1 + city-scoped price range moves
     // these toward page-1 positioning.
     'kitchen/burnaby': {
-      title: 'Kitchen Renovation Burnaby | $20K–$60K | Reno Stars',
-      description: 'Burnaby kitchen renovation — Metrotown condos, Heights SFH, townhouse galleys. Custom & prefab cabinets, quartz countertops, full layout. $20K–$60K. Free quote.',
+      title: `Kitchen Renovation Burnaby | ${R.kitchen} | Reno Stars`,
+      description: `Burnaby kitchen renovation — Metrotown condos, Heights SFH, townhouse galleys. Custom & prefab cabinets, quartz countertops, full layout. ${R.kitchen}. Free quote.`,
     },
     'kitchen/richmond': {
-      title: 'Kitchen Renovation Richmond BC | $20K–$60K | Reno Stars',
-      description: 'Richmond kitchen renovation — Steveston, Brighouse, Terra Nova. Cabinet replacement, quartz countertops, layout reconfiguration. $20K–$60K, 3–5 weeks. Free quote.',
+      title: `Kitchen Renovation Richmond BC | ${R.kitchen} | Reno Stars`,
+      description: `Richmond kitchen renovation — Steveston, Brighouse, Terra Nova. Cabinet replacement, quartz countertops, layout reconfiguration. ${R.kitchen}, 3–5 weeks. Free quote.`,
     },
     'kitchen/vancouver': {
-      title: 'Kitchen Renovation Vancouver | $25K–$72K | Reno Stars',
-      description: 'Vancouver kitchen renovation — Kitsilano, Mount Pleasant, Dunbar SFH plus condos throughout downtown. Custom cabinets, quartz, layout redesign. Real costs $25K–$72K. Free quote.',
+      title: `Kitchen Renovation Vancouver | ${R.kitchen} | Reno Stars`,
+      description: `Vancouver kitchen renovation — Kitsilano, Mount Pleasant, Dunbar SFH plus condos throughout downtown. Custom cabinets, quartz, layout redesign. Real costs ${R.kitchen}. Free quote.`,
     },
     'kitchen/surrey': {
-      title: 'Kitchen Renovation Surrey | $20K–$55K | Reno Stars',
-      description: 'Surrey kitchen renovation — Fleetwood, Newton, Cloverdale, South Surrey. Custom & prefab cabinets, quartz, layout redesign. $20K–$55K, 3–5 weeks. Free quote.',
+      title: `Kitchen Renovation Surrey | ${R.kitchen} | Reno Stars`,
+      description: `Surrey kitchen renovation — Fleetwood, Newton, Cloverdale, South Surrey. Custom & prefab cabinets, quartz, layout redesign. ${R.kitchen}, 3–5 weeks. Free quote.`,
     },
     'bathroom/north-vancouver': {
-      title: 'Bathroom Renovation North Vancouver | $15K–$45K | Reno Stars',
-      description: 'North Vancouver bathroom renovation — Lynn Valley, Lonsdale, Deep Cove. Walk-in showers, soaker tubs, custom vanities. $15K–$45K, 3–6 weeks. Free quote.',
+      title: `Bathroom Renovation North Vancouver | ${R.bathroom} | Reno Stars`,
+      description: `North Vancouver bathroom renovation — Lynn Valley, Lonsdale, Deep Cove. Walk-in showers, soaker tubs, custom vanities. ${R.bathroom}, 3–6 weeks. Free quote.`,
     },
     'whole-house/burnaby': {
-      title: 'Whole-House Renovation Burnaby | $50K–$200K+ | Reno Stars',
-      description: `Burnaby whole-house renovation — Heights SFH, Metrotown townhouses, Capitol Hill homes. Strata-compliant. $50K–$200K+ from real projects. ${years}+ yrs, $5M insured.`,
+      title: `Whole-House Renovation Burnaby | ${R.wholeHouse} | Reno Stars`,
+      description: `Burnaby whole-house renovation — Heights SFH, Metrotown townhouses, Capitol Hill homes. Strata-compliant. ${R.wholeHouse} from real projects. ${years}+ yrs, $5M insured.`,
     },
     'whole-house/richmond': {
-      title: 'Whole-House Renovation Richmond BC | $50K–$200K+ | Reno Stars',
-      description: `Richmond whole-house renovation — Steveston heritage, Brighouse condos, Terra Nova SFH. $50K–$200K+ from real projects. ${years}+ yrs, $5M insured, 3-yr warranty.`,
+      title: `Whole-House Renovation Richmond BC | ${R.wholeHouse} | Reno Stars`,
+      description: `Richmond whole-house renovation — Steveston heritage, Brighouse condos, Terra Nova SFH. ${R.wholeHouse} from real projects. ${years}+ yrs, $5M insured, 3-yr warranty.`,
     },
     // 2026-06-23: Remove price range from title — CTR A/B test per owner directive.
     // Price ranges in SERP titles depress CTR for high-cost whole-house queries
     // because users see "$50K–$200K+" before clicking and self-select out.
     'whole-house/surrey': {
       title: 'Whole-House Renovation Surrey | Real Projects | Reno Stars',
-      description: `Surrey whole-house renovation — Fleetwood, Newton, Cloverdale, South Surrey. SFH + secondary suite work. $50K–$200K+, ${years}+ yrs, $5M insured. Free quote.`,
+      description: `Surrey whole-house renovation — Fleetwood, Newton, Cloverdale, South Surrey. SFH + secondary suite work. ${R.wholeHouse}, ${years}+ yrs, $5M insured. Free quote.`,
     },
     // 2026-06-21 GSC scan: white-rock whole-house at pos 6.35 / 83 impressions / 0 clicks.
     // Generic template showing — adding localized override to match surrey/burnaby/richmond pattern.
     'whole-house/white-rock': {
-      title: 'Whole-House Renovation White Rock | $50K–$200K+ | Reno Stars',
-      description: 'White Rock whole-house renovation — East Beach, West Beach & South Surrey. SFH & character home projects. $50K–$200K+ from real projects. $5M insured. Free quote.',
+      title: `Whole-House Renovation White Rock | ${R.wholeHouse} | Reno Stars`,
+      description: `White Rock whole-house renovation — East Beach, West Beach & South Surrey. SFH & character home projects. ${R.wholeHouse} from real projects. $5M insured. Free quote.`,
     },
     // 2026-05-19 GSC pass: missing high-impression combos. Each entry below
     // targets a specific city+service query where the generic template was
     // shown but no clicks earned. Order = descending monthly impressions.
     // (Skipped combos that already exist above — those were tuned earlier.)
     'bathroom/west-vancouver': {
-      title: 'Bathroom Renovation West Vancouver | $20K–$60K | Reno Stars',
-      description: 'West Vancouver bathroom renovation — Ambleside, British Properties, Caulfeild. Curbless showers, premium tile, custom vanities. $20K–$60K, 3–6 weeks. Free quote.',
+      title: `Bathroom Renovation West Vancouver | ${R.bathroom} | Reno Stars`,
+      description: `West Vancouver bathroom renovation — Ambleside, British Properties, Caulfeild. Curbless showers, premium tile, custom vanities. ${R.bathroom}, 3–6 weeks. Free quote.`,
     },
     'basement/vancouver': {
-      title: 'Basement Renovation Vancouver | $30K–$120K+ | Reno Stars',
-      description: 'Vancouver basement renovation — finishing, suite conversions, family rooms. Kitsilano to Killarney. Permit-aware, egress-compliant. $30K–$120K+ from real projects.',
+      title: `Basement Renovation Vancouver | ${R.basement} | Reno Stars`,
+      description: `Vancouver basement renovation — finishing, suite conversions, family rooms. Kitsilano to Killarney. Permit-aware, egress-compliant. ${R.basement} from real projects.`,
     },
     'basement/burnaby': {
-      title: 'Basement Renovation Burnaby | $30K–$120K+ | Reno Stars',
-      description: 'Burnaby basement renovation — Metrotown, Heights, Capitol Hill. Finishing, secondary suites, family rooms. Strata-compliant, permit-aware. $30K–$120K+. Free quote.',
+      title: `Basement Renovation Burnaby | ${R.basement} | Reno Stars`,
+      description: `Burnaby basement renovation — Metrotown, Heights, Capitol Hill. Finishing, secondary suites, family rooms. Strata-compliant, permit-aware. ${R.basement}. Free quote.`,
     },
     'basement/port-coquitlam': {
-      title: 'Basement Renovation Port Coquitlam | $30K–$120K+ | Reno Stars',
-      description: 'Port Coquitlam basement renovation — finishing, suite conversions, family rooms. Permit-aware, egress-compliant. $30K–$120K+ from real projects. Free quote.',
+      title: `Basement Renovation Port Coquitlam | ${R.basement} | Reno Stars`,
+      description: `Port Coquitlam basement renovation — finishing, suite conversions, family rooms. Permit-aware, egress-compliant. ${R.basement} from real projects. Free quote.`,
     },
     'basement/port-moody': {
-      title: 'Basement Renovation Port Moody | $30K–$120K+ | Reno Stars',
-      description: 'Port Moody basement renovation — finishing, suite conversions, family rooms. Inlet to Heritage Mountain. Permit-aware, $5M insured. $30K–$120K+. Free quote.',
+      title: `Basement Renovation Port Moody | ${R.basement} | Reno Stars`,
+      description: `Port Moody basement renovation — finishing, suite conversions, family rooms. Inlet to Heritage Mountain. Permit-aware, $5M insured. ${R.basement}. Free quote.`,
     },
     // 2026-06-25: Kitchen city-specific overrides for remaining 7 cities without custom meta.
     // Price ranges from real completed projects per city (§8-compliant DB data).
     'kitchen/delta': {
-      title: 'Kitchen Renovation Delta BC | $20K–$50K | Reno Stars',
-      description: 'Delta kitchen renovation — Tsawwassen, Ladner & North Delta. Custom cabinets, quartz countertops, full layout redesign. $20K–$50K from real projects. 3–5 weeks. Free quote.',
+      title: `Kitchen Renovation Delta BC | ${R.kitchen} | Reno Stars`,
+      description: `Delta kitchen renovation — Tsawwassen, Ladner & North Delta. Custom cabinets, quartz countertops, full layout redesign. ${R.kitchen} from real projects. 3–5 weeks. Free quote.`,
     },
     'kitchen/langley': {
-      title: 'Kitchen Renovation Langley BC | $20K–$35K | Reno Stars',
-      description: 'Langley kitchen renovation — Willoughby, Walnut Grove, Fort Langley. Custom & prefab cabinets, quartz, layout redesign. $20K–$35K from real projects. Free quote.',
+      title: `Kitchen Renovation Langley BC | ${R.kitchen} | Reno Stars`,
+      description: `Langley kitchen renovation — Willoughby, Walnut Grove, Fort Langley. Custom & prefab cabinets, quartz, layout redesign. ${R.kitchen} from real projects. Free quote.`,
     },
     'kitchen/maple-ridge': {
-      title: 'Kitchen Renovation Maple Ridge | $22K–$50K | Reno Stars',
-      description: 'Maple Ridge kitchen renovation — Silver Valley, Albion, Cottonwood. Custom cabinets, quartz countertops, full layout. $22K–$50K from real projects. Free quote.',
+      title: `Kitchen Renovation Maple Ridge | ${R.kitchen} | Reno Stars`,
+      description: `Maple Ridge kitchen renovation — Silver Valley, Albion, Cottonwood. Custom cabinets, quartz countertops, full layout. ${R.kitchen} from real projects. Free quote.`,
     },
     'kitchen/new-westminster': {
-      title: 'Kitchen Renovation New Westminster | $20K–$40K | Reno Stars',
-      description: "New Westminster kitchen renovation — Queen's Park heritage, Sapperton & Queensborough. Custom cabinets, quartz countertops, layout redesign. $20K–$40K. Free quote.",
+      title: `Kitchen Renovation New Westminster | ${R.kitchen} | Reno Stars`,
+      description: `New Westminster kitchen renovation — Queen's Park heritage, Sapperton & Queensborough. Custom cabinets, quartz countertops, layout redesign. ${R.kitchen}. Free quote.`,
     },
     'kitchen/port-coquitlam': {
-      title: 'Kitchen Renovation Port Coquitlam | $22K–$45K | Reno Stars',
-      description: 'Port Coquitlam kitchen renovation — Citadel Heights, Riverwood & West PoCo. Custom & prefab cabinets, quartz, layout redesign. $22K–$45K from real projects. Free quote.',
+      title: `Kitchen Renovation Port Coquitlam | ${R.kitchen} | Reno Stars`,
+      description: `Port Coquitlam kitchen renovation — Citadel Heights, Riverwood & West PoCo. Custom & prefab cabinets, quartz, layout redesign. ${R.kitchen} from real projects. Free quote.`,
     },
     'kitchen/port-moody': {
-      title: 'Kitchen Renovation Port Moody | $25K–$55K | Reno Stars',
-      description: 'Port Moody kitchen renovation — Heritage Woods, Moody Centre & Inlet Centre. Custom cabinets, quartz countertops, full layout redesign. $25K–$55K. Free quote.',
+      title: `Kitchen Renovation Port Moody | ${R.kitchen} | Reno Stars`,
+      description: `Port Moody kitchen renovation — Heritage Woods, Moody Centre & Inlet Centre. Custom cabinets, quartz countertops, full layout redesign. ${R.kitchen}. Free quote.`,
     },
     'kitchen/white-rock': {
-      title: 'Kitchen Renovation White Rock | $16K–$46K | Reno Stars',
-      description: 'White Rock kitchen renovation — East Beach, West Beach & South Surrey. Custom cabinets, quartz countertops, layout redesign. $16K–$46K from real projects. Free quote.',
+      title: `Kitchen Renovation White Rock | ${R.kitchen} | Reno Stars`,
+      description: `White Rock kitchen renovation — East Beach, West Beach & South Surrey. Custom cabinets, quartz countertops, layout redesign. ${R.kitchen} from real projects. Free quote.`,
     },
     // 2026-06-25: Bathroom overrides for 7 cities.
     'bathroom/coquitlam': {
-      title: 'Bathroom Renovation Coquitlam | $14K–$35K | Reno Stars',
-      description: 'Coquitlam bathroom renovation — Burke Mountain condos, Westwood Plateau SFH. Walk-in showers, tub conversions, custom vanities. $14K–$35K, 3–6 weeks. Free quote.',
+      title: `Bathroom Renovation Coquitlam | ${R.bathroom} | Reno Stars`,
+      description: `Coquitlam bathroom renovation — Burke Mountain condos, Westwood Plateau SFH. Walk-in showers, tub conversions, custom vanities. ${R.bathroom}, 3–6 weeks. Free quote.`,
     },
     'bathroom/delta': {
-      title: 'Bathroom Renovation Delta BC | $15K–$35K | Reno Stars',
-      description: 'Delta bathroom renovation — Tsawwassen coastal, Ladner heritage, North Delta. Walk-in showers, soaker tubs, custom vanities. $15K–$35K, 3–6 weeks. Free quote.',
+      title: `Bathroom Renovation Delta BC | ${R.bathroom} | Reno Stars`,
+      description: `Delta bathroom renovation — Tsawwassen coastal, Ladner heritage, North Delta. Walk-in showers, soaker tubs, custom vanities. ${R.bathroom}, 3–6 weeks. Free quote.`,
     },
     'bathroom/langley': {
-      title: 'Bathroom Renovation Langley BC | $12K–$35K | Reno Stars',
-      description: 'Langley bathroom renovation — Willoughby, Walnut Grove & Fort Langley. Walk-in showers, tub conversions, custom tile & vanities. $12K–$35K. 3–6 weeks. Free quote.',
+      title: `Bathroom Renovation Langley BC | ${R.bathroom} | Reno Stars`,
+      description: `Langley bathroom renovation — Willoughby, Walnut Grove & Fort Langley. Walk-in showers, tub conversions, custom tile & vanities. ${R.bathroom}. 3–6 weeks. Free quote.`,
     },
     'bathroom/new-westminster': {
-      title: 'Bathroom Renovation New Westminster | $14K–$35K | Reno Stars',
-      description: "New Westminster bathroom renovation — Queen's Park, Sapperton & Queensborough. Walk-in showers, soaker tubs, custom vanities. $14K–$35K, 3–6 weeks. Free quote.",
+      title: `Bathroom Renovation New Westminster | ${R.bathroom} | Reno Stars`,
+      description: `New Westminster bathroom renovation — Queen's Park, Sapperton & Queensborough. Walk-in showers, soaker tubs, custom vanities. ${R.bathroom}, 3–6 weeks. Free quote.`,
     },
     'bathroom/port-coquitlam': {
-      title: 'Bathroom Renovation Port Coquitlam | $14K–$35K | Reno Stars',
-      description: 'Port Coquitlam bathroom renovation — Citadel Heights, Riverwood, Oxford Heights. Walk-in showers, tub conversions, custom vanities. $14K–$35K. Free quote.',
+      title: `Bathroom Renovation Port Coquitlam | ${R.bathroom} | Reno Stars`,
+      description: `Port Coquitlam bathroom renovation — Citadel Heights, Riverwood, Oxford Heights. Walk-in showers, tub conversions, custom vanities. ${R.bathroom}. Free quote.`,
     },
     'bathroom/port-moody': {
-      title: 'Bathroom Renovation Port Moody | $16K–$40K | Reno Stars',
-      description: 'Port Moody bathroom renovation — Heritage Woods, Moody Centre & Inlet Centre. Walk-in showers, soaker tubs, custom vanities. $16K–$40K, 3–6 weeks. Free quote.',
+      title: `Bathroom Renovation Port Moody | ${R.bathroom} | Reno Stars`,
+      description: `Port Moody bathroom renovation — Heritage Woods, Moody Centre & Inlet Centre. Walk-in showers, soaker tubs, custom vanities. ${R.bathroom}, 3–6 weeks. Free quote.`,
     },
     'bathroom/surrey': {
-      title: 'Bathroom Renovation Surrey BC | $14K–$40K | Reno Stars',
-      description: 'Surrey bathroom renovation — Fleetwood, Newton, Cloverdale & South Surrey. Walk-in showers, tub conversions, custom tile & vanities. $14K–$40K. Free quote.',
+      title: `Bathroom Renovation Surrey BC | ${R.bathroom} | Reno Stars`,
+      description: `Surrey bathroom renovation — Fleetwood, Newton, Cloverdale & South Surrey. Walk-in showers, tub conversions, custom tile & vanities. ${R.bathroom}. Free quote.`,
     },
     // 2026-06-25: Basement overrides for 8 cities.
     'basement/coquitlam': {
-      title: 'Basement Renovation Coquitlam | $35K–$120K+ | Reno Stars',
-      description: 'Coquitlam basement renovation — Burke Mountain, Westwood Plateau, Maillardville. Finishing, suite conversions, family rooms. Permit-aware. $35K–$120K+. Free quote.',
+      title: `Basement Renovation Coquitlam | ${R.basement} | Reno Stars`,
+      description: `Coquitlam basement renovation — Burke Mountain, Westwood Plateau, Maillardville. Finishing, suite conversions, family rooms. Permit-aware. ${R.basement}. Free quote.`,
     },
     'basement/delta': {
-      title: 'Basement Renovation Delta BC | $30K–$110K+ | Reno Stars',
-      description: 'Delta basement renovation — Tsawwassen, Ladner & North Delta. Finishing, secondary suites, family rooms. Permit-aware, egress-compliant. $30K–$110K+. Free quote.',
+      title: `Basement Renovation Delta BC | ${R.basement} | Reno Stars`,
+      description: `Delta basement renovation — Tsawwassen, Ladner & North Delta. Finishing, secondary suites, family rooms. Permit-aware, egress-compliant. ${R.basement}. Free quote.`,
     },
     'basement/langley': {
-      title: 'Basement Renovation Langley BC | $30K–$110K+ | Reno Stars',
-      description: 'Langley basement renovation — Willoughby, Walnut Grove, Fort Langley. Finishing, secondary suites, family rooms. Permit-aware. $30K–$110K+. Free quote.',
+      title: `Basement Renovation Langley BC | ${R.basement} | Reno Stars`,
+      description: `Langley basement renovation — Willoughby, Walnut Grove, Fort Langley. Finishing, secondary suites, family rooms. Permit-aware. ${R.basement}. Free quote.`,
     },
     'basement/maple-ridge': {
-      title: 'Basement Renovation Maple Ridge | $30K–$110K+ | Reno Stars',
-      description: 'Maple Ridge basement renovation — Silver Valley, Albion, Cottonwood. Finishing, secondary suites, family rooms. Permit-aware, $5M insured. $30K–$110K+. Free quote.',
+      title: `Basement Renovation Maple Ridge | ${R.basement} | Reno Stars`,
+      description: `Maple Ridge basement renovation — Silver Valley, Albion, Cottonwood. Finishing, secondary suites, family rooms. Permit-aware, $5M insured. ${R.basement}. Free quote.`,
     },
     'basement/new-westminster': {
-      title: 'Basement Renovation New Westminster | $30K–$110K+ | Reno Stars',
-      description: "New Westminster basement renovation — Queen's Park heritage, Queensborough. Finishing, suite conversions, family rooms. Permit-aware. $30K–$110K+. Free quote.",
+      title: `Basement Renovation New Westminster | ${R.basement} | Reno Stars`,
+      description: `New Westminster basement renovation — Queen's Park heritage, Queensborough. Finishing, suite conversions, family rooms. Permit-aware. ${R.basement}. Free quote.`,
     },
     'basement/richmond': {
-      title: 'Basement Renovation Richmond BC | $35K–$120K+ | Reno Stars',
-      description: 'Richmond basement renovation — Steveston, Brighouse, Terra Nova. Finishing, secondary suites, family rooms. Permit-aware, egress-compliant. $35K–$120K+. Free quote.',
+      title: `Basement Renovation Richmond BC | ${R.basement} | Reno Stars`,
+      description: `Richmond basement renovation — Steveston, Brighouse, Terra Nova. Finishing, secondary suites, family rooms. Permit-aware, egress-compliant. ${R.basement}. Free quote.`,
     },
     'basement/west-vancouver': {
-      title: 'Basement Renovation West Vancouver | $40K–$130K+ | Reno Stars',
-      description: 'West Vancouver basement renovation — British Properties, Caulfeild, Dundarave. Wine cellars, home theatres, suite conversions. Luxury finishes. $40K–$130K+. Free quote.',
+      title: `Basement Renovation West Vancouver | ${R.basement} | Reno Stars`,
+      description: `West Vancouver basement renovation — British Properties, Caulfeild, Dundarave. Wine cellars, home theatres, suite conversions. Luxury finishes. ${R.basement}. Free quote.`,
     },
     'basement/white-rock': {
-      title: 'Basement Renovation White Rock | $30K–$110K+ | Reno Stars',
-      description: 'White Rock basement renovation — East Beach, West Beach & South Surrey. Finishing, secondary suites, family rooms. Permit-aware, $5M insured. $30K–$110K+. Free quote.',
+      title: `Basement Renovation White Rock | ${R.basement} | Reno Stars`,
+      description: `White Rock basement renovation — East Beach, West Beach & South Surrey. Finishing, secondary suites, family rooms. Permit-aware, $5M insured. ${R.basement}. Free quote.`,
     },
     // 2026-06-25: Whole-house overrides for 6 cities.
     'whole-house/delta': {
-      title: 'Home Renovation Delta BC | $50K–$200K+ | Reno Stars',
-      description: `Delta home renovation — Tsawwassen, Ladner & North Delta. Kitchen, bathroom & whole-house remodels. $50K–$200K+, ${years}+ yrs, $5M insured. Free quote.`,
+      title: `Home Renovation Delta BC | ${R.wholeHouse} | Reno Stars`,
+      description: `Delta home renovation — Tsawwassen, Ladner & North Delta. Kitchen, bathroom & whole-house remodels. ${R.wholeHouse}, ${years}+ yrs, $5M insured. Free quote.`,
     },
     'whole-house/langley': {
-      title: 'Home Renovation Langley BC | $50K–$200K+ | Reno Stars',
-      description: `Langley home renovation — Willoughby, Walnut Grove & Fort Langley. Kitchen, bathroom & whole-house remodels. $50K–$200K+, ${years}+ yrs, $5M insured. Free quote.`,
+      title: `Home Renovation Langley BC | ${R.wholeHouse} | Reno Stars`,
+      description: `Langley home renovation — Willoughby, Walnut Grove & Fort Langley. Kitchen, bathroom & whole-house remodels. ${R.wholeHouse}, ${years}+ yrs, $5M insured. Free quote.`,
     },
     'whole-house/maple-ridge': {
-      title: 'Home Renovation Maple Ridge | $50K–$200K+ | Reno Stars',
-      description: `Maple Ridge home renovation — Silver Valley, Albion & Cottonwood. Kitchen, bathroom & whole-house remodels. $50K–$200K+, ${years}+ yrs, $5M insured. Free quote.`,
+      title: `Home Renovation Maple Ridge | ${R.wholeHouse} | Reno Stars`,
+      description: `Maple Ridge home renovation — Silver Valley, Albion & Cottonwood. Kitchen, bathroom & whole-house remodels. ${R.wholeHouse}, ${years}+ yrs, $5M insured. Free quote.`,
     },
     'whole-house/new-westminster': {
-      title: 'Home Renovation New Westminster | $50K–$200K+ | Reno Stars',
-      description: "New Westminster home renovation — Queen's Park heritage, Sapperton & Uptown. Kitchen, bathroom & whole-house remodels. $50K–$200K+, $5M insured. Free quote.",
+      title: `Home Renovation New Westminster | ${R.wholeHouse} | Reno Stars`,
+      description: `New Westminster home renovation — Queen's Park heritage, Sapperton & Uptown. Kitchen, bathroom & whole-house remodels. ${R.wholeHouse}, $5M insured. Free quote.`,
     },
     'whole-house/north-vancouver': {
-      title: 'Home Renovation North Vancouver | $50K–$200K+ | Reno Stars',
-      description: `North Vancouver home renovation — Lynn Valley, Lonsdale & Deep Cove. Kitchen, bathroom & whole-house remodels. $50K–$200K+, ${years}+ yrs, $5M insured. Free quote.`,
+      title: `Home Renovation North Vancouver | ${R.wholeHouse} | Reno Stars`,
+      description: `North Vancouver home renovation — Lynn Valley, Lonsdale & Deep Cove. Kitchen, bathroom & whole-house remodels. ${R.wholeHouse}, ${years}+ yrs, $5M insured. Free quote.`,
     },
     'whole-house/port-moody': {
-      title: 'Home Renovation Port Moody | $50K–$200K+ | Reno Stars',
-      description: 'Port Moody home renovation — Heritage Woods, Moody Centre & Inlet Centre. Kitchen, bathroom & whole-house remodels. $50K–$200K+, $5M insured. Free quote.',
+      title: `Home Renovation Port Moody | ${R.wholeHouse} | Reno Stars`,
+      description: `Port Moody home renovation — Heritage Woods, Moody Centre & Inlet Centre. Kitchen, bathroom & whole-house remodels. ${R.wholeHouse}, $5M insured. Free quote.`,
     },
   };
   // ZH overrides — parallel of the EN cabinet city CTR fix (commit 55f6962).
@@ -695,146 +706,146 @@ export function serviceCityOverrides(years: number | string): {
     // 2026-06-25: ZH overrides for the 28 new EN combos (kitchen/bathroom/basement/whole-house).
     'kitchen/delta': {
       title: '德尔塔厨房装修费用2026 | Reno Stars',
-      description: '德尔塔厨房装修——察瓦森、拉德纳及北德尔塔。定制橱柜、石英台面、布局重设计。费用$20K–$50K，3–5周完工。免费报价。',
+      description: `德尔塔厨房装修——察瓦森、拉德纳及北德尔塔。定制橱柜、石英台面、布局重设计。费用${R.kitchen}，3–5周完工。免费报价。`,
     },
     'kitchen/langley': {
       title: '兰里厨房装修费用2026 | Reno Stars',
-      description: '兰里厨房装修——威洛比、胡桃树林及弗雷德里克。定制及预制橱柜、石英台面。费用$20K–$35K，3–5周。免费报价。',
+      description: `兰里厨房装修——威洛比、胡桃树林及弗雷德里克。定制及预制橱柜、石英台面。费用${R.kitchen}，3–5周。免费报价。`,
     },
     'kitchen/maple-ridge': {
       title: '枫树岭厨房装修费用2026 | Reno Stars',
-      description: '枫树岭厨房装修——银谷、阿尔比恩及科顿伍德。定制橱柜、石英台面、全面布局改造。费用$22K–$50K。免费报价。',
+      description: `枫树岭厨房装修——银谷、阿尔比恩及科顿伍德。定制橱柜、石英台面、全面布局改造。费用${R.kitchen}。免费报价。`,
     },
     'kitchen/new-westminster': {
       title: '新西敏厨房装修费用2026 | Reno Stars',
-      description: '新西敏厨房装修——皇后公园历史建筑、萨帕顿及昆斯伯勒。定制橱柜、石英台面、布局重设计。费用$20K–$40K。免费报价。',
+      description: `新西敏厨房装修——皇后公园历史建筑、萨帕顿及昆斯伯勒。定制橱柜、石英台面、布局重设计。费用${R.kitchen}。免费报价。`,
     },
     'kitchen/port-coquitlam': {
       title: '高贵林港厨房装修费用2026 | Reno Stars',
-      description: '高贵林港厨房装修——山城高地、河木及西区。定制及预制橱柜、石英台面。费用$22K–$45K，3–5周完工。免费报价。',
+      description: `高贵林港厨房装修——山城高地、河木及西区。定制及预制橱柜、石英台面。费用${R.kitchen}，3–5周完工。免费报价。`,
     },
     'kitchen/port-moody': {
       title: '满地宝厨房装修费用2026 | Reno Stars',
-      description: '满地宝厨房装修——遗产林、穆迪中心及英湾口岸。定制橱柜、石英台面、全面布局改造。费用$25K–$55K。免费报价。',
+      description: `满地宝厨房装修——遗产林、穆迪中心及英湾口岸。定制橱柜、石英台面、全面布局改造。费用${R.kitchen}。免费报价。`,
     },
     'kitchen/white-rock': {
       title: '白石厨房装修费用2026 | Reno Stars',
-      description: '白石厨房装修——东滩、西滩及南素里。定制橱柜、石英台面、布局重设计。费用$16K–$46K，来自真实项目数据。免费报价。',
+      description: `白石厨房装修——东滩、西滩及南素里。定制橱柜、石英台面、布局重设计。费用${R.kitchen}，来自真实项目数据。免费报价。`,
     },
     'bathroom/coquitlam': {
       title: '高贵林浴室装修费用2026 | Reno Stars',
-      description: '高贵林浴室装修——博客山公寓、西木高原独立屋。步入式淋浴、浴缸改造、定制梳妆台。费用$14K–$35K，3–6周。免费报价。',
+      description: `高贵林浴室装修——博客山公寓、西木高原独立屋。步入式淋浴、浴缸改造、定制梳妆台。费用${R.bathroom}，3–6周。免费报价。`,
     },
     'bathroom/delta': {
       title: '德尔塔浴室装修费用2026 | Reno Stars',
-      description: '德尔塔浴室装修——察瓦森海岸、拉德纳历史建筑。步入式淋浴、泡澡浴缸、定制梳妆台。费用$15K–$35K，3–6周。免费报价。',
+      description: `德尔塔浴室装修——察瓦森海岸、拉德纳历史建筑。步入式淋浴、泡澡浴缸、定制梳妆台。费用${R.bathroom}，3–6周。免费报价。`,
     },
     'bathroom/langley': {
       title: '兰里浴室装修费用2026 | Reno Stars',
-      description: '兰里浴室装修——威洛比、胡桃树林及弗雷德里克。步入式淋浴、浴缸改造、定制瓷砖及梳妆台。费用$12K–$35K。免费报价。',
+      description: `兰里浴室装修——威洛比、胡桃树林及弗雷德里克。步入式淋浴、浴缸改造、定制瓷砖及梳妆台。费用${R.bathroom}。免费报价。`,
     },
     'bathroom/new-westminster': {
       title: '新西敏浴室装修费用2026 | Reno Stars',
-      description: '新西敏浴室装修——皇后公园、萨帕顿及昆斯伯勒。步入式淋浴、泡澡浴缸、定制梳妆台。费用$14K–$35K，3–6周。免费报价。',
+      description: `新西敏浴室装修——皇后公园、萨帕顿及昆斯伯勒。步入式淋浴、泡澡浴缸、定制梳妆台。费用${R.bathroom}，3–6周。免费报价。`,
     },
     'bathroom/port-coquitlam': {
       title: '高贵林港浴室装修费用2026 | Reno Stars',
-      description: '高贵林港浴室装修——山城高地、河木及牛津高地。步入式淋浴、浴缸改造、定制梳妆台。费用$14K–$35K。免费报价。',
+      description: `高贵林港浴室装修——山城高地、河木及牛津高地。步入式淋浴、浴缸改造、定制梳妆台。费用${R.bathroom}。免费报价。`,
     },
     'bathroom/port-moody': {
       title: '满地宝浴室装修费用2026 | Reno Stars',
-      description: '满地宝浴室装修——遗产林、穆迪中心及英湾口岸。步入式淋浴、泡澡浴缸、定制梳妆台。费用$16K–$40K，3–6周。免费报价。',
+      description: `满地宝浴室装修——遗产林、穆迪中心及英湾口岸。步入式淋浴、泡澡浴缸、定制梳妆台。费用${R.bathroom}，3–6周。免费报价。`,
     },
     'bathroom/surrey': {
       title: '素里浴室装修费用2026 | Reno Stars',
-      description: '素里浴室装修——弗利特伍德、纽顿、克洛弗代尔及南素里。步入式淋浴、浴缸改造、定制瓷砖及梳妆台。费用$14K–$40K。免费报价。',
+      description: `素里浴室装修——弗利特伍德、纽顿、克洛弗代尔及南素里。步入式淋浴、浴缸改造、定制瓷砖及梳妆台。费用${R.bathroom}。免费报价。`,
     },
     'basement/coquitlam': {
       title: '高贵林地下室装修费用2026 | Reno Stars',
-      description: '高贵林地下室装修——博客山、西木高原、马拉德维尔。收尾装修、套间改造、家庭活动室。已获许可，费用$35K–$120K+。免费报价。',
+      description: `高贵林地下室装修——博客山、西木高原、马拉德维尔。收尾装修、套间改造、家庭活动室。已获许可，费用${R.basement}。免费报价。`,
     },
     'basement/delta': {
       title: '德尔塔地下室装修费用2026 | Reno Stars',
-      description: '德尔塔地下室装修——察瓦森、拉德纳及北德尔塔。收尾装修、辅助套间改造、家庭活动室。已获许可，费用$30K–$110K+。免费报价。',
+      description: `德尔塔地下室装修——察瓦森、拉德纳及北德尔塔。收尾装修、辅助套间改造、家庭活动室。已获许可，费用${R.basement}。免费报价。`,
     },
     'basement/langley': {
       title: '兰里地下室装修费用2026 | Reno Stars',
-      description: '兰里地下室装修——威洛比、胡桃树林及弗雷德里克。收尾装修、辅助套间改造、家庭活动室。已获许可，费用$30K–$110K+。免费报价。',
+      description: `兰里地下室装修——威洛比、胡桃树林及弗雷德里克。收尾装修、辅助套间改造、家庭活动室。已获许可，费用${R.basement}。免费报价。`,
     },
     'basement/maple-ridge': {
       title: '枫树岭地下室装修费用2026 | Reno Stars',
-      description: '枫树岭地下室装修——银谷、阿尔比恩及科顿伍德。收尾装修、辅助套间改造、家庭活动室。$5M保险，费用$30K–$110K+。免费报价。',
+      description: `枫树岭地下室装修——银谷、阿尔比恩及科顿伍德。收尾装修、辅助套间改造、家庭活动室。$5M保险，费用${R.basement}。免费报价。`,
     },
     'basement/new-westminster': {
       title: '新西敏地下室装修费用2026 | Reno Stars',
-      description: '新西敏地下室装修——皇后公园历史建筑、昆斯伯勒。收尾装修、套间改造、家庭活动室。已获许可，费用$30K–$110K+。免费报价。',
+      description: `新西敏地下室装修——皇后公园历史建筑、昆斯伯勒。收尾装修、套间改造、家庭活动室。已获许可，费用${R.basement}。免费报价。`,
     },
     'basement/richmond': {
       title: '列治文地下室装修费用2026 | Reno Stars',
-      description: '列治文地下室装修——史蒂文斯顿、布里格豪斯、特拉诺瓦。收尾装修、辅助套间改造、家庭活动室。已获许可，费用$35K–$120K+。免费报价。',
+      description: `列治文地下室装修——史蒂文斯顿、布里格豪斯、特拉诺瓦。收尾装修、辅助套间改造、家庭活动室。已获许可，费用${R.basement}。免费报价。`,
     },
     'basement/west-vancouver': {
       title: '西温哥华地下室装修费用2026 | Reno Stars',
-      description: '西温哥华地下室装修——英属山庄、科尔菲尔德及敦达雷夫。酒窖、家庭影院、套间改造。豪华饰面，费用$40K–$130K+。免费报价。',
+      description: `西温哥华地下室装修——英属山庄、科尔菲尔德及敦达雷夫。酒窖、家庭影院、套间改造。豪华饰面，费用${R.basement}。免费报价。`,
     },
     'basement/white-rock': {
       title: '白石地下室装修费用2026 | Reno Stars',
-      description: '白石地下室装修——东滩、西滩及南素里。收尾装修、辅助套间改造、家庭活动室。$5M保险，费用$30K–$110K+。免费报价。',
+      description: `白石地下室装修——东滩、西滩及南素里。收尾装修、辅助套间改造、家庭活动室。$5M保险，费用${R.basement}。免费报价。`,
     },
     'whole-house/delta': {
       title: '德尔塔家居装修2026 | Reno Stars',
-      description: `德尔塔家居装修——察瓦森、拉德纳及北德尔塔。厨房、浴室及全房翻新。费用$50K–$200K+，${years}年以上经验，$5M保险。免费报价。`,
+      description: `德尔塔家居装修——察瓦森、拉德纳及北德尔塔。厨房、浴室及全房翻新。费用${R.wholeHouse}，${years}年以上经验，$5M保险。免费报价。`,
     },
     'whole-house/langley': {
       title: '兰里家居装修2026 | Reno Stars',
-      description: `兰里家居装修——威洛比、胡桃树林及弗雷德里克。厨房、浴室及全房翻新。费用$50K–$200K+，${years}年以上经验，$5M保险。免费报价。`,
+      description: `兰里家居装修——威洛比、胡桃树林及弗雷德里克。厨房、浴室及全房翻新。费用${R.wholeHouse}，${years}年以上经验，$5M保险。免费报价。`,
     },
     'whole-house/maple-ridge': {
       title: '枫树岭家居装修2026 | Reno Stars',
-      description: `枫树岭家居装修——银谷、阿尔比恩及科顿伍德。厨房、浴室及全房翻新。费用$50K–$200K+，${years}年以上经验，$5M保险。免费报价。`,
+      description: `枫树岭家居装修——银谷、阿尔比恩及科顿伍德。厨房、浴室及全房翻新。费用${R.wholeHouse}，${years}年以上经验，$5M保险。免费报价。`,
     },
     'whole-house/new-westminster': {
       title: '新西敏家居装修2026 | Reno Stars',
-      description: '新西敏家居装修——皇后公园历史建筑、萨帕顿及上城区。厨房、浴室及全房翻新。费用$50K–$200K+，$5M保险。免费报价。',
+      description: `新西敏家居装修——皇后公园历史建筑、萨帕顿及上城区。厨房、浴室及全房翻新。费用${R.wholeHouse}，$5M保险。免费报价。`,
     },
     'whole-house/north-vancouver': {
       title: '北温哥华家居装修2026 | Reno Stars',
-      description: `北温哥华家居装修——林恩谷、朗斯代尔及深湾。厨房、浴室及全房翻新。费用$50K–$200K+，${years}年以上经验，$5M保险。免费报价。`,
+      description: `北温哥华家居装修——林恩谷、朗斯代尔及深湾。厨房、浴室及全房翻新。费用${R.wholeHouse}，${years}年以上经验，$5M保险。免费报价。`,
     },
     'whole-house/port-moody': {
       title: '满地宝家居装修2026 | Reno Stars',
-      description: '满地宝家居装修——遗产林、穆迪中心及英湾口岸。厨房、浴室及全房翻新。费用$50K–$200K+，$5M保险。免费报价。',
+      description: `满地宝家居装修——遗产林、穆迪中心及英湾口岸。厨房、浴室及全房翻新。费用${R.wholeHouse}，$5M保险。免费报价。`,
     },
     // 2026-06-26: ZH overrides for remaining kitchen/bathroom/basement/whole-house city combos.
     // These 28 entries complete the full 14-city × 4-service ZH coverage.
-    'kitchen/burnaby': { title: '本拿比厨房装修费用2026 | Reno Stars', description: '本拿比厨房装修——Metrotown公寓、Heights独立屋、Capitol Hill联排。定制及预制橱柜、石英台面。费用$20K–$60K，3–5周。免费报价。' },
-    'kitchen/coquitlam': { title: '高贵林厨房装修费用2026 | Reno Stars', description: '高贵林厨房装修——博客山公寓、西木高原独立屋。定制橱柜、石英台面、全面布局改造。费用$22K–$55K，3–5周完工。免费报价。' },
-    'kitchen/north-vancouver': { title: '北温哥华厨房装修费用2026 | Reno Stars', description: '北温哥华厨房装修——林恩谷、朗斯代尔及深湾。定制橱柜、石英台面、开放式布局改造。费用$22K–$60K，3–5周完工。免费报价。' },
-    'kitchen/richmond': { title: '列治文厨房装修费用2026 | Reno Stars', description: '列治文厨房装修——史蒂文斯顿、布里格豪斯及特拉诺瓦。定制及预制橱柜、石英台面、布局重设计。费用$20K–$60K，3–5周。免费报价。' },
-    'kitchen/surrey': { title: '素里厨房装修费用2026 | Reno Stars', description: '素里厨房装修——弗利特伍德、纽顿、克洛弗代尔及南素里。定制橱柜、石英台面、全面布局改造。费用$20K–$55K，3–5周。免费报价。' },
-    'kitchen/vancouver': { title: '温哥华厨房装修费用2026 | Reno Stars', description: '温哥华厨房装修——基斯兰奴、芒特普莱森特、邓巴及市中心公寓。定制橱柜、石英台面、布局重设计。费用$25K–$72K。免费报价。' },
-    'kitchen/west-vancouver': { title: '西温哥华厨房装修费用2026 | Reno Stars', description: '西温哥华厨房装修——敦达雷夫、安布尔赛德及英属山庄。高端定制橱柜、石英及大理石台面。费用$30K–$80K。免费报价。' },
-    'bathroom/burnaby': { title: '本拿比浴室装修费用2026 | Reno Stars', description: '本拿比浴室装修——Metrotown、Heights、Capitol Hill。步入式淋浴、浴缸改造、定制梳妆台。费用$15K–$45K，3–6周完工。免费报价。' },
-    'bathroom/maple-ridge': { title: '枫树岭浴室装修费用2026 | Reno Stars', description: '枫树岭浴室装修——银谷、阿尔比恩及科顿伍德。步入式淋浴、自定义玻璃淋浴屏、定制梳妆台。费用$15K–$35K。免费报价。' },
-    'bathroom/north-vancouver': { title: '北温哥华浴室装修费用2026 | Reno Stars', description: '北温哥华浴室装修——林恩谷、朗斯代尔及深湾。步入式淋浴、泡澡浴缸、定制梳妆台。费用$15K–$45K，3–6周。免费报价。' },
-    'bathroom/richmond': { title: '列治文浴室装修费用2026 | Reno Stars', description: '列治文浴室装修——史蒂文斯顿、布里格豪斯及特拉诺瓦。步入式淋浴、浴缸改造、定制瓷砖及梳妆台。费用$15K–$45K。免费报价。' },
-    'bathroom/vancouver': { title: '温哥华浴室翻新费用2026 | Reno Stars', description: `温哥华浴室翻新——从$15K–$45K。步入式淋浴、浴缸改造、定制梳妆台。3–6周，${years}年以上经验，$5M保险，3年质保。免费报价。` },
-    'bathroom/west-vancouver': { title: '西温哥华浴室装修费用2026 | Reno Stars', description: '西温哥华浴室装修——安布尔赛德、英属山庄及科尔菲尔德。无门槛淋浴、高端瓷砖、定制梳妆台。费用$20K–$60K，3–6周。免费报价。' },
-    'bathroom/white-rock': { title: '白石浴室装修费用2026 | Reno Stars', description: '白石及南素里浴室装修——步入式淋浴、泡澡浴缸、定制梳妆台。费用$14K–$40K，3–6周。$5M保险。免费报价。' },
-    'basement/burnaby': { title: '本拿比地下室装修费用2026 | Reno Stars', description: '本拿比地下室装修——Metrotown、Heights、Capitol Hill。收尾装修、辅助套间改造、家庭活动室。已获许可，费用$35K–$120K+。免费报价。' },
-    'basement/north-vancouver': { title: '北温哥华地下室装修费用2026 | Reno Stars', description: '北温哥华地下室装修——林恩谷、朗斯代尔及深湾。收尾装修、辅助套间改造、坡地特有防水。$5M保险，费用$35K–$130K+。免费报价。' },
-    'basement/port-coquitlam': { title: '高贵林港地下室装修费用2026 | Reno Stars', description: '高贵林港地下室装修——山城高地、河木及牛津高地。收尾装修、辅助套间改造、家庭活动室。已获许可，费用$30K–$120K+。免费报价。' },
-    'basement/port-moody': { title: '满地宝地下室装修费用2026 | Reno Stars', description: '满地宝地下室装修——遗产林、穆迪中心及英湾口岸。收尾装修、辅助套间改造、家庭影院。$5M保险，费用$30K–$120K+。免费报价。' },
-    'basement/surrey': { title: '素里地下室装修费用2026 | Reno Stars', description: '素里地下室装修——弗利特伍德、纽顿、克洛弗代尔及南素里。收尾装修、辅助套间改造、家庭活动室。已获许可，费用$30K–$115K+。免费报价。' },
-    'basement/vancouver': { title: '温哥华地下室装修费用2026 | Reno Stars', description: '温哥华地下室装修——收尾装修、套间改造、家庭活动室。基斯兰奴至基拉尼。符合出行规范，费用$30K–$120K+，来自真实项目数据。免费报价。' },
-    'whole-house/burnaby': { title: '本拿比全屋装修2026 | Reno Stars', description: `本拿比全屋装修——Heights独立屋、Metrotown联排、Capitol Hill住宅。符合分层规定。费用$50K–$200K+，${years}年以上经验，$5M保险。免费报价。` },
-    'whole-house/coquitlam': { title: '高贵林全屋装修2026 | Reno Stars', description: '高贵林全屋装修——博客山公寓、西木高原独立屋。厨房、浴室及全房翻新。费用$50K–$200K+，$5M保险。免费报价。' },
-    'whole-house/port-coquitlam': { title: '高贵林港全屋装修2026 | Reno Stars', description: '高贵林港全屋装修——山城高地、河木及牛津高地。厨房、浴室及全房翻新。费用$50K–$200K+，$5M保险。免费报价。' },
-    'whole-house/richmond': { title: '列治文全屋装修2026 | Reno Stars', description: `列治文全屋装修——史蒂文斯顿历史建筑、布里格豪斯公寓、特拉诺瓦独立屋。费用$50K–$200K+，${years}年以上经验，$5M保险，3年质保。免费报价。` },
-    'whole-house/surrey': { title: '素里全屋装修2026 | Reno Stars', description: '素里全屋装修——弗利特伍德、纽顿、克洛弗代尔及南素里。独立屋及辅助套间。费用$50K–$200K+，$5M保险。免费报价。' },
-    'whole-house/vancouver': { title: '温哥华全屋装修2026 | Reno Stars', description: '温哥华全屋装修——基斯兰奴、芒特普莱森特、邓巴独立屋及市中心公寓。厨房、浴室及全房翻新。费用$60K–$300K+。免费报价。' },
-    'whole-house/west-vancouver': { title: '西温哥华全屋装修2026 | Reno Stars', description: '西温哥华全屋装修——英属山庄、科尔菲尔德及敦达雷夫。高端定制翻新，豪华饰面。费用$80K–$350K+，$5M保险。免费报价。' },
-    'whole-house/white-rock': { title: '白石全屋装修2026 | Reno Stars', description: '白石及南素里全屋装修——东滩、西滩独立屋。厨房、浴室及全房翻新。费用$50K–$200K+，$5M保险。免费报价。' },
+    'kitchen/burnaby': { title: '本拿比厨房装修费用2026 | Reno Stars', description: `本拿比厨房装修——Metrotown公寓、Heights独立屋、Capitol Hill联排。定制及预制橱柜、石英台面。费用${R.kitchen}，3–5周。免费报价。` },
+    'kitchen/coquitlam': { title: '高贵林厨房装修费用2026 | Reno Stars', description: `高贵林厨房装修——博客山公寓、西木高原独立屋。定制橱柜、石英台面、全面布局改造。费用${R.kitchen}，3–5周完工。免费报价。` },
+    'kitchen/north-vancouver': { title: '北温哥华厨房装修费用2026 | Reno Stars', description: `北温哥华厨房装修——林恩谷、朗斯代尔及深湾。定制橱柜、石英台面、开放式布局改造。费用${R.kitchen}，3–5周完工。免费报价。` },
+    'kitchen/richmond': { title: '列治文厨房装修费用2026 | Reno Stars', description: `列治文厨房装修——史蒂文斯顿、布里格豪斯及特拉诺瓦。定制及预制橱柜、石英台面、布局重设计。费用${R.kitchen}，3–5周。免费报价。` },
+    'kitchen/surrey': { title: '素里厨房装修费用2026 | Reno Stars', description: `素里厨房装修——弗利特伍德、纽顿、克洛弗代尔及南素里。定制橱柜、石英台面、全面布局改造。费用${R.kitchen}，3–5周。免费报价。` },
+    'kitchen/vancouver': { title: '温哥华厨房装修费用2026 | Reno Stars', description: `温哥华厨房装修——基斯兰奴、芒特普莱森特、邓巴及市中心公寓。定制橱柜、石英台面、布局重设计。费用${R.kitchen}。免费报价。` },
+    'kitchen/west-vancouver': { title: '西温哥华厨房装修费用2026 | Reno Stars', description: `西温哥华厨房装修——敦达雷夫、安布尔赛德及英属山庄。高端定制橱柜、石英及大理石台面。费用${R.kitchen}。免费报价。` },
+    'bathroom/burnaby': { title: '本拿比浴室装修费用2026 | Reno Stars', description: `本拿比浴室装修——Metrotown、Heights、Capitol Hill。步入式淋浴、浴缸改造、定制梳妆台。费用${R.bathroom}，3–6周完工。免费报价。` },
+    'bathroom/maple-ridge': { title: '枫树岭浴室装修费用2026 | Reno Stars', description: `枫树岭浴室装修——银谷、阿尔比恩及科顿伍德。步入式淋浴、自定义玻璃淋浴屏、定制梳妆台。费用${R.bathroom}。免费报价。` },
+    'bathroom/north-vancouver': { title: '北温哥华浴室装修费用2026 | Reno Stars', description: `北温哥华浴室装修——林恩谷、朗斯代尔及深湾。步入式淋浴、泡澡浴缸、定制梳妆台。费用${R.bathroom}，3–6周。免费报价。` },
+    'bathroom/richmond': { title: '列治文浴室装修费用2026 | Reno Stars', description: `列治文浴室装修——史蒂文斯顿、布里格豪斯及特拉诺瓦。步入式淋浴、浴缸改造、定制瓷砖及梳妆台。费用${R.bathroom}。免费报价。` },
+    'bathroom/vancouver': { title: '温哥华浴室翻新费用2026 | Reno Stars', description: `温哥华浴室翻新——从${R.bathroom}。步入式淋浴、浴缸改造、定制梳妆台。3–6周，${years}年以上经验，$5M保险，3年质保。免费报价。` },
+    'bathroom/west-vancouver': { title: '西温哥华浴室装修费用2026 | Reno Stars', description: `西温哥华浴室装修——安布尔赛德、英属山庄及科尔菲尔德。无门槛淋浴、高端瓷砖、定制梳妆台。费用${R.bathroom}，3–6周。免费报价。` },
+    'bathroom/white-rock': { title: '白石浴室装修费用2026 | Reno Stars', description: `白石及南素里浴室装修——步入式淋浴、泡澡浴缸、定制梳妆台。费用${R.bathroom}，3–6周。$5M保险。免费报价。` },
+    'basement/burnaby': { title: '本拿比地下室装修费用2026 | Reno Stars', description: `本拿比地下室装修——Metrotown、Heights、Capitol Hill。收尾装修、辅助套间改造、家庭活动室。已获许可，费用${R.basement}。免费报价。` },
+    'basement/north-vancouver': { title: '北温哥华地下室装修费用2026 | Reno Stars', description: `北温哥华地下室装修——林恩谷、朗斯代尔及深湾。收尾装修、辅助套间改造、坡地特有防水。$5M保险，费用${R.basement}。免费报价。` },
+    'basement/port-coquitlam': { title: '高贵林港地下室装修费用2026 | Reno Stars', description: `高贵林港地下室装修——山城高地、河木及牛津高地。收尾装修、辅助套间改造、家庭活动室。已获许可，费用${R.basement}。免费报价。` },
+    'basement/port-moody': { title: '满地宝地下室装修费用2026 | Reno Stars', description: `满地宝地下室装修——遗产林、穆迪中心及英湾口岸。收尾装修、辅助套间改造、家庭影院。$5M保险，费用${R.basement}。免费报价。` },
+    'basement/surrey': { title: '素里地下室装修费用2026 | Reno Stars', description: `素里地下室装修——弗利特伍德、纽顿、克洛弗代尔及南素里。收尾装修、辅助套间改造、家庭活动室。已获许可，费用${R.basement}。免费报价。` },
+    'basement/vancouver': { title: '温哥华地下室装修费用2026 | Reno Stars', description: `温哥华地下室装修——收尾装修、套间改造、家庭活动室。基斯兰奴至基拉尼。符合出行规范，费用${R.basement}，来自真实项目数据。免费报价。` },
+    'whole-house/burnaby': { title: '本拿比全屋装修2026 | Reno Stars', description: `本拿比全屋装修——Heights独立屋、Metrotown联排、Capitol Hill住宅。符合分层规定。费用${R.wholeHouse}，${years}年以上经验，$5M保险。免费报价。` },
+    'whole-house/coquitlam': { title: '高贵林全屋装修2026 | Reno Stars', description: `高贵林全屋装修——博客山公寓、西木高原独立屋。厨房、浴室及全房翻新。费用${R.wholeHouse}，$5M保险。免费报价。` },
+    'whole-house/port-coquitlam': { title: '高贵林港全屋装修2026 | Reno Stars', description: `高贵林港全屋装修——山城高地、河木及牛津高地。厨房、浴室及全房翻新。费用${R.wholeHouse}，$5M保险。免费报价。` },
+    'whole-house/richmond': { title: '列治文全屋装修2026 | Reno Stars', description: `列治文全屋装修——史蒂文斯顿历史建筑、布里格豪斯公寓、特拉诺瓦独立屋。费用${R.wholeHouse}，${years}年以上经验，$5M保险，3年质保。免费报价。` },
+    'whole-house/surrey': { title: '素里全屋装修2026 | Reno Stars', description: `素里全屋装修——弗利特伍德、纽顿、克洛弗代尔及南素里。独立屋及辅助套间。费用${R.wholeHouse}，$5M保险。免费报价。` },
+    'whole-house/vancouver': { title: '温哥华全屋装修2026 | Reno Stars', description: `温哥华全屋装修——基斯兰奴、芒特普莱森特、邓巴独立屋及市中心公寓。厨房、浴室及全房翻新。费用${R.wholeHouse}。免费报价。` },
+    'whole-house/west-vancouver': { title: '西温哥华全屋装修2026 | Reno Stars', description: `西温哥华全屋装修——英属山庄、科尔菲尔德及敦达雷夫。高端定制翻新，豪华饰面。费用${R.wholeHouse}，$5M保险。免费报价。` },
+    'whole-house/white-rock': { title: '白石全屋装修2026 | Reno Stars', description: `白石及南素里全屋装修——东滩、西滩独立屋。厨房、浴室及全房翻新。费用${R.wholeHouse}，$5M保险。免费报价。` },
     // 2026-06-25: ZH for cabinet remaining 10 cities.
     'cabinet/burnaby': { title: '本拿比厨柜翻新喷漆 | $1.5K–$15K | Reno Stars', description: '本拿比厨柜翻新——Metrotown、Heights、Capitol Hill。喷漆$1.5K起，门板更换$4K+，整体翻新$8–$15K。免费报价。' },
     'cabinet/coquitlam': { title: '高贵林厨柜翻新喷漆 | $1.5K–$15K | Reno Stars', description: '高贵林厨柜翻新——博客山、西木高原、马拉德维尔。喷漆$1.5K起，门板更换$4K+，整体翻新$8–$15K。免费报价。' },

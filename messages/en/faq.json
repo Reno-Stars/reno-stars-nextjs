@@ -4,7 +4,7 @@
       "q1": "How long does a kitchen renovation typically take?",
       "a1": "A typical kitchen renovation takes 4-8 weeks depending on the scope. Simple updates like cabinet refacing may take 1-2 weeks, while complete gut renovations with custom cabinetry can take 8-12 weeks.",
       "q2": "What is the average cost of a kitchen renovation in {area}?",
-      "a2": "Kitchen renovations in {area} typically range from $15,000 to $75,000+ depending on size and finishes. We provide free detailed quotes after an in-home consultation.",
+      "a2": "Kitchen renovations in {area} typically cost {kitchenRangeLong} depending on size and finishes. We provide free detailed quotes after an in-home consultation.",
       "q3": "Do I need permits for my kitchen renovation?",
       "a3": "Permits are required for electrical, plumbing, and structural changes. We handle all permit applications and ensure your renovation meets {area} building codes."
     },

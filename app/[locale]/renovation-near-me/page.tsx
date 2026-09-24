@@ -7,6 +7,7 @@ import { getBaseUrl, buildAlternates, buildOgImageUrl, SITE_NAME, buildAlternate
 import { getServiceAreasFromDb, getCompanyFromDb } from '@/lib/db/queries';
 import { getGoogleReviews } from '@/lib/google-reviews';
 import ClientMessages from '@/components/ClientMessages';
+import { formatBand, spanRange, RESIDENTIAL_SPAN } from '@/lib/pricing';
 
 interface PageProps {
   params: Promise<{ locale: string }>;
@@ -16,8 +17,9 @@ interface PageProps {
 // ServiceSchema serviceDescription and the ServiceSchema priceRange prop so the
 // two can never drift. The trailing "+" is a display convention (open-ended
 // top), not a number. Do NOT re-type the band inline.
-const PRICE_RANGE = { min: 10000, max: 200000 } as const;
-const PRICE_BAND = `$${PRICE_RANGE.min / 1000}K-$${PRICE_RANGE.max / 1000}K+`;
+const PRICE_SPAN = spanRange(RESIDENTIAL_SPAN);
+const PRICE_RANGE = { min: PRICE_SPAN.min, max: PRICE_SPAN.max };
+const PRICE_BAND = formatBand(PRICE_SPAN);
 
 // Unlike the room-specific near-me pages, this umbrella page IS self-canonical
 // (it keeps its hreflang cluster). Single source for the path so the declared

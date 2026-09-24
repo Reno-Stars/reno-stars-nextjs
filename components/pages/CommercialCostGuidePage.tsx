@@ -17,6 +17,7 @@ import {
   STEP_TEAL, STEP_TEAL_LIGHT, STEP_ORANGE, STEP_ORANGE_LIGHT,
   STEP_GREEN, STEP_GREEN_LIGHT,
 } from '@/lib/theme';
+import { formatPriceTier } from '@/lib/pricing';
 
 interface CommercialCostGuidePageProps {
   locale: Locale;
@@ -49,9 +50,9 @@ export default function CommercialCostGuidePage({ locale, projects, phone, share
   }, [projects]);
 
   const costTiers = [
-    { key: 'budget', icon: DollarSign, accent: STEP_GREEN, accentLight: STEP_GREEN_LIGHT, range: '$50,000 – $150,000' },
-    { key: 'midRange', icon: Building2, accent: STEP_TEAL, accentLight: STEP_TEAL_LIGHT, range: '$150,000 – $400,000' },
-    { key: 'highEnd', icon: TrendingUp, accent: STEP_ORANGE, accentLight: STEP_ORANGE_LIGHT, range: '$400,000 – $1,000,000+' },
+    { key: 'budget', icon: DollarSign, accent: STEP_GREEN, accentLight: STEP_GREEN_LIGHT, range: formatPriceTier('commercial', 'budget', 'long') },
+    { key: 'midRange', icon: Building2, accent: STEP_TEAL, accentLight: STEP_TEAL_LIGHT, range: formatPriceTier('commercial', 'mid', 'long') },
+    { key: 'highEnd', icon: TrendingUp, accent: STEP_ORANGE, accentLight: STEP_ORANGE_LIGHT, range: formatPriceTier('commercial', 'high', 'long') },
   ];
 
   const costFactors = [

@@ -4,6 +4,7 @@ import { parse, TYPE, type MessageFormatElement } from '@formatjs/icu-messagefor
 import { locales, defaultLocale } from '@/i18n/config';
 import { namespaces } from '@/i18n/namespaces';
 import { guideSections } from '@/i18n/guideSections';
+import { priceTokens } from '@/lib/pricing';
 
 // Every message must COMPILE as ICU, and must take the same arguments as its EN
 // source. Both halves matter and neither is cosmetic.
@@ -59,6 +60,12 @@ function stringLeaves(node: unknown, prefix = '', into: Array<[string, string]> 
   return into;
 }
 
+// Price tokens ({kitchenRange}, …) are resolved by i18n/request.ts from
+// lib/pricing.ts, not passed by callers, so a translation MAY carry one its EN
+// source lacks (e.g. zh titles that state a price the EN title omits). A price
+// token EN has is still required — dropping it would drop the price.
+const PRICE_TOKENS = new Set(Object.keys(priceTokens()));
+
 const RELS = [...namespaces, ...guideSections.map((g) => `guides/${g}`)];
 
 describe('ICU validity — every message compiles', () => {
@@ -103,7 +110,7 @@ describe('ICU arguments match EN', () => {
         }
 
         const missing = [...expected].filter((a) => !actual.has(a));
-        const extra = [...actual].filter((a) => !expected.has(a));
+        const extra = [...actual].filter((a) => !expected.has(a) && !PRICE_TOKENS.has(a));
         if (missing.length || extra.length) {
           mismatches.push(
             `${rel}: ${key} — expected {${[...expected].join(',')}} got {${[...actual].join(',')}}`,
