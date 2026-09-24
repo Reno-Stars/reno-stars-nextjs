@@ -15,12 +15,12 @@
       "description": "溫哥華大都會地區 100 多個真實的改造項目 - 前後照片、實際成本、時間表。廚房、衛浴、地下室、全屋。"
     },
     "projectsBudget": {
-      "title": "溫哥華 | {tier} 裝修工程Reno Stars",
+      "title": "溫哥華 | {tier} 裝修工程聚星裝修",
       "description": "溫哥華大都會區真實的{tier}裝潢工程 — 實際造價、前後對比照片與完整工期記錄。可依廚房、浴室、地下室或全屋篩選。"
     },
     "contact": {
       "title": "聯絡 Reno Stars — 免費報價 |溫哥華 778-960-7999",
-      "description": "透過 Reno Stars 預訂免費裝修報價——溫哥華大都會區的廚房、浴室、地下室和整棟房子。請致電 778-960-7999 或線上請求。 24小時內回覆。"
+      "description": "透過聚星裝修預訂免費裝修報價——溫哥華大都會區的廚房、浴室、地下室和整棟房子。請致電 778-960-7999 或線上請求。 24小時內回覆。"
     },
     "blog": {
       "title": "裝修技巧和成本指南|溫哥華 |Reno Stars 博客",
@@ -28,7 +28,7 @@
     },
     "benefits": {
       "title": "Why Choose Reno Stars | 五星評論, $5M Insured",
-      "description": "Google 五星評論、500 萬加元的 CGL 保險、有效的 WCB 保險。透明的報價和反應靈敏的團隊。了解為什麼溫哥華房主信任 Reno Stars。"
+      "description": "Google 五星評論、500 萬加元的 CGL 保險、有效的 WCB 保險。透明的報價和反應靈敏的團隊。了解為什麼溫哥華房主信任聚星裝修。"
     },
     "design": {
       "title": "溫哥華裝潢設計圖庫 | 聚星裝修 Reno Stars",
@@ -44,11 +44,11 @@
     "serviceLocation": {
       "title": "{service}的{area} |Reno Stars",
       "titleWithTagline": "{service}的{area} – {tagline} |Reno Stars",
-      "description": "Reno Stars為{area}提供專業{service}服務——{years}+年經驗、500萬加元CGL保險、有效WCB保險、最長3年保固。今天免費報價。"
+      "description": "聚星裝修為{area}提供專業{service}服務——{years}+年經驗、500萬加元CGL保險、有效WCB保險、最長3年保固。今天免費報價。"
     },
     "areas": {
       "title": "您附近的裝潢 | 17 個大溫哥華地區 |Reno Stars",
-      "description": "Reno Stars 為大溫哥華地區和弗雷澤河谷的 17 個社區提供服務。尋找您所在城市的裝修服務並獲得免費報價。"
+      "description": "聚星裝修為大溫哥華地區和弗雷澤河谷的 17 個社區提供服務。尋找您所在城市的裝修服務並獲得免費報價。"
     },
     "area": {
       "title": "{area} 裝修承包商 | 聚星裝修 Reno Stars",
@@ -59,7 +59,7 @@
       "description": "您的留言已收到。我們會盡快回覆您。"
     },
     "process": {
-      "title": "裝潢工作流程：5 步驟 |溫哥華Reno Stars",
+      "title": "裝潢工作流程：5 步驟 |溫哥華聚星裝修",
       "description": "了解我們簡化的 5 步驟翻新工作流程。從初步諮詢到專案移交，我們讓您的裝修之旅簡單無憂。"
     },
     "showroom": {
@@ -79,7 +79,7 @@
       },
       "bathroomCost": {
         "title": "2026 年溫哥華浴室裝潢成本：$10K–$60K |Reno Stars",
-        "description": "溫哥華浴室裝修費用：翻新$10K–$20K，中檔$20K–$35K，高級$40K+。浴缸、廁所和梳妝台翻新費用——19 個 2026 年真實項目。"
+        "description": "溫哥華浴室裝修費用：翻新$10K–$20K，中檔$20K–$35K，高級$40K+。浴缸、廁所和浴室櫃翻新費用——19 個 2026 年真實項目。"
       },
       "cabinetCost": {
         "title": "2026 溫哥華櫥櫃整修成本：$4K–$15K 真實數據",
@@ -112,7 +112,7 @@
     },
     "reviews": {
       "title": "聚星裝修 Reno Stars 評價 — 溫哥華裝修公司客戶評價",
-      "description": "來自溫哥華真實房主的經過驗證的 Google 五星級評級 - 廚房、浴室和全屋翻新。了解為什麼大溫哥華家庭信任 Reno Stars。"
+      "description": "來自溫哥華真實房主的經過驗證的 Google 五星級評級 - 廚房、浴室和全屋翻新。了解為什麼大溫哥華家庭信任聚星裝修。"
     },
     "financing": {
       "title": "裝修融資和預算指南|溫哥華",
@@ -124,7 +124,7 @@
     },
     "features": {
       "title": "$500萬保險・3年保固 | 聚星裝修 Reno Stars",
-      "description": "Reno Stars 的與眾不同之處在於：500 萬加元的 CGL 保險、WCB 保險、3 年工藝保固、雙語團隊、五星級 Google 評論。溫哥華。"
+      "description": "聚星裝修的與眾不同之處在於：500 萬加元的 CGL 保險、WCB 保險、3 年工藝保固、雙語團隊、五星級 Google 評論。溫哥華。"
     },
     "nearMe": {
       "title": "我附近的家居裝修 |溫哥華地鐵 |Reno Stars",
