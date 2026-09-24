@@ -1,10 +1,11 @@
-import type { Company, GoogleReview, SocialLink, ServiceArea } from '@/lib/types';
+import type { Company, SocialLink, ServiceArea } from '@/lib/types';
 import { e164 } from '@/lib/phone';
 import JsonLd from './JsonLd';
-import { SCHEMA_AVAILABLE_LANGUAGES, type Locale } from '@/i18n/config';
+import { SCHEMA_AVAILABLE_LANGUAGES } from '@/i18n/config';
 import { getBaseUrl } from '@/lib/utils';
 import { parseAddress } from './parse-address';
 import { COMPANY_STATS, OPENING_HOURS, BRAND_ALTERNATE_NAMES } from '@/lib/company-config';
+import { organizationId } from './ids';
 
 const BASE_URL = getBaseUrl();
 
@@ -13,37 +14,33 @@ const BASE_URL = getBaseUrl();
 // describes the same business MUST NOT reuse `@id: ${BASE_URL}/#organization`,
 // or Google will merge nodes by @id and flag conflicts (e.g. "Review has
 // multiple aggregate ratings"). Page-level schemas should reference this node
-// via `{ "@id": "${BASE_URL}/#organization" }` instead of redeclaring it.
+// via `organizationRef()` from ./ids instead of redeclaring it.
 interface LocalBusinessSchemaProps {
   company: Company;
   socialLinks: SocialLink[];
   areas: ServiceArea[];
   googleRating?: number;
   googleReviewCount?: number;
-  reviews?: GoogleReview[];
   /** Pre-resolved localized business description from layout's loaded
    *  i18n messages. When omitted we fall back to an EN string so the
    *  schema remains valid even on pages that haven't wired this up. */
   description?: string;
-  /** Page locale. When supplied, each Review's `reviewBody` is rendered
-   *  in the matching locale via `review.translations?.[locale] ?? review.text`,
-   *  keeping structured-data review text consistent with the visible
-   *  testimonials marquee (PR #83 schema + Stage 2 read-path). Optional —
-   *  when omitted, the EN source text is emitted. */
-  locale?: Locale;
 }
 
-export default function LocalBusinessSchema({ company, socialLinks, areas, googleRating, googleReviewCount, reviews, description, locale }: LocalBusinessSchemaProps): React.ReactElement {
+export default function LocalBusinessSchema({ company, socialLinks, areas, googleRating, googleReviewCount, description }: LocalBusinessSchemaProps): React.ReactElement {
   const addressParts = parseAddress(company.address);
 
-  // Google requires an aggregateRating on any node that carries one or more
-  // Review objects — otherwise GSC flags "Multiple reviews without
-  // aggregateRating object" (WNC-10030322, 2026-06-17). The two blocks below
-  // MUST stay coupled to this single flag: never emit `review[]` without
-  // `aggregateRating`. This guards against the upstream Places API returning
-  // reviews with a zeroed rating/count (lib/google-reviews.ts makes two
-  // independent requests — if MOST_RELEVANT fails but NEWEST succeeds, the
-  // result is `{ rating: 0, userRatingCount: 0, reviews: [...] }`).
+  // aggregateRating is emitted ONLY here — never on Service / Project /
+  // area nodes — so a page carries one rating for the one business. Its
+  // source is the Google Business Profile (Places API). Google does not show
+  // review stars for a LocalBusiness/Organization about itself ("self-serving
+  // reviews", Sept 2019), so this is an entity signal only, not a rich-result
+  // play. Omitted when the Places fetch returned a zeroed rating/count.
+  //
+  // `review[]` is deliberately NOT emitted: those are Google Maps reviews,
+  // i.e. collected by a third party, and Google's review-snippet policy
+  // disallows marking up reviews the business did not collect itself
+  // (removed 2026-09-24). The visible testimonials marquee is unaffected.
   const hasAggregateRating = Boolean(googleRating && googleReviewCount);
 
   const schema = {
@@ -53,7 +50,7 @@ export default function LocalBusinessSchema({ company, socialLinks, areas, googl
     // satisfying literal @type checks for "Organization" and "LocalBusiness"
     // without duplicating the entity into separate nodes.
     '@type': ['Organization', 'LocalBusiness', 'HomeAndConstructionBusiness'],
-    '@id': `${BASE_URL}/#organization`,
+    '@id': organizationId(),
     // NOTE: inLanguage is intentionally NOT set here. It is a CreativeWork
     // property and is invalid on Organization/LocalBusiness nodes (Semrush
     // and Google Rich Results flag it as an unknown property). Document
@@ -106,30 +103,6 @@ export default function LocalBusinessSchema({ company, socialLinks, areas, googl
         ratingCount: googleReviewCount,
         reviewCount: googleReviewCount,
       },
-    }),
-    // Gated on hasAggregateRating (NOT just reviews.length) so the review
-    // array is never emitted without the aggregateRating above it.
-    ...(hasAggregateRating && reviews && reviews.length > 0 && {
-      review: reviews.map((r) => ({
-        '@type': 'Review',
-        author: {
-          '@type': 'Person',
-          name: r.authorName,
-          ...(r.authorUri && { url: r.authorUri }),
-        },
-        reviewRating: {
-          '@type': 'Rating',
-          ratingValue: r.rating,
-          bestRating: 5,
-          worstRating: 1,
-        },
-        // reviewBody follows the visible testimonial text: use the locale
-        // translation when available, fall back to the EN source. Keeps the
-        // JSON-LD locale-consistent with the rendered marquee on each
-        // /[locale]/* path. translations map is populated by pnpm reviews:cache.
-        reviewBody: (locale && r.translations?.[locale]) ?? r.text,
-        ...(r.publishTime && { datePublished: r.publishTime }),
-      })),
     }),
     description: description
       ?? `Professional home renovation services in Metro Vancouver. Kitchen, bathroom, whole house renovations. Licensed, insured with ${company.liabilityCoverage} CGL insurance, active WCB coverage, and up to ${COMPANY_STATS.warrantyYears} years warranty.`,

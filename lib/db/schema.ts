@@ -425,7 +425,7 @@ export const projects = pgTable(
     createdAt: timestamp('created_at').defaultNow().notNull(),
     updatedAt: timestamp('updated_at').defaultNow().notNull(),
   localizations: jsonb('localizations').$type<Record<string, string>>().default({}).notNull(),
-  // Dynamic content blocks — rich content + auto-emit FAQ/HowTo/ItemList JSON-LD
+  // Dynamic content blocks — rich content + auto-emit FAQ/ItemList JSON-LD
   // See lib/blocks/types.ts for the Block discriminated union and
   // components/blocks/BlockRenderer.tsx for the renderer.
   dynamicBlocks: jsonb('dynamic_blocks').$type<unknown[]>().default([]).notNull(),

@@ -13,7 +13,7 @@ interface BreadcrumbSchemaProps {
    * compatibility but intentionally NOT emitted into the JSON-LD.
    *
    * History: a prior commit added `inLanguage` here, copying the
-   * FAQSchema/HowToSchema/ArticleSchema pattern. That was a mistake —
+   * FAQSchema/ArticleSchema (and since-removed HowTo) pattern. That was a mistake —
    * `inLanguage` is a property of `CreativeWork`, but `BreadcrumbList`
    * is an `ItemList`/`Intangible`, so `inLanguage` is NOT a recognized
    * property on it. Google silently ignores it (it derives breadcrumb

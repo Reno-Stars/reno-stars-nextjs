@@ -1,5 +1,6 @@
 import type { Company } from '@/lib/types';
 import JsonLd from './JsonLd';
+import { articleAuthor } from './ids';
 import { getBaseUrl } from '@/lib/utils';
 
 interface ArticleJsonLdProps {
@@ -43,7 +44,6 @@ export default function ArticleJsonLd({
   locale,
   keywords,
 }: ArticleJsonLdProps): React.ReactElement {
-  const resolvedAuthorName = authorName ?? `${company.name} Team`;
   const baseUrl = getBaseUrl();
   const absoluteUrl = `${baseUrl}${url}`;
 
@@ -55,12 +55,8 @@ export default function ArticleJsonLd({
     url: absoluteUrl,
     ...(datePublished && { datePublished }),
     ...(dateModified && { dateModified }),
-    author: {
-      '@type': authorName ? 'Person' : 'Organization',
-      ...(authorName
-        ? { name: authorName }
-        : { name: resolvedAuthorName, url: baseUrl }),
-    },
+    // Team byline -> the Organization (by @id), a real byline -> Person.
+    author: articleAuthor(authorName, company.name),
     publisher: {
       '@type': 'Organization',
       name: company.name,

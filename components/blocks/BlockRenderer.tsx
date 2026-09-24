@@ -17,7 +17,7 @@ interface BlockRendererProps {
  * Picks EN/ZH per locale, renders bilingual blocks as proper semantic HTML
  * (headings, paragraphs, lists, etc.) so screen readers and Google can
  * parse the content. Pair with `lib/blocks/json-ld.ts` to also emit
- * structured-data JSON-LD for FAQ/HowTo/ItemList blocks.
+ * structured-data JSON-LD for FAQ/ItemList blocks.
  */
 export default function BlockRenderer({ blocks, locale }: BlockRendererProps) {
   if (!blocks || blocks.length === 0) return null;

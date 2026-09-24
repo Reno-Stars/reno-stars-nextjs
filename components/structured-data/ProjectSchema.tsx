@@ -17,8 +17,6 @@ interface ProjectSchemaProps {
   location?: string;
   serviceType?: string;
   url: string;
-  googleRating?: number;
-  googleReviewCount?: number;
   duration?: string;
   budgetRange?: string;
   spaceType?: string;
@@ -26,13 +24,13 @@ interface ProjectSchemaProps {
    *  Schema.org `inLanguage` on the WebPage node so Google can match
    *  the project page to localized SERPs. Extends the i18n-aware
    *  schema cluster shipped earlier on this daily branch (FAQ, Article,
-   *  HowTo, Breadcrumb, ContactPage, LocalBusiness). Optional for
+   *  Breadcrumb, ContactPage, LocalBusiness). Optional for
    *  backwards compatibility — 2 in-tree callers updated in same commit. */
   locale?: string;
   /** Verified client reviews linked to THIS project (project_reviews table).
    *  Emitted as Schema.org Review objects on the mainEntity Service. No
-   *  aggregateRating is derived from these — the provider keeps the
-   *  business-wide Google aggregate it already carried. */
+   *  aggregateRating is derived from these, and the provider carries none
+   *  either — the one business-wide rating lives on the layout Organization. */
   reviews?: ProjectReviewDisplay[];
 }
 
@@ -45,8 +43,6 @@ export default function ProjectSchema({
   location,
   serviceType,
   url,
-  googleRating,
-  googleReviewCount,
   duration,
   budgetRange,
   spaceType,
@@ -111,16 +107,9 @@ export default function ProjectSchema({
         addressCountry: 'CA',
       },
     }),
-    ...(googleRating && googleReviewCount && {
-      aggregateRating: {
-        '@type': 'AggregateRating',
-        ratingValue: googleRating,
-        bestRating: 5,
-        worstRating: 1,
-        ratingCount: googleReviewCount,
-        reviewCount: googleReviewCount,
-      },
-    }),
+    // No aggregateRating: the business-wide Google rating is emitted once, on
+    // the layout Organization (LocalBusinessSchema). Repeating it here gave
+    // every project page a second rating for the same business.
   };
 
   const schema = {

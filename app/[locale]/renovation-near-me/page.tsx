@@ -111,8 +111,6 @@ export default async function Page({ params }: PageProps) {
         areaServed={areas.map((a) => a.name.en)}
         priceRange={PRICE_RANGE}
         serviceRadiusKm={50}
-        googleRating={googleReviews.rating}
-        googleReviewCount={googleReviews.userRatingCount}
       />
       <NearMePage
         locale={locale as Locale}

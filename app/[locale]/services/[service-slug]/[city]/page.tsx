@@ -7,9 +7,8 @@ import { getLocalizedProject } from '@/lib/data/projects';
 import { getLocalizedArea } from '@/lib/data/areas';
 import type { ServiceType } from '@/lib/types';
 import { getCompanyFromDb, getServicesFromDb, getServiceAreasFromDb, getProjectsByAreaFromDb, getProjectsFromDb, getFaqsByAreaFromDb } from '@/lib/db/queries';
-import { getGoogleReviews } from '@/lib/google-reviews';
 import ServiceLocationPage from '@/components/pages/ServiceLocationPage';
-import { BreadcrumbSchema, LocalBusinessAreaSchema, ServiceSchema, FAQSchema } from '@/components/structured-data';
+import { BreadcrumbSchema, ServiceSchema, FAQSchema } from '@/components/structured-data';
 import { getBaseUrl, buildAlternates, SITE_NAME, pickLocale, buildAlternateLocales} from '@/lib/utils';
 import { images as siteImages } from '@/lib/data';
 import { pickServiceAreaFaqs, pickComboProjects, summarizeProjectCosts } from '@/lib/seo/combo-content';
@@ -143,11 +142,10 @@ export default async function Page({ params }: PageProps) {
   const { locale, 'service-slug': serviceSlug, city } = await params;
   setRequestLocale(locale);
 
-  const [company, services, areas, googleReviews] = await Promise.all([
+  const [company, services, areas] = await Promise.all([
     getCompanyFromDb(),
     getServicesFromDb(),
     getServiceAreasFromDb(),
-    getGoogleReviews(),
   ]);
   const service = services.find((s) => s.slug === serviceSlug);
   const area = areas.find((a) => a.slug === city);
@@ -248,20 +246,10 @@ export default async function Page({ params }: PageProps) {
   return (
     <ClientMessages ns={['areas', 'cta', 'lightbox', 'locationBenefits', 'modal', 'projects', 'share', 'wholeHouse']}>
       <BreadcrumbSchema items={breadcrumbs} locale={locale} />
-      {/* 2026-06-26: LocalBusiness schema — on-page scan P7 finding: all service+city
-          sub-pages were missing LocalBusiness schema (only Service + BreadcrumbList
-          were present). Adding LocalBusinessAreaSchema gives Google the geo/contact
-          signals needed for local pack eligibility on "kitchen renovation richmond"
-          style queries that land on service+city sub-pages. */}
-      <LocalBusinessAreaSchema
-        company={company}
-        areaName={localizedArea.name}
-        areaSlug={city}
-        locale={locale}
-        services={[localizedService.title]}
-        googleRating={googleReviews.rating}
-        googleReviewCount={googleReviews.userRatingCount}
-      />
+      {/* One Service node, provided by the layout Organization (by @id) and
+          scoped to this city. The former LocalBusinessAreaSchema here declared
+          a second business "Reno Stars - <City>" at the Richmond office
+          address — removed 2026-09-24; there is one real location. */}
       <ServiceSchema
         company={company}
         serviceName={serviceTitle}
@@ -275,8 +263,6 @@ export default async function Page({ params }: PageProps) {
           : {})}
         areaServed={[localizedArea.name]}
         url={`/${locale}/services/${serviceSlug}/${city}/`}
-        googleRating={googleReviews.rating}
-        googleReviewCount={googleReviews.userRatingCount}
         serviceRadiusKm={50}
       />
       <FAQSchema faqs={faqs} locale={locale} />

@@ -356,6 +356,57 @@ export function truncateMetaDescription(text: string, maxLength: number = 155): 
   return truncated.slice(0, lastSpace) + '...';
 }
 
+/** Sentence terminators (Latin + CJK) that make an appended period redundant. */
+const SENTENCE_END = /[.!?:;。！？：；]$/;
+const HAS_CJK = /[\u3000-\u9fff\uac00-\ud7af]/;
+
+/** Strip block + inline markdown/HTML from ONE line; returns '' for pure syntax. */
+function stripMarkdownLine(line: string): { text: string; isBlock: boolean } {
+  let t = line.trim();
+  if (/^(```|~~~)/.test(t) || /^([-*_]\s*){3,}$/.test(t)) return { text: '', isBlock: false };
+  const isBlock = /^(#{1,6}\s|[-*+]\s|\d+[.)]\s)/.test(t);
+  t = t
+    .replace(/<[^>]+>/g, ' ')
+    .replace(/^#{1,6}\s+/, '')
+    .replace(/^>\s?/, '')
+    .replace(/^([-*+]|\d+[.)])\s+/, '')
+    .replace(/!\[[^\]]*\]\([^)]*\)/g, '')
+    .replace(/\[([^\]]+)\]\([^)]*\)/g, '$1')
+    .replace(/\[([^\]]+)\]\[[^\]]*\]/g, '$1')
+    .replace(/(\*\*|__)(.+?)\1/g, '$2')
+    .replace(/(^|[^\w*])[*_]([^*_\s](?:[^*_]*[^*_\s])?)[*_](?=[^\w*]|$)/g, '$1$2')
+    .replace(/`+([^`]*)`+/g, '$1')
+    .replace(/\s+/g, ' ')
+    .trim();
+  return { text: t, isBlock };
+}
+
+/**
+ * Markdown/HTML → a single plain-text paragraph, truncated at a word boundary.
+ *
+ * For JSON-LD `description` fields. Service `long_description` is authored as
+ * markdown (~7.7KB) for the page body; passing it raw put `##`, `**` and
+ * `[label](/url)` syntax into structured data. Headings and list items become
+ * their own sentences so the joined text still reads. CJK text (no spaces) is
+ * cut at the character limit instead of a word boundary.
+ *
+ * @example toPlainTextSummary('## Title\n\n**Bold** [link](/x)', 300) // 'Title. Bold link'
+ */
+export function toPlainTextSummary(text: string, maxLength: number = 300): string {
+  if (!text) return '';
+  const plain = text
+    .split(/\r?\n/)
+    .map(stripMarkdownLine)
+    .filter((l) => l.text)
+    .map(({ text: t, isBlock }) => (isBlock && !SENTENCE_END.test(t) ? `${t}${HAS_CJK.test(t) ? '。' : '.'}` : t))
+    .join(' ');
+  if (plain.length <= maxLength) return plain;
+  const cut = plain.slice(0, maxLength);
+  const lastSpace = cut.lastIndexOf(' ');
+  const head = lastSpace >= maxLength * 0.6 ? cut.slice(0, lastSpace) : cut;
+  return `${head.replace(/[\s,;:、，；：-]+$/, '')}…`;
+}
+
 /**
  * Expands residual markdown link syntax `[label](url)` → `<a href="url">label</a>`
  * inside heading tags (h1-h6) only.

@@ -21,19 +21,20 @@ Components in `components/structured-data/`:
 
 | Component | Schema Type | Used On |
 |-----------|-------------|---------|
-| `LocalBusinessSchema` | LocalBusiness | Layout (global, `aggregateRating` from Google Reviews API) |
-| `LocalBusinessAreaSchema` | HomeAndConstructionBusiness | Area pages (location-specific, `aggregateRating` from Google Reviews) |
+| `LocalBusinessSchema` | Organization + LocalBusiness + HomeAndConstructionBusiness (`@id` `/#organization`) | Layout (global). The ONLY node with `aggregateRating` (Google Business Profile). No `review[]` — Google Maps reviews are third-party. Other schemas reference it via `organizationRef()` (`ids.ts`). |
+| `AreaServiceSchema` | Service (provider = `/#organization` ref, `areaServed` City) | Area pages. Replaced `LocalBusinessAreaSchema` 2026-09-24 — no per-city business at the office address. |
 | `WebSiteSchema` | WebSite | Layout (global, includes `SearchAction` for sitelinks search) |
-| `ServiceSchema` | Service | Service detail pages |
-| `ProjectSchema` | WebPage + Service (mainEntity) | Project detail pages (nested `HomeAndConstructionBusiness` provider with `aggregateRating` from Google Reviews) |
-| `ArticleSchema` | Article | Blog post pages (includes `image` as `ImageObject` with width/height) |
+| `ServiceSchema` | Service (provider = `/#organization` ref) | Service detail + service×city pages. `description` is markdown-stripped and cut to ~300 chars (`toPlainTextSummary`). No `aggregateRating`. |
+| `ProjectSchema` | WebPage + Service (mainEntity) | Project detail pages (nested `HomeAndConstructionBusiness` provider, no `aggregateRating`) |
+| `ArticleSchema` | BlogPosting | Blog posts + cost guides (includes `image` as `ImageObject` with width/height). A missing or team byline ("Reno Stars Team") is authored by the `/#organization` ref, not a Person. |
 | `BreadcrumbSchema` | BreadcrumbList | All pages with breadcrumbs |
 | `FAQSchema` | FAQPage | Homepage (DB global FAQs), Benefits, Projects, Design, Showroom, Workflow, Reviews, About, Cost guide pages, Service detail pages (3 Q&A per service), Service+location pages (3 Q&A per service), Area pages (area-specific DB FAQs). Returns `null` when faqs array is empty. |
 | `ReviewSchema` | HomeAndConstructionBusiness + Review | Homepage (individual Google Reviews only, no aggregate — handled by layout) |
-| `HowToSchema` | HowTo | Workflow page (5-step renovation workflow with tools and total time) |
 | `ProjectCategorySchema` | ItemList | Project category pages (positioned list of projects with URLs) |
 | `ContactPageSchema` | ContactPage + ContactPoint | Contact page (HomeAndConstructionBusiness with phone, email, languages, areas served) |
 | `OrganizationSchema` | HomeAndConstructionBusiness | About page (company info, area served, offer catalog; accepts optional `socialLinks`/`areas` props) |
+
+HowTo markup is intentionally not emitted anywhere (Google retired HowTo rich results, Sept 2023); `howto` content blocks render as visible content only.
 
 ## Pagination Links
 

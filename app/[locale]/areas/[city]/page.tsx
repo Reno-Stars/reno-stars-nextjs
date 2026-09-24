@@ -4,7 +4,7 @@ import { notFound } from 'next/navigation';
 import { ogLocaleMap, type Locale } from '@/i18n/config';
 import { getLocalizedArea } from '@/lib/data/areas';
 import AreaPage from '@/components/pages/AreaPage';
-import { BreadcrumbSchema, LocalBusinessAreaSchema, FAQSchema } from '@/components/structured-data';
+import { BreadcrumbSchema, AreaServiceSchema, FAQSchema } from '@/components/structured-data';
 import { getBaseUrl, buildAlternates, SITE_NAME, pickLocale, buildAlternateLocales, minimalLocalized, slimForClient, deepMinimalLocalized } from '@/lib/utils';
 import { getLocalizedService } from '@/lib/data/services';
 import { images as siteImages } from '@/lib/data';
@@ -450,14 +450,12 @@ export default async function Page({ params }: PageProps) {
   return (
     <ClientMessages ns={['areaBenefits', 'areas', 'costGuidesSection', 'cta', 'projects', 'share']}>
       <BreadcrumbSchema items={breadcrumbs} locale={locale} />
-      <LocalBusinessAreaSchema
+      <AreaServiceSchema
         company={company}
         areaName={localizedArea.name}
         areaSlug={city}
         locale={locale}
         services={serviceNames}
-        googleRating={googleReviews.rating}
-        googleReviewCount={googleReviews.userRatingCount}
       />
       {localizedFaqs.length > 0 && <FAQSchema faqs={localizedFaqs} locale={locale} />}
       <AreaPage

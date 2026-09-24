@@ -1,12 +1,16 @@
 import type { Company } from '@/lib/types';
-import { e164 } from '@/lib/phone';
 import JsonLd from './JsonLd';
-import { getBaseUrl } from '@/lib/utils';
-import { parseAddress } from './parse-address';
+import { getBaseUrl, toPlainTextSummary } from '@/lib/utils';
+import { organizationRef } from './ids';
+
+/** JSON-LD description budget. Callers pass markdown long_description. */
+const DESCRIPTION_MAX_CHARS = 300;
 
 interface ServiceSchemaProps {
   company: Company;
   serviceName: string;
+  /** May be markdown (service long_description) — it is reduced to plain
+   *  text and truncated to ~300 chars here, so no caller can leak syntax. */
   serviceDescription?: string;
   location?: string;
   areaServed?: string[];
@@ -17,8 +21,6 @@ interface ServiceSchemaProps {
   /** Optional representative image URL (absolute). Adds to Service for richer SERP. */
   image?: string;
   url: string;
-  googleRating?: number;
-  googleReviewCount?: number;
   /** Service-area radius in km centred on company.geo. When set, emits a
    *  GeoCircle alongside the City `areaServed` list — Google reads both as
    *  complementary geographic-coverage signals for local pack eligibility. */
@@ -34,15 +36,11 @@ export default function ServiceSchema({
   priceRange,
   image,
   url,
-  googleRating,
-  googleReviewCount,
   serviceRadiusKm,
 }: ServiceSchemaProps): React.ReactElement {
   const baseUrl = getBaseUrl();
   const absoluteUrl = `${baseUrl}${url}`;
-  const addressParts = parseAddress(company.address);
-  const hasFullAddress = addressParts.streetAddress && addressParts.locality
-    && addressParts.region && addressParts.postalCode;
+  const description = serviceDescription ? toPlainTextSummary(serviceDescription, DESCRIPTION_MAX_CHARS) : '';
 
   const schema: Record<string, unknown> = {
     '@context': 'https://schema.org',
@@ -50,26 +48,10 @@ export default function ServiceSchema({
     '@id': `${absoluteUrl}#service`,
     name: serviceName,
     serviceType: serviceName,
-    ...(serviceDescription && { description: serviceDescription }),
-    provider: {
-      '@type': 'HomeAndConstructionBusiness',
-      name: company.name,
-      url: baseUrl,
-      telephone: e164(company.phone),
-      // Only emit address when all four PostalAddress sub-fields are present.
-      // A fabricated postalCode in a rated Service node suppresses stars in SERP —
-      // the same class of defect already fixed in ProjectSchema. Keep them in sync.
-      ...(hasFullAddress && {
-        address: {
-          '@type': 'PostalAddress',
-          streetAddress: addressParts.streetAddress,
-          addressLocality: addressParts.locality,
-          addressRegion: addressParts.region,
-          postalCode: addressParts.postalCode,
-          addressCountry: 'CA',
-        },
-      }),
-    },
+    ...(description && { description }),
+    // Reference the layout's canonical business node instead of redeclaring
+    // a HomeAndConstructionBusiness (with the office address) per page.
+    provider: organizationRef(),
     url: absoluteUrl,
   };
 
@@ -106,20 +88,9 @@ export default function ServiceSchema({
     schema.areaServed = areaServedNodes.length === 1 ? areaServedNodes[0] : areaServedNodes;
   }
 
-  if (googleRating && googleReviewCount) {
-    // aggregateRating lives on the Service node itself, not on provider.
-    // GSC flags "Rating distribution is invalid" when aggregateRating sits on
-    // HomeAndConstructionBusiness inside provider — it must be a direct property
-    // of the Service entity for the sitelink-ratings rich result to render.
-    schema.aggregateRating = {
-      '@type': 'AggregateRating',
-      ratingValue: googleRating,
-      bestRating: 5,
-      worstRating: 1,
-      ratingCount: googleReviewCount,
-      reviewCount: googleReviewCount,
-    };
-  }
+  // No aggregateRating here: it lives only on the layout Organization
+  // (LocalBusinessSchema). Repeating it per Service was a duplicate rating
+  // for the same business on every service page.
 
   if (priceRange) {
     schema.hasOfferCatalog = {
