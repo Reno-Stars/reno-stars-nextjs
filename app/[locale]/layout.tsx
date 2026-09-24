@@ -20,10 +20,8 @@ import Footer from '@/components/Footer';
 // FEATURES it (services page, contact, areas index), not the whole site. ISR Phase 2.
 import { getCompanyForNav, getSocialLinksForNav, getServicesForNav, getServiceAreasForNav } from '@/lib/db/queries';
 import { getGoogleReviews } from '@/lib/google-reviews';
-import { images } from '@/lib/data';
 import { ASSET_ORIGIN } from '@/lib/storage';
 import { NAVY } from '@/lib/theme';
-import { buildPreloadUrl, buildProcessedUrl, buildProcessedSrcSet, isR2Url } from '@/lib/image';
 import { minimalLocalized } from '@/lib/utils';
 
 
@@ -109,25 +107,13 @@ export default async function LocaleLayout({
             <img> tags resolve. crossOrigin=anonymous because Google's CDN
             requires it and the avatar URLs do not carry credentials. */}
         <link rel="preconnect" href="https://lh3.googleusercontent.com" crossOrigin="anonymous" />
-        {/* Preload hero image for faster LCP. When the hero lives on R2 with
-            pre-processed variants, use a responsive imagesrcset preload so
-            mobile fetches the 21KB 640w WebP instead of the 173KB legacy JPG
-            (was the LCP bottleneck — 5.6s mobile per the seo-builder Apr 7
-            audit). type="image/webp" lets the <3% of browsers without WebP
-            skip the preload entirely. */}
-        {isR2Url(images.hero) ? (
-          <link
-            rel="preload"
-            as="image"
-            href={buildProcessedUrl(images.hero, 828)}
-            imageSrcSet={buildProcessedSrcSet(images.hero)}
-            imageSizes="100vw"
-            type="image/webp"
-            fetchPriority="high"
-          />
-        ) : (
-          <link rel="preload" as="image" href={buildPreloadUrl(images.hero, 828)} type="image/webp" fetchPriority="high" />
-        )}
+        {/* No image preload here: the layout wraps EVERY page, and a
+            high-priority preload of the homepage hero on pages that never show
+            it competed with each page's own LCP image. Each page's hero <img>
+            is in the server HTML with fetchpriority="high" (HeroSection,
+            OptimizedImage `priority`), and React hoists a matching preload into
+            <head> from that element — so a page only ever preloads what it
+            actually renders. */}
         {/* RSS feed discovery — localized title per locale for accurate browser bookmark labels */}
         <link rel="alternate" type="application/rss+xml" title={
           locale === 'zh' ? 'Reno Stars 博客 RSS'
