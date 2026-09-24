@@ -31,8 +31,8 @@
  *
  * Deliberately NOT here (needs a human, see the PR): 化妆室/化妆间 for "powder
  * room" (common in Chinese-Canadian listings), 干墙 for drywall (understood
- * colloquially), and the brand name, which is handled by BRAND_PATTERN below
- * because it depends on the characters around it, not on a fixed phrase.
+ * colloquially), and the bare brand name "Reno Stars", which BRAND_PATTERN
+ * below handles OPT-IN only (see FixTextOptions.brand).
  */
 
 export type ZhScript = 'zh' | 'zh-Hant';
@@ -309,6 +309,25 @@ export function applyLocaleLinks(text: string, script: ZhScript): ApplyResult {
     }
   }
   return { text: out, hits };
+}
+
+export interface FixTextOptions {
+  /**
+   * Also replace a bare "Reno Stars" in Chinese prose (applyBrand). OFF by
+   * default: the owner rule (2026-07-09, brandDisplay() in lib/company-config.ts)
+   * keeps "Reno Stars" searchable next to 聚星装修, so dropping it is an owner
+   * decision. The 聚星裝修 → 聚星装修 script correction is a glossary rule and
+   * always applies.
+   */
+  brand?: boolean;
+}
+
+/** Everything the repo fix applies to one string: glossary, optional brand, locale links. Pure. */
+export function fixText(text: string, script: ZhScript, opts: FixTextOptions = {}): ApplyResult {
+  const a = applyGlossary(text, script);
+  const b = opts.brand ? applyBrand(a.text, script) : { text: a.text, hits: 0 };
+  const c = applyLocaleLinks(b.text, script);
+  return { text: c.text, hits: a.hits + b.hits + c.hits };
 }
 
 // ─────────────────────────── SQL generation ───────────────────────────

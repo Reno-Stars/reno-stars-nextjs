@@ -2,7 +2,7 @@
  * Repair machine-translated renovation terms in Chinese copy — the repo's
  * messages/zh* files and (via a generated migration) the database.
  *
- *   npx tsx scripts/fix-zh-glossary.ts --messages
+ *   npx tsx scripts/fix-zh-glossary.ts --messages [--brand]
  *       Rewrite messages/zh/**.json and messages/zh-Hant/**.json in place.
  *
  *   npx tsx scripts/fix-zh-glossary.ts --audit-sql > audit.sql
@@ -10,8 +10,16 @@
  *       currently hits. Run it against production, save the output (psql -At
  *       -F'|'), then:
  *
- *   npx tsx scripts/fix-zh-glossary.ts --emit-sql <hits.txt> <glossary.sql> <brand.sql>
- *       Write the two migrations from those hits.
+ *   npx tsx scripts/fix-zh-glossary.ts --emit-sql <hits.txt> <glossary.sql> [--brand <brand.sql>]
+ *       Write the glossary migration from those hits (and, with --brand, the
+ *       brand migration).
+ *
+ * --brand is OFF by default. It replaces a bare "Reno Stars" inside Chinese
+ * prose with 聚星装修 / 聚星裝修. Owner rule (2026-07-09, brandDisplay() in
+ * lib/company-config.ts): "Reno Stars" must stay searchable alongside the
+ * Chinese name, so dropping it is an owner decision, not a translation fix.
+ * The Traditional→Simplified brand correction (聚星裝修 in zh copy) is a
+ * glossary rule and always runs.
  *
  * The glossary and its rules live in scripts/lib/zh-glossary.ts.
  */
@@ -20,12 +28,10 @@ import { join } from 'node:path';
 import {
   BRAND_PATTERN,
   ZH_GLOSSARY,
-  applyBrand,
-  applyGlossary,
-  applyLocaleLinks,
   buildBrandUpdate,
   buildGlossaryStatements,
   buildReplaceUpdate,
+  fixText,
   sqlLiteral,
   type GlossaryHit,
   type ZhScript,
@@ -80,29 +86,32 @@ function jsonFiles(dir: string): string[] {
   });
 }
 
-function fixValue(value: unknown, script: ZhScript, tally: { hits: number }): unknown {
+interface FixOptions {
+  script: ZhScript;
+  brand: boolean;
+}
+
+function fixValue(value: unknown, opts: FixOptions, tally: { hits: number }): unknown {
   if (typeof value === 'string') {
-    const a = applyGlossary(value, script);
-    const b = applyBrand(a.text, script);
-    const c = applyLocaleLinks(b.text, script);
-    tally.hits += a.hits + b.hits + c.hits;
-    return c.text;
+    const r = fixText(value, opts.script, { brand: opts.brand });
+    tally.hits += r.hits;
+    return r.text;
   }
-  if (Array.isArray(value)) return value.map((v) => fixValue(v, script, tally));
+  if (Array.isArray(value)) return value.map((v) => fixValue(v, opts, tally));
   if (value && typeof value === 'object') {
     return Object.fromEntries(
-      Object.entries(value).map(([k, v]) => [k, fixValue(v, script, tally)]),
+      Object.entries(value).map(([k, v]) => [k, fixValue(v, opts, tally)]),
     );
   }
   return value;
 }
 
-function fixMessages(): void {
+function fixMessages(brand: boolean): void {
   for (const script of ['zh', 'zh-Hant'] as const) {
     for (const file of jsonFiles(join('messages', script))) {
       const raw = readFileSync(file, 'utf8');
       const tally = { hits: 0 };
-      const fixed = fixValue(JSON.parse(raw), script, tally);
+      const fixed = fixValue(JSON.parse(raw), { script, brand }, tally);
       if (tally.hits === 0) continue;
       writeFileSync(file, `${JSON.stringify(fixed, null, 2)}\n`);
       console.log(`${file}: ${tally.hits} correction(s)`);
@@ -175,7 +184,7 @@ const HEADER = (title: string, run: string, body: string) =>
   `-- ${title}\n--   pnpm db:query -f ${run} --dry-run   # then without --dry-run\n` +
   `-- NOT APPLIED to production when authored (2026-09-24). Applying it is a human decision.\n--\n${body}\n`;
 
-function emitSql(hitsFile: string, glossaryOut: string, brandOut: string): void {
+function emitSql(hitsFile: string, glossaryOut: string, brandOut: string | undefined): void {
   const hits = parseHits(hitsFile);
   const totalRows = (kind: string) => hits.filter((h) => h.kind === kind).reduce((n, h) => n + h.rows, 0);
 
@@ -226,6 +235,13 @@ function emitSql(hitsFile: string, glossaryOut: string, brandOut: string): void 
     ),
   );
 
+  const updates = (f: string) => readFileSync(f, 'utf8').split('\n').filter((l) => l.startsWith('UPDATE ')).length;
+  console.log(`wrote ${glossaryOut} (${updates(glossaryOut)} UPDATEs)`);
+  if (brandOut) emitBrandSql(hits, brandOut, totalRows('brand'));
+}
+
+/** Opt-in (--brand): bare "Reno Stars" in Chinese prose → the Chinese name. Owner decision. */
+function emitBrandSql(hits: readonly HitLine[], brandOut: string, brandRows: number): void {
   const brandTargets = hits.filter((h) => h.kind === 'brand');
   writeFileSync(
     brandOut,
@@ -240,7 +256,10 @@ function emitSql(hitsFile: string, glossaryOut: string, brandOut: string): void 
         '-- an English run ("Reno Stars Richmond") or a JSON-LD value ("name": "Reno Stars").',
         '-- Titles of the form "… — Reno Stars Burnaby" / "| Reno Stars" are left alone.',
         '--',
-        `-- Pre-audit: ${brandTargets.length} columns/keys, ${totalRows('brand')} (column, row) matches.`,
+        '-- OWNER DECISION: brandDisplay() (lib/company-config.ts) keeps "Reno Stars"',
+        '-- searchable next to the Chinese name; this file drops it from Chinese prose.',
+        '--',
+        `-- Pre-audit: ${brandTargets.length} columns/keys, ${brandRows} (column, row) matches.`,
         `-- Pre-check (expect > 0) / post-check (expect 0):`,
         `--   SELECT count(*) FROM blog_posts WHERE content_zh ~ ${sqlLiteral(BRAND_PATTERN)};`,
         '',
@@ -248,16 +267,25 @@ function emitSql(hitsFile: string, glossaryOut: string, brandOut: string): void 
       ].join('\n'),
     ),
   );
-  const updates = (f: string) => readFileSync(f, 'utf8').split('\n').filter((l) => l.startsWith('UPDATE ')).length;
-  console.log(`wrote ${glossaryOut} (${updates(glossaryOut)} UPDATEs), ${brandOut} (${updates(brandOut)} UPDATEs)`);
+  const n = readFileSync(brandOut, 'utf8').split('\n').filter((l) => l.startsWith('UPDATE ')).length;
+  console.log(`wrote ${brandOut} (${n} UPDATEs)`);
 }
 
 function main(): void {
   const [mode, ...rest] = process.argv.slice(2);
-  if (mode === '--messages') return fixMessages();
+  const brandAt = rest.indexOf('--brand');
+  const brand = brandAt !== -1;
+  if (mode === '--messages') return fixMessages(brand);
   if (mode === '--audit-sql') return void process.stdout.write(`${auditSql()}\n`);
-  if (mode === '--emit-sql' && rest.length === 3) return emitSql(rest[0], rest[1], rest[2]);
-  console.error('usage: fix-zh-glossary.ts --messages | --audit-sql | --emit-sql <hits> <glossary.sql> <brand.sql>');
+  if (mode === '--emit-sql') {
+    // --brand takes the brand migration's output path as its value.
+    const brandOut = brand ? rest[brandAt + 1] : undefined;
+    const positional = brand ? rest.filter((_, i) => i !== brandAt && i !== brandAt + 1) : rest;
+    if (positional.length === 2 && (!brand || brandOut)) return emitSql(positional[0], positional[1], brandOut);
+  }
+  console.error(
+    'usage: fix-zh-glossary.ts --messages [--brand] | --audit-sql | --emit-sql <hits> <glossary.sql> [--brand <brand.sql>]',
+  );
   process.exit(2);
 }
 

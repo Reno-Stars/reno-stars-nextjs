@@ -10,6 +10,7 @@ import {
   buildBrandUpdate,
   buildGlossaryStatements,
   buildReplaceUpdate,
+  fixText,
   withChainedRules,
   type ZhScript,
 } from '@/scripts/lib/zh-glossary';
@@ -129,6 +130,22 @@ describe('applyBrand', () => {
     'Per Reno Stars policy',
   ])('leaves alone: %s', (text) => {
     expect(applyBrand(text, 'zh')).toEqual({ text, hits: 0 });
+  });
+});
+
+describe('fixText — the brand rule is opt-in', () => {
+  const text = '了解 Reno Stars 如何，聚星裝修团队，[指南](/en/guides/x/)';
+
+  it('by default leaves bare "Reno Stars" alone (owner rule: brandDisplay keeps it searchable)', () => {
+    expect(fixText(text, 'zh').text).toBe('了解 Reno Stars 如何，聚星装修团队，[指南](/zh/guides/x/)');
+  });
+
+  it('still corrects Traditional 聚星裝修 in Simplified copy by default', () => {
+    expect(fixText('聚星裝修', 'zh').text).toBe('聚星装修');
+  });
+
+  it('replaces bare "Reno Stars" only with { brand: true }', () => {
+    expect(fixText(text, 'zh', { brand: true }).text).toBe('了解聚星装修如何，聚星装修团队，[指南](/zh/guides/x/)');
   });
 });
 
