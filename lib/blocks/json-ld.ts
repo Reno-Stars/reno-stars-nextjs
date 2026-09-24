@@ -4,34 +4,23 @@
  * Walks the blocks array and returns prop objects that map 1:1 to
  * existing structured-data components:
  *   - `faq` blocks  -> FAQSchema
- *   - `howto` blocks -> HowToSchema
  *   - `image` blocks (any count >= 1) -> ItemListSchema (combined)
  *
  * The page component should call `getJsonLdFromBlocks(blocks, locale)`
  * and spread the returned arrays into the existing schema components.
+ *
+ * No JSON-LD emitted for `howto` blocks: Google retired HowTo rich results
+ * (Sept 2023), so the steps render as visible content only.
  *
  * No JSON-LD emitted for heading/paragraph/list/callout/quote/html/video
  * — those are pure presentational/narrative content with no
  * Schema.org type that benefits SEO at the AI-search level.
  */
 
-import type { Block, FaqBlock, HowToBlock, ImageBlock } from './types';
+import type { Block, FaqBlock, ImageBlock } from './types';
 
 export type FaqSchemaInput = {
   faqs: Array<{ question: string; answer: string }>;
-  locale: string;
-};
-
-export type HowToSchemaInput = {
-  name: string;
-  description: string;
-  totalTime?: string;
-  steps: Array<{ name: string; text: string; image?: string }>;
-  image?: string;
-  /** BCP-47 locale, e.g. 'en' / 'zh'. Populated by howtoToInput from
-   *  the parent block-conversion locale; consumed by HowToSchema to
-   *  emit Schema.org `inLanguage` at HowTo + per-step. Mirrors the
-   *  FaqSchemaInput.locale pattern shipped in PR #102. */
   locale: string;
 };
 
@@ -44,7 +33,6 @@ export type ItemListSchemaInput = {
 
 export type BlockJsonLd = {
   faqs: FaqSchemaInput[];
-  howtos: HowToSchemaInput[];
   imageList: ItemListSchemaInput | null;
 };
 
@@ -66,22 +54,6 @@ function faqToInput(block: FaqBlock, locale: string): FaqSchemaInput {
         answer: pickEnZh(item.answerEn, item.answerZh, locale),
       };
     }),
-  };
-}
-
-function howtoToInput(block: HowToBlock, locale: string): HowToSchemaInput {
-  return {
-    name: pickEnZh(block.nameEn, block.nameZh, locale),
-    description:
-      pickEnZh(block.descriptionEn ?? '', block.descriptionZh ?? '', locale) ||
-      pickEnZh(block.nameEn, block.nameZh, locale),
-    totalTime: block.totalTimeISO,
-    steps: block.steps.map((step) => ({
-      name: pickEnZh(step.nameEn, step.nameZh, locale),
-      text: pickEnZh(step.textEn, step.textZh, locale),
-      image: step.image,
-    })),
-    locale,
   };
 }
 
@@ -115,7 +87,6 @@ export function getJsonLdFromBlocks(
 ): BlockJsonLd {
   const out: BlockJsonLd = {
     faqs: [],
-    howtos: [],
     imageList: null,
   };
 
@@ -128,14 +99,11 @@ export function getJsonLdFromBlocks(
       case 'faq':
         if (block.items.length > 0) out.faqs.push(faqToInput(block, locale));
         break;
-      case 'howto':
-        if (block.steps.length > 0) out.howtos.push(howtoToInput(block, locale));
-        break;
       case 'image':
         imageBlocks.push(block);
         break;
       default:
-        // No JSON-LD for heading/paragraph/list/callout/quote/html/video
+        // No JSON-LD for howto/heading/paragraph/list/callout/quote/html/video
         break;
     }
   }

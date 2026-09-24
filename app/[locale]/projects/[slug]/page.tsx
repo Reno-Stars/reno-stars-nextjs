@@ -6,13 +6,12 @@ import { getLocalizedProject, getLocalizedSiteWithProjects } from '@/lib/data/pr
 import ProjectDetailPage from '@/components/pages/ProjectDetailPage';
 import ProjectCategoryPage from '@/components/pages/ProjectCategoryPage';
 import SiteDetailPage from '@/components/pages/SiteDetailPage';
-import { BreadcrumbSchema, ProjectSchema, ProjectCategorySchema, FAQSchema, HowToSchema, ItemListSchema, ServiceSchema } from '@/components/structured-data';
+import { BreadcrumbSchema, ProjectSchema, ProjectCategorySchema, FAQSchema, ItemListSchema, ServiceSchema } from '@/components/structured-data';
 import { getJsonLdFromBlocks } from '@/lib/blocks/json-ld';
 import type { Block } from '@/lib/blocks/types';
 import { getBaseUrl, buildAlternates, SITE_NAME, truncateMetaDescription, pickLocale, pickLocaleOptional, buildAlternateLocales} from '@/lib/utils';
 import { images as siteImages } from '@/lib/data';
 import { getCompanyFromDb, getProjectsFromDb, getSiteBySlugFromDb, getServiceTypeToCategory, getCategoriesLocalized, getCategorySlugs, getServiceBlocksBySlug, getProjectReviews } from '@/lib/db/queries';
-import { getGoogleReviews } from '@/lib/google-reviews';
 import ClientMessages from '@/components/ClientMessages';
 
 interface PageProps {
@@ -170,11 +169,10 @@ export default async function Page({ params }: PageProps) {
   const { locale, slug } = await params;
   setRequestLocale(locale);
 
-  const [t, company, allProjects, googleReviews, serviceTypeMap, categories] = await Promise.all([
+  const [t, company, allProjects, serviceTypeMap, categories] = await Promise.all([
     getTranslations({ locale, namespace: 'nav' }),
     getCompanyFromDb(),
     getProjectsFromDb(),
-    getGoogleReviews(),
     getServiceTypeToCategory(),
     getCategoriesLocalized(),
   ]);
@@ -194,7 +192,7 @@ export default async function Page({ params }: PageProps) {
     const categoryProjects = allProjects.filter((p) => p.service_type === slug);
     const categoryBlocks = await getServiceBlocksBySlug(slug);
 
-    // Auto-emit FAQ/HowTo/ItemList JSON-LD from category dynamic_blocks.
+    // Auto-emit FAQ/ItemList JSON-LD from category dynamic_blocks.
     const categoryBlockSchema = getJsonLdFromBlocks(
       (categoryBlocks as Block[] | undefined) ?? null,
       locale,
@@ -217,14 +215,9 @@ export default async function Page({ params }: PageProps) {
             : `Professional ${categoryName.toLowerCase()} renovation services in Metro Vancouver. Free quotes, permits handled, ${company.liabilityCoverage} insured, ${company.yearsExperience}+ years experience.`}
           url={`/${locale}/projects/${slug}/`}
           areaServed={['Vancouver', 'Richmond', 'Burnaby', 'Surrey', 'Coquitlam', 'North Vancouver', 'West Vancouver', 'Delta', 'Langley', 'New Westminster', 'Port Moody', 'Maple Ridge', 'White Rock', 'Port Coquitlam']}
-          googleRating={googleReviews.rating}
-          googleReviewCount={googleReviews.userRatingCount}
         />
         {categoryBlockSchema.faqs.map((faq, i) => (
           <FAQSchema key={`cat-faq-${i}`} faqs={faq.faqs} locale={faq.locale} />
-        ))}
-        {categoryBlockSchema.howtos.map((howto, i) => (
-          <HowToSchema key={`cat-howto-${i}`} name={howto.name} description={howto.description} totalTime={howto.totalTime} steps={howto.steps} image={howto.image} locale={howto.locale} />
         ))}
         {categoryBlockSchema.imageList && (
           <ItemListSchema items={categoryBlockSchema.imageList.items} name={categoryBlockSchema.imageList.name} description={categoryBlockSchema.imageList.description} locale={categoryBlockSchema.imageList.locale} />
@@ -255,7 +248,7 @@ export default async function Page({ params }: PageProps) {
       { name: pickLocale(project.title, locale as Locale), url: `/${locale}/projects/${slug}/` },
     ];
 
-    // Auto-emit FAQ/HowTo/ItemList JSON-LD from dynamic content blocks.
+    // Auto-emit FAQ/ItemList JSON-LD from dynamic content blocks.
     // No-op when project.dynamic_blocks is empty/undefined.
     const blockSchema = getJsonLdFromBlocks(
       (project.dynamic_blocks as Block[] | undefined) ?? null,
@@ -283,8 +276,6 @@ export default async function Page({ params }: PageProps) {
           location={project.location_city}
           serviceType={serviceTypeName}
           url={`/${locale}/projects/${slug}/`}
-          googleRating={googleReviews.rating}
-          googleReviewCount={googleReviews.userRatingCount}
           duration={localizedProject.duration}
           budgetRange={project.budget_range}
           spaceType={localizedProject.space_type}
@@ -300,9 +291,6 @@ export default async function Page({ params }: PageProps) {
         />
         {blockSchema.faqs.map((faq, i) => (
           <FAQSchema key={`faq-${i}`} faqs={faq.faqs} locale={faq.locale} />
-        ))}
-        {blockSchema.howtos.map((howto, i) => (
-          <HowToSchema key={`howto-${i}`} name={howto.name} description={howto.description} totalTime={howto.totalTime} steps={howto.steps} image={howto.image} locale={howto.locale} />
         ))}
         {blockSchema.imageList && (
           <ItemListSchema items={blockSchema.imageList.items} name={blockSchema.imageList.name} description={blockSchema.imageList.description} locale={blockSchema.imageList.locale} />
@@ -339,7 +327,7 @@ export default async function Page({ params }: PageProps) {
       { name: pickLocale(siteData.title, locale as Locale), url: `/${locale}/projects/${slug}/` },
     ];
 
-    // Auto-emit FAQ/HowTo/ItemList JSON-LD from site dynamic_blocks.
+    // Auto-emit FAQ/ItemList JSON-LD from site dynamic_blocks.
     const siteBlockSchema = getJsonLdFromBlocks(
       (siteData.dynamic_blocks as Block[] | undefined) ?? null,
       locale,
@@ -358,8 +346,6 @@ export default async function Page({ params }: PageProps) {
           location={siteData.location_city ?? ''}
           serviceType="Whole House"
           url={`/${locale}/projects/${slug}/`}
-          googleRating={googleReviews.rating}
-          googleReviewCount={googleReviews.userRatingCount}
           locale={locale}
         />
         <ServiceSchema
@@ -371,9 +357,6 @@ export default async function Page({ params }: PageProps) {
         />
         {siteBlockSchema.faqs.map((faq, i) => (
           <FAQSchema key={`site-faq-${i}`} faqs={faq.faqs} locale={faq.locale} />
-        ))}
-        {siteBlockSchema.howtos.map((howto, i) => (
-          <HowToSchema key={`site-howto-${i}`} name={howto.name} description={howto.description} totalTime={howto.totalTime} steps={howto.steps} image={howto.image} locale={howto.locale} />
         ))}
         {siteBlockSchema.imageList && (
           <ItemListSchema items={siteBlockSchema.imageList.items} name={siteBlockSchema.imageList.name} description={siteBlockSchema.imageList.description} locale={siteBlockSchema.imageList.locale} />

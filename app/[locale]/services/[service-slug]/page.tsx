@@ -415,8 +415,6 @@ export default async function Page({ params }: PageProps) {
         areaServed={areas.map((a) => a.name.en)}
         priceRange={SERVICE_PRICE_RANGES[serviceSlug]}
         image={service.image || SERVICE_OG_IMAGES[serviceSlug] || siteImages.hero}
-        googleRating={googleReviews.rating}
-        googleReviewCount={googleReviews.userRatingCount}
         serviceRadiusKm={50}
       />
       <FAQSchema faqs={faqs} locale={locale} />

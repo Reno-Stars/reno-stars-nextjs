@@ -1,5 +1,5 @@
 export { default as LocalBusinessSchema } from './LocalBusinessSchema';
-export { default as LocalBusinessAreaSchema } from './LocalBusinessAreaSchema';
+export { default as AreaServiceSchema } from './AreaServiceSchema';
 export { default as BreadcrumbSchema } from './BreadcrumbSchema';
 export { default as ServiceSchema } from './ServiceSchema';
 export { default as ProjectSchema } from './ProjectSchema';
@@ -9,7 +9,6 @@ export { default as ArticleJsonLd } from './ArticleJsonLd';
 export { default as WebSiteSchema } from './WebSiteSchema';
 export { default as ContactPageSchema } from './ContactPageSchema';
 export { default as ProjectCategorySchema } from './ProjectCategorySchema';
-export { default as HowToSchema } from './HowToSchema';
 export { default as ItemListSchema } from './ItemListSchema';
 export { default as VideoObjectSchema } from './VideoObjectSchema';
 export { default as BlogSchema } from './BlogSchema';

@@ -2,7 +2,7 @@ import { Metadata } from 'next';
 import { getTranslations, setRequestLocale } from 'next-intl/server';
 import { ogLocaleMap, isIndexableLeafLocale, INDEXABLE_LEAF_LOCALES, type Locale } from '@/i18n/config';
 import WholeHouseCostGuidePage from '@/components/pages/WholeHouseCostGuidePage';
-import { ArticleSchema, BreadcrumbSchema, FAQSchema, HowToSchema } from '@/components/structured-data';
+import { ArticleSchema, BreadcrumbSchema, FAQSchema } from '@/components/structured-data';
 import { getBaseUrl, buildAlternates, buildOgImageUrl, SITE_NAME, buildAlternateLocales} from '@/lib/utils';
 import { getCompanyFromDb, getWholeHouseProjectsForGuide } from '@/lib/db/queries';
 import ClientMessages from '@/components/ClientMessages';
@@ -79,39 +79,6 @@ export default async function Page({ params }: PageProps) {
   const shareUrl = buildAlternates('/guides/whole-house-renovation-cost-vancouver/', locale).canonical;
   const ogImage = buildOgImageUrl(mt('title'), mt('description'));
 
-  const howToSteps = [
-    {
-      name: locale === 'zh' ? '评估房屋整体状况' : 'Evaluate Your Home\'s Overall Condition',
-      text: locale === 'zh'
-        ? '评估屋顶、地基、电气、管道和暖通系统的状况。1975年以前的房屋可能需要石棉检测和铅漆处理，预算需增加20-25%。'
-        : 'Assess roofing, foundation, electrical, plumbing, and HVAC systems. Pre-1975 homes may need asbestos testing and lead paint remediation, adding 20-25% to budget.',
-    },
-    {
-      name: locale === 'zh' ? '确定装修阶段和优先级' : 'Define Phases and Priorities',
-      text: locale === 'zh'
-        ? '全屋装修通常分阶段进行：结构/机械系统优先，然后是厨房和浴室，最后是表面装饰。确定哪些区域最需要翻新。'
-        : 'Whole-house renovations are typically phased: structural/mechanical first, then kitchens and bathrooms, finally cosmetic finishes. Identify which areas need the most work.',
-    },
-    {
-      name: locale === 'zh' ? '制定详细预算' : 'Build a Detailed Budget',
-      text: locale === 'zh'
-        ? '温哥华全屋装修真实区间 $150,000-$800,000+（豪华或大型结构改造可达 $1M+）。每平方英尺 $250-$700 取决于范围与饰面等级。预算需含设计费、市政许可费、结构工程师费、和 15-20% 应急款。'
-        : 'Vancouver whole-house renovations realistically range $150,000-$800,000+ (luxury or major structural changes hit $1M+). Per-square-foot costs run $250-$700 depending on scope and finish tier. Budget must include design fees, City permit fees, structural engineer fees, and 15-20% contingency.',
-    },
-    {
-      name: locale === 'zh' ? '选择设计-施工团队' : 'Choose a Design-Build Team',
-      text: locale === 'zh'
-        ? '全屋装修需要设计师和承包商紧密配合。设计-施工一体化模式可以节省时间和成本。确认团队有处理大型项目的经验。'
-        : 'Whole-house projects require tight coordination between designer and contractor. Design-build firms save time and cost. Verify the team has experience with large-scale projects.',
-    },
-    {
-      name: locale === 'zh' ? '管理施工过程' : 'Manage the Construction Process',
-      text: locale === 'zh'
-        ? '全屋装修通常需要2-6个月。制定临时住所计划。定期现场检查和里程碑付款确保项目按计划进行。'
-        : 'Whole-house renovations typically take 2-6 months. Plan temporary living arrangements. Regular site inspections and milestone payments keep the project on track.',
-    },
-  ];
-
   // `guides.cityCostTable` lives INSIDE messages/en/guides/relatedGuides.json rather
   // than in a file of its own, so client-namespace-scope.test.ts cannot see it — that
   // test recognises guide sections by FILENAME. This page therefore shipped
@@ -130,16 +97,6 @@ export default async function Page({ params }: PageProps) {
         datePublished="2026-02-03"
         dateModified="2026-06-25"
         image={ogImage}
-        locale={locale}
-      />
-      <HowToSchema
-        name={locale === 'zh' ? '如何规划温哥华全屋装修预算' : 'How to Budget for a Whole House Renovation in Vancouver'}
-        description={locale === 'zh'
-          ? '温哥华全屋装修费用$50,000-$200,000+的完整预算规划指南。'
-          : 'Plan your whole-house renovation budget in Vancouver. Costs range from $50,000 to $200,000+ based on real project data.'}
-        totalTime="P24W"
-        estimatedCost={{ currency: 'CAD', minValue: 50000, maxValue: 200000 }}
-        steps={howToSteps}
         locale={locale}
       />
       <WholeHouseCostGuidePage

@@ -177,8 +177,6 @@ export default async function Page({ params }: PageProps) {
           : {})}
         areaServed={areas.map((a) => a.name.en)}
         url={`/${locale}/services/`}
-        googleRating={undefined}
-        googleReviewCount={undefined}
       />
       {/* Hub-level FAQPage schema — covers cross-service questions: licensing,
           insurance, service areas, getting started, and differentiators.

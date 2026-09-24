@@ -66,7 +66,7 @@ const TEMPLATES: BlockTemplate[] = [
   {
     type: 'howto',
     label: 'How-To',
-    description: 'Step-by-step instructions — auto-emits HowTo JSON-LD',
+    description: 'Step-by-step instructions (visible content; no JSON-LD — HowTo rich results are retired)',
     template: {
       type: 'howto',
       nameEn: 'How to do X',

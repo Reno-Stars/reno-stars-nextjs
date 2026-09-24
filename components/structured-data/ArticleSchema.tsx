@@ -1,6 +1,7 @@
 import type { Company } from '@/lib/types';
 import JsonLd from './JsonLd';
 import { getBaseUrl } from '@/lib/utils';
+import { articleAuthor } from './ids';
 
 interface ArticleSchemaProps {
   company: Company;
@@ -8,6 +9,8 @@ interface ArticleSchemaProps {
   description?: string;
   datePublished?: string;
   dateModified?: string;
+  /** A real person's byline. Omit it — or pass the company / "<company> Team"
+   *  — and the author is the canonical Organization, not a Person. */
   authorName?: string;
   url: string;
   image?: string;
@@ -47,7 +50,6 @@ export default function ArticleSchema({
   keywords,
   articleSection,
 }: ArticleSchemaProps): React.ReactElement {
-  const resolvedAuthorName = authorName ?? `${company.name} Team`;
   const baseUrl = getBaseUrl();
 
   const absoluteUrl = `${baseUrl}${url}`;
@@ -66,12 +68,10 @@ export default function ArticleSchema({
     // dateModified (= datePublished, or worse, request time) is a fake-fresh
     // signal Google explicitly devalues. Omitting the field is honest.
     ...(dateModified && { dateModified }),
-    author: {
-      '@type': authorName ? 'Person' : 'Organization',
-      ...(authorName
-        ? { name: authorName }
-        : { name: resolvedAuthorName, url: baseUrl }),
-    },
+    // A team byline ("Reno Stars Team") is the company, not a person: typing it
+    // as Person is a fabricated author. Reference the layout Organization by
+    // @id instead of redeclaring it (Google merges nodes by @id).
+    author: articleAuthor(authorName, company.name),
     publisher: {
       '@type': 'Organization',
       name: company.name,

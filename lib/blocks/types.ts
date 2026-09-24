@@ -3,7 +3,7 @@
  *
  * Stored as a JSONB array on `projects.dynamic_blocks`. Rendered server-side
  * by `<BlockRenderer>` (components/blocks/BlockRenderer.tsx). Walked by
- * `lib/blocks/json-ld.ts` to auto-emit FAQ/HowTo/ItemList structured data
+ * `lib/blocks/json-ld.ts` to auto-emit FAQ/ItemList structured data
  * for SEO + AI-search citations.
  *
  * Every block is bilingual EN+ZH; the renderer picks one based on the

@@ -1,7 +1,7 @@
 import { describe, it, expect } from 'vitest';
 import { renderToStaticMarkup } from 'react-dom/server';
 import LocalBusinessSchema from '@/components/structured-data/LocalBusinessSchema';
-import LocalBusinessAreaSchema from '@/components/structured-data/LocalBusinessAreaSchema';
+import AreaServiceSchema from '@/components/structured-data/AreaServiceSchema';
 import WebSiteSchema from '@/components/structured-data/WebSiteSchema';
 import BreadcrumbSchema from '@/components/structured-data/BreadcrumbSchema';
 import FAQSchema from '@/components/structured-data/FAQSchema';
@@ -9,9 +9,8 @@ import ServiceSchema from '@/components/structured-data/ServiceSchema';
 import ProjectSchema from '@/components/structured-data/ProjectSchema';
 import ArticleSchema from '@/components/structured-data/ArticleSchema';
 import ContactPageSchema from '@/components/structured-data/ContactPageSchema';
-import HowToSchema from '@/components/structured-data/HowToSchema';
 import ProjectCategorySchema from '@/components/structured-data/ProjectCategorySchema';
-import type { Company, GoogleReview, ServiceArea, SocialLink } from '@/lib/types';
+import type { Company, ServiceArea, SocialLink } from '@/lib/types';
 
 const company: Company = {
   name: 'Reno Stars',
@@ -28,18 +27,6 @@ const company: Company = {
 
 const socialLinks: SocialLink[] = [{ url: 'https://example.com/social', platform: 'facebook' } as unknown as SocialLink];
 const areas: ServiceArea[] = [{ slug: 'vancouver', name: { en: 'Vancouver', zh: '温哥华' } } as unknown as ServiceArea];
-const reviews: GoogleReview[] = [
-  {
-    authorName: 'Test User',
-    authorUri: 'https://example.com/user',
-    authorPhotoUri: '',
-    rating: 5,
-    text: 'Great work',
-    languageCode: 'en',
-    publishTime: '2025-01-01T00:00:00Z',
-    relativePublishTime: '1 month ago',
-  },
-];
 
 /** Extract every parsed JSON-LD object from a rendered HTML string. */
 function extractJsonLd(html: string): unknown[] {
@@ -98,7 +85,6 @@ describe('structured-data: no duplicate @id collisions', () => {
           areas={areas}
           googleRating={5}
           googleReviewCount={69}
-          reviews={reviews}
         />
         <BreadcrumbSchema items={[{ name: 'Home', url: '/en/' }]} />
         <FAQSchema faqs={[{ question: 'Q', answer: 'A' }]} />
@@ -119,7 +105,6 @@ describe('structured-data: no duplicate @id collisions', () => {
         areas={areas}
         googleRating={5}
         googleReviewCount={69}
-        reviews={reviews}
       />
     );
     const html = renderToStaticMarkup(tree);
@@ -127,7 +112,10 @@ describe('structured-data: no duplicate @id collisions', () => {
     expect(aggregateCount).toBe(1);
   });
 
-  it('LocalBusinessSchema embeds Google reviews under the same organization @id', () => {
+  it('LocalBusinessSchema carries the aggregateRating under the organization @id, and no review[]', () => {
+    // Google Maps reviews are third-party; Google's review-snippet policy
+    // disallows marking them up as the business's own (removed 2026-09-24).
+    // The rating stays, on this one node only.
     const html = renderToStaticMarkup(
       <LocalBusinessSchema
         company={company}
@@ -135,24 +123,15 @@ describe('structured-data: no duplicate @id collisions', () => {
         areas={areas}
         googleRating={5}
         googleReviewCount={69}
-        reviews={reviews}
       />,
     );
     const [node] = extractJsonLd(html) as [Record<string, unknown>];
     expect(node['@id']).toMatch(/#organization$/);
-    expect(Array.isArray(node.review)).toBe(true);
-    expect((node.review as unknown[]).length).toBe(1);
+    expect(node).not.toHaveProperty('review');
     expect(node.aggregateRating).toBeDefined();
   });
 
-  it('never emits review[] without aggregateRating (GSC WNC-10030322 regression)', () => {
-    // Upstream Places API can return reviews with a zeroed rating/count
-    // (lib/google-reviews.ts makes two independent requests; if MOST_RELEVANT
-    // fails but NEWEST succeeds the result is { rating: 0, userRatingCount: 0,
-    // reviews: [...] }). Emitting those Review objects without an
-    // aggregateRating triggers Google's "Multiple reviews without
-    // aggregateRating object" structured-data error. The component must drop
-    // the review array entirely in that case.
+  it('omits aggregateRating when the Places fetch returned a zeroed rating/count', () => {
     const html = renderToStaticMarkup(
       <LocalBusinessSchema
         company={company}
@@ -160,7 +139,6 @@ describe('structured-data: no duplicate @id collisions', () => {
         areas={areas}
         googleRating={0}
         googleReviewCount={0}
-        reviews={reviews}
       />,
     );
     const [node] = extractJsonLd(html) as [Record<string, unknown>];
@@ -168,7 +146,7 @@ describe('structured-data: no duplicate @id collisions', () => {
     expect(node.review).toBeUndefined();
   });
 
-  it('area page (LocalBusinessAreaSchema) uses a distinct @id from the layout organization', () => {
+  it('area page (AreaServiceSchema) uses a distinct @id from the layout organization', () => {
     const layoutTree = (
       <LocalBusinessSchema
         company={company}
@@ -179,14 +157,12 @@ describe('structured-data: no duplicate @id collisions', () => {
       />
     );
     const areaTree = (
-      <LocalBusinessAreaSchema
+      <AreaServiceSchema
         company={company}
         areaName="Vancouver"
         areaSlug="vancouver"
         locale="en"
         services={['Kitchen Renovation']}
-        googleRating={5}
-        googleReviewCount={69}
       />
     );
     const nodes = [...renderAndExtract(layoutTree), ...renderAndExtract(areaTree)];
@@ -216,9 +192,8 @@ describe('structured-data: no duplicate @id collisions', () => {
       <ProjectSchema key="p" company={company} name="Project" description="desc" image="https://example.com/i.jpg" url="/en/projects/example/" />,
       <ArticleSchema key="a" company={company} headline="Title" description="desc" datePublished="2025-01-01" image="https://example.com/i.jpg" url="/en/blog/x/" />,
       <ContactPageSchema key="c" company={company} areaNames={['Vancouver']} locale="en" />,
-      <HowToSchema key="h" name="How" description="desc" steps={[{ name: 'step', text: 'do' }]} />,
       <ProjectCategorySchema key="pc" categoryName="Kitchen" locale="en" projects={[{ slug: 'x', title: { en: 'X', zh: 'X' } }]} />,
-      <LocalBusinessAreaSchema key="lba" company={company} areaName="Vancouver" areaSlug="vancouver" locale="en" services={['Kitchen']} />,
+      <AreaServiceSchema key="as" company={company} areaName="Vancouver" areaSlug="vancouver" locale="en" services={['Kitchen']} />,
     ];
 
     for (const el of pageSchemas) {
