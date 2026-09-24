@@ -15,12 +15,12 @@
       "description": "温哥华大都会地区 100 多个真实的改造项目 - 前后照片、实际成本、时间表。厨房、卫生间、地下室、全屋。"
     },
     "projectsBudget": {
-      "title": "温哥华 | {tier} 装修项目Reno Stars",
+      "title": "温哥华 | {tier} 装修项目聚星装修",
       "description": "温哥华大都会区真实的{tier}装修项目 — 实际造价、前后对比照片与完整工期记录。可按厨房、浴室、地下室或全屋筛选。"
     },
     "contact": {
       "title": "联系 Reno Stars — 免费报价 |温哥华 778-960-7999",
-      "description": "通过 Reno Stars 预订免费装修报价——温哥华大都会区的厨房、浴室、地下室和整栋房子。请致电 778-960-7999 或在线请求。 24小时内回复。"
+      "description": "通过聚星装修预订免费装修报价——温哥华大都会区的厨房、浴室、地下室和整栋房子。请致电 778-960-7999 或在线请求。 24小时内回复。"
     },
     "blog": {
       "title": "装修技巧和成本指南|温哥华 |Reno Stars博客",
@@ -28,14 +28,14 @@
     },
     "benefits": {
       "title": "为什么选择Reno Stars | 五星评论，500 万加元保险",
-      "description": "Google 五星级评论、500 万加元的 CGL 保险、有效的 WCB 保险。透明的报价和反应灵敏的团队。了解为什么温哥华房主信任 Reno Stars。"
+      "description": "Google 五星级评论、500 万加元的 CGL 保险、有效的 WCB 保险。透明的报价和反应灵敏的团队。了解为什么温哥华房主信任聚星装修。"
     },
     "design": {
       "title": "温哥华装修设计图库 | 聚星装修 Reno Stars",
       "description": "浏览 100 多个真实的大温哥华地区项目的装修设计理念。厨房、浴室、地下室和全屋灵感与实际成本。"
     },
     "projectCategory": {
-      "title": "{category} 装修项目 |温哥华Reno Stars",
+      "title": "{category} 装修项目 |温哥华聚星装修",
       "description": "探索我们在温哥华和低陆平原的{category}改造项目。查看前后照片和设计灵感。"
     },
     "projectDetail": {
@@ -44,11 +44,11 @@
     "serviceLocation": {
       "title": "{service}的{area} |Reno Stars",
       "titleWithTagline": "{service}的{area} – {tagline} |Reno Stars",
-      "description": "Reno Stars为{area}提供专业{service}服务——{years}+年经验、500万加元CGL保险、有效WCB保险、最长3年保修。今天免费报价。"
+      "description": "聚星装修为{area}提供专业{service}服务——{years}+年经验、500万加元CGL保险、有效WCB保险、最长3年保修。今天免费报价。"
     },
     "areas": {
       "title": "您附近的装修 | 17 个大温哥华地区 |Reno Stars",
-      "description": "Reno Stars 为大温哥华地区和菲沙河谷的 17 个社区提供服务。查找您所在城市的装修服务并获得免费报价。"
+      "description": "聚星装修为大温哥华地区和菲沙河谷的 17 个社区提供服务。查找您所在城市的装修服务并获得免费报价。"
     },
     "area": {
       "title": "{area} 装修承包商 | 聚星装修 Reno Stars",
@@ -59,7 +59,7 @@
       "description": "您的留言已收到。我们会尽快回复您。"
     },
     "process": {
-      "title": "装修工作流程：5 个步骤 |温哥华Reno Stars",
+      "title": "装修工作流程：5 个步骤 |温哥华聚星装修",
       "description": "了解我们简化的 5 步翻新工作流程。从初步咨询到项目移交，我们让您的装修之旅简单无忧。"
     },
     "showroom": {
@@ -112,7 +112,7 @@
     },
     "reviews": {
       "title": "聚星装修 Reno Stars 评价 — 温哥华装修公司客户评价",
-      "description": "来自温哥华真实房主的经过验证的 Google 五星级评级 - 厨房、浴室和全屋翻新。了解为什么大温哥华家庭信任 Reno Stars。"
+      "description": "来自温哥华真实房主的经过验证的 Google 五星级评级 - 厨房、浴室和全屋翻新。了解为什么大温哥华家庭信任聚星装修。"
     },
     "financing": {
       "title": "装修融资和预算指南|温哥华",
@@ -124,7 +124,7 @@
     },
     "features": {
       "title": "$500万保险・3年保修 | 聚星装修 Reno Stars",
-      "description": "Reno Stars 的与众不同之处在于：500 万加元的 CGL 保险、WCB 保险、3 年工艺保修、双语团队、五星级 Google 评论。温哥华。"
+      "description": "聚星装修的与众不同之处在于：500 万加元的 CGL 保险、WCB 保险、3 年工艺保修、双语团队、五星级 Google 评论。温哥华。"
     },
     "nearMe": {
       "title": "我附近的家居装修 |温哥华地铁 |Reno Stars",
