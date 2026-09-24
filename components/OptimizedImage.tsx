@@ -5,6 +5,12 @@
  * 1. Instantly shows a tiny 20px thumbnail (blurred) — loads in ~100ms even cold
  * 2. Loads the full-res image in the background
  * 3. Crossfades from thumbnail → full image when ready
+ *
+ * `priority` images (above-the-fold / LCP candidates) skip all of that: the
+ * full-res <img> is emitted in the server HTML with fetchpriority="high" and is
+ * visible from first paint. No thumb, no shimmer, no opacity gate — any of
+ * those makes the LCP element wait on hydration or compete with the thumb for
+ * bandwidth (PageSpeed mobile, 2026-09-24: /en/services/bathroom/ LCP 5.8s).
  */
 
 import { useState, useEffect, useRef } from 'react';
@@ -136,10 +142,13 @@ export default function OptimizedImage({
   const thumbSrc = useProcessed
     ? buildProcessedUrl(src, 320)   // direct R2, no redirect, ~fast
     : buildOptimizedUrl(src, 20, 30); // /api/image for external/legacy
-  const fullSrc = isInView
+  // Priority images never wait for the (client-only) IntersectionObserver, so
+  // the full image lands in SSR HTML even if `priority` flips on after mount.
+  const renderFull = priority || isInView;
+  const fullSrc = renderFull
     ? (useProcessed ? buildProcessedUrl(src, 828) : buildOptimizedUrl(src, 828, quality))
     : undefined;
-  const fullSrcSet = isInView
+  const fullSrcSet = renderFull
     ? (useProcessed ? buildProcessedSrcSet(src) : buildSrcSet(src, quality))
     : undefined;
 
@@ -169,7 +178,7 @@ export default function OptimizedImage({
           A static base tint with a sliding highlight overlay; the overlay
           animates via transform (GPU-composited) instead of background-position
           so it never touches the main thread. */}
-      {!thumbLoaded && (
+      {!priority && !thumbLoaded && (
         <div
           aria-hidden="true"
           style={{
@@ -203,20 +212,18 @@ export default function OptimizedImage({
             which left every gallery image with empty alt in first-pass crawls.
           → If the caller explicitly passes `aria-hidden`, respect that (truly
             decorative use cases like icons stay decorative). */}
-      {/* eslint-disable-next-line @next/next/no-img-element */}
+      {/* Priority images render no thumb at all (see header comment). */}
+      {!priority && (
+      // eslint-disable-next-line @next/next/no-img-element
       <img
         src={thumbSrc}
         alt={ariaHidden ? '' : alt}
         aria-hidden={ariaHidden ? 'true' : undefined}
-        loading={priority ? 'eager' : 'lazy'}
+        loading="lazy"
         decoding="async"
-        // Match the full image's fetch priority so the thumb arrives BEFORE
-        // the full image and acts as a real LQIP. Earlier this was "low"
-        // which (with default-priority full image) put the thumb behind
-        // the full image in the network queue and defeated the placeholder.
         // loading="lazy" already prevents React 19's auto-preload, so we
         // don't need fetchPriority="low" to suppress that.
-        fetchPriority={priority ? 'high' : 'auto'}
+        fetchPriority="auto"
         className={combinedClassName}
         style={{
           ...style,
@@ -234,10 +241,13 @@ export default function OptimizedImage({
         onLoad={() => setThumbLoaded(true)}
         onError={() => setThumbLoaded(true)}
       />
+      )}
 
       {/* Full image — fades in on top when loaded. Only mount once in view so
-          SSR HTML never emits an <img> without src/srcset (W3C validation). */}
-      {isInView && (
+          SSR HTML never emits an <img> without src/srcset (W3C validation).
+          Priority images mount immediately and are visible from first paint,
+          and carry the descriptive alt themselves since there is no thumb. */}
+      {renderFull && (
         // eslint-disable-next-line @next/next/no-img-element
         <img
           src={fullSrc}
@@ -246,15 +256,17 @@ export default function OptimizedImage({
           // Thumb already carries the descriptive alt in SSR HTML (see comment
           // on the thumb img). Once the full image fades in client-side, mark
           // it aria-hidden so screen readers don't announce the same alt twice.
-          alt=""
-          aria-hidden="true"
+          alt={priority && !ariaHidden ? alt : ''}
+          aria-hidden={priority && !ariaHidden ? undefined : 'true'}
           width={fill ? undefined : width}
           height={fill ? undefined : height}
           loading={resolvedLoading}
-          decoding={resolvedDecoding}
+          // async even for priority: a sync decode of a large hero blocks the
+          // main thread and does not make it paint any sooner.
+          decoding="async"
           fetchPriority={priority ? 'high' : undefined}
           className={combinedClassName}
-          style={{
+          style={priority ? style : {
             ...style,
             opacity: fullLoaded ? 1 : 0,
             transition: 'opacity 0.4s ease-out',
