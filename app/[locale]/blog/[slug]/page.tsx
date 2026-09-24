@@ -13,6 +13,8 @@ import { getGoogleReviews } from '@/lib/google-reviews';
 import { resolveBlogDates } from '@/lib/blog-dates';
 import ClientMessages from '@/components/ClientMessages';
 
+export const revalidate = 3600;
+
 interface PageProps {
   params: Promise<{ locale: string; slug: string }>;
 }

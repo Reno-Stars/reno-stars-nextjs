@@ -7,6 +7,8 @@ import { getBaseUrl, buildAlternates, buildOgImageUrl, SITE_NAME, buildAlternate
 import { getCompanyFromDb, getServiceAreasFromDb } from '@/lib/db/queries';
 import ClientMessages from '@/components/ClientMessages';
 
+export const revalidate = 3600;
+
 interface PageProps {
   params: Promise<{ locale: string }>;
 }

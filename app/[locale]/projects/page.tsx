@@ -9,6 +9,8 @@ import { presetBySlug, presetRange } from '@/lib/budget-presets';
 import { slimProjectForListing, slimSiteForListing } from '@/lib/data/listing-payload';
 import ClientMessages from '@/components/ClientMessages';
 
+export const revalidate = 3600;
+
 interface PageProps {
   params: Promise<{ locale: string }>;
   searchParams: Promise<{ service?: string; location?: string; space?: string; budget?: string; q?: string }>;

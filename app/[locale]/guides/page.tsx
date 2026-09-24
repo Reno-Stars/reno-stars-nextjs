@@ -6,6 +6,8 @@ import { BreadcrumbSchema, FAQSchema, ItemListSchema } from '@/components/struct
 import { getBaseUrl, buildAlternates, buildOgImageUrl, SITE_NAME, buildAlternateLocales} from '@/lib/utils';
 import ClientMessages from '@/components/ClientMessages';
 
+export const revalidate = 3600;
+
 interface PageProps {
   params: Promise<{ locale: string }>;
 }

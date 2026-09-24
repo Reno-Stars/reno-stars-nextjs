@@ -10,6 +10,8 @@ import { getCompanyFromDb, getServiceAreasFromDb, getPropertyTypesFromDb } from 
 import { getGoogleReviews } from '@/lib/google-reviews';
 import ClientMessages from '@/components/ClientMessages';
 
+export const revalidate = 3600;
+
 interface PageProps {
   params: Promise<{ locale: string }>;
 }

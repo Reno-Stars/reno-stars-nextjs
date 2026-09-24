@@ -4,6 +4,8 @@ import { type Locale } from '@/i18n/config';
 import ThankYouPage from '@/components/pages/ThankYouPage';
 import ClientMessages from '@/components/ClientMessages';
 
+export const revalidate = 3600;
+
 interface PageProps {
   params: Promise<{ locale: string }>;
 }
