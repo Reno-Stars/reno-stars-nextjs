@@ -145,7 +145,7 @@ export async function GET(): Promise<Response> {
     `Yes — free in-home consultation and itemized written quote within 2-3 business days across all ${areas.length} Metro Vancouver cities we serve. No deposit required to quote.`,
     '',
     `### Does ${SITE_NAME} build legal basement suites in Vancouver?`,
-    'Yes. Legal secondary suite conversions in Metro Vancouver typically cost $60,000-$150,000 including permits, separate entrance, fire separation, egress windows, kitchen, bathroom, and inspections. Many municipalities (Vancouver, Burnaby) offer subsidies of $5,000-$10,000 for legal suite creation.',
+    'Yes. Legal secondary suite conversions in Metro Vancouver typically cost $60,000-$150,000 including permits, separate entrance, fire separation, egress windows, kitchen, bathroom, and inspections.',
   ].join('\n');
 
   const body = [

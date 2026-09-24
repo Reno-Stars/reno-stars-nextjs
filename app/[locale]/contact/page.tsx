@@ -2,6 +2,7 @@ import { Metadata } from 'next';
 import { getTranslations, setRequestLocale } from 'next-intl/server';
 import { ogLocaleMap, type Locale } from '@/i18n/config';
 import ContactPage from '@/components/pages/ContactPage';
+import { formatOpeningHours } from '@/lib/opening-hours';
 import { BreadcrumbSchema, ContactPageSchema, FAQSchema } from '@/components/structured-data';
 import { localeSelfName, nativeSupportLanguageList } from '@/lib/i18n/language-names';
 import { getBaseUrl, buildAlternates, buildOgImageUrl, SITE_NAME, pickLocale, buildAlternateLocales} from '@/lib/utils';
@@ -98,6 +99,7 @@ export default async function Page({ params }: PageProps) {
       <FAQSchema faqs={contactFaqs} locale={locale} />
       <ContactPage
         company={company}
+        hours={formatOpeningHours(locale)}
         areaNames={areaNames}
         cityOptions={cityOptions}
         propertyTypeOptions={propertyTypeOptions}

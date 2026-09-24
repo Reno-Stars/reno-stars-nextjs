@@ -11,8 +11,7 @@
     "new": "NEW",
     "new2": "New",
     "businessHours": "Business Hours",
-    "businessHoursShort": "Mon–Fri 8AM–6PM, Sat 9AM–4PM",
-    "businessHoursDetail": "Monday - Friday: 8:00 AM - 6:00 PM\nSaturday: 9:00 AM - 4:00 PM\nSunday: Closed",
+    "showroomByAppointment": "Showroom visits by appointment",
     "featured": "Featured"
   }
 }

@@ -11,8 +11,7 @@
     "new": "새로운",
     "new2": "새로운",
     "businessHours": "영업시간",
-    "businessHoursShort": "월~금 오전 8시~오후 6시, 토요일 오전 9시~오후 4시",
-    "businessHoursDetail": "월요일~금요일: 오전 8시~오후 6시\n토요일: 오전 9시 - 오후 4시\n일요일: 휴무",
+    "showroomByAppointment": "쇼룸 방문은 예약제로 운영됩니다",
     "featured": "추천"
   },
   "_translation_meta": {
