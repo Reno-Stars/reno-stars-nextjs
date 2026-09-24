@@ -11,8 +11,7 @@
     "new": "新的",
     "new2": "新的",
     "businessHours": "營業時間",
-    "businessHoursShort": "Mon–Fri 8AM–6PM, Sat 9AM–4PM",
-    "businessHoursDetail": "週一至週五：上午 8:00 至下午 6:00\n週六：上午 9:00 - 下午 4:00\n週日：休息",
+    "showroomByAppointment": "展廳參觀需預約",
     "featured": "精選"
   },
   "_translation_meta": {

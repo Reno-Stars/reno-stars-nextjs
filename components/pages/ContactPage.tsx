@@ -6,6 +6,7 @@ import { Phone, Mail, MapPin, Clock, Shield, Star, CheckCircle, ChevronRight } f
 import { useRouter } from '@/navigation';
 import type { Locale } from '@/i18n/config';
 import type { Company } from '@/lib/types';
+import type { FormattedHours } from '@/lib/opening-hours';
 import { MAP_EMBED_URL } from '@/lib/data';
 import ContactForm from '@/components/ContactForm';
 import LanguageSupportNotice from '@/components/LanguageSupportNotice';
@@ -25,6 +26,8 @@ export interface FormSelectOption {
 
 interface ContactPageProps {
   company: Company;
+  /** Pre-formatted on the server from OPENING_HOURS (see lib/opening-hours.ts). */
+  hours: FormattedHours;
   areaNames: string[];
   /** City options for the form (slug+localized name). */
   cityOptions: FormSelectOption[];
@@ -40,7 +43,7 @@ interface ContactPageProps {
   languageSupport: { language: string; supported: string };
 }
 
-export default function ContactPage({ company, areaNames, cityOptions, propertyTypeOptions, googleRating, languageSupport }: ContactPageProps) {
+export default function ContactPage({ company, hours, areaNames, cityOptions, propertyTypeOptions, googleRating, languageSupport }: ContactPageProps) {
   const t = useTranslations();
   const locale = useLocale() as Locale;
   const router = useRouter();
@@ -53,8 +56,8 @@ export default function ContactPage({ company, areaNames, cityOptions, propertyT
     { icon: Phone, title: t('label.phone'), value: company.phone, href: `tel:${company.phone}` },
     { icon: Mail, title: t('label.email'), value: company.email, href: `mailto:${company.email}` },
     { icon: MapPin, title: t('label.address'), value: company.address },
-    { icon: Clock, title: t('label.businessHours'), value: t('label.businessHoursDetail') },
-  ], [t, company]);
+    { icon: Clock, title: t('label.businessHours'), value: [...hours.detail, t('label.showroomByAppointment')].join('\n') },
+  ], [t, company, hours]);
 
   const heroBadges = useMemo(() => [
     { label: `${company.yearsExperience}+ ${t('stats.yearsExperience')}` },
@@ -126,7 +129,7 @@ export default function ContactPage({ company, areaNames, cityOptions, propertyT
           <div className="flex items-center gap-2">
             <Clock className="w-5 h-5" style={{ color: GOLD }} />
             <span className="text-base font-medium" style={{ color: TEXT_MID }}>
-              {t('label.businessHoursShort')}
+              {hours.short} · {t('label.showroomByAppointment')}
             </span>
           </div>
         </div>

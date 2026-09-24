@@ -11,8 +11,7 @@
     "new": "NUEVO",
     "new2": "Nuevo",
     "businessHours": "Horario",
-    "businessHoursShort": "Lun–Vie 8AM–6PM, Sáb 9AM–4PM",
-    "businessHoursDetail": "Lunes - Viernes: 8:00 AM - 6:00 PM\nSábado: 9:00 AM - 4:00 PM\nDomingo: Cerrado",
+    "showroomByAppointment": "Visitas a la sala de exposición con cita previa",
     "featured": "Destacado"
   }
 }

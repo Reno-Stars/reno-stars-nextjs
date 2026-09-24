@@ -11,8 +11,7 @@
     "new": "新しい",
     "new2": "新しい",
     "businessHours": "営業時間",
-    "businessHoursShort": "月曜～金曜 午前 8 時～午後 6 時、土曜 午前 9 時～午後 4 時",
-    "businessHoursDetail": "月曜～金曜：午前8時～午後6時\n土曜: 午前9時～午後4時\n日曜日：定休日",
+    "showroomByAppointment": "ショールームへのご来店は予約制です",
     "featured": "注目の"
   },
   "_translation_meta": {

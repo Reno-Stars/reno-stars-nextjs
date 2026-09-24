@@ -11,8 +11,7 @@
     "new": "新的",
     "new2": "新的",
     "businessHours": "营业时间",
-    "businessHoursShort": "周一至周五上午 8 点至下午 6 点，周六上午 9 点至下午 4 点",
-    "businessHoursDetail": "周一至周五：上午 8:00 至下午 6:00\n周六：上午 9:00 - 下午 4:00\n周日：休息",
+    "showroomByAppointment": "展厅参观需预约",
     "featured": "精选"
   },
   "_translation_meta": {

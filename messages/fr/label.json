@@ -11,8 +11,7 @@
     "new": "NOUVEAU",
     "new2": "Nouveau",
     "businessHours": "Heures d'ouverture",
-    "businessHoursShort": "Du lundi au vendredi de 8h00 à 18h00, le samedi de 9h00 à 16h00",
-    "businessHoursDetail": "Du lundi au vendredi : 8h00 - 18h00\nSamedi : 9h00 - 16h00\nDimanche : Fermé",
+    "showroomByAppointment": "Visites de la salle d'exposition sur rendez-vous",
     "featured": "En vedette"
   }
 }
