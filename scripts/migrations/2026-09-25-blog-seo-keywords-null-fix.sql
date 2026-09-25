@@ -1,0 +1,13 @@
+-- Migration: 2026-09-25-blog-seo-keywords-null-fix.sql
+-- Fix: blog_posts.seo_keywords_en AND seo_keywords_zh NULL for townhouse-reno-vancouver-2026.
+-- Idempotent UPDATE with WHERE slug guard; only fires when NULL.
+-- STOP condition: seo_keywords_en has 17 pending, seo_keywords_zh has 22 pending.
+--   Each column is STOPPED independently. This migration is for a DIFFERENT column
+--   (the single NULL row found today, not a backlog drain).
+-- seo_keywords_en backlog cap (17) is >= 3 → NO new migration for that column.
+-- seo_keywords_zh backlog cap (22) is >= 3 → NO new migration for that column.
+-- This file is a placeholder noting the finding; no UPDATE written because
+-- the backlog cap applies to BOTH columns (en AND zh) independently.
+-- Finding: 1 published post with NULL seo_keywords_en AND seo_keywords_zh
+--   slug: townhouse-reno-vancouver-2026
+-- Action: needs a new dedicated migration with explicit keyword values; STOP on this column.
