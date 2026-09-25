@@ -1,60 +1,64 @@
-# SEO Tick 2026-09-25 — Continuous
+# SEO Tick 2026-09-25 — Continuous (Evening)
 
-## Branch: `seo/daily-2026-09-25` (pushed ✓)
+## Branch: `seo/daily-2026-09-25` (existing branch, continuing)
 
-## Blog Post Published
+## Blog Post: Attempted
 
-**Topic:** Ladder 1 — Competitor gap
-**Slug:** `bathroom-renovation-cost-burnaby`
-**Title:** "How Much Does a Bathroom Renovation Cost in Burnaby BC? (2026)"
-**Title Zh:** 本拿比浴室翻新费用指南 (2026)
+**Topic:** Ladder 2 — Uncovered query
+**Slug candidate:** `mold-remediation-cost-vancouver-2026`
+**Title EN:** "Mold Remediation Cost Vancouver BC 2026: What Homeowners Actually Pay"
+**Title ZH:** "温哥华霉菌治理费用2026：业主真实花费指南"
 
-### Gates
+### Gates Assessed
 | Gate | Result |
 |------|--------|
-| DEDUP | ✅ Not in existing 456 published posts |
-| CANNIBALISATION | ✅ New slug, no existing cluster |
-| SUBSTANCE FLOOR | ✅ ~580 words EN, ~800 CJK chars ZH, 6 FAQ Q&A pairs |
+| DEDUP | ✅ CLEAR — 0 posts for `mold`, `solar`, `ventilation`; no matching slugs |
+| CANNIBALISATION | ✅ CLEAR — new slug, no existing cluster |
+| SUBSTANCE FLOOR | ✅ ~1,100 words EN, ~1,600 CJK chars ZH, 6 FAQ Q&A pairs |
 
-### API Response
-```json
-{"ok":true,"slug":"bathroom-renovation-cost-burnaby","created":true,"isPublished":true,"locales":0}
-```
+### Blog API Status
+- Blog API confirmed alive (HTTP 200)
+- Slug `mold-remediation-cost-vancouver-2026` confirmed not in DB (rowCount: 0)
+- Hero image: `https://pub-b88db8c50fd64a9a87f60a4486a4a488.r2.dev/...` (real R2 URL, verified in DB)
+- **BLOCKED:** Shell security scanner blocks `.dev` in terminal curl commands; execute_code requires interactive approval; pnpm/node not available in this environment
 
-### Content
-- Cost breakdown table: powder room ($4–12K), standard 5-piece ($12–38K), master bath ($25–60K+), full gut ($18–50K+)
-- Cost drivers: plumbing reconfiguration, tile work, cabinetry, electrical, asbestos remediation
-- Budget strategies: keep layout, refinish vs replace, layer updates, self-source materials
-- Permit requirements for City of Burnaby
-- Timeline: 4–8 weeks standard, 8–14 weeks for complex
-- 6 FAQ Q&A pairs (EN + ZH)
+### Content Written
+- Full HTML article drafted: `/workspace/repo/blog-drafts/mold-remediation-cost-vancouver-2026.md`
+- JSON metadata file: `/workspace/repo/blog-drafts/mold-remediation-cost-vancouver-2026.json`
+- Topics covered:
+  - Cost by scope table ($500 – $30,000+)
+  - Vancouver climate factors (1,400–1,700mm rainfall, 1980s–90s vapour barrier gaps)
+  - Inspection costs ($250–$1,200)
+  - BC Building Code 2024 / Vancouver Bylaw
+  - WorkSafeBC compliance
+  - 6 FAQ Q&A pairs (EN + ZH)
+  - Post-remediation steps
 
-### SEO Metadata
-- `focusKeywordEn`: bathroom renovation cost burnaby
-- `focusKeywordZh`: 本拿比浴室翻新费用
-- `seoKeywordsEn`: bathroom renovation cost burnaby,bathroom renovation price burnaby bc,how much bathroom renovation burnaby,burnaby bathroom renovation cost guide,bathroom renovation estimate burnaby
-- `seoKeywordsZh`: 本拿比浴室翻新费用,本拿比浴室翻新价格,本拿比浴室装修费用2026,浴柜装修本拿比,本拿比浴室翻新报价
-- `metaTitleEn`: How Much Does a Bathroom Renovation Cost in Burnaby BC? (2026) — 61 chars ✅
-- `metaDescriptionEn`: Get accurate 2026 bathroom renovation costs in Burnaby BC. Detailed cost breakdown... — 117 chars ✅
+### SEO Tick Findings
 
-### Note
-Hero image not available at publish time — `projects.hero_image_url` query returned zero rows in this session (DB projection issue). Post published without featured image; hero image can be backfilled via migration if needed.
+| Check | Result |
+|-------|--------|
+| Attic-insulation post | ✅ Published this session (Ladder 1) |
+| Mold dedup | ✅ CLEAR — 0 posts for mold/solar/ventilation |
+| Guides competition | ✅ /en/guides/mold/ = 404, /solar/ = 404, /ventilation/ = 404 |
+| service_areas meta trim | ⚠️ richmond (163 > 155), west-vancouver (157 > 155) — migrations written but not applied |
+| Hero image DB | ⚠️ `projects.hero_image_url` query with explicit cols returned 5 rows; earlier `SELECT *` returned 0 rows — confirms explicit column list requirement |
+| `.dev` URL block | 🚫 Shell scanner blocks `.dev` in terminal — publish via Blog API blocked; execute_code needs approval |
 
-## DB Notes
-- `blog_posts.status` column does not exist — correct column is `is_published` (boolean)
-- `projects.title` column does not exist — correct column is `title` in projects but `title_en` in services
-- `services.focus_keyword_en` returned "column does not exist" — services table uses different column names; schema inspection needed
-- DB query projection corruption confirmed: explicit column lists required, `SELECT *` returns wrong column positions
-
-## Status Summary
+## SEO Tick Summary
 
 | Ladder | Finding | Action |
 |--------|---------|--------|
-| Ladder 1 (Competitor gap) | No bathroom renovation cost guide for Burnaby BC | ✅ Published `bathroom-renovation-cost-burnaby` |
-| Ladder 2 (Schema) | Column name mismatches in DB queries | Documented — always use explicit column lists |
-| Ladder 3 (Coverage) | Hero images from projects unavailable (DB query error) | Post published without featured image |
+| L1 (attic insulation) | ✅ Published `attic-insulation-cost-vancouver-2026` this session | Done |
+| L2 (mold query) | ✅ Content written, slug CLEAR, hero image confirmed | **Publish blocked by env — needs pnpm/blog-publish or DB INSERT** |
+| Schema | Confirmed: explicit col lists required for `projects.hero_image_url` | Documented |
+| service_areas | richmond + west-vancouver meta_description_en over 155 chars | Migrations written, not applied |
+
+## Blocking Issue
+- **Cannot publish via Blog API or DB INSERT** — `.dev` domain blocked in all terminal shell commands by security scanner; `execute_code` requires interactive one-shot approval; pnpm/node unavailable in this container environment
+- **Workaround available:** Run `pnpm blog:publish -f blog-drafts/mold-publish.json --publish` on a machine with pnpm + node + .env.local
 
 ## Commit
 ```
-seo: publish bathroom-renovation-cost-burnaby — Ladder 1 cost guide, EN+ZH, FAQ, no hero image [tick 2026-09-25]
+seo: draft mold-remediation-cost-vancouver-2026 — Ladder 2, EN+ZH, FAQ, cost table [tick 2026-09-25]
 ```
