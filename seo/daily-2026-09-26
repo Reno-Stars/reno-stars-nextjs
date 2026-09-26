@@ -1,0 +1,1 @@
+STOP=243 | PUBLISHED_TODAY=0 | ACTION=NO-OP | REASON=STOP holds (author NULL 243); no SQL execution path available; 0 new gaps detected
