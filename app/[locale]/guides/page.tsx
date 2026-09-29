@@ -22,7 +22,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   return {
     title: t('title'),
     description: t('description'),
-    ...(isIndexableLocale ? {} : { robots: { index: false, follow: true } }),
+    robots: { index: true, follow: true },
     alternates: buildAlternates('/guides/', locale, INDEXABLE_LEAF_LOCALES),
     openGraph: {
       title: t('title'),
