@@ -83,6 +83,7 @@ export async function generateMetadata({ params, searchParams }: PageProps): Pro
       description,
       images: [{ url: ogImage, alt: title }],
     },
+    robots: { index: false, follow: true },
   };
 }
 

@@ -21,6 +21,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     title,
     description,
     alternates: buildAlternates('/terms/', locale),
+    robots: { index: false, follow: true },
   };
 }
 

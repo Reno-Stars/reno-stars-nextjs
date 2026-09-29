@@ -109,11 +109,12 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       images: [{ url: ogImage, width: 1200, height: 630, alt: t("title") }],
     },
     twitter: {
-      card: "summary_large_image",
-      title: t("title"),
-      description: t("description"),
-      images: [{ url: ogImage, alt: t("title") }],
+      card: 'summary_large_image',
+      title: t('title'),
+      description: t('description'),
+      images: [{ url: ogImage, alt: t('title') }],
     },
+    robots: { index: false, follow: true },
   };
 }
 
