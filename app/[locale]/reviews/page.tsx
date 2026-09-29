@@ -114,7 +114,6 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       description: t('description'),
       images: [{ url: ogImage, alt: t('title') }],
     },
-    robots: { index: false, follow: true },
   };
 }
 
