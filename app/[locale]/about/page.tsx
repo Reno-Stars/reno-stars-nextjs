@@ -40,6 +40,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       description: t('description', years),
       images: [{ url: ogImage, alt: t('title') }],
     },
+    robots: { index: true, follow: true },
   };
 }
 
