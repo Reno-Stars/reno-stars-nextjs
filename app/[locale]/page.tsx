@@ -79,6 +79,10 @@ export async function generateMetadata({
       description,
       images: [{ url: ogImage, alt: title }],
     },
+    robots: {
+      index: true,
+      follow: true,
+    },
   };
 }
 

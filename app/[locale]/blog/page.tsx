@@ -45,6 +45,7 @@ export async function generateMetadata({ params, searchParams }: PageProps): Pro
       description: t('description'),
       images: [{ url: ogImage, alt: title }],
     },
+    robots: { index: true, follow: true },
   };
 }
 
