@@ -162,7 +162,7 @@ function getEnAreaOverrides(): Record<string, { title: string; description: stri
   'west-vancouver': {
     title: 'Bathroom Renovation West Vancouver — Kitchen & Home | Reno Stars',
     description:
-      'Bathroom renovation West Vancouver: verified $57K–$60K projects. Kitchen ($29K–$33K), whole-house & suite. Caulfeild, Dundarave, Ambleside. $5M insured.',
+      'Bathroom renovation West Vancouver: verified $57K–$60K. Kitchen ($29K–$33K), whole-house & suite. Caulfeild, Dundarave, Ambleside. $5M insured.',
   },
   'new-westminster': {
     title: 'New Westminster Renovations (2026) | Quay Condos | Reno Stars',
