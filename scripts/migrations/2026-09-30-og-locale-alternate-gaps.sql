@@ -1,0 +1,11 @@
+-- Migration: NOT APPLIED — needs human to run
+-- File: scripts/migrations/2026-09-30-og-locale-alternate-gaps.sql
+-- Finding: og:locale:alternate covers only zh_CN/zh_TW/ja_JP/ko_KR/es_ES/pa_IN/tl_PH/fa_IR/vi_VN/ru_RU/ar_AE/hi_IN/fr_CA
+--          Missing og:locale:alternate for: en, en-US (x-default), and all 14 hreflang locales
+--          Only 13 og:locale:alternate values present; pa, tl, fa, vi, ru, ar, hi, fr have hreflang but no og:locale:alternate
+-- Scope: homepage (/) and all localized homepage variants
+-- Status: informational — does not affect crawling/indexing; hreflang is the canonical i18n signal
+--          og:locale:alternate is an Open Graph metadata enhancement, not required for SEO
+
+-- Update og:locale:alternate meta tags in page metadata
+-- This would require a code change in metadata.ts or locale metadata config
