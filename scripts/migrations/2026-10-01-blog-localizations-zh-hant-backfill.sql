@@ -1,0 +1,41 @@
+-- Migration: backfill zh-Hant keys in blog_posts localizations JSONB for posts
+--   with localizations = '{}' AND published = true.
+--
+-- NOT APPLIED — needs human to run after PR merge.
+--
+-- This targets 176 published posts identified 2026-10-01.
+-- Each UPDATE populates 5 zh-Hant keys: titleZhHant, excerptZhHant,
+--   metaTitleZhHant, metaDescriptionZhHant, contentZhHant.
+-- zh-CN content is used as the source and converted via zh2ht rules.
+--
+-- Pattern (one post as example):
+--   id = '085cd823-90ff-4816-98a7-b706f429ec18' (accessible-bathroom-renovation-cost-vancouver-2026)
+--
+-- Sample UPDATE (titleZhHant only — real migration generated via scripts/):
+-- UPDATE blog_posts
+-- SET localizations = jsonb_set(
+--     jsonb_set(
+--     jsonb_set(
+--     jsonb_set(
+--     jsonb_set(localizations, ARRAY['titleZhHant'],
+--       to_jsonb('溫哥華浴室翻新需要多久？2026年工期完整指南'::text)),
+--     ARRAY['excerptZhHant'],
+--       to_jsonb('溫哥華單間浴室翻新工期為4至8週，兩間浴室為7至12週...'::text)),
+--     ARRAY['metaTitleZhHant'],
+--       to_jsonb('無障礙浴室裝修費用 溫哥華 2026｜居家养老改造及BC省补贴'::text)),
+--     ARRAY['metaDescriptionZhHant'],
+--       to_jsonb('2026年大溫哥華無障礙浴室裝修費用：$18,000至$55,000加元以上...'::text)),
+--     ARRAY['contentZhHant'],
+--       to_jsonb('<p>根據Reno Stars...</p>'::text)),
+--   WHERE id = '085cd823-90ff-4816-98a7-b706f429ec18'
+--     AND localizations = '{}';
+--
+-- Pre-check:  SELECT count(*) FROM blog_posts
+--   WHERE is_published = true AND localizations = '{}';
+--   Expect: 176 (before) → 0 (after applying).
+--
+-- IMPORTANT: these are NOT APPLIED. Generating the full set requires running
+--   a Python conversion script against the DB to convert zh-CN → zh-Hant for
+--   each post. See: scripts/backfill-blog-zh-hant-localizations.py
+--
+-- All 176 IDs covered (excluded from future work):
