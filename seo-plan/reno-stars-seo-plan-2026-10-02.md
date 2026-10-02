@@ -1,139 +1,164 @@
-# Reno Stars SEO Strategy — Refreshed 2026-10-02
+# Reno Stars SEO Strategy — 2026-10-02
 
-## Current Inventory (DB snapshot)
-| Asset | Count |
-|-------|-------|
-| blog_posts (published) | 270 |
-| FAQs | 210 |
-| project_scopes | 321 |
-| projects | 58 |
-| service_areas | 14 |
-| services | 11 |
-| project_reviews | 27 |
+**Refresh date:** 2026-10-02
+**Site:** reno-stars.com
+**Live inventory:** 270 blog posts · 58 published projects · 11 services · 14 service areas · 27 reviews
 
 ---
 
-## 1. Content Integrity (DEFENSIVE — ongoing)
+## 1. Content Integrity Status
 
-**Status: Largely resolved. Maintenance mode.**
+**113 pending migrations** in `scripts/migrations/` — all awaiting human apply.
+Column backlog cap (3+) reached for: `blog_posts` (zh fields), `services`, `service_areas`.
+→ Migration production PAUSED. Human review/applies needed before more are written.
 
-All zh-localized fields in blog_posts, services, service_areas, project_scopes, projects, and FAQs confirmed clean of English bleed (query: `WHERE col_zh !~ '[一-鿿]'` = 0 rows for all checked tables as of 2026-10-02).
+| Column | Status |
+|--------|--------|
+| `blog_posts.title_zh` | 30+ migrations covering english-test and townhouse posts; backlog capped |
+| `blog_posts.content_zh` | Same — english-test posts partially covered |
+| `blog_posts.excerpt_zh` | Same |
+| `blog_posts.meta_description_zh` | Same |
+| `blog_posts.seo_keywords_zh` | Same |
+| `blog_posts.focus_keyword_zh` | Partially covered |
+| `services.*_zh` | Backlog capped |
+| `service_areas.*_zh` | Backlog capped |
+| `project_scopes.*_zh` | Not yet checked this run |
 
-**Remaining risk — service_areas.meta_description_en:**
-- `richmond`: 163 chars (limit 155) — migration written, NOT applied
-- `west-vancouver`: 157 chars (limit 155) — migration written, NOT applied
-
-**Action:** Human must apply `scripts/migrations/pending/2026-10-02-service-areas-meta-description-en-overlimit.sql`
-
----
-
-## 2. Geographic Coverage (OFFENSIVE — highest ROI)
-
-| City | Commercial Post | Whole-House | Kitchen | Bathroom |
-|------|----------------|-------------|---------|----------|
-| Vancouver | ✅ | ✅ | ✅ | ✅ |
-| Richmond | ✅ | ✅ | ✅ | ✅ |
-| Burnaby | ❌ | ❌ | ❌ | ❌ |
-| North Vancouver | ❌ | ❌ | ❌ | ❌ |
-| West Vancouver | ❌ | ❌ | ❌ | ❌ |
-| Coquitlam | ❌ | ❌ | ❌ | ❌ |
-| Delta | ❌ | ❌ | ❌ | ❌ |
-| Surrey | ❌ | ❌ | ❌ | ❌ |
-| White Rock | ❌ | ❌ | ❌ | ❌ |
-| New Westminster | ❌ | ❌ | ❌ | ❌ |
-| Port Moody | ❌ | ❌ | ❌ | ❌ |
-| Port Coquitlam | ❌ | ❌ | ❌ | ❌ |
-| Langley | ❌ | ❌ | ❌ | ❌ |
-| Tsawwassen | ❌ | ❌ | ❌ | ❌ |
-
-**Priority queue:**
-1. **Burnaby commercial renovation** — draft committed, pending publish
-2. **Burnaby whole-house renovation** — ladder rung 3, no existing page
-3. **North Vancouver kitchen** — ladder rung 3
-4. **Surrey bathroom** — ladder rung 3
+**Immediate action:** Human review and apply pending migrations. Priority: `blog_posts` english-test posts (those publish English on Chinese URLs).
 
 ---
 
-## 3. Topic Gaps
+## 2. Geographic Coverage Matrix
 
-**Uncovered service topics (no blog post at all):**
-- ADU / secondary suite
-- Heat pump / HVAC upgrade
-- Accessible bathroom / aging in place
-- Cabinet refacing / countertop
-- Flooring replacement
-- Painting / interior cosmetic
+14 cities × 11 services = 154 possible combinations.
+Verified service-city pages exist for (sample from live scraping):
+- `/en/projects/` — filtered by service and city via query params
+- Service pages: `/en/services/kitchen/`, `/en/services/bathroom/`, `/en/services/whole-house/`, `/en/services/basement/`, `/en/services/commercial/`, `/en/services/cabinet/`, `/en/services/accessible-bathroom/`, `/en/services/critical-load-panel/`, `/en/services/heat-pump-hvac/`, `/en/services/poly-b-replacement/`, `/en/services/realtor/`
 
-**Recommended first reads:**
-- ADU: high search intent, multi-city opportunity, BC building codes apply
-- Heat pump: government rebates available (2026), competitive topic
-- Accessible bathroom: aging Metro Vancouver population, low competition
+**Coverage gaps identified:**
+- Service page × Port Moody: no dedicated page (only blog posts)
+- Service page × White Rock: only blog posts
+- Service page × Port Coquitlam: only blog posts
+- Service page × Maple Ridge: only blog posts
+- Service page × New Westminster: only blog posts
+
+**Recommended:** Create `/en/services/kitchen/port-moody/` style pages for top untiered city × service combinations.
 
 ---
 
-## 4. Technical SEO
+## 3. Blog Post Gaps — Priority Queue
 
-**Identified issues:**
-- `test-*` slug posts may still exist in DB — recommend purge
-- Some blog posts may have readingTimeMinutes = 0 or null (thin content risk)
-- Schema: `BlogPosting` and `BreadcrumbList` JSON-LD recommended for all blog posts
-- `<h1>` duplicates detected on several pages — audit needed
+Top gaps not yet covered by a published post (from 270-post inventory scan):
 
-**CWV / Core Web Vitals:**
-- INP (Interaction to Next Paint) is the key metric for Reno Stars' page types
-- No CrUX data accessible in current runtime — recommend connecting GSC API
+| Topic | Ladder rung | Status |
+|-------|-------------|--------|
+| How Long Does a Kitchen Renovation Take in Vancouver 2026 | Tutorial | Not covered — timeline post exists for whole-house but kitchen-specific is missing |
+| HVAC / Heat Pump Renovation Costs Vancouver | Competitor gap | Partially covered in HVAC post — expand |
+| Heritage Home Renovation Vancouver 2026 (pre-1980) | Tutorial | Not covered |
+| Laneway House Renovation Vancouver 2026 | Competitor gap | Not covered |
+| Strata Approval Process for Condo Renovation BC | Tutorial | Not covered |
+| Renovation Financing BC 2026 (HELOC, programs) | Tutorial | Not covered |
+| Pre-renovation asbestos/lead testing Vancouver | Tutorial | Not covered |
+| Resale value ROI by renovation type Vancouver | Comparison | Not covered |
+
+**Today's post (2026-10-02):** Condo Renovation Cost Vancouver 2026 — published via Blog API.
+
+**Tomorrow draft:** How Long Does a Kitchen Renovation Take in Vancouver 2026
+
+---
+
+## 4. Technical SEO Debt
+
+| Issue | Severity | Status |
+|-------|----------|--------|
+| `kitchen-vs-bathroom-reno-vancouver-2026` meta_description_en = "Kitchen vs bathroom Vancouver" (41 chars) | HIGH | Identified this run — needs fix |
+| Blog draft `condo-renovation-cost-vancouver-2026.json` still on disk (was published via API, not moved) | LOW | Clean up |
+| 113 pending migrations unapplied | MEDIUM | Human action needed |
+| No live backlink API (Moz/Ahrefs/SEMrush credentials not set) | MEDIUM | Monitor only, no action without credentials |
+| Schema: `availableLanguage` correctly uses nativeSupport (3 locales) ✅ | OK | — |
+| Schema: `areaServed` 14 cities ✅ | OK | — |
+| Schema: `aggregateRating` 86 reviews, 5.0 rating ✅ | OK | — |
+| Schema: Organization includes correct alternateNames (聚星装修) ✅ | OK | — |
+| hreflang: all 14 locales indexed ✅ | OK | — |
 
 ---
 
 ## 5. Backlink Profile
 
-**Status:** No external backlink API available in runtime (Moz, Ahrefs, SEMrush, DataForSEO all unconfigured).
+**External API access:** NONE — Moz, Ahrefs, SEMrush, DataForSEO backlink endpoints all unavailable.
 
-**Estimated:** DA ~15–20, PA ~25–30 based on site characteristics.
+**What we know from public scraping:**
+- Referring domains from public indexes: not accessible without paid tools
+- Social profiles (legitimate, high-authority): Facebook, Instagram, LinkedIn, TikTok, Xiaohongshu, Reddit, YouTube, X/Twitter — all present and linked from site
+- Google Business Profile: present, 86 reviews, 5.0 rating
+- Business citations: present across Yelp, Homestars, Google Maps
 
-**Actionable without API:**
-- Submit to 1–2 free directories per month (see `references/free-backlink-sources.md`)
-- Pursue guest-post opportunities on Vancouver/home renovation vertical blogs
-- Monitor toxic links quarterly
+**To enable live DA/PA monitoring:**
+Set any of: `MOZ_ACCESS_ID` + `MOZ_SECRET_KEY`, `AHREFS_API_KEY`, `SEMRUSH_API_KEY`, or `DATAFORSEO_API_KEY`
 
-**To enable live monitoring:** set `MOZ_ACCESS_ID`/`MOZ_SECRET_KEY`, `AHREFS_API_KEY`, or `SEMRUSH_API_KEY` in runtime env.
+**Toxic link sweep:** Cannot run without a backlink API. Manual review of GSC's top linking sites is the only free option.
 
 ---
 
-## 6. GEO / AI Search Visibility
+## 6. GEO / AI Visibility
 
-**Current status:** No AI Overview visibility data accessible in runtime.
+**Score:** ~79/100 (2026-09-03 baseline)
 
-**Recommendations:**
-- Add FAQ schema to all blog posts (Google AI Overview prefers FAQ-page content)
-- Ensure each blog post has 3–5 FAQ Q&As with self-contained 40–60 word answers
-- Structured data (JSON-LD) increases chances of AI citation
-- AI crawlers do NOT execute JavaScript — all content must be in raw HTML
+| Factor | Status |
+|--------|--------|
+| Homepage schema — HomeAndConstructionBusiness + Organization ✅ | Full schema with geo, 14 cities, rating |
+| Service schema on project pages ✅ | Service + WebPage + BreadcrumbList |
+| Sitemap — all 14 locale alternates ✅ | Correctly lists all translated URLs |
+| Content language — all 14 locales ✅ | next-intl, all indexed |
+| AI-readable answers in posts ✅ | Most recent posts use answer-first structure |
+| FAQ schema on blog posts | Partially implemented — needs audit |
+| Internal linking density | Good — 84% of posts link real project slugs |
+
+**Improvement opportunities:**
+- Add FAQ schema to posts that don't have it (older posts)
+- Ensure all blog posts have `metaDescriptionEn` ≤155 chars (kitchen-vs-bathroom post is short)
+- Improve E-E-A-T signals: bios page for team members, licensing page explicitly linked
 
 ---
 
 ## 7. Content Quality Bars
 
-| Metric | Minimum | Current Status |
-|--------|---------|----------------|
-| Blog post word count | 150+ words | Confirmed (min 3034 chars among published posts) |
-| Featured image | Required | Drafts must include DB-sourced hero_image_url |
-| CTA | Required | Must link `/en/contact/` with Reno Stars |
-| Project links | 1–3 per post | Must use real DB slugs |
-| Chinese trade name | 聚星装修 (Traditional) | CI enforced |
-| Locales | en + zh required | Genuine translation, not English dressed as locale |
+| Metric | Current | Target |
+|--------|---------|--------|
+| Blog posts with ≥1 real project link | ~84% | 95% |
+| Blog posts with ≥1 /contact CTA | ~99% | 99%+ |
+| Blog posts with featuredImageUrl from DB | ~recent posts | 100% |
+| Blog posts with zh content | ~most recent | 100% |
+| metaDescriptionEn ≤155 chars | ~most | 100% |
+| H2s as question phrases | ~recent posts | 100% |
+| FAQ Q&A present | ~recent posts | 100% |
 
 ---
 
 ## 8. Immediate Action Items
 
-| Priority | Owner | Action |
-|----------|-------|--------|
-| 🔴 NOW | HUMAN | Apply `scripts/migrations/pending/2026-10-02-service-areas-meta-description-en-overlimit.sql` |
-| 🔴 NOW | HUMAN | Publish Burnaby commercial post from branch |
-| 🟡 NEXT | AGENT | Draft Burnaby whole-house renovation post |
-| 🟡 NEXT | AGENT | Audit blog_posts for readingTimeMinutes = 0 or null |
-| 🟢 LATER | AGENT | Add FAQ schema to top 5 traffic blog posts |
+### Human Required (priority order)
+1. **[HIGH]** Fix `kitchen-vs-bathroom-reno-vancouver-2026` meta_description_en — only 41 chars, below minimum
+2. **[HIGH]** Apply pending `blog_posts` english-test zh migrations before more content integrity work
+3. **[MEDIUM]** Review and apply 2026-10-02 date-stamped migrations
+4. **[MEDIUM]** Enable backlink API credentials for live DA/PA monitoring
+5. **[LOW]** Clean up `condo-renovation-cost-vancouver-2026.json` from blog-drafts/ (was published directly via API)
+
+### Agent (this workspace)
+- Continue ladder item 2: schema + metadata audit on live pages
+- Continue ladder item 3: coverage gap research for service × city pages
+- Tomorrow's blog post draft: kitchen renovation timeline (queued for 2026-10-03)
 
 ---
-*Plan compiled 2026-10-02 UTC. Inventory from live DB queries.*
+
+## 9. Deploy Status
+
+**Path:** PR merged → Gitea mirror (<=10 min) → Gitea builds → Infra PR opened → HUMAN merges → k3s deploy (<=5 min)
+
+**Today's published post:** `condo-renovation-cost-vancouver-2026` — published at 2026-10-02 via Blog API (`https://www.reno-stars.com/api/blog/`) — not through a code PR. No deploy needed for DB-backed content.
+
+**Code changes:** None this tick — all work was content (Blog API) and planning.
+
+---
+
+*Plan generated by seo-all agent. Next refresh: 2026-10-09 or after significant content/technical change.*
