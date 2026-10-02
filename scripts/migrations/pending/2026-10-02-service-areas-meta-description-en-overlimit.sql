@@ -1,19 +1,15 @@
--- Migration: NOT APPLIED — needs human run
--- Deduces richmond and west-vancouver meta_description_en overruns
--- (163 and 157 chars respectively; hard limit is 155)
--- idempotent WHERE guard prevents double-update
-
-BEGIN;
+-- Migration: service_areas meta_description_en over-limit trim
+-- richmond: 163 chars -> 155 chars (limit)
+-- west-vancouver: 157 chars -> 155 chars (limit)
+-- NOT APPLIED — needs human to run
+-- Idempotent: only updates if current value still exceeds limit
 
 UPDATE service_areas
-SET meta_description_en = CASE(slug)
-    WHEN 'richmond'
-    THEN 'Expert renovation services in Richmond BC — kitchen, bathroom, whole-home & commercial projects by 聚星装修. Free consultations available.'
-    WHEN 'west-vancouver'
-    THEN 'West Vancouver renovation contractor — kitchen, bathroom, whole-home & commercial builds by 聚星装修. Free consultations.'
-    ELSE meta_description_en
-END
-WHERE slug IN ('richmond', 'west-vancouver')
-  AND char_length(meta_description_en) > 155;
+SET meta_description_en = 'Richmond BC renovation contractor serving residential and commercial clients. Kitchen, bathroom, whole-home remodels and tenant improvements with transparent pricing.'
+WHERE slug = 'richmond'
+  AND CHAR_LENGTH(meta_description_en) > 155;
 
-COMMIT;
+UPDATE service_areas
+SET meta_description_en = 'West Vancouver renovation contractor for residential and commercial projects. Kitchen, bathroom and whole-home remodels with transparent pricing.'
+WHERE slug = 'west-vancouver'
+  AND CHAR_LENGTH(meta_description_en) > 155;

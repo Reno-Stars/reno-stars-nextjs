@@ -33,7 +33,7 @@ All zh-localized fields in blog_posts, services, service_areas, project_scopes, 
 |------|----------------|-------------|---------|----------|
 | Vancouver | ✅ | ✅ | ✅ | ✅ |
 | Richmond | ✅ | ✅ | ✅ | ✅ |
-| Burnaby | ❌ **DRAFT** | ❌ | ❌ | ❌ |
+| Burnaby | ❌ | ❌ | ❌ | ❌ |
 | North Vancouver | ❌ | ❌ | ❌ | ❌ |
 | West Vancouver | ❌ | ❌ | ❌ | ❌ |
 | Coquitlam | ❌ | ❌ | ❌ | ❌ |
@@ -47,7 +47,7 @@ All zh-localized fields in blog_posts, services, service_areas, project_scopes, 
 | Tsawwassen | ❌ | ❌ | ❌ | ❌ |
 
 **Priority queue:**
-1. **Burnaby commercial renovation** — draft on `seo/daily-2026-10-02`, pending publish
+1. **Burnaby commercial renovation** — draft committed, pending publish
 2. **Burnaby whole-house renovation** — ladder rung 3, no existing page
 3. **North Vancouver kitchen** — ladder rung 3
 4. **Surrey bathroom** — ladder rung 3
@@ -130,7 +130,7 @@ All zh-localized fields in blog_posts, services, service_areas, project_scopes, 
 | Priority | Owner | Action |
 |----------|-------|--------|
 | 🔴 NOW | HUMAN | Apply `scripts/migrations/pending/2026-10-02-service-areas-meta-description-en-overlimit.sql` |
-| 🔴 NOW | HUMAN | Publish Burnaby commercial post from `seo/daily-2026-10-02` |
+| 🔴 NOW | HUMAN | Publish Burnaby commercial post from branch |
 | 🟡 NEXT | AGENT | Draft Burnaby whole-house renovation post |
 | 🟡 NEXT | AGENT | Audit blog_posts for readingTimeMinutes = 0 or null |
 | 🟢 LATER | AGENT | Add FAQ schema to top 5 traffic blog posts |
