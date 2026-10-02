@@ -20,7 +20,7 @@
 | `blog_posts.focus_keyword_zh` | Partially covered |
 | `services.*_zh` | Backlog capped |
 | `service_areas.*_zh` | Backlog capped |
-| `blog_posts.meta_description_en` | **NEW HIGH PRIORITY — see §4** |
+| `blog_posts.meta_description_en` | Covered by `2026-10-01-blog-meta-description-en-fix.sql` — awaiting human apply |
 
 **Backlog cap (3+ for same column):** Reached for all `blog_posts.*_zh` columns. Stopped producing more.
 
@@ -79,26 +79,26 @@ Recent posts show strong coverage expansion into secondary Metro Vancouver citie
 
 ---
 
-## 4. Technical Debt — CRITICAL
+## 4. Technical Debt — HIGH PRIORITY
 
-### HIGH: Two meta_description_en violations
+### HIGH: Two meta_description_en violations — covered by existing migration
+
+**Migration:** `2026-10-01-blog-meta-description-en-fix.sql` — covers all 4 violations including the 2 below.
+Human action needed: apply it.
 
 **1. `kitchen-vs-bathroom-reno-vancouver-2026`**
 - `meta_description_en` = `"Kitchen vs bathroom Vancouver"` — **29 chars**
 - Column limit: 155 chars
-- This is not a varchar truncation — the content itself is 29 characters of thin placeholder text
-- **Action:** Human — write a real 120–155 char description from the article's actual content
+- Fix in migration: proper 155-char description from article content
 
 **2. `metro-vancouver-renovation-cost-comparison-2026`**
-- `meta_description_en` = `"2026年大溫哥華裝修真實價格：廚房$40k–$150k、浴室$12k–$95k、全屋$150k–$800k。查看58個項目的實際造價。"` — **68 chars of Chinese**
-- This is the Chinese translation stored in the English field — the field is mislabeled or the translation was put in the wrong column
-- **Action:** Migration — move this text to `meta_description_zh`, write a genuine English `meta_description_en` for this row
-- Migration NOT yet written — this is a new finding
+- `meta_description_en` = Chinese text (68 chars) — wrong language in English field
+- Fix in migration: English rewrite: `"Metro Vancouver renovation costs 2026: kitchen $40K–$150K, bathroom $12K–$95K, whole house $150K–$800K. Real prices from 100+ completed projects across the Lower Mainland."`
 
 ### MEDIUM: Pending migration batch (16 files dated 2026-10-xx)
 Human apply needed. Prioritize:
-- `2026-10-02-blog-featured-image-null.sql` and `*-url-null.sql` — these affect SEO image signals
-- `2026-10-02-blog-reading-time-minutes.sql` — affects Core Web Vitals/user experience signals
+- `2026-10-02-blog-featured-image-null.sql` and `*-url-null.sql` — SEO image signals
+- `2026-10-02-blog-reading-time-minutes.sql` — Core Web Vitals/user experience
 
 ---
 
@@ -161,11 +161,10 @@ Human apply needed. Prioritize:
 ## 8. Immediate Action Items
 
 ### Human Required (priority order)
-1. **[HIGH]** Fix `kitchen-vs-bathroom-reno-vancouver-2026` meta_description_en (29 chars) — write real description from article content
-2. **[HIGH]** Fix `metro-vancouver-renovation-cost-comparison-2026` meta_description_en (Chinese text in English field) — move to `meta_description_zh`, write genuine English
-3. **[MEDIUM]** Apply 16 pending 2026-10-xx migrations
-4. **[MEDIUM]** Enable backlink API (Moz recommended)
-5. **[LOW]** Publish pipeline drafts from `blog-drafts/` that are ready
+1. **[HIGH]** Apply `2026-10-01-blog-meta-description-en-fix.sql` — fixes both meta_description_en violations (kitchen-vs-bathroom 29-char placeholder + metro-vancouver Chinese-in-English field)
+2. **[MEDIUM]** Apply 16 pending 2026-10-xx migrations (featured image nulls, reading time minutes)
+3. **[MEDIUM]** Enable backlink API (Moz recommended)
+4. **[LOW]** Publish pipeline drafts from `blog-drafts/` that are ready
 
 ### Agent (this workspace)
 - Continue coverage gap research: city × service pages for White Rock, New Westminster
