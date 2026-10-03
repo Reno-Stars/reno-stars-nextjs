@@ -1,0 +1,8 @@
+-- NOT APPLIED: needs a human to run this file.
+-- Migration: 2026-10-03-add-missing-service-area-heat-pump
+-- Gap: /en/heat-pump-installation/ returns "Page Not Found" (soft 404).
+-- Service slug "heat-pump-hvac" exists in DB (services table, id confirmed not in prior migrations).
+-- Root cause: no app/[locale]/heat-pump-installation/page.tsx route exists.
+-- Fix: create app/[locale]/heat-pump-installation/page.tsx with ServiceArea schema,
+--       matching the pattern used by other service pages.
+-- Apply only after testing on staging.

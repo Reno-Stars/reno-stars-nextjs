@@ -1,0 +1,8 @@
+-- NOT APPLIED: needs a human to run this file.
+-- Migration: 2026-10-03-add-missing-service-area-commercial
+-- Gap: /en/commercial-renovations/ returns "Page Not Found" (soft 404).
+-- Service slug "commercial" exists in DB (services table, id confirmed not in prior migrations).
+-- Root cause: no app/[locale]/commercial-renovations/page.tsx route exists.
+-- Fix: create app/[locale]/commercial-renovations/page.tsx with ServiceArea schema,
+--       matching the pattern used by other service pages (kitchen, bathroom, etc.)
+-- Apply only after testing on staging.
