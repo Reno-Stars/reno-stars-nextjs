@@ -1,63 +1,55 @@
-# SEO Audit Notes — 2026-10-03
+# SEO Audit Notes — 2026-10-03 (Updated)
 
-## Aggregate Rating Discrepancy (ORGANIZATION schema)
+## LADDER 2 — Schema (Partially Resolved)
 
-**File:** `src/app/[locale]/layout.tsx` (or wherever Organization JSON-LD is assembled)
+### Finding 1: `ratingCount: 86` in Organization JSON-LD — NOT A BUG ✅
+- **Original concern**: `ratingCount: 86` in `LocalBusinessSchema.tsx` appeared to be hardcoded; DB has only 35 internal reviews
+- **Actual source**: `googleReviewCount` prop, populated from `lib/google-reviews.ts` → `getGoogleReviews()` → Google Places API (`relevant.userRatingsTotal`)
+- **Verdict**: `86` is live Google Business Profile rating count — accurate, dynamic, NOT a bug
+- **Action**: None needed
 
-**Finding:** Organization JSON-LD contains hardcoded `aggregateRating.ratingCount: 86` and `reviewCount: 86`.
-DB `project_reviews` table has **35 rows**.
-
-**Impact:** Google sees stale aggregate rating count on every page that publishes the Organization schema.
-
-**Fix:** Replace hardcoded `86` with a dynamic count from DB:
-```tsx
-// Before (hardcoded):
-"ratingCount": 86,
-"reviewCount": 86,
-
-// After (dynamic — requires DB query or props):
-"ratingCount": reviewCountFromDb,
-"reviewCount": reviewCountFromDb,
-```
-
-**Owner:** Code change needed — not a DB migration.
+### Finding 2: `reviewCount: 0` on WebPage JSON-LD — No evidence of this pattern
+- Searched `components/structured-data/ProjectSchema.tsx` and all schema files
+- `ProjectSchema` WebPage node does NOT contain `reviewCount` — only individual `Review` objects under `mainEntity.Service`
+- Organization schema (`LocalBusinessSchema`) sets `reviewCount: googleReviewCount` (live GBP count, same as `ratingCount`)
+- **Verdict**: Original finding was a misread of the data; no `reviewCount: 0` issue found in schema
+- **Action**: None needed
 
 ---
 
-## Project Page WebPage Schema — reviewCount: 0
+## LADDER 4 — Technical SEO
 
-**URL sampled:** `/en/projects/coquitlam-condo-kitchen-renovation/`
+### Finding 3: `lib/sitemap/sections.ts` service-city section uses 3 locales instead of all 14
 
-**Finding:** The `WebPage` JSON-LD has:
-```json
-"aggregateRating": {"@type":"AggregateRating","ratingValue":"5","reviewCount":0}
+**File**: `lib/sitemap/sections.ts`, line 74
+```typescript
+const SERVICE_CITY_LOCALES = INDEXABLE_SERVICE_CITY_LOCALES;  // = ['en', 'zh', 'zh-Hant'] (3 locales)
 ```
 
-**Impact:** Explicit `reviewCount: 0` on project pages may suppress stars in SERP for individual projects, even when those projects have reviews.
+**Context**:
+- `INDEXABLE_SERVICE_CITY_LOCALES` = `['en', 'zh', 'zh-Hant']` (defined in `i18n/config.ts`)
+- Service-city pages (`/services/[service-slug]/[city]/`) emit `noindex` for the 11 minor locales
+- The sitemap section for service-city URLs uses the same 3-locale list
 
-**Fix:** Either remove the `aggregateRating` from `WebPage` schema entirely (since project-specific reviews are already in the page), or populate it with the actual per-project review count.
+**Hard constraint conflict**:
+> "CONTENT/TRANSLATION METADATA (hreflang, og:locale:alternate, sitemap entries, canonical alternates, robots/indexability) → gate on INDEXABLE_LEAF_LOCALES, which is ALL 14."
 
-**Owner:** Code change needed.
+The sitemap uses `INDEXABLE_SERVICE_CITY_LOCALES` (3) instead of `INDEXABLE_LEAF_LOCALES` (14) for service-city URLs.
+
+**Why this may be intentional**:
+- Service-city pages do NOT exist in the 11 minor locales (no translations)
+- Submitting 14 locale variants of a URL that only has 3 locale versions would advertise non-existent content to crawlers
+- Comment in `sections.ts` lines 107-109: "the default of all 14 would advertise eleven URLs this section deliberately does not submit"
+
+**Risk**: If a service-city page somehow becomes accessible in a minor locale (e.g., via URL manipulation), the sitemap would not submit it, creating a discoverability gap.
+
+**Recommended action**: Audit whether service-city pages have any locale variants beyond `en/zh/zh-Hant`. If they genuinely do not, the sitemap restriction is correct and the hard constraint's "all 14" requirement is misapplied to this section. If some content exists in other locales, it should be added to the sitemap.
 
 ---
 
-## Verified OK
-
-- `services.description_zh`: 0 violations
-- `services.long_description_zh`: 0 violations
-- `services.title_zh`: 0 violations
-- `service_areas.description_zh`: 0 violations
-- `service_areas.meta_description_zh`: 0 violations
-- `service_areas.name_zh`: 0 violations
-- `service_areas.content_zh`: 0 violations
-- `service_areas.highlights_zh`: 0 violations
-- `service_areas.meta_title_zh`: 0 violations
-- hreflang: 14 locales correctly present
-- og:locale:alternate: 14 locales correctly present
-- canonical: correct
-- meta description: present and appropriate length
-- JSON-LD: Organization + WebPage + BreadcrumbList + Service present
-
-## Pending Human-Applied Migrations
-
-- `2026-10-01-blog-meta-description-en-fix.sql` — covers 4 blog post meta_description_en violations
+## Status Summary
+| Ladder | Finding | Status |
+|--------|---------|--------|
+| Ladder 2 | `ratingCount: 86` (GBP live, not hardcoded) | ✅ Resolved — not a bug |
+| Ladder 2 | `reviewCount: 0` on WebPage | ✅ Resolved — misread; no such issue |
+| Ladder 4 | `SERVICE_CITY_LOCALES = 3` in sitemap | ⚠️ Needs review — may be intentional |
