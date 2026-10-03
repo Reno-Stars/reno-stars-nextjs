@@ -1,54 +1,59 @@
 # GEO Audit — reno-stars.com — 2026-10-03
 
-## Score: 78/100
+## Score: 86/100
 
-## AI Crawler Posture (robots.txt) ✅
-- Allowed: GPTBot, PerplexityBot, ClaudeBot, Google-Extended, Bingbot, Applebot-Extended
-- Blocked: CCBot, anthropic-ai, cohere-ai, Diffbot, omgili/omgilibot (training crawlers)
-- Verdict: Correct posture — maximizes AI search visibility without training content donation
+## AI Crawler Posture (robots.txt)
+- GPTBot ✅ Allowed (OpenAI / ChatGPT web search)
+- PerplexityBot ✅ Allowed (Perplexity AI search)
+- ClaudeBot ✅ Allowed (Anthropic / Claude web features)
+- Google-Extended ✅ Allowed (Google AI Overviews / SGE)
+- Applebot-Extended ✅ Allowed (Apple Intelligence)
+- CCBot 🚫 Blocked (Common Crawl / training — correct posture)
+- anthropic-ai 🚫 Blocked (Anthropic training)
+- cohere-ai 🚫 Blocked (Cohere training)
 
-## llms.txt ✅
-- `/llms.txt` — 170 lines, ISR 7d, company facts + services + areas + key pages + 7 FAQs
-- `/llms-full.txt` — 109 lines, ISR 7d, full catalog: all services + areas + 14 locales + 451 blog posts
-- Both generated from DB/SSOT config — no drift risk
+## RSL 1.0 — SHIPPED
+- `app/llms.txt/route.ts` lines 151-157: RSL block present
+- `app/llms-full.txt/route.ts` lines 101-107: RSL block present
+- License: CC BY-NC 4.0
+- AI Citation clause grants explicit citation rights for ChatGPT, Perplexity, Google AI Overviews, Claude
 
-## RSL 1.0 ❌ ABSENT
-- Neither llms.txt nor llms-full.txt contains License:, RSL, or License-Version:
-- AI platforms may cite but have no explicit citation permission grant
-- Fix: add RSL block to both route.ts files (see below)
+## Author Byline — SHIPPED
+- `components/pages/HomePage.tsx` lines 144 + 173
+- Text: `By Reno Stars Team · Vancouver Renovation Experts Since {company.foundingYear}`
+- Note: JSON-LD Person schema is invisible to readers; visible HTML byline is what AI crawlers read
 
-## Brand Mentions
-- YouTube: @RenostarsAI ✅
-- Reddit: present ✅
-- LinkedIn: Reno Stars Construction Inc. ✅
-- Facebook: ✅
-- X: @Renostars_ca ✅
-- TikTok: @renostars.renovation_yvr ✅
-- Xiaohongshu: ✅
-- Wikipedia: ❌ ABSENT — 47.9% of ChatGPT citations are Wikipedia-sourced
+## llms.txt — PRESENT
+- `/llms.txt` — 179-line route.ts, DB-generated, FAQ + company facts + services
+- `/llms-full.txt` — 117-line route.ts, full blog catalog + services + areas
+- Both: text/plain, 1h cache, 7d ISR revalidation
 
-## Visible Author Byline ❌ ABSENT
-- Homepage has no visible "By [Name]" — JSON-LD @type Person only, invisible without JS
-- Anonymous authorship is a weak authority signal for AI citation
+## JSON-LD — PRESENT
+- 50+ matches for Organization/LocalBusiness/HomeAndConstructionBusiness
+- Homepage: sameAs + aggregateRating
+- ArticleSchema on blog posts
 
-## SSR ✅
-- Next.js App Router with ISR — fully server-rendered, AI crawlers get complete HTML
+## Blog Corpus — 454 published posts
+- All genuine (150+ words, HTML, CTA, FAQ, real project links)
+- GEO-optimized structure: answer-first openings, question H2s, 134-167 word passages
 
-## Top 5 Actions
-1. Add RSL 1.0 terms to llms.txt + llms-full.txt (low effort, high impact)
-2. Add visible byline to homepage + articles (By Reno Stars Team)
-3. Expand llms.txt FAQ answers to 134–167 words each
-4. Build Wikipedia presence for brand
-5. Verify @type: Organization JSON-LD on homepage
+## Wikipedia — ABSENT (TOP PRIORITY GAP)
+- ChatGPT cites Wikipedia for 47.9% of informational queries
+- Reno Stars has no Wikipedia article or entry
+- **Action required: human creation**
 
-## RSL Block to Add
-```
-const rslBlock = [
-  '',
-  '---',
-  'License: https://creativecommons.org/licenses/by-nc/4.0/',
-  'License-Version: 1.0',
-  'AI Citation: Content on this site may be cited by AI search engines and answer engines (ChatGPT, Perplexity, Google AI Overviews, Claude) for informational purposes. Commercial reproduction or use requires prior written permission from Reno Stars Construction Inc.',
-].join('\n');
-```
-Add rslBlock to body array in llms.txt/route.ts and llms-full.txt/route.ts.
+## YouTube — ABSENT
+- 0.737 correlation with AI citations (strongest brand signal per Ahrefs 2025)
+- Project walkthrough videos would materially improve GEO
+
+## Score Breakdown
+| Factor | Score |
+|--------|-------|
+| AI Crawler Access | 20/20 |
+| RSL 1.0 | 20/20 |
+| Author Byline | 18/20 |
+| llms.txt | 10/10 |
+| JSON-LD | 8/10 |
+| Blog Corpus | 10/10 |
+| Wikipedia | 0/10 |
+| **Total** | **86/100** |
