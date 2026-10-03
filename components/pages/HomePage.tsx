@@ -139,6 +139,10 @@ export default function HomePage({
   return (
     <div className="min-h-screen" style={{ backgroundColor: SURFACE }}>
       <HeroSection company={company} googleRating={googleReviews.rating} translations={t.hero} />
+      {/* Visible author byline — GEO/AI citation signal, not JSON-LD only */}
+      <p className="text-center text-sm py-3 tracking-wide" style={{ color: 'rgba(255,255,255,0.55)', backgroundColor: '#1a1a2e' }}>
+        By Reno Stars Team · Vancouver Renovation Experts Since {company.foundingYear}
+      </p>
       {/* zh/zh-Hant only — Chinese-market trust band (renders null elsewhere) */}
       <ZhTrustLine locale={locale} rating={googleReviews.rating} />
       {t.answerBlock && (
