@@ -169,6 +169,9 @@ export default function HomePage({
       <ShowroomSection company={company} showroom={showroom} translations={t.showroom} />
       <ContactSection company={company} areasList={areasList} translations={t.contact} />
       <StickyHomeCta phone={company.phone} />
+      <p className="text-center text-sm pb-4" style={{ color: 'rgba(255,255,255,0.45)' }}>
+        By Reno Stars Team · Vancouver Renovation Experts Since {company.foundingYear}
+      </p>
     </div>
   );
 }
