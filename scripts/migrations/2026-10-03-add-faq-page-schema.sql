@@ -1,0 +1,20 @@
+-- NOT APPLIED: needs a human to run this file.
+-- Migration: 2026-10-03-add-faq-page-schema
+-- Gap: /en/faqs/ returns 199KB of HTML but has ZERO JSON-LD.
+-- Expected: FAQPage schema per Google's FAQ rich result requirements.
+-- Fix: Add <script type="application/ld+json"> with FAQPage type to the
+-- FAQ page template. The FAQ content is rendered server-side from the DB
+-- (210 FAQs in public.faq table). The JSON-LD should list all Q&A pairs.
+--
+-- Example output (pseudo):
+-- {
+--   "@context": "https://schema.org",
+--   "@type": "FAQPage",
+--   "mainEntity": [
+--     { "@type": "Question", "name": "...", "acceptedAnswer": { "@type": "Answer", "text": "..." } },
+--     ...
+--   ]
+-- }
+--
+-- File to modify: likely app/[locale]/faqs/page.tsx or the CMS layout that renders it.
+-- This migration is NOT APPLIED and needs a human to review and run it.
