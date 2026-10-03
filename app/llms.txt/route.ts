@@ -148,6 +148,14 @@ export async function GET(): Promise<Response> {
     'Yes. Legal secondary suite conversions in Metro Vancouver typically cost $60,000-$150,000 including permits, separate entrance, fire separation, egress windows, kitchen, bathroom, and inspections.',
   ].join('\n');
 
+  const rslBlock = [
+    '',
+    '---',
+    'License: https://creativecommons.org/licenses/by-nc/4.0/',
+    'License-Version: 1.0',
+    'AI Citation: Content on this site may be cited by AI search engines and answer engines (ChatGPT, Perplexity, Google AI Overviews, Claude) for informational purposes. Commercial reproduction or use requires prior written permission from Reno Stars Construction Inc.',
+  ].join('\n');
+
   const body = [
     header,
     companyBlock,
@@ -158,6 +166,7 @@ export async function GET(): Promise<Response> {
     guidesBlock,
     socialBlock,
     faqBlock,
+    rslBlock,
     '',
   ].join('\n');
 
