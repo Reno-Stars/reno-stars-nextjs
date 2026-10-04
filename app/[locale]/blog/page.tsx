@@ -102,7 +102,12 @@ export default async function Page({ params, searchParams }: PageProps) {
           Renders on page 1 only (subsequent paginated pages don't need it).
           Source: on-page scanner finding on-page-2e8f4c6a1d3b (2026-08-04). */}
       {currentPage === 1 && (
-        <BlogSchema name={mt('title')} description={mt('description')} locale={locale} />
+        <BlogSchema
+          name={mt('title')}
+          description={mt('description')}
+          url={`${baseUrl}/${locale}/blog/`}
+          locale={locale}
+        />
       )}
       {currentPage === 1 && (
         <ItemListSchema
