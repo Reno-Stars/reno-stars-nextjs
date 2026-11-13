@@ -135,7 +135,7 @@ function getServiceH1Override(serviceSlug: string, locale: Locale): string | und
  * Source: 2026-06-23 on-page scanner (Tick 441).
  */
 const enServiceMetaDescriptions: Partial<Record<string, string>> = {
-  kitchen:    'Vancouver kitchen renovations — cabinetry, countertops, tile, plumbing & electrical. $5M insured, 3-yr workmanship warranty. Free quote.',
+  kitchen:    'Vancouver kitchen renovations — cabinetry, countertops, tile, plumbing & electrical. $5M insured, up to 3-yr workmanship warranty. Free quote.',
   bathroom:   'Vancouver bathroom renovations — waterproofing, custom tile, showers, soaker tubs & vanities. $5M insured, 3-yr warranty. Free quote.',
   // 2026-06-24: "basement renovation vancouver" (121 imp, pos 18.8) + "vancouver
   // basement renovations" (58 imp, pos 15.4) — description started with "Metro
@@ -160,8 +160,8 @@ const enServiceMetaDescriptions: Partial<Record<string, string>> = {
  * Tick 485 — 2026-06-24.
  */
 const zhServiceMetaDescriptions: Partial<Record<string, string>> = {
-  kitchen:       '温哥华厨房翻新 — 定制橱柜、石英台面、瓷砖、管道及电气一站式服务。500万保险，3年工艺保修。Metro Vancouver全区服务。免费报价。',
-  bathroom:      '温哥华浴室翻新 — 防水工程、定制瓷砖、淋浴间及浴缸安装。500万保险，3年工艺保修。Metro Vancouver全区服务。免费报价。',
+  kitchen:       '温哥华厨房翻新 — 定制橱柜、石英台面、瓷砖、管道及电气一站式服务。500万保险，最长3年工艺保修。Metro Vancouver全区服务。免费报价。',
+  bathroom:      '温哥华浴室翻新 — 防水工程、定制瓷砖、淋浴间及浴缸安装。500万保险，最长3年工艺保修。Metro Vancouver全区服务。免费报价。',
   basement:      'Metro Vancouver地下室翻新 — 娱乐室、合法套间、家庭影院一条龙。代办许可证申请。500万保险，3年保修。免费报价。',
   'whole-house': '温哥华全屋翻新 — 厨房、浴室、地板及各工种统一合同，单一项目经理统筹全程。500万保险，3年保修。Metro Vancouver全区。免费报价。',
   commercial:     '温哥华商业装修 — 办公室、零售、餐厅及诊所装修。BC建筑规范合规，500万保险。免费估价。',
@@ -170,7 +170,7 @@ const zhServiceMetaDescriptions: Partial<Record<string, string>> = {
   // heat-pump-hvac: 200 zh imp / 1.5% CTR (worst). cabinet: 79 imp truncated to "...翻新 8K-18K 加元，完全定制更换 20K...".
   // poly-b-replacement: 49 imp / 4.1% CTR, short zh description. Prices from services.description_zh DB column.
   'heat-pump-hvac':    '温哥华热泵安装与空调升级 — 告别燃气炉，冬暖夏凉，符合BC Hydro退税资格，代办申请全程跟进。500万保险，3年保修，Metro Vancouver全区上门。免费报价。',
-  cabinet:             '温哥华橱柜翻新 — 喷漆整修$4K–$8K，换门板$8K–$18K，全定制更换$20K–$50K。一站式设计安装，500万保险，3年工艺保修。免费报价。',
+  cabinet:             '温哥华橱柜翻新 — 喷漆整修$4K–$8K，换门板$8K–$18K，全定制更换$20K–$50K。一站式设计安装，500万保险，最长3年工艺保修。免费报价。',
   'poly-b-replacement':'Metro Vancouver Poly-B水管更换 — 1985–1997年BC省住宅常见，管道老化漏水风险高。全屋换PEX管道，含许可证验收，多数BC保险公司要求更换。免费报价。',
 };
 
@@ -185,12 +185,12 @@ const zhServiceMetaDescriptions: Partial<Record<string, string>> = {
  * and vocabulary converted to Traditional Chinese.
  */
 const zhHantServiceMetaDescriptions: Partial<Record<string, string>> = {
-  kitchen:       '溫哥華廚房翻新 — 訂製櫥櫃、石英檯面、磁磚、管道及電氣一站式服務。500萬保險，3年工藝保固。Metro Vancouver全區。免費報價。',
-  bathroom:      '溫哥華浴室翻新 — 防水工程、訂製磁磚、淋浴間及浴缸安裝。500萬保險，3年工藝保固。Metro Vancouver全區。免費報價。',
+  kitchen:       '溫哥華廚房翻新 — 訂製櫥櫃、石英檯面、磁磚、管道及電氣一站式服務。500萬保險，最長3年工藝保固。Metro Vancouver全區。免費報價。',
+  bathroom:      '溫哥華浴室翻新 — 防水工程、訂製磁磚、淋浴間及浴缸安裝。500萬保險，最長3年工藝保固。Metro Vancouver全區。免費報價。',
   basement:      'Metro Vancouver地下室翻新 — 娛樂室、合法套間、家庭影院一條龍。代辦許可證申請。500萬保險，3年保固。免費報價。',
   'whole-house': '溫哥華全屋翻新 — 廚房、浴室、地板及各工種統一合約，單一專案經理統籌全程。500萬保險，3年保固。Metro Vancouver全區。免費報價。',
   commercial:     '溫哥華商業裝修 — 辦公室、零售、餐廳及診所裝修。BC建築規範合規，500萬保險。免費估價。',
-  cabinet:       '溫哥華橱櫃翻新 — 噴漆整修$4K–$8K，換門板$8K–$18K，全定製更換$20K–$50K。500萬保險，3年工藝保固。免費報價。',
+  cabinet:       '溫哥華橱櫃翻新 — 噴漆整修$4K–$8K，換門板$8K–$18K，全定製更換$20K–$50K。500萬保險，最長3年工藝保固。免費報價。',
   'heat-pump-hvac':    '溫哥華熱泵安裝與空調升級 — 符合BC Hydro退稅資格，全程代辦申請。500萬保險，3年保固，Metro Vancouver全區。免費報價。',
   'poly-b-replacement':'Metro Vancouver Poly-B水管更換 — 1985–1997年BC省住宅常見，全屋換PEX管道，含許可證驗收，多數BC保險公司要求更換。免費報價。',
 };
