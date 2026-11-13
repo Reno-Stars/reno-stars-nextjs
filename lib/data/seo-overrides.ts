@@ -59,9 +59,10 @@ export function serviceCityOverrides(years: number | string): {
       description: 'Reno Stars is a Coquitlam home renovation company serving Burke Mountain, Maillardville, Westwood Plateau, Eagle Ridge, Austin Heights and Ranch Park. Whole-house renovations, permit-ready work, $5M CGL, 3-year warranty. Free quote.',
     },
     // Currently NOT RANKING in Local Finder for "Coquitlam kitchen renovation company".
+    // 2026-11-12 P3 (test A treatment, approved by Ryan): case-specific hook, no price range.
     'kitchen/coquitlam': {
-      title: 'Coquitlam Kitchen Renovation Company | Reno Stars',
-      description: `Coquitlam kitchen renovation company — custom cabinets, quartz countertops, layout reconfiguration, full project management. Serving Burke Mountain to Maillardville with ${years}+ years experience and a 3-year workmanship warranty.`,
+      title: 'Kitchen Renovation Coquitlam | Quartz & Painted Cabinets',
+      description: 'Kitchen renovation in Coquitlam: two-tone painted cabinets, quartz in place of laminate, new vinyl plank flooring, and upgraded lighting in a condo.',
     },
     // 315 imp pos 24.4 — top queries: "reno white rock" (114 imp) + "bathroom renovations white rock" (68 imp).
     'bathroom/white-rock': {
@@ -81,9 +82,10 @@ export function serviceCityOverrides(years: number | string): {
     // is primary, but adding svc-location override for the dedicated bathroom+city page).
     // Richmond showroom at 21300 Gordon Way — English & Mandarin team.
     // Real project pricing from DB: bathroom $12K–$45K. Source: GSC 2026-06-26.
+    // 2026-11-12 P3 (approved by Ryan): case-specific hook, no price range.
     'bathroom/richmond': {
-      title: 'Bathroom Renovation Richmond BC | $12K–$45K | Reno Stars',
-      description: 'Bathroom renovation Richmond BC: $12K–$45K. Showroom 21300 Gordon Way — English & Mandarin. Steveston, Brighouse. $5M insured, 3-yr warranty. Free quote.',
+      title: 'Bathroom Renovation Richmond | Walk-In Shower + Tub',
+      description: 'Bathroom renovation in Richmond: a townhouse with one walk-in shower and one updated tub bath, grey porcelain tile, and matte black fixtures.',
     },
     // 118 imp pos 31.3 — top queries: "reno port coquitlam" (53 imp pos 22.8), "reno coquitlam" (42 imp pos 48.2).
     'whole-house/port-coquitlam': {
@@ -153,9 +155,10 @@ export function serviceCityOverrides(years: number | string): {
       title: 'Cabinet Resurfacing & Refinishing White Rock | $1.5K–$15K | Reno Stars',
       description: 'Cabinet resurfacing & refinishing in White Rock & South Surrey — painting from $1.5K, door replacement $4K+, full refacing $9–$16K. Free in-home quote.',
     },
+    // 2026-11-12 P3 (test A treatment, approved by Ryan): no price range.
     'cabinet/delta': {
-      title: 'Cabinet Resurfacing & Refinishing Delta BC | $1.5K–$15K | Reno Stars',
-      description: 'Cabinet resurfacing & refinishing in Delta — Ladner, Tsawwassen, North Delta. Painting from $1.5K, full refacing from $4K. Free in-home quote.',
+      title: 'Cabinet Refinishing & Refacing in Delta BC',
+      description: 'Cabinet refinishing and refacing in Delta, including Ladner, Tsawwassen, and North Delta. Painting and full refacing. Free in-home quote.',
     },
     // Specialty services launched 2026-05-04. Title overrides for the
     // highest-volume cities in Metro Vancouver — Burnaby/Richmond/Surrey/
@@ -296,6 +299,12 @@ export function serviceCityOverrides(years: number | string): {
       title: 'Heat Pump Installation Coquitlam | $8K–$18K | Reno Stars',
       description: 'Coquitlam heat pump & HVAC installation — ductless mini-splits, multi-zone systems. CleanBC rebates available. Burke Mountain, Westwood Plateau. $8K–$18K.',
     },
+    // 2026-11-12 P3 (test A treatment, approved by Ryan). Was the generic
+    // template. Description keeps the page's existing claims, minus the dollar figure.
+    'heat-pump-hvac/port-moody': {
+      title: 'Heat Pump Installation in Port Moody | Free Quote',
+      description: "Heat pump installation in Port Moody by Reno Stars. 20+ years' experience, CGL insurance, active WCB coverage, and up to a 3-year warranty. Free quote.",
+    },
     // Kitchen — high-volume cities
     'kitchen/west-vancouver': {
       title: 'Kitchen Renovation West Vancouver | Luxury Kitchens | Reno Stars',
@@ -310,9 +319,10 @@ export function serviceCityOverrides(years: number | string): {
       title: 'Basement Renovation Surrey | Legal Suites | Reno Stars',
       description: 'Surrey basement renovation & legal suite conversion. $35K–$130K+. Permits handled, fire separation, separate entrance. Fleetwood, Newton, Cloverdale.',
     },
+    // 2026-11-12 P3 (test A treatment, approved by Ryan): shorter title, no price range.
     'basement/north-vancouver': {
-      title: 'Basement Renovation North Vancouver | Waterproofing | Reno Stars',
-      description: 'North Vancouver basement renovation with waterproofing guarantee. $35K–$80K. Lynn Valley, Lonsdale, Deep Cove. Permits handled. Free quote.',
+      title: 'Basement Renovation North Vancouver | Waterproofing',
+      description: 'Basement renovation in North Vancouver with waterproofing and permit support. Lynn Valley, Lonsdale, and Deep Cove. Free quote.',
     },
     // Commercial — near-page-1
     'commercial/west-vancouver': {
@@ -433,15 +443,15 @@ export function serviceCityOverrides(years: number | string): {
       description: 'White Rock & South Surrey pre-sale renovation — kitchen, bathroom & cosmetic updates. Best ROI updates for sellers & realtors near East Beach & West Beach. Free quote.',
     },
     // Bathroom — high impressions
+    // 2026-11-12 P3 (approved by Ryan): case-specific hook, no price range.
     'bathroom/burnaby': {
-      title: 'Bathroom Renovation Burnaby | $15K–$45K | Reno Stars',
-      description: 'Burnaby bathroom renovation — tiled showers, tub conversions, custom vanities. Metrotown to Heights. $15K–$45K, 3–6 weeks. Free quote.',
+      title: 'Bathroom Renovation Burnaby | Curbless Shower',
+      description: 'Bathroom renovation in Burnaby: a townhouse bathroom with a curbless shower, custom glass, a quartz vanity, and an LED-backlit mirror.',
     },
-    // Q7 (64 imp pos 5.2) "bathroom reno vancouver" + Q10 (57 imp pos 1.5) "bathroom remodel vancouver".
-    // Page is already ranking — entire fix is snippet attractiveness, not rank.
+    // 2026-11-12 P3 (approved by Ryan): "renovation" matches the main query; no price range.
     'bathroom/vancouver': {
-      title: 'Bathroom Remodel Vancouver | $15K–$45K | Reno Stars',
-      description: `Vancouver bathroom remodel from $15K–$45K — walk-in showers, tub conversions, custom vanities. 3–6 wks. ${years}+ yrs, $5M insured, 3-yr warranty. Free quote.`,
+      title: 'Bathroom Renovation Vancouver | Tile & Floating Vanity',
+      description: 'Bathroom renovation in Vancouver: floor-to-ceiling porcelain tile, a floating vanity with LED lighting, and new fixtures in a whole-house project.',
     },
     // 2026-04-30 GSC pass: missing high-impression combos. Each one targets
     // a specific city+service query Google was matching to a less-relevant
@@ -451,9 +461,10 @@ export function serviceCityOverrides(years: number | string): {
       title: 'Kitchen Renovation Burnaby | $20K–$60K | Reno Stars',
       description: 'Burnaby kitchen renovation — Metrotown condos, Heights SFH, townhouse galleys. Custom & prefab cabinets, quartz countertops, full layout. $20K–$60K. Free quote.',
     },
+    // 2026-11-12 P3 (test A treatment, approved by Ryan): case-specific hook, no price range.
     'kitchen/richmond': {
-      title: 'Kitchen Renovation Richmond BC | $20K–$60K | Reno Stars',
-      description: 'Richmond kitchen renovation — Steveston, Brighouse, Terra Nova. Cabinet replacement, quartz countertops, layout reconfiguration. $20K–$60K, 3–5 weeks. Free quote.',
+      title: 'Kitchen Renovation Richmond | White Shaker + Quartz',
+      description: 'Kitchen renovation in Richmond: white shaker cabinets, quartz waterfall peninsula, and under-cabinet LED. 2–3 week townhouse project, family in residence.',
     },
     'kitchen/vancouver': {
       title: 'Kitchen Renovation Vancouver | $25K–$72K | Reno Stars',
@@ -559,17 +570,19 @@ export function serviceCityOverrides(years: number | string): {
       title: 'Bathroom Renovation New Westminster | $14K–$35K | Reno Stars',
       description: "New Westminster bathroom renovation — Queen's Park, Sapperton & Queensborough. Walk-in showers, soaker tubs, custom vanities. $14K–$35K, 3–6 weeks. Free quote.",
     },
+    // 2026-11-12 P3 (test A treatment, approved by Ryan): no price range.
     'bathroom/port-coquitlam': {
-      title: 'Bathroom Renovation Port Coquitlam | $14K–$35K | Reno Stars',
-      description: 'Port Coquitlam bathroom renovation — Citadel Heights, Riverwood, Oxford Heights. Walk-in showers, tub conversions, custom vanities. $14K–$35K. Free quote.',
+      title: 'Bathroom Renovation Port Coquitlam | Walk-In Showers',
+      description: 'Bathroom renovation in Port Coquitlam — Citadel Heights, Riverwood, and Oxford Heights. Walk-in showers, tub conversions, and custom vanities. Free quote.',
     },
     'bathroom/port-moody': {
       title: 'Bathroom Renovation Port Moody | $16K–$40K | Reno Stars',
       description: 'Port Moody bathroom renovation — Heritage Woods, Moody Centre & Inlet Centre. Walk-in showers, soaker tubs, custom vanities. $16K–$40K, 3–6 weeks. Free quote.',
     },
+    // 2026-11-12 P3 (approved by Ryan): case-specific hook, no price range.
     'bathroom/surrey': {
-      title: 'Bathroom Renovation Surrey BC | $14K–$40K | Reno Stars',
-      description: 'Surrey bathroom renovation — Fleetwood, Newton, Cloverdale & South Surrey. Walk-in showers, tub conversions, custom tile & vanities. $14K–$40K. Free quote.',
+      title: 'Bathroom Renovation Surrey | Two Modern Bathrooms',
+      description: 'Bathroom renovation in Surrey: two bathrooms in one house — a four-piece with a soaker tub, plus a frameless glass shower and floating vanity.',
     },
     // 2026-06-25: Basement overrides for 8 cities.
     'basement/coquitlam': {
@@ -580,9 +593,10 @@ export function serviceCityOverrides(years: number | string): {
       title: 'Basement Renovation Delta BC | $30K–$110K+ | Reno Stars',
       description: 'Delta basement renovation — Tsawwassen, Ladner & North Delta. Finishing, secondary suites, family rooms. Permit-aware, egress-compliant. $30K–$110K+. Free quote.',
     },
+    // 2026-11-12 P3 (test A treatment, approved by Ryan): no price range.
     'basement/langley': {
-      title: 'Basement Renovation Langley BC | $30K–$110K+ | Reno Stars',
-      description: 'Langley basement renovation — Willoughby, Walnut Grove, Fort Langley. Finishing, secondary suites, family rooms. Permit-aware. $30K–$110K+. Free quote.',
+      title: 'Basement Renovation Langley | Suites & Finishing',
+      description: 'Basement renovation in Langley: finishing, secondary suites, and family rooms in Willoughby, Walnut Grove, and Fort Langley. Free quote.',
     },
     'basement/maple-ridge': {
       title: 'Basement Renovation Maple Ridge | $30K–$110K+ | Reno Stars',
