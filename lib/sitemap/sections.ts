@@ -3,6 +3,7 @@ import { locales, INDEXABLE_LEAF_LOCALES, INDEXABLE_SERVICE_CITY_LOCALES } from 
 import { getBaseUrl } from '@/lib/utils';
 import { PRIORITY, CHANGEFREQ, STATIC_PAGES, COST_GUIDE_BLOG_SLUGS } from './config';
 import { loadSitemapData, nativeLocalesFor, type SitemapData } from './data';
+import { SERVICE_CITY_LASTMOD_OVERRIDES, serviceCityLastModKey } from './lastmod-overrides';
 
 /**
  * The sitemap, split into an index plus per-section files.
@@ -117,7 +118,12 @@ export const SECTIONS: Section[] = [
           for (const locale of SERVICE_CITY_LOCALES) {
             entries.push({
               url: `${BASE_URL}/${locale}/services/${slug}/${area.slug}/`,
-              lastModified: d.areaLastModMap.get(area.slug) ?? d.staticLastModified,
+              // Per-URL override first (see lastmod-overrides.ts), then the
+              // city's latest project stamp, then the site-wide fallback.
+              lastModified:
+                SERVICE_CITY_LASTMOD_OVERRIDES[serviceCityLastModKey(locale, slug, area.slug)]
+                ?? d.areaLastModMap.get(area.slug)
+                ?? d.staticLastModified,
               alternates: buildAlternates(`/services/${slug}/${area.slug}`, SERVICE_CITY_LOCALES),
               priority: PRIORITY.serviceArea,
               changeFrequency: CHANGEFREQ.monthly,
