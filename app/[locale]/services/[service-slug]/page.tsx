@@ -143,6 +143,10 @@ const enServiceMetaDescriptions: Partial<Record<string, string>> = {
   // renovations" / "basement renovation Vancouver". Moved Vancouver to front.
   basement:   'Vancouver basement renovations — rec rooms, legal suites, home gyms & home theatres. Metro-wide service. Permits handled. $5M insured, up to 3-year warranty.',
   'whole-house': 'Vancouver whole-house renovations — kitchens, bathrooms, flooring & all trades under one contract. $5M CGL, up to 3-year warranty. Free quote.',
+  // 2026-11-13 (Ryan via Captain): the cabinet warranty covers only its plumbing/
+  // electrical parts (under-cabinet lighting, sinks, faucets) — never "workmanship".
+  // Without this override the page fell back to the DB long_description truncated mid-sentence.
+  cabinet:    'Vancouver cabinet refacing & replacement. Up to 3-year warranty on plumbing and electrical work such as under-cabinet lighting, sinks and faucets. Free quote.',
   commercial: 'Commercial renovation Metro Vancouver — offices, retail, restaurants & clinics. BC Building Code compliant. $5M insured. Free estimate.',
   // 2026-06-24: GSC striking-distance gsc-3c0d3aad7adf — "poly b replacement
   // vancouver" striking-distance. Description now surfaces "poly-b replacement"
