@@ -490,6 +490,9 @@ export default function ServiceLocationPage({
           heading={featuredHeading}
           subheading={t('areas.featuredProjectSubheading')}
           viewCta={t('areas.featuredProjectCta')}
+          locale={locale}
+          serviceSlug={serviceSlug}
+          citySlug={citySlug}
         />
       )}
 

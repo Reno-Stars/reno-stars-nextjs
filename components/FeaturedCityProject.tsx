@@ -5,6 +5,7 @@ import { Link } from '@/navigation';
 import { ArrowRight, DollarSign, Clock, MapPin } from 'lucide-react';
 import type { LocalizedProject } from '@/lib/types';
 import { CARD, GOLD, GOLD_PALE, NAVY, NAVY_PALE, SURFACE, TEXT, TEXT_MID, TEXT_MUTED, neu } from '@/lib/theme';
+import { getCityParagraphOverride, splitMarkdownLinks } from '@/lib/data/city-paragraph-overrides';
 
 interface FeaturedCityProjectProps {
   project: LocalizedProject;
@@ -14,6 +15,11 @@ interface FeaturedCityProjectProps {
   subheading: string;
   /** "View full project" CTA label */
   viewCta: string;
+  /** Page identity — only used to look up an approved EN city paragraph
+   *  (lib/data/city-paragraph-overrides.ts); absent → DB description as before. */
+  locale?: string;
+  serviceSlug?: string;
+  citySlug?: string;
 }
 
 /**
@@ -30,7 +36,12 @@ export default function FeaturedCityProject({
   heading,
   subheading,
   viewCta,
+  locale,
+  serviceSlug,
+  citySlug,
 }: FeaturedCityProjectProps) {
+  // EN-only, per-page override of the card's short intro; undefined everywhere else.
+  const cityParagraph = getCityParagraphOverride(locale, serviceSlug, citySlug);
   return (
     <section className="py-14 px-4 sm:px-6 lg:px-8" style={{ backgroundColor: SURFACE }}>
       <div className="max-w-5xl mx-auto">
@@ -66,7 +77,12 @@ export default function FeaturedCityProject({
                 {project.title}
               </h3>
               <p className="text-sm mb-5 leading-relaxed" style={{ color: TEXT_MID }}>
-                {project.description}
+                {cityParagraph
+                  // The card is already ONE anchor to this project, so the paragraph's
+                  // own [title](url) link renders as the title (no nested <a>).
+                  ? splitMarkdownLinks(cityParagraph).map((s, i) =>
+                      s.href ? <span key={i} className="underline">{s.text}</span> : s.text)
+                  : project.description}
               </p>
               <div className="flex flex-wrap gap-3 mb-5">
                 {project.budget_range && (
