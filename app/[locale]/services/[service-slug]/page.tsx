@@ -135,14 +135,18 @@ function getServiceH1Override(serviceSlug: string, locale: Locale): string | und
  * Source: 2026-06-23 on-page scanner (Tick 441).
  */
 const enServiceMetaDescriptions: Partial<Record<string, string>> = {
-  kitchen:    'Vancouver kitchen renovations — cabinetry, countertops, tile, plumbing & electrical. $5M insured, up to 3-yr workmanship warranty. Free quote.',
-  bathroom:   'Vancouver bathroom renovations — waterproofing, custom tile, showers, soaker tubs & vanities. $5M insured, 3-yr warranty. Free quote.',
+  kitchen:    'Vancouver kitchen renovations — cabinetry, countertops, tile, plumbing & electrical. $5M insured, up to 3-year warranty. Free quote.',
+  bathroom:   'Vancouver bathroom renovations — waterproofing, custom tile, showers, soaker tubs & vanities. $5M insured, up to 3-year warranty. Free quote.',
   // 2026-06-24: "basement renovation vancouver" (121 imp, pos 18.8) + "vancouver
   // basement renovations" (58 imp, pos 15.4) — description started with "Metro
   // Vancouver basement renovations" but query form is "Vancouver basement
   // renovations" / "basement renovation Vancouver". Moved Vancouver to front.
-  basement:   'Vancouver basement renovations — rec rooms, legal suites, home gyms & home theatres. Metro-wide service. Permits handled. $5M insured, 3-yr warranty.',
-  'whole-house': 'Vancouver whole-house renovations — kitchens, bathrooms, flooring & all trades under one contract. $5M CGL, 3-yr warranty. Free quote.',
+  basement:   'Vancouver basement renovations — rec rooms, legal suites, home gyms & home theatres. Metro-wide service. Permits handled. $5M insured, up to 3-year warranty.',
+  'whole-house': 'Vancouver whole-house renovations — kitchens, bathrooms, flooring & all trades under one contract. $5M CGL, up to 3-year warranty. Free quote.',
+  // 2026-11-13 (Ryan via Captain): the cabinet warranty covers only its plumbing/
+  // electrical parts (under-cabinet lighting, sinks, faucets) — never "workmanship".
+  // Without this override the page fell back to the DB long_description truncated mid-sentence.
+  cabinet:    'Vancouver cabinet refacing & replacement. Up to 3-year warranty on plumbing and electrical work such as under-cabinet lighting, sinks and faucets. Free quote.',
   commercial: 'Commercial renovation Metro Vancouver — offices, retail, restaurants & clinics. BC Building Code compliant. $5M insured. Free estimate.',
   // 2026-06-24: GSC striking-distance gsc-3c0d3aad7adf — "poly b replacement
   // vancouver" striking-distance. Description now surfaces "poly-b replacement"
@@ -160,17 +164,17 @@ const enServiceMetaDescriptions: Partial<Record<string, string>> = {
  * Tick 485 — 2026-06-24.
  */
 const zhServiceMetaDescriptions: Partial<Record<string, string>> = {
-  kitchen:       '温哥华厨房翻新 — 定制橱柜、石英台面、瓷砖、管道及电气一站式服务。500万保险，最长3年工艺保修。Metro Vancouver全区服务。免费报价。',
-  bathroom:      '温哥华浴室翻新 — 防水工程、定制瓷砖、淋浴间及浴缸安装。500万保险，最长3年工艺保修。Metro Vancouver全区服务。免费报价。',
-  basement:      'Metro Vancouver地下室翻新 — 娱乐室、合法套间、家庭影院一条龙。代办许可证申请。500万保险，3年保修。免费报价。',
-  'whole-house': '温哥华全屋翻新 — 厨房、浴室、地板及各工种统一合同，单一项目经理统筹全程。500万保险，3年保修。Metro Vancouver全区。免费报价。',
+  kitchen:       '温哥华厨房翻新 — 定制橱柜、石英台面、瓷砖、管道及电气一站式服务。500万保险，最长3年保修。Metro Vancouver全区服务。免费报价。',
+  bathroom:      '温哥华浴室翻新 — 防水工程、定制瓷砖、淋浴间及浴缸安装。500万保险，最长3年保修。Metro Vancouver全区服务。免费报价。',
+  basement:      'Metro Vancouver地下室翻新 — 娱乐室、合法套间、家庭影院一条龙。代办许可证申请。500万保险，最长3年保修。免费报价。',
+  'whole-house': '温哥华全屋翻新 — 厨房、浴室、地板及各工种统一合同，单一项目经理统筹全程。500万保险，最长3年保修。Metro Vancouver全区。免费报价。',
   commercial:     '温哥华商业装修 — 办公室、零售、餐厅及诊所装修。BC建筑规范合规，500万保险。免费估价。',
   // 2026-06-26 Tick 663: GSC zh service page CTR audit — three services missing zh overrides,
   // falling back to truncated long_description_zh (starts with English "Vancouver" or mid-sentence cut).
   // heat-pump-hvac: 200 zh imp / 1.5% CTR (worst). cabinet: 79 imp truncated to "...翻新 8K-18K 加元，完全定制更换 20K...".
   // poly-b-replacement: 49 imp / 4.1% CTR, short zh description. Prices from services.description_zh DB column.
   'heat-pump-hvac':    '温哥华热泵安装与空调升级 — 告别燃气炉，冬暖夏凉，符合BC Hydro退税资格，代办申请全程跟进。500万保险，3年保修，Metro Vancouver全区上门。免费报价。',
-  cabinet:             '温哥华橱柜翻新 — 喷漆整修$4K–$8K，换门板$8K–$18K，全定制更换$20K–$50K。一站式设计安装，500万保险，最长3年工艺保修。免费报价。',
+  cabinet:             '温哥华橱柜翻新 — 喷漆整修$4K–$8K，换门板$8K–$18K，全定制更换$20K–$50K。一站式设计安装，500万保险，柜下灯、水盆、水龙头等水电部分最长3年保修。免费报价。',
   'poly-b-replacement':'Metro Vancouver Poly-B水管更换 — 1985–1997年BC省住宅常见，管道老化漏水风险高。全屋换PEX管道，含许可证验收，多数BC保险公司要求更换。免费报价。',
 };
 
@@ -185,12 +189,12 @@ const zhServiceMetaDescriptions: Partial<Record<string, string>> = {
  * and vocabulary converted to Traditional Chinese.
  */
 const zhHantServiceMetaDescriptions: Partial<Record<string, string>> = {
-  kitchen:       '溫哥華廚房翻新 — 訂製櫥櫃、石英檯面、磁磚、管道及電氣一站式服務。500萬保險，最長3年工藝保固。Metro Vancouver全區。免費報價。',
-  bathroom:      '溫哥華浴室翻新 — 防水工程、訂製磁磚、淋浴間及浴缸安裝。500萬保險，最長3年工藝保固。Metro Vancouver全區。免費報價。',
-  basement:      'Metro Vancouver地下室翻新 — 娛樂室、合法套間、家庭影院一條龍。代辦許可證申請。500萬保險，3年保固。免費報價。',
-  'whole-house': '溫哥華全屋翻新 — 廚房、浴室、地板及各工種統一合約，單一專案經理統籌全程。500萬保險，3年保固。Metro Vancouver全區。免費報價。',
+  kitchen:       '溫哥華廚房翻新 — 訂製櫥櫃、石英檯面、磁磚、管道及電氣一站式服務。500萬保險，最長3年保固。Metro Vancouver全區。免費報價。',
+  bathroom:      '溫哥華浴室翻新 — 防水工程、訂製磁磚、淋浴間及浴缸安裝。500萬保險，最長3年保固。Metro Vancouver全區。免費報價。',
+  basement:      'Metro Vancouver地下室翻新 — 娛樂室、合法套間、家庭影院一條龍。代辦許可證申請。500萬保險，最長3年保固。免費報價。',
+  'whole-house': '溫哥華全屋翻新 — 廚房、浴室、地板及各工種統一合約，單一專案經理統籌全程。500萬保險，最長3年保固。Metro Vancouver全區。免費報價。',
   commercial:     '溫哥華商業裝修 — 辦公室、零售、餐廳及診所裝修。BC建築規範合規，500萬保險。免費估價。',
-  cabinet:       '溫哥華橱櫃翻新 — 噴漆整修$4K–$8K，換門板$8K–$18K，全定製更換$20K–$50K。500萬保險，最長3年工藝保固。免費報價。',
+  cabinet:       '溫哥華橱櫃翻新 — 噴漆整修$4K–$8K，換門板$8K–$18K，全定製更換$20K–$50K。500萬保險，櫃下燈、水盆、水龍頭等水電部分最長3年保固。免費報價。',
   'heat-pump-hvac':    '溫哥華熱泵安裝與空調升級 — 符合BC Hydro退稅資格，全程代辦申請。500萬保險，3年保固，Metro Vancouver全區。免費報價。',
   'poly-b-replacement':'Metro Vancouver Poly-B水管更換 — 1985–1997年BC省住宅常見，全屋換PEX管道，含許可證驗收，多數BC保險公司要求更換。免費報價。',
 };
@@ -235,6 +239,21 @@ const jaServiceMetaDescriptions: Partial<Record<string, string>> = {
 };
 
 /**
+ * Services whose warranty wording may say "up to 3 years". Ryan (2026-11-13):
+ * the up-to-3-year warranty covers plumbing and electrical work only, so only
+ * services that involve plumbing/electrical carry that claim in their title.
+ * Every other service keeps its existing suffix untouched.
+ */
+const PLUMBING_ELECTRICAL_SERVICES = new Set(['kitchen', 'bathroom', 'basement', 'whole-house']);
+
+/**
+ * Services whose title carries no warranty suffix at all. Cabinet's warranty
+ * covers only its plumbing/electrical parts (under-cabinet lighting, sinks,
+ * faucets) — too long for a title, so the title says nothing about warranty.
+ */
+const NO_WARRANTY_TITLE_SERVICES = new Set(['cabinet']);
+
+/**
  * The SERP/OG title for a service page. Shared by generateMetadata and the
  * share card below so the two cannot drift apart.
  *
@@ -242,14 +261,20 @@ const jaServiceMetaDescriptions: Partial<Record<string, string>> = {
  * zh-Hant gets Traditional Chinese geo + trust term; zh gets simplified.
  * ko gets Korean geo + warranty suffix; ja gets Japanese; EN template for all others.
  */
-function buildServiceTitle(serviceTitle: string, locale: Locale): string {
-  if (locale === 'zh') return `${serviceTitle} 温哥华 — 3年保修 | Reno Stars`;
-  if (locale === 'zh-Hant') return `${serviceTitle} 溫哥華 — 3年保固 | Reno Stars`;
+function buildServiceTitle(serviceTitle: string, locale: Locale, serviceSlug: string): string {
+  const noWarranty = NO_WARRANTY_TITLE_SERVICES.has(serviceSlug);
+  const upTo = PLUMBING_ELECTRICAL_SERVICES.has(serviceSlug);
+  const zhSuffix = upTo ? '最长3年保修' : '3年保修';
+  const zhHantSuffix = upTo ? '最長3年保固' : '3年保固';
+  const enSuffix = upTo ? 'Up to 3-Yr Warranty' : '3-Yr Warranty';
+  if (locale === 'zh') return noWarranty ? `${serviceTitle} 温哥华 | Reno Stars` : `${serviceTitle} 温哥华 — ${zhSuffix} | Reno Stars`;
+  if (locale === 'zh-Hant') return noWarranty ? `${serviceTitle} 溫哥華 | Reno Stars` : `${serviceTitle} 溫哥華 — ${zhHantSuffix} | Reno Stars`;
   if (locale === 'ko') return `${serviceTitle} 밴쿠버 — 3년 보증 | Reno Stars`;
   if (locale === 'ja') return `${serviceTitle} バンクーバー — 3年保証 | Reno Stars`;
+  if (noWarranty) return `${serviceTitle} Vancouver | Reno Stars`;
   // Keep the trust suffix for short service names (e.g. Kitchen/Bathroom);
   // drop it for long names so the title stays under Google's ~60-char cap.
-  const withWarranty = `${serviceTitle} Vancouver — 3-Yr Warranty | Reno Stars`;
+  const withWarranty = `${serviceTitle} Vancouver — ${enSuffix} | Reno Stars`;
   return withWarranty.length <= 60 ? withWarranty : `${serviceTitle} Vancouver | Reno Stars`;
 }
 
@@ -273,7 +298,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
   const ogImage = service.image || SERVICE_OG_IMAGES[serviceSlug] || siteImages.hero;
 
-  const title = buildServiceTitle(localizedService.title, locale as Locale);
+  const title = buildServiceTitle(localizedService.title, locale as Locale, serviceSlug);
 
   const isIndexableLocale = isIndexableLeafLocale(locale);
 
@@ -414,7 +439,7 @@ export default async function Page({ params }: PageProps) {
         h1Override={getServiceH1Override(serviceSlug, locale as Locale)}
         share={{
           url: shareUrl,
-          title: buildServiceTitle(localizedService.title, locale as Locale),
+          title: buildServiceTitle(localizedService.title, locale as Locale, serviceSlug),
           imageUrl: serviceHeroImage,
         }}
       />
