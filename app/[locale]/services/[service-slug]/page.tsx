@@ -250,8 +250,10 @@ const PLUMBING_ELECTRICAL_SERVICES = new Set(['kitchen', 'bathroom', 'basement',
  * Services whose title carries no warranty suffix at all. Cabinet's warranty
  * covers only its plumbing/electrical parts (under-cabinet lighting, sinks,
  * faucets) — too long for a title, so the title says nothing about warranty.
+ * Commercial (Captain, 2026-11-14): no warranty claim in its title either —
+ * its meta descriptions never carried one.
  */
-const NO_WARRANTY_TITLE_SERVICES = new Set(['cabinet']);
+const NO_WARRANTY_TITLE_SERVICES = new Set(['cabinet', 'commercial']);
 
 /**
  * The SERP/OG title for a service page. Shared by generateMetadata and the
