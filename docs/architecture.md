@@ -9,10 +9,10 @@
 | Language | TypeScript (strict) | 5.7 |
 | Styling | Tailwind CSS | 4.0 |
 | Database ORM | Drizzle ORM | 0.36 |
-| Database | PostgreSQL 16 (local `127.0.0.1:5435` in prod and dev, via pg Pool) | — |
+| Database | PostgreSQL 16 via pg Pool — prod: Postgres in Docker on the production Mac (container name not yet verified); dev: `127.0.0.1:5435` | — |
 | i18n | next-intl | 4.8 |
 | Testing | Vitest + Playwright | — |
-| Deployment | Self-hosted `next start` on a Mac (launchd `com.renostars.reno-stars-web`, port 3000, Cloudflare Tunnel); manual `pnpm build` + `launchctl kickstart` (migrated off Vercel mid-2026) | — |
+| Deployment | Docker image on the production Mac (docker compose, Cloudflare Tunnel) since 2026-10-04. Merge to `main` → `.github/workflows/build-image.yml` pushes `ghcr.io/reno-stars/reno-stars-web:sha-<12>` → PR on `Reno-Stars/reno-stars-infra` `deploy/images.json` → merge → the prod Mac's CD agent applies. See `CLAUDE.md` for the full flow. (Earlier: Vercel → launchd on a Mac → Enter OS k3s cluster 2026-08-15 → 2026-10-04.) | — |
 | Storage | Cloudflare R2 (prod), MinIO (local dev) | — |
 
 ## Directory Layout
