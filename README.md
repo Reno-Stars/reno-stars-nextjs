@@ -8,7 +8,7 @@ Bilingual (English / Chinese) website for [Reno Stars](https://reno-stars.com), 
 - **Next.js 16** (App Router, Turbopack)
 - **React 19** with TypeScript 5.7 (strict)
 - **Tailwind CSS 4** — neumorphic design system
-- **Drizzle ORM** → PostgreSQL (Neon in production, pg Pool locally)
+- **Drizzle ORM** → PostgreSQL via pg Pool (self-hosted Postgres in production, Docker locally)
 - **next-intl** — bilingual routing (`/en/`, `/zh/`)
 - **Vitest** + **Playwright** — unit and e2e testing
 
@@ -68,6 +68,10 @@ MinIO console: [http://localhost:9001](http://localhost:9001) (minioadmin / mini
 | `NEXT_PUBLIC_BASE_URL` | Yes | Canonical site URL |
 | `STORAGE_PROVIDER` | No | Set to `minio` for local asset rewriting |
 | `MINIO_ORIGIN` | No | MinIO base URL (default: `http://localhost:9000/reno-stars`) |
+
+## Deployment
+
+Merge to `main` → `.github/workflows/build-image.yml` builds `ghcr.io/reno-stars/reno-stars-web:sha-<12>` → a PR on `Reno-Stars/reno-stars-infra` updates `deploy/images.json` → once merged, the production Mac's CD agent deploys it. A green build alone deploys nothing. Details in [`CLAUDE.md`](CLAUDE.md).
 
 ## Project Structure
 

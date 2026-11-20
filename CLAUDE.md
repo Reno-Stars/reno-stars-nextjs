@@ -6,27 +6,36 @@ This file provides essential context for AI assistants. For detailed docs, see `
 
 Bilingual (EN/ZH) renovation company website built with Next.js 16 App Router.
 
-**Runs on the Enter OS k3s cluster (`ns/reno-stars`) since 2026-08-15.** NOT on
-this Mac. The launchd service `com.renostars.reno-stars-web` is booted out and
-`127.0.0.1:3000` / `127.0.0.1:5435` are dead — anything still pointing there is
-broken. Postgres is `renostars-website-pg-0` in-cluster; www is served through
-the cluster Cloudflare tunnel `f6974f01-…`. Local dev still uses Docker.
+**Runs on the production Mac (`RdeMacBook-Pro.local`, docker compose) since
+2026-10-04.** NOT on the Enter OS k3s cluster any more (it served 2026-08-15 →
+2026-10-04 only) and NOT on the automation Mac. The cluster copy is still
+reachable with the old kubeconfig, but nothing serves from it — a write there
+(`kubectl`, `renostars-website-pg-0`) lands in a database nobody reads and looks
+successful. **Never write to the cluster.** The old launchd service
+`com.renostars.reno-stars-web` and `127.0.0.1:3000` / `127.0.0.1:5435` are dead too.
+Production Postgres runs on the production Mac in Docker (container name not yet
+verified). Local dev still uses Docker.
 
-**Deploy = merge → Gitea builds → merge the deploy PR → CD applies.**
-Push to `main` on GitHub → the Gitea mirror picks it up (`mirror-sync` to skip
-the ≤10 min poll) → `.gitea/workflows/build.yml` builds and pushes
-`registry.enteros.ai/reno-stars/reno-stars-web:<sha12>` → `propose-deploy` opens
-a PR on `Reno-Stars/reno-stars-infra` → **merge it** → `cronjob/reno-stars-cd`
-(*/5) applies. Merging your own deploy PR is expected; no human gate.
+**Deploy = merge on GitHub → `build-image.yml` pushes to ghcr → PR on
+`Reno-Stars/reno-stars-infra` → merge → the prod Mac's CD agent applies.**
 
-> ⚠️ **A merged deploy PR can be a SILENT NO-OP.** The namespace runs at ~99% of
-> its ResourceQuota, and with `replicas: 2` the default rollingUpdate values
-> deadlock (maxSurge 25% rounds UP to 1, maxUnavailable 25% rounds DOWN to 0), so
-> a rollout needs a third pod the quota refuses. Git says the tag moved, the
-> Deployment reports `Available=True`, the old pods keep serving, and nothing
-> alerts. The manifest now pins `maxSurge: 0, maxUnavailable: 1`. **Always finish
-> a deploy with `kubectl rollout status` and confirm
-> `updatedReplicas == spec.replicas`, then read a byte back off the live site.**
+1. Code lives on GitHub (`Reno-Stars/reno-stars-nextjs`). Branch → PR → required
+   checks green → merge to `main`. The GitHub → Gitea mirror is dead; there is no
+   Gitea step.
+2. Push to `main` runs `.github/workflows/build-image.yml` on GitHub-hosted runners
+   and pushes `ghcr.io/reno-stars/reno-stars-web:sha-<12>` (+ `:main`).
+   **A green build deploys nothing** — CI never reaches the production Docker daemon.
+3. Open a PR on `Reno-Stars/reno-stars-infra` that changes the `reno-stars-web`
+   entry's `image` in `deploy/images.json` to that `sha-<12>` tag (see infra PRs
+   #12–#17 for the format; put the rollback tag in the body), and merge it once
+   checks pass.
+4. The prod Mac's CD agent pulls that exact digest, recreates only that service,
+   asserts health + running digest, and rolls back on failure.
+5. **Verify from outside** — read the changed text back off the live page
+   (`https://www.reno-stars.com/...`, mind the edge cache below).
+6. **Rollback = `git revert` on GitHub** and run the same flow again (or point the
+   `images.json` entry back at the previous tag via a PR). **Never SSH into the
+   production Mac** to fix or roll back by hand.
 
 > ⚠️ **Cloudflare caches HTML at the edge (`s-maxage=300`).** After a deploy the
 > cached page carries a stale Server Action id and form submissions fail with
@@ -49,7 +58,7 @@ exists; the Vercel-specific costs no longer apply, but the designs remain sound.
 
 - **Framework:** Next.js 16, React 19, TypeScript 5.7
 - **Styling:** Tailwind CSS 4 with neumorphic design system
-- **Database:** Drizzle ORM → pg Pool. Production is `renostars-website-pg-0` in-cluster; local dev is Docker on `127.0.0.1:5435`. (Neon HTTP driver is retired but still auto-selected if `DATABASE_URL` contains `neon.tech` — see "Dual DB driver" below.)
+- **Database:** Drizzle ORM → pg Pool. Production is Postgres in Docker on the production Mac (container name not yet verified); local dev is Docker on `127.0.0.1:5435`. (Neon HTTP driver is retired but still auto-selected if `DATABASE_URL` contains `neon.tech` — see "Dual DB driver" below.)
 - **i18n:** next-intl 4 — locales: `en`, `zh`, prefix: `always`
 - **Testing:** Vitest (unit), Playwright (e2e)
 - **Storage:** Production images on Cloudflare R2, local dev on MinIO (S3-compatible)
@@ -137,6 +146,12 @@ pnpm site-visit:check     # Verify committed catalog against authored copy (CI-s
 
 ## Secrets — how a value reaches the running app
 
+> ⚠️ **Written for the cluster period (2026-08-15 → 2026-10-04).** The resolution
+> order in code is current, but "pod", ExternalSecret and the Infisical delivery
+> path describe the k3s deployment. How environment variables reach the container
+> on the production Mac has not been re-verified since the 10-04 cutover — check
+> `/api/health/config` rather than assuming.
+
 `lib/secrets.ts` `getSecret(name)` resolves in THREE tiers, in order:
 
 1. **`process.env`** — whatever the ExternalSecret maps in. Wins always, so an
@@ -216,14 +231,26 @@ A missing variable fails at FIRST USE, not at boot, so liveness cannot see it.
   Cloudflare redirect rule masks it at `/`. Needs a `DNS:Edit` token or the
   dashboard; neither the Argo tunnel token nor `CLOUDFLARE_API_TOKEN`
   (cache-purge scope) can change it. Use `www.` for anything that must work.
-- **`ns/reno-stars` is at ~99% of its ResourceQuota** (40704Mi/40Gi,
-  31750m/32 CPU across 28 pods). Deploys fit only because the web deployment
-  rolls by replacement. Raising replicas or adding a service needs a quota
-  increase (`reno-stars-infra#181`).
 - **The database default ACL auto-grants `agent_ro` SELECT on every new table**
   created by `renostars` (`renostars | r | {agent_ro=r/renostars}`), and
   `agent_ro` is served publicly by `api.reno-stars.com`. **Any new table holding
   secrets or customer PII must `REVOKE ALL ... FROM agent_ro` explicitly.**
+
+## History — the cluster period (2026-08-15 → 2026-10-04, no longer applies)
+
+Kept so old incident notes make sense; none of this describes production today.
+
+- **Deploy path then:** push to `main` → GitHub → Gitea mirror (`mirror-sync`) →
+  `.gitea/workflows/build.yml` → `registry.enteros.ai/reno-stars/reno-stars-web:<sha12>`
+  → `propose-deploy` PR on `reno-stars-infra` → `cronjob/reno-stars-cd` (*/5) applied it.
+  The `.gitea/` workflows are still in the repo but nothing runs them.
+- **Silent no-op rollouts:** `ns/reno-stars` ran at ~99% of its ResourceQuota, and with
+  `replicas: 2` the default rollingUpdate values deadlocked (maxSurge 25% → 1,
+  maxUnavailable 25% → 0), so a merged deploy PR could leave the old pods serving while
+  the Deployment reported `Available=True`. The manifest pinned
+  `maxSurge: 0, maxUnavailable: 1`, and every deploy was finished with
+  `kubectl rollout status` + `updatedReplicas == spec.replicas`.
+- Postgres was `renostars-website-pg-0` in-cluster; www went through cluster tunnel `f6974f01-…`.
 
 ## Detailed Documentation
 
