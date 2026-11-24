@@ -5,8 +5,6 @@
     "allLocations": "ਸਾਰੇ ਟਿਕਾਣੇ",
     "spaceType": "ਥਾਂ ਦੀ ਕਿਸਮ",
     "allSpaceTypes": "ਸਾਰੀਆਂ ਥਾਵਾਂ ਦੀਆਂ ਕਿਸਮਾਂ",
-    "budget": "ਬਜਟ",
-    "allBudgets": "ਸਾਰੇ ਬਜਟ",
     "showing": "ਦਿਖਾਈ ਜਾ ਰਹੀ",
     "projects": "{count, plural, one {project} other {projects}}",
     "clearAll": "ਫਿਲਟਰ ਸਾਫ਼ ਕਰੋ",

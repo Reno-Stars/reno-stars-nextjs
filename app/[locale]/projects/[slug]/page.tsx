@@ -4,6 +4,7 @@ import { notFound } from 'next/navigation';
 import { ogLocaleMap, type Locale, INDEXABLE_LEAF_LOCALES, isIndexableLeafLocale } from '@/i18n/config';
 import { getLocalizedProject, getLocalizedSiteWithProjects } from '@/lib/data/projects';
 import ProjectDetailPage from '@/components/pages/ProjectDetailPage';
+import { omitBudget, omitSiteBudget } from '@/lib/projects/omit-budget';
 import ProjectCategoryPage from '@/components/pages/ProjectCategoryPage';
 import SiteDetailPage from '@/components/pages/SiteDetailPage';
 import { BreadcrumbSchema, ProjectSchema, ProjectCategorySchema, FAQSchema, ItemListSchema, ServiceSchema } from '@/components/structured-data';
@@ -222,7 +223,7 @@ export default async function Page({ params }: PageProps) {
         {categoryBlockSchema.imageList && (
           <ItemListSchema items={categoryBlockSchema.imageList.items} name={categoryBlockSchema.imageList.name} description={categoryBlockSchema.imageList.description} locale={categoryBlockSchema.imageList.locale} />
         )}
-        <ProjectCategoryPage locale={locale as Locale} categorySlug={slug} company={company} projects={allProjects} categories={categories} categoryBlocks={categoryBlocks} />
+        <ProjectCategoryPage locale={locale as Locale} categorySlug={slug} company={company} projects={allProjects.map(omitBudget)} categories={categories} categoryBlocks={categoryBlocks} />
       </ClientMessages>
     );
   }
@@ -262,7 +263,7 @@ export default async function Page({ params }: PageProps) {
     const relatedProjects = allProjects
       .filter((p) => p.slug !== project.slug && p.service_type != null && p.service_type === project.service_type)
       .slice(0, 3)
-      .map((p) => getLocalizedProject(p, locale as Locale));
+      .map((p) => omitBudget(getLocalizedProject(p, locale as Locale)));
 
     return (
       <ClientMessages ns={['cta', 'lightbox', 'modal', 'projects', 'share', 'wholeHouse']}>
@@ -277,7 +278,6 @@ export default async function Page({ params }: PageProps) {
           serviceType={serviceTypeName}
           url={`/${locale}/projects/${slug}/`}
           duration={localizedProject.duration}
-          budgetRange={project.budget_range}
           spaceType={localizedProject.space_type}
           locale={locale}
           reviews={projectReviews}
@@ -299,7 +299,7 @@ export default async function Page({ params }: PageProps) {
             this same path — never rebuilt, so the two cannot drift. */}
         <ProjectDetailPage
           locale={locale as Locale}
-          project={project}
+          project={omitBudget(project)}
           relatedProjects={relatedProjects}
           company={company}
           serviceType={project.service_type}
@@ -361,7 +361,7 @@ export default async function Page({ params }: PageProps) {
         {siteBlockSchema.imageList && (
           <ItemListSchema items={siteBlockSchema.imageList.items} name={siteBlockSchema.imageList.name} description={siteBlockSchema.imageList.description} locale={siteBlockSchema.imageList.locale} />
         )}
-        <SiteDetailPage site={localizedSite} company={company} />
+        <SiteDetailPage site={omitSiteBudget(localizedSite)} company={company} />
       </ClientMessages>
     );
   }

@@ -5,8 +5,6 @@
     "allLocations": "جميع المواقع",
     "spaceType": "نوع المساحة",
     "allSpaceTypes": "جميع أنواع الفضاء",
-    "budget": "ميزانية",
-    "allBudgets": "جميع الميزانيات",
     "showing": "عرض",
     "projects": "{count, plural, one {project} other {projects}}",
     "clearAll": "مسح المرشحات",

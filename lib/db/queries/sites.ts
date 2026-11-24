@@ -74,7 +74,7 @@ export const getSitesAsProjectsFromDb = cachedQuery(async (): Promise<SiteWithPr
   const siteIds = rows.map((r: DbSiteRow) => r.id);
   if (siteIds.length === 0) return [];
 
-  // LISTING-LITE shape: this query feeds `/projects/`, `/projects/budget/*`,
+  // LISTING-LITE shape: this query feeds `/projects/`,
   // and category routing on `/projects/[slug]/`. None of those render
   // child-project image_pairs, scopes, or external products — they show
   // site-level cards. Skipping the per-project relation fetches drops the

@@ -3,7 +3,7 @@
 import { useState, useMemo, useCallback, useEffect, useRef } from 'react';
 import { useTranslations, useLocale } from 'next-intl';
 import OptimizedImage from '@/components/OptimizedImage';
-import { MapPin, Calendar, DollarSign, Layers, Home, ZoomIn, X, ChevronLeft, ChevronRight, Video } from 'lucide-react';
+import { MapPin, Calendar, Layers, Home, ZoomIn, X, ChevronLeft, ChevronRight, Video } from 'lucide-react';
 import { Link } from '@/navigation';
 import type { Company, LocalizedSiteWithProjects, LocalizedProject, LocalizedImagePair } from '@/lib/types';
 import { BeforeAfterBadge } from '@/components/ImageBadge';
@@ -555,19 +555,6 @@ export default function SiteDetailPage({ site, company }: SiteDetailPageProps) {
                     </span>
                   </div>
                 )}
-                {site.budget_range && (
-                  <div className="rounded-xl p-3 sm:p-4" style={{ boxShadow: neu(4), backgroundColor: CARD }}>
-                    <div className="flex items-center gap-2 mb-1">
-                      <DollarSign className="w-4 h-4" style={{ color: GOLD }} />
-                      <span className="text-sm uppercase tracking-wider" style={{ color: TEXT_MUTED }}>
-                        {t('wholeHouse.totalBudget')}
-                      </span>
-                    </div>
-                    <span className="text-base font-semibold" style={{ color: TEXT }}>
-                      {site.budget_range}
-                    </span>
-                  </div>
-                )}
                 <div className="rounded-xl p-3 sm:p-4" style={{ boxShadow: neu(4), backgroundColor: CARD }}>
                   <div className="flex items-center gap-2 mb-1">
                     <Layers className="w-4 h-4" style={{ color: GOLD }} />
@@ -937,12 +924,6 @@ function AreaDetailCard({
                 <span className="flex items-center gap-1">
                   <Calendar className="w-4 h-4" />
                   {project.duration}
-                </span>
-              )}
-              {project.budget_range && (
-                <span className="flex items-center gap-1">
-                  <DollarSign className="w-4 h-4" />
-                  {project.budget_range}
                 </span>
               )}
             </div>

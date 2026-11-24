@@ -74,7 +74,6 @@ function expandPaths(items: PathEntry[], fallbackLastMod: string): MetadataRoute
 
 const SERVICE_CITY_LOCALES = INDEXABLE_SERVICE_CITY_LOCALES;
 const PROJECT_LEAF_LOCALES = INDEXABLE_LEAF_LOCALES;
-const BUDGET_TIERS = ['under-30k', '30k-60k', '60k-plus'] as const;
 
 interface Section {
   id: string;
@@ -135,17 +134,13 @@ export const SECTIONS: Section[] = [
     },
   },
   {
-    // Project category hubs + the programmatic budget-tier filter pages.
+    // Project category hubs. (The budget-tier pages were retired 2026-11-24 —
+    // they now 301 to /projects/, see lib/projects/retired-budget-pages.ts.)
     id: 'project-hubs',
     items: (d) => [
       ...d.categorySlugs.map((category: string) => ({
         path: `/projects/${category}`,
         priority: PRIORITY.hub,
-        changeFrequency: CHANGEFREQ.monthly,
-      })),
-      ...BUDGET_TIERS.map((tier) => ({
-        path: `/projects/budget/${tier}`,
-        priority: PRIORITY.guide,
         changeFrequency: CHANGEFREQ.monthly,
       })),
     ],

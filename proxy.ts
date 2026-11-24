@@ -4,6 +4,7 @@ import type { NextRequest } from 'next/server';
 import { routing, locales, defaultLocale, type Locale } from './i18n/config';
 import { verifyToken } from './lib/admin/auth';
 import { ASSET_ORIGIN, PROD_ORIGIN } from './lib/storage';
+import { retiredBudgetRedirectPath } from './lib/projects/retired-budget-pages';
 
 const intlMiddleware = createMiddleware(routing);
 
@@ -109,6 +110,12 @@ export default function proxy(request: NextRequest): NextResponse {
     const corrected = '/' + segments[0] + '/' + segments.slice(2).join('/');
     const target = new URL(corrected + (pathname.endsWith('/') && !corrected.endsWith('/') ? '/' : ''), request.url);
     return addSecurityHeaders(NextResponse.redirect(target, 301));
+  }
+
+  // Retired budget-tier landing pages → the locale's /projects/ listing (301).
+  const retiredBudgetTarget = retiredBudgetRedirectPath(pathname);
+  if (retiredBudgetTarget) {
+    return addSecurityHeaders(NextResponse.redirect(new URL(retiredBudgetTarget, request.url), 301));
   }
 
   // Redirect old /process route to /workflow

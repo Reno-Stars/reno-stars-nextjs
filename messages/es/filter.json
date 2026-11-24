@@ -5,8 +5,6 @@
     "allLocations": "Todas las ubicaciones",
     "spaceType": "Tipo de espacio",
     "allSpaceTypes": "Todos los tipos",
-    "budget": "Presupuesto",
-    "allBudgets": "Todos los presupuestos",
     "showing": "Mostrando",
     "projects": "{count, plural, one {proyecto} other {proyectos}}",
     "clearAll": "Limpiar filtros",

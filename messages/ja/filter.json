@@ -5,8 +5,6 @@
     "allLocations": "すべての場所",
     "spaceType": "スペースタイプ",
     "allSpaceTypes": "すべてのスペースタイプ",
-    "budget": "予算",
-    "allBudgets": "すべての予算",
     "showing": "表示中",
     "projects": "{count, plural, other {件のプロジェクト}}",
     "clearAll": "フィルターをクリアする",

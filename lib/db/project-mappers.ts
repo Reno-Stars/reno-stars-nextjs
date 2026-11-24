@@ -191,7 +191,7 @@ export async function fetchProjectRelations(projectIds: string[]): Promise<{
  * localizations jsonb (description / project_story / challenge / solution
  * / meta_description across 12 locales).
  *
- * Used on homepage gallery, /projects/ index, /projects/budget/[tier]/,
+ * Used on homepage gallery, /projects/ index,
  * /before-after/ list — pages that only need title / hero / category /
  * slug / location / featured-flag. Detail pages (/projects/[slug]/) use
  * the full getProjectsFromDb / getProjectBySlugFromDb.

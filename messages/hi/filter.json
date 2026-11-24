@@ -5,8 +5,6 @@
     "allLocations": "सभी स्थान",
     "spaceType": "अंतरिक्ष प्रकार",
     "allSpaceTypes": "सभी स्थान प्रकार",
-    "budget": "बजट",
-    "allBudgets": "सभी बजट",
     "showing": "दिखा",
     "projects": "{count, plural, one {project} other {projects}}",
     "clearAll": "फ़िल्टर साफ़ करें",

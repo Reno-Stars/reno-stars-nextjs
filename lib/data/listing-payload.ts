@@ -35,6 +35,8 @@ import { deepMinimalLocalized, slimForClient } from '@/lib/utils';
 
 /** Not rendered by the grid; not read by `getLocalizedProject`. */
 const PROJECT_OMIT = [
+  // No prices on the projects pages (Ryan 11-24): never ship budget_range.
+  'budget_range',
   'excerpt',
   'project_story',
   'meta_title',
@@ -45,6 +47,8 @@ const PROJECT_OMIT = [
 
 /** A site's own SEO fields — the card renders title/description/badge only. */
 const SITE_OMIT = [
+  // No prices on the projects pages (Ryan 11-24): never ship budget_range.
+  'budget_range',
   'excerpt',
   'meta_title',
   'meta_description',
@@ -58,6 +62,8 @@ const SITE_OMIT = [
  * interface, so they stay (collapsed); everything else optional goes.
  */
 const CHILD_PROJECT_OMIT = [
+  // No prices on the projects pages (Ryan 11-24): never ship budget_range.
+  'budget_range',
   'excerpt',
   'project_story',
   'meta_title',
