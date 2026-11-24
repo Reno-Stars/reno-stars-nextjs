@@ -20,6 +20,7 @@ import {
   TEXT_MUTED,
   neu,
 } from "@/lib/theme";
+import PhoneLink from '@/components/PhoneLink';
 
 /**
  * "Renovation near me" landing page — anchors the generic "near me" query
@@ -149,13 +150,14 @@ export default function NearMePage({ locale, areas, h1Override, googleRating, re
             >
               {t("hero.ctaPrimary")} <ArrowRight size={18} />
             </Link>
-            <a
+            <PhoneLink
               href="tel:+17789607999"
+              trackingLocation="near_me_hero"
               className="inline-flex items-center gap-2 px-8 py-4 rounded-lg font-semibold border-2"
               style={{ borderColor: NAVY, color: NAVY }}
             >
               <Phone size={18} /> 778-960-7999
-            </a>
+            </PhoneLink>
           </div>
         </div>
       </section>
@@ -419,13 +421,14 @@ export default function NearMePage({ locale, areas, h1Override, googleRating, re
             >
               {t("finalCta.quote")} <ArrowRight size={18} />
             </Link>
-            <a
+            <PhoneLink
               href="tel:+17789607999"
+              trackingLocation="near_me_final_cta"
               className="inline-flex items-center gap-2 px-8 py-4 rounded-lg font-semibold border-2"
               style={{ borderColor: NAVY, color: NAVY }}
             >
               <Phone size={18} /> {t("finalCta.call")}
-            </a>
+            </PhoneLink>
           </div>
         </div>
       </section>

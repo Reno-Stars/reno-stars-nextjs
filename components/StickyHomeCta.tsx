@@ -1,7 +1,9 @@
 'use client';
 
+import { useTranslations } from 'next-intl';
 import { Phone, ArrowRight } from 'lucide-react';
 import { GOLD, NAVY } from '@/lib/theme';
+import PhoneLink from '@/components/PhoneLink';
 
 interface StickyHomeCtaProps {
   phone: string;
@@ -18,6 +20,7 @@ interface StickyHomeCtaProps {
  * Added: 2026-06-25 SEO tick-595 (GA4 high-engagement-no-convert finding)
  */
 export default function StickyHomeCta({ phone }: StickyHomeCtaProps) {
+  const t = useTranslations('cta');
   const phoneDigits = phone.replace(/[^\d+]/g, '');
 
   return (
@@ -34,20 +37,22 @@ export default function StickyHomeCta({ phone }: StickyHomeCtaProps) {
           href="#contact"
           className="flex-1 flex items-center justify-center gap-2 px-4 py-3 rounded-xl text-white font-semibold text-sm shadow-md"
           style={{ backgroundColor: GOLD }}
-          aria-label="Get a free renovation quote"
+          aria-label={t('stickyHomeQuoteAria')}
         >
-          <span className="truncate">Free Renovation Quote</span>
+          <span className="truncate">{t('stickyHomeQuote')}</span>
           <ArrowRight size={16} />
         </a>
-        <a
+        <PhoneLink
           href={`tel:${phoneDigits}`}
+          phone={phone}
+          trackingLocation="sticky_home"
           className="flex items-center justify-center gap-2 px-4 py-3 rounded-xl border-2 font-semibold text-sm"
           style={{ borderColor: NAVY, color: NAVY }}
-          aria-label={`Call ${phone}`}
+          aria-label={t('stickyHomeCallAria', { phone })}
         >
           <Phone size={16} />
-          <span>Call</span>
-        </a>
+          <span>{t('stickyHomeCall')}</span>
+        </PhoneLink>
       </div>
     </div>
   );

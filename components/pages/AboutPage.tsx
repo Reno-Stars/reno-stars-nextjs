@@ -15,6 +15,7 @@ import {
   STEP_TEAL, STEP_TEAL_LIGHT, STEP_ORANGE, STEP_ORANGE_LIGHT,
   STEP_GREEN, STEP_GREEN_LIGHT,
 } from '@/lib/theme';
+import PhoneLink from '@/components/PhoneLink';
 
 const VALUES = [
   { key: 'integrity', icon: Shield, accent: STEP_TEAL, accentLight: STEP_TEAL_LIGHT },
@@ -375,9 +376,9 @@ export default function AboutPage({ locale, company, badges }: AboutPageProps) {
             <Link href="/contact" className="inline-flex items-center gap-2 px-6 py-3 rounded-lg font-semibold transition-colors" style={{ backgroundColor: GOLD, color: '#fff' }}>
               {t('cta.getQuote')} <ArrowRight size={16} />
             </Link>
-            <a href={`tel:${company.phone}`} className="inline-flex items-center gap-2 px-6 py-3 rounded-lg font-semibold border transition-colors" style={{ borderColor: NAVY, color: NAVY }}>
+            <PhoneLink href={`tel:${company.phone}`} phone={company.phone} trackingLocation="about_cta" className="inline-flex items-center gap-2 px-6 py-3 rounded-lg font-semibold border transition-colors" style={{ borderColor: NAVY, color: NAVY }}>
               <Phone size={16} /> {company.phone}
-            </a>
+            </PhoneLink>
           </div>
         </div>
       </section>

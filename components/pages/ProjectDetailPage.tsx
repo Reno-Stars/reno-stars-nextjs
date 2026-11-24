@@ -24,6 +24,7 @@ import {
   NAVY, GOLD, GOLD_PALE, NAVY_90, SURFACE, SURFACE_ALT,
   CARD, TEXT, TEXT_MID, TEXT_MUTED, neu,
 } from '@/lib/theme';
+import PhoneLink from '@/components/PhoneLink';
 
 interface ProjectDetailPageProps {
   locale: Locale;
@@ -641,13 +642,15 @@ export default function ProjectDetailPage({ locale, project, relatedProjects, co
                 >
                   {t('cta.getFreeQuote')}
                 </Link>
-                <a
+                <PhoneLink
                   href={`tel:${company.phone}`}
+                  phone={company.phone}
+                  trackingLocation="project_detail_cta"
                   className="px-6 py-3 rounded-xl text-base font-semibold cursor-pointer transition-all duration-200"
                   style={{ boxShadow: neu(4), backgroundColor: CARD, color: TEXT }}
                 >
                   {t('cta.callNow')}
-                </a>
+                </PhoneLink>
               </div>
 
               {/* Contextual internal links */}

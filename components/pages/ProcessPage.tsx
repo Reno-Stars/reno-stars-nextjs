@@ -20,6 +20,7 @@ import {
   STEP_GREEN, STEP_GREEN_LIGHT, STEP_RED, STEP_RED_LIGHT,
 } from '@/lib/theme';
 import { stepIllustrations, TreeSvg, HouseSvg } from '@/components/illustrations/process';
+import PhoneLink from '@/components/PhoneLink';
 
 interface ProcessPageProps {
   company: Company;
@@ -635,10 +636,10 @@ export default function ProcessPage({ company, locale, googleRating }: ProcessPa
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 items-start">
             {/* Left: Contact Details */}
             <div className="space-y-3 sm:space-y-4 order-2 md:order-1">
-              <a href={`tel:${company.phone}`} className="flex items-center gap-3 hover:opacity-80 transition-opacity">
+              <PhoneLink href={`tel:${company.phone}`} phone={company.phone} trackingLocation="process_contact" className="flex items-center gap-3 hover:opacity-80 transition-opacity">
                 <Phone className="w-5 h-5 sm:w-6 sm:h-6" style={{ color: GOLD }} />
                 <span className="text-white text-base sm:text-lg md:text-xl">{company.phone}</span>
-              </a>
+              </PhoneLink>
               <a href={`mailto:${company.email}`} className="flex items-center gap-3 hover:opacity-80 transition-opacity">
                 <Mail className="w-5 h-5 sm:w-6 sm:h-6" style={{ color: GOLD }} />
                 <span className="text-white text-base sm:text-lg md:text-xl">{company.email}</span>

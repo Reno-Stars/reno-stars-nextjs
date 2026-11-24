@@ -3,6 +3,7 @@
 import { useTranslations } from 'next-intl';
 import { Phone, ArrowRight } from 'lucide-react';
 import { GOLD, NAVY } from '@/lib/theme';
+import PhoneLink from '@/components/PhoneLink';
 
 interface StickyComboCtaProps {
   area: string;
@@ -41,15 +42,17 @@ export default function StickyComboCta({ area, service, phone }: StickyComboCtaP
           <span className="truncate">{t('stickyQuoteFor', { area, service })}</span>
           <ArrowRight size={16} />
         </a>
-        <a
+        <PhoneLink
           href={`tel:${phoneDigits}`}
+          phone={phone}
+          trackingLocation="sticky_combo"
           className="flex items-center justify-center gap-2 px-4 py-3 rounded-xl border-2 font-semibold text-sm"
           style={{ borderColor: NAVY, color: NAVY }}
           aria-label={`${t('stickyCall')} ${phone}`}
         >
           <Phone size={16} />
           <span>{t('stickyCall')}</span>
-        </a>
+        </PhoneLink>
       </div>
     </div>
   );

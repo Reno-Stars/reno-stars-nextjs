@@ -7,6 +7,7 @@ import type { ShareContext } from '@/lib/share/types';
 import { NAVY, GOLD, SURFACE, TEXT, TEXT_MID, TEXT_MUTED, neu } from '@/lib/theme';
 import FaqSection from '@/components/home/FaqSection';
 import ShareBar from '@/components/share/ShareBar';
+import PhoneLink from '@/components/PhoneLink';
 
 const NEU8 = neu(8);
 
@@ -93,9 +94,9 @@ export default function ShowroomPage({ locale, company, showroom, faqs, translat
                 <Phone className="w-5 h-5 mt-0.5 flex-shrink-0" style={{ color: GOLD }} />
                 <div>
                   <p className="font-semibold text-sm" style={{ color: TEXT_MUTED }}>{t.phoneTitle}</p>
-                  <a href={`tel:${showroom.phone || company.phone}`} className="hover:underline" style={{ color: TEXT }}>
+                  <PhoneLink href={`tel:${showroom.phone || company.phone}`} phone={showroom.phone || company.phone} trackingLocation="showroom_info" className="hover:underline" style={{ color: TEXT }}>
                     {showroom.phone || company.phone}
-                  </a>
+                  </PhoneLink>
                 </div>
               </div>
 
@@ -176,9 +177,9 @@ export default function ShowroomPage({ locale, company, showroom, faqs, translat
             </Link>
             <p className="text-white/70 text-sm">
               {t.callUs}{' '}
-              <a href={`tel:${company.phone}`} className="text-white hover:underline font-semibold">
+              <PhoneLink href={`tel:${company.phone}`} phone={company.phone} trackingLocation="showroom_cta" className="text-white hover:underline font-semibold">
                 {company.phone}
-              </a>
+              </PhoneLink>
             </p>
           </div>
         </div>

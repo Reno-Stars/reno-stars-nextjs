@@ -9,7 +9,7 @@ import { MAP_EMBED_URL } from '@/lib/data';
 import ContactForm from '@/components/ContactForm';
 import { WeChatContactCard } from '@/components/ZhTrustSignals';
 import { GOLD, GOLD_PALE, SURFACE, CARD, TEXT, TEXT_MID, TEXT_MUTED, neu } from '@/lib/theme';
-import { trackPhoneClick } from '@/lib/analytics';
+import PhoneLink from '@/components/PhoneLink';
 
 interface ContactSectionProps {
   company: Company;
@@ -48,10 +48,19 @@ export default function ContactSection({ company, areasList, translations: t }: 
                 </div>
                 <div className="min-w-0">
                   <div className="text-sm font-semibold uppercase tracking-wider mb-1" style={{ color: TEXT_MUTED }}>{c.title}</div>
-                  {c.href ? (
+                  {c.href?.startsWith('tel:') ? (
+                    <PhoneLink
+                      href={c.href}
+                      phone={company.phone}
+                      trackingLocation="home_contact"
+                      className="text-base font-medium cursor-pointer transition-colors hover:underline"
+                      style={{ color: TEXT }}
+                    >
+                      {Array.isArray(c.value) ? c.value[0] : c.value}
+                    </PhoneLink>
+                  ) : c.href ? (
                     <a
                       href={c.href}
-                      onClick={c.href.startsWith('tel:') ? () => trackPhoneClick(company.phone) : undefined}
                       className="text-base font-medium cursor-pointer transition-colors hover:underline"
                       style={{ color: TEXT }}
                     >

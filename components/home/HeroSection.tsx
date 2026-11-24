@@ -8,7 +8,8 @@ import { video, images, WORKSAFE_BC_LOGO } from '@/lib/data';
 import { GOLD, GOLD_ON_DARK } from '@/lib/theme';
 import LazyVideo from '@/components/LazyVideo';
 import { buildProcessedSrcSet, buildProcessedUrl, isR2Url } from '@/lib/image';
-import { trackPhoneClick, trackCtaClick } from '@/lib/analytics';
+import { trackCtaClick } from '@/lib/analytics';
+import PhoneLink from '@/components/PhoneLink';
 
 interface HeroSectionProps {
   company: Company;
@@ -181,12 +182,14 @@ export default function HeroSection({ company, googleRating, translations: t }: 
             >
               {t.getFreeQuote}
             </Link>
-            <a href={`tel:${company.phone}`}
-              onClick={() => trackPhoneClick(company.phone)}
+            <PhoneLink
+              href={`tel:${company.phone}`}
+              phone={company.phone}
+              trackingLocation="hero"
               className="px-5 sm:px-7 py-3.5 rounded-xl text-base font-semibold cursor-pointer border border-white/30 text-white/90 hover:text-white hover:border-white/50 transition-all duration-200 backdrop-blur-sm"
             >
               {t.callNow}
-            </a>
+            </PhoneLink>
           </div>
         </div>
 
