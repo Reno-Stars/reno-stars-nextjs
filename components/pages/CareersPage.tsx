@@ -28,6 +28,7 @@ import {
   neu,
 } from "@/lib/theme";
 import { WECHAT_ID } from "@/lib/company-config";
+import PhoneLink from '@/components/PhoneLink';
 
 interface CareersPageProps {
   locale: Locale;
@@ -144,14 +145,16 @@ export default function CareersPage({ locale, phone, email }: CareersPageProps) 
           <h2 className="text-2xl font-bold mb-3 text-white">{t("apply.title")}</h2>
           <p className="text-sm sm:text-base max-w-2xl mx-auto mb-7 text-white/80">{t("apply.body")}</p>
           <div className="flex flex-col sm:flex-row items-stretch justify-center gap-3 max-w-2xl mx-auto">
-            <a
+            <PhoneLink
               href={tel}
+              phone={phone}
+              trackingLocation="careers_apply"
               className="flex-1 inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl font-semibold text-sm transition-transform hover:scale-[1.02]"
               style={{ backgroundColor: GOLD_ON_DARK, color: NAVY }}
             >
               <Phone className="w-4 h-4" aria-hidden="true" />
               {t("apply.call")}: {phone}
-            </a>
+            </PhoneLink>
             <a
               href={`mailto:${email}?subject=${encodeURIComponent(t("apply.emailSubject"))}`}
               className="flex-1 inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl font-semibold text-sm border border-white/25 text-white transition-transform hover:scale-[1.02]"

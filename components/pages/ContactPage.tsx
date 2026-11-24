@@ -15,6 +15,7 @@ import {
   NAVY, GOLD_PALE, SURFACE, SURFACE_ALT,
   CARD, TEXT, TEXT_MID, GOLD, GOLD_ON_DARK, neu,
 } from '@/lib/theme';
+import PhoneLink from '@/components/PhoneLink';
 
 /** Form dropdown option populated from the DB (service_areas / property_types). */
 export interface FormSelectOption {
@@ -118,10 +119,10 @@ export default function ContactPage({ company, hours, areaNames, cityOptions, pr
       {/* Quick Contact Bar */}
       <section className="py-4 px-4 sm:px-6 lg:px-8" style={{ backgroundColor: SURFACE_ALT }}>
         <div className="max-w-7xl mx-auto flex flex-wrap justify-center gap-4 sm:gap-6 md:gap-10">
-          <a href={`tel:${company.phone}`} className="flex items-center gap-2 hover:opacity-80 transition-opacity">
+          <PhoneLink href={`tel:${company.phone}`} phone={company.phone} trackingLocation="contact_quick_bar" className="flex items-center gap-2 hover:opacity-80 transition-opacity">
             <Phone className="w-5 h-5" style={{ color: GOLD }} />
             <span className="text-base font-medium" style={{ color: TEXT }}>{company.phone}</span>
-          </a>
+          </PhoneLink>
           <a href={`mailto:${company.email}`} className="flex items-center gap-2 hover:opacity-80 transition-opacity">
             <Mail className="w-5 h-5" style={{ color: GOLD }} />
             <span className="text-base font-medium" style={{ color: TEXT }}>{company.email}</span>
@@ -199,7 +200,17 @@ export default function ContactPage({ company, hours, areaNames, cityOptions, pr
                       <h3 className="text-base font-bold mb-1" style={{ color: TEXT }}>
                         {item.title}
                       </h3>
-                      {item.href ? (
+                      {item.href?.startsWith('tel:') ? (
+                        <PhoneLink
+                          href={item.href}
+                          phone={company.phone}
+                          trackingLocation="contact_info"
+                          className="text-base hover:underline"
+                          style={{ color: TEXT_MID }}
+                        >
+                          {item.value}
+                        </PhoneLink>
+                      ) : item.href ? (
                         <a
                           href={item.href}
                           className="text-base hover:underline"

@@ -8,7 +8,6 @@ import { useTranslations, useLocale } from 'next-intl';
 import { Link } from '@/navigation';
 import type { Company, SocialLink, Service, ServiceArea } from '@/lib/types';
 import type { Locale } from '@/i18n/config';
-import { trackPhoneClick } from '@/lib/analytics';
 import { pickLocale } from '@/lib/utils';
 // The footer sits on a navy background, so its gold must stay bright (the
 // AA-darkened GOLD is for light backgrounds). Alias GOLD_ON_DARK → GOLD so every
@@ -16,6 +15,7 @@ import { pickLocale } from '@/lib/utils';
 import { NAVY, GOLD_ON_DARK as GOLD } from '@/lib/theme';
 import { WORKSAFE_BC_LOGO } from '@/lib/data';
 import { HAS_AWARDS } from '@/lib/awards';
+import PhoneLink from '@/components/PhoneLink';
 
 type IconComponent = React.ComponentType<{ className?: string }>;
 
@@ -367,14 +367,15 @@ export default function Footer({ company, socialLinks, services, areas, googleRa
           <div>
             <h2 className="text-white font-semibold text-sm mb-4">{t('label.contact')}</h2>
             <div className="space-y-3">
-              <a
+              <PhoneLink
                 href={`tel:${company.phone}`}
-                onClick={() => trackPhoneClick(company.phone)}
+                phone={company.phone}
+                trackingLocation="footer"
                 className="flex items-center gap-2 text-sm text-white/80 hover:text-white transition-colors"
               >
                 <Phone className="w-4 h-4 shrink-0" style={{ color: GOLD }} />
                 {company.phone}
-              </a>
+              </PhoneLink>
               <a
                 href={`mailto:${company.email}`}
                 className="flex items-center gap-2 text-sm text-white/80 hover:text-white transition-colors"

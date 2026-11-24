@@ -70,11 +70,19 @@ export function trackFormSubmission(
 
 /**
  * Track a phone number click event.
- * Also fires a Google Ads conversion if AW conversion ID/label are set.
+ * Also fires a Google Ads call conversion if AW conversion ID/label are set.
+ *
+ * Both hits use the beacon transport so they survive the dialer taking over
+ * the screen. `location` (optional) says which button was tapped; the
+ * `phone_number` parameter is unchanged for existing reports.
+ * Render tel: links with components/PhoneLink.tsx rather than calling this
+ * directly, so no click-to-call button goes untracked.
  */
-export function trackPhoneClick(phoneNumber: string): void {
+export function trackPhoneClick(phoneNumber: string, location?: string): void {
   trackEvent('phone_click', {
     phone_number: phoneNumber,
+    ...(location ? { link_location: location } : {}),
+    transport_type: 'beacon',
   });
 
   // Also fire Google Ads call conversion
@@ -84,6 +92,7 @@ export function trackPhoneClick(phoneNumber: string): void {
     try {
       window.gtag?.('event', 'conversion', {
         send_to: `${awId}/${awLabel}`,
+        transport_type: 'beacon',
       });
     } catch {
       // Silently ignore

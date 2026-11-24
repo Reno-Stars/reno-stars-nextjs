@@ -2,6 +2,7 @@
 
 import { Phone, ArrowRight } from 'lucide-react';
 import { GOLD, NAVY } from '@/lib/theme';
+import PhoneLink from '@/components/PhoneLink';
 
 interface StickyHomeCtaProps {
   phone: string;
@@ -39,15 +40,17 @@ export default function StickyHomeCta({ phone }: StickyHomeCtaProps) {
           <span className="truncate">Free Renovation Quote</span>
           <ArrowRight size={16} />
         </a>
-        <a
+        <PhoneLink
           href={`tel:${phoneDigits}`}
+          phone={phone}
+          trackingLocation="sticky_home"
           className="flex items-center justify-center gap-2 px-4 py-3 rounded-xl border-2 font-semibold text-sm"
           style={{ borderColor: NAVY, color: NAVY }}
           aria-label={`Call ${phone}`}
         >
           <Phone size={16} />
           <span>Call</span>
-        </a>
+        </PhoneLink>
       </div>
     </div>
   );

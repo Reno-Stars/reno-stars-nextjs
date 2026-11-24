@@ -3,6 +3,7 @@ import { Link } from '@/navigation';
 import type { Locale } from '@/i18n/config';
 import { GOLD, SURFACE_ALT, CARD, TEXT, TEXT_MID, neu } from '@/lib/theme';
 import { WeChatContactCard } from '@/components/ZhTrustSignals';
+import PhoneLink from '@/components/PhoneLink';
 
 interface CTASectionProps {
   heading: string;
@@ -37,13 +38,15 @@ export default function CTASection({ heading, subtitle, bg = SURFACE_ALT, showCa
             {t('cta.getFreeQuote')}
           </Link>
           {showCallButton && phone && (
-            <a
+            <PhoneLink
               href={`tel:${phone}`}
+              phone={phone}
+              trackingLocation="cta_section"
               className="px-6 sm:px-8 py-3 rounded-xl text-sm font-semibold cursor-pointer transition-all duration-200"
               style={{ boxShadow: neu(4), backgroundColor: CARD, color: TEXT }}
             >
               {t('cta.callNow')}
-            </a>
+            </PhoneLink>
           )}
         </div>
         {/* zh/zh-Hant only — WeChat QR next to the primary CTA (renders null elsewhere) */}

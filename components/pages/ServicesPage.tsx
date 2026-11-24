@@ -12,6 +12,7 @@ import {
   GOLD, GOLD_PALE, GOLD_ICON_FILTER, SURFACE, SURFACE_ALT,
   CARD, NAVY, TEXT, TEXT_MID, neu,
 } from '@/lib/theme';
+import PhoneLink from '@/components/PhoneLink';
 
 interface ServicesPageProps {
   locale: Locale;
@@ -185,13 +186,15 @@ export default function ServicesPage({ locale: _locale, company, services, areas
             >
               {t('cta.getFreeQuote')}
             </Link>
-            <a
+            <PhoneLink
               href={`tel:${company.phone}`}
+              phone={company.phone}
+              trackingLocation="services_cta"
               className="px-8 py-3 rounded-xl text-sm font-semibold cursor-pointer transition-all duration-200"
               style={{ boxShadow: neu(4), backgroundColor: CARD, color: TEXT }}
             >
               {t('cta.callNow')} - {company.phone}
-            </a>
+            </PhoneLink>
           </div>
         </div>
       </section>
