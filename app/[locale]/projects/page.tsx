@@ -6,6 +6,7 @@ import { BreadcrumbSchema, FAQSchema, ItemListSchema } from '@/components/struct
 import { getBaseUrl, buildAlternates, buildOgImageUrl, SITE_NAME, buildAlternateLocales, pickLocale } from '@/lib/utils';
 import { getCompanyFromDb, getProjectsListFromDb, getSitesAsProjectsFromDb, getCategoriesLocalized } from '@/lib/db/queries';
 import { slimProjectForListing, slimSiteForListing } from '@/lib/data/listing-payload';
+import { stripProjectPrices, stripSitePrices } from '@/lib/projects/strip-prices';
 import ClientMessages from '@/components/ClientMessages';
 
 interface PageProps {
@@ -81,7 +82,7 @@ export default async function Page({ params, searchParams }: PageProps) {
   const [{ locale }, resolvedSearchParams] = await Promise.all([params, searchParams]);
   setRequestLocale(locale);
 
-  const [t, faqT, company, projects, sitesAsProjects, categories] = await Promise.all([
+  const [t, faqT, company, rawProjects, rawSites, categories] = await Promise.all([
     getTranslations({ locale, namespace: 'nav' }),
     getTranslations({ locale, namespace: 'projectsFaqs' }),
     getCompanyFromDb(),
@@ -89,6 +90,9 @@ export default async function Page({ params, searchParams }: PageProps) {
     getSitesAsProjectsFromDb(),
     getCategoriesLocalized(),
   ]);
+  // Card summaries and the client payload read price-filtered copy (lib/projects/strip-prices.ts).
+  const projects = rawProjects.map(stripProjectPrices);
+  const sitesAsProjects = rawSites.map(stripSitePrices);
 
   // Validate + thread ALL filter params server-side so SSR output (and what
   // crawlers see) matches the filtered view, not just for ?service=.
