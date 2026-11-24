@@ -5,8 +5,6 @@
     "allLocations": "Tất Cả Vị Trí",
     "spaceType": "Loại Không Gian",
     "allSpaceTypes": "Tất Cả Loại Không Gian",
-    "budget": "Ngân Sách",
-    "allBudgets": "Tất Cả Mức Ngân Sách",
     "showing": "Đang hiển thị",
     "projects": "{count, plural, one {project} other {projects}}",
     "clearAll": "Xóa Bộ Lọc",

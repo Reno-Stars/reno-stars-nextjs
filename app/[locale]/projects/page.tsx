@@ -5,13 +5,14 @@ import ProjectsPage from '@/components/pages/ProjectsPage';
 import { BreadcrumbSchema, FAQSchema, ItemListSchema } from '@/components/structured-data';
 import { getBaseUrl, buildAlternates, buildOgImageUrl, SITE_NAME, buildAlternateLocales, pickLocale } from '@/lib/utils';
 import { getCompanyFromDb, getProjectsListFromDb, getSitesAsProjectsFromDb, getCategoriesLocalized } from '@/lib/db/queries';
-import { presetBySlug, presetRange } from '@/lib/budget-presets';
 import { slimProjectForListing, slimSiteForListing } from '@/lib/data/listing-payload';
 import ClientMessages from '@/components/ClientMessages';
 
 interface PageProps {
   params: Promise<{ locale: string }>;
-  searchParams: Promise<{ service?: string; location?: string; space?: string; budget?: string; q?: string }>;
+  // A legacy ?budget= param (the removed budget filter) is deliberately not
+  // read: old links render the unfiltered listing instead of erroring.
+  searchParams: Promise<{ service?: string; location?: string; space?: string; q?: string }>;
 }
 
 /** Parse+sanitize the filter params shared by generateMetadata and the page. */
@@ -24,41 +25,31 @@ async function resolveFilters(searchParams: PageProps['searchParams'], locale: s
     : undefined;
   const location = sp.location && /^[\p{L} .'-]{2,40}$/u.test(sp.location) ? sp.location : undefined;
   const space = sp.space && /^[\p{L} .'-]{2,40}$/u.test(sp.space) ? sp.space : undefined;
-  // Budget: preset slug (indexable facet) or raw lo-hi (slider refinement).
-  const budgetPreset = presetBySlug(sp.budget);
-  const budgetMatch = sp.budget?.match(/^(\d{3,7})-(\d{3,7})$/);
-  const budget: [number, number] | null = budgetPreset
-    ? presetRange(budgetPreset)
-    : budgetMatch
-      ? [parseInt(budgetMatch[1], 10), parseInt(budgetMatch[2], 10)]
-      : null;
   const q = sp.q ? sp.q.slice(0, 80) : undefined;
-  return { service, serviceLabel, location, space, budget, budgetPreset, q };
+  return { service, serviceLabel, location, space, q };
 }
 
 export async function generateMetadata({ params, searchParams }: PageProps): Promise<Metadata> {
   const { locale } = await params;
   const t = await getTranslations({ locale, namespace: 'metadata.projects' });
-  const { service, serviceLabel, location, budget, budgetPreset } = await resolveFilters(searchParams, locale);
+  const { service, serviceLabel, location } = await resolveFilters(searchParams, locale);
 
   const baseUrl = getBaseUrl();
 
   // Facet-aware SEO: ?service= and ?location= are finite, high-intent facets
   // ("Whole House Renovation projects in Burnaby") — give them descriptive
   // titles/descriptions and SELF-canonical URLs so they can rank as landing
-  // pages. Budget/space/search are refinements, not landing pages: they are
+  // pages. Space/search are refinements, not landing pages: they are
   // STRIPPED from the canonical so engines consolidate them onto the parent
   // service+location facet instead of index-bloating on slider positions.
-  const facetBits = [serviceLabel, location, budgetPreset?.label].filter(Boolean) as string[];
+  const facetBits = [serviceLabel, location].filter(Boolean) as string[];
   const title = facetBits.length ? `${facetBits.join(' · ')} | ${t('title')}` : t('title');
-  const budgetNote = budget && !budgetPreset ? ` ($${budget[0].toLocaleString()} – $${budget[1].toLocaleString()})` : '';
   const description = facetBits.length
-    ? `${facetBits.join(' · ')}${budgetNote} — ${t('description')}`
+    ? `${facetBits.join(' · ')} — ${t('description')}`
     : t('description');
   const canonicalParams = new URLSearchParams();
   if (service) canonicalParams.set('service', service);
   if (location) canonicalParams.set('location', location);
-  if (budgetPreset) canonicalParams.set('budget', budgetPreset.slug);
   const canonicalQs = canonicalParams.toString();
   const canonicalPath = `/projects/${canonicalQs ? `?${canonicalQs}` : ''}`;
   const ogImage = buildOgImageUrl(title);
@@ -101,7 +92,7 @@ export default async function Page({ params, searchParams }: PageProps) {
 
   // Validate + thread ALL filter params server-side so SSR output (and what
   // crawlers see) matches the filtered view, not just for ?service=.
-  const { service: initialService, location: initialLocation, space: initialSpaceType, budget: initialBudget, q: initialQuery } =
+  const { service: initialService, location: initialLocation, space: initialSpaceType, q: initialQuery } =
     await resolveFilters(searchParams, locale);
 
   const breadcrumbs = [
@@ -138,7 +129,7 @@ export default async function Page({ params, searchParams }: PageProps) {
         name={`${company.name} — Renovation Projects`}
         description={`${itemListItems.length} completed renovation projects across Metro Vancouver — kitchens, bathrooms, basements and whole-house remodels.`}
       />
-      <ProjectsPage locale={locale as Locale} company={company} projects={clientProjects} sitesAsProjects={clientSites} categories={categories} initialService={initialService} initialLocation={initialLocation} initialSpaceType={initialSpaceType} initialBudget={initialBudget} initialQuery={initialQuery} />
+      <ProjectsPage locale={locale as Locale} company={company} projects={clientProjects} sitesAsProjects={clientSites} categories={categories} initialService={initialService} initialLocation={initialLocation} initialSpaceType={initialSpaceType} initialQuery={initialQuery} />
     </ClientMessages>
   );
 }

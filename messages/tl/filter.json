@@ -5,8 +5,6 @@
     "allLocations": "Lahat ng Lokasyon",
     "spaceType": "Uri ng Espasyo",
     "allSpaceTypes": "Lahat ng Uri ng Espasyo",
-    "budget": "Budget",
-    "allBudgets": "Lahat ng Budget",
     "showing": "Pinapakita",
     "projects": "{count, plural, one {project} other {projects}}",
     "clearAll": "I-clear ang Filters",

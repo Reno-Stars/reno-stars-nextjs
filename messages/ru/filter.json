@@ -5,8 +5,6 @@
     "allLocations": "Все локации",
     "spaceType": "Тип пространства",
     "allSpaceTypes": "Все типы помещений",
-    "budget": "Бюджет",
-    "allBudgets": "Все бюджеты",
     "showing": "Показаны",
     "projects": "{count, plural, one {project} other {projects}}",
     "clearAll": "Очистить фильтры",

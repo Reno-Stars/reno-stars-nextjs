@@ -11,8 +11,6 @@ import { getLocalizedProject } from '@/lib/data/projects';
 import { pickLocale, pickLocaleOptional } from '@/lib/utils';
 // categories passed as prop from server component
 import SelectDropdown from '@/components/SelectDropdown';
-import BudgetRangeSlider from '@/components/BudgetRangeSlider';
-import { BUDGET_PRESETS, presetForSelection } from '@/lib/budget-presets';
 import ProjectCard from '@/components/ProjectCard';
 import ProjectModal from '@/components/ProjectModal';
 import CTASection from '@/components/CTASection';
@@ -62,15 +60,6 @@ function collectImagesFromPairs(
 const PROJECTS_PER_PAGE = 12;
 
 /** Check if a project matches a given service type category */
-function parseBudgetRange(range: string | null | undefined): [number, number] | null {
-  if (!range) return null;
-  const nums = range.match(/[\d,]+/g);
-  if (!nums || nums.length === 0) return null;
-  const lo = parseInt(nums[0].replace(/,/g, ''), 10);
-  const hi = nums.length > 1 ? parseInt(nums[1].replace(/,/g, ''), 10) : lo;
-  return [lo, hi];
-}
-
 function matchesCategory(project: DisplayProject, serviceType: string): boolean {
   return serviceType === 'whole-house'
     ? project.isSiteProject === true || project.service_type === 'whole-house'
@@ -86,11 +75,10 @@ interface ProjectsPageProps {
   initialService?: string;
   initialLocation?: string;
   initialSpaceType?: string;
-  initialBudget?: [number, number] | null;
   initialQuery?: string;
 }
 
-export default function ProjectsPage({ locale, company, projects: rawProjects, sitesAsProjects = [], categories, initialService, initialLocation, initialSpaceType, initialBudget = null, initialQuery }: ProjectsPageProps) {
+export default function ProjectsPage({ locale, company, projects: rawProjects, sitesAsProjects = [], categories, initialService, initialLocation, initialSpaceType, initialQuery }: ProjectsPageProps) {
   const t = useTranslations();
 
   // Convert sites to display format (as "Whole House" projects)
@@ -182,7 +170,6 @@ export default function ProjectsPage({ locale, company, projects: rawProjects, s
           projectCount: site.project_count ?? site.projects?.length ?? 0,
           // Site-specific data
           childAreas: site.projects?.map((p) => pickLocale(p.category, locale)) ?? [],
-          totalBudget: site.budget_range,
           totalDuration: pickLocaleOptional(site.duration, locale),
           allServiceScopes: site.aggregated?.allServiceScopes ? pickLocale(site.aggregated.allServiceScopes, locale) : [],
           allExternalProducts: site.aggregated?.allExternalProducts?.map((ep) => ({
@@ -257,17 +244,6 @@ export default function ProjectsPage({ locale, company, projects: rawProjects, s
       ...sitesAsProjects.map((s) => s.space_type?.en).filter((v): v is string => !!v),
     ]);
     return Array.from(types).sort();
-  }, [rawProjects, sitesAsProjects]);
-  // Full budget extent across all projects/sites, snapped to $1k, for the slider.
-  const budgetBounds = useMemo<[number, number]>(() => {
-    const parsed = [
-      ...rawProjects.map((p) => parseBudgetRange(p.budget_range)),
-      ...sitesAsProjects.map((st) => parseBudgetRange(st.budget_range)),
-    ].filter((r): r is [number, number] => !!r);
-    if (parsed.length === 0) return [0, 200000];
-    const lo = Math.floor(Math.min(...parsed.map((r) => r[0])) / 1000) * 1000;
-    const hi = Math.ceil(Math.max(...parsed.map((r) => r[1])) / 1000) * 1000;
-    return [lo, Math.max(hi, lo + 1000)];
   }, [rawProjects, sitesAsProjects]);
 
   const projectsRef = useRef<HTMLElement>(null);
@@ -358,14 +334,6 @@ export default function ProjectsPage({ locale, company, projects: rawProjects, s
   const [activeCategory, setActiveCategory] = useState<string>(initialService ?? 'All');
   const [locationFilter, setLocationFilter] = useState<string>(initialLocation ?? 'All');
   const [spaceTypeFilter, setSpaceTypeFilter] = useState<string>(initialSpaceType ?? 'All');
-  const clampBudget = useCallback((b: [number, number] | null): [number, number] | null => {
-    if (!b) return null;
-    const lo = Math.max(b[0], budgetBounds[0]);
-    const hi = Math.min(b[1], budgetBounds[1]);
-    return lo <= budgetBounds[0] && hi >= budgetBounds[1] ? null : [lo, hi];
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [budgetBounds[0], budgetBounds[1]]);
-  const [budgetSel, setBudgetSel] = useState<[number, number] | null>(() => clampBudget(initialBudget));
   const [searchQuery, setSearchQuery] = useState(initialQuery ?? '');
   const [currentPage, setCurrentPage] = useState(1);
   const neuShadow4 = useMemo(() => neu(4), []);
@@ -377,12 +345,6 @@ export default function ProjectsPage({ locale, company, projects: rawProjects, s
     setActiveCategory(initialService ?? 'All');
     setCurrentPage(1);
   }, [initialService]);
-  useEffect(() => {
-    if (isFirstRender.current) return;
-    setBudgetSel(clampBudget(initialBudget));
-    setCurrentPage(1);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [initialBudget?.[0], initialBudget?.[1]]);
   const [selectedProject, setSelectedProject] = useState<DisplayProject | null>(null);
 
   // --- Filter <-> URL sync -------------------------------------------------
@@ -403,15 +365,16 @@ export default function ProjectsPage({ locale, company, projects: rawProjects, s
     setOrDel('service', activeCategory, 'All');
     setOrDel('location', locationFilter, 'All');
     setOrDel('space', spaceTypeFilter, 'All');
-    const activePreset = presetForSelection(budgetSel, budgetBounds);
-    setOrDel('budget', budgetSel ? (activePreset ? activePreset.slug : `${budgetSel[0]}-${budgetSel[1]}`) : '', '');
+    // The budget filter was removed (no prices on the site); drop any stale
+    // `budget` param from an old link instead of carrying it forward.
+    params.delete('budget');
     setOrDel('q', searchQuery, '');
     const qs = params.toString();
     const next = `${window.location.pathname}${qs ? `?${qs}` : ''}`;
     if (next !== `${window.location.pathname}${window.location.search}`) {
       window.history.replaceState(window.history.state, '', next);
     }
-  }, [activeCategory, locationFilter, spaceTypeFilter, budgetSel, searchQuery, budgetBounds]);
+  }, [activeCategory, locationFilter, spaceTypeFilter, searchQuery]);
 
   const handleCategoryClick = useCallback((serviceType: string) => {
     setActiveCategory(serviceType);
@@ -459,32 +422,26 @@ export default function ProjectsPage({ locale, company, projects: rawProjects, s
     const categoryMatch = activeCategory === 'All' || matchesCategory(project, activeCategory);
     const locationMatch = locationFilter === 'All' || project.location_city === locationFilter;
     const spaceTypeMatch = spaceTypeFilter === 'All' || project.space_type === localizedSpaceType;
-    const budgetMatch = !budgetSel || (() => {
-      const pr = parseBudgetRange(project.budget_range ?? project.totalBudget);
-      return !!pr && pr[1] >= budgetSel[0] && pr[0] <= budgetSel[1];
-    })();
     const q = searchQuery.toLowerCase();
     const searchMatch = !searchQuery || [project.title, project.po_number].some((v) => v?.toLowerCase().includes(q));
-    return categoryMatch && locationMatch && spaceTypeMatch && budgetMatch && searchMatch;
-  }), [allProjects, activeCategory, locationFilter, spaceTypeFilter, localizedSpaceType, budgetSel, searchQuery]);
+    return categoryMatch && locationMatch && spaceTypeMatch && searchMatch;
+  }), [allProjects, activeCategory, locationFilter, spaceTypeFilter, localizedSpaceType, searchQuery]);
 
   const handleCategoryChange = useCallback((v: string) => { setActiveCategory(v); setCurrentPage(1); }, []);
   const handleLocationChange = useCallback((v: string) => { setLocationFilter(v); setCurrentPage(1); }, []);
   const handleSpaceTypeChange = useCallback((v: string) => { setSpaceTypeFilter(v); setCurrentPage(1); }, []);
-  const handleBudgetChange = useCallback((v: [number, number] | null) => { setBudgetSel(v); setCurrentPage(1); }, []);
 
   const clearFilters = useCallback(() => {
     setActiveCategory('All');
     setLocationFilter('All');
     setSpaceTypeFilter('All');
-    setBudgetSel(null);
     setSearchQuery('');
     setCurrentPage(1);
   }, []);
 
   const hasActiveFilters = useMemo(() =>
-    activeCategory !== 'All' || locationFilter !== 'All' || spaceTypeFilter !== 'All' || budgetSel !== null || searchQuery !== '',
-  [activeCategory, locationFilter, spaceTypeFilter, budgetSel, searchQuery]);
+    activeCategory !== 'All' || locationFilter !== 'All' || spaceTypeFilter !== 'All' || searchQuery !== '',
+  [activeCategory, locationFilter, spaceTypeFilter, searchQuery]);
 
   // Pagination
   const totalPages = useMemo(() => Math.ceil(filteredProjects.length / PROJECTS_PER_PAGE), [filteredProjects.length]);
@@ -651,16 +608,6 @@ export default function ProjectsPage({ locale, company, projects: rawProjects, s
               ariaLabel={t('filter.spaceType')}
             />
           </div>
-          <div className="w-full xl:w-auto xl:flex-1 xl:min-w-[400px] xl:max-w-md">
-            <BudgetRangeSlider
-              bounds={budgetBounds}
-              value={budgetSel}
-              onChange={handleBudgetChange}
-              ariaLabelMin={`${t('filter.budget')} min`}
-              ariaLabelMax={`${t('filter.budget')} max`}
-              allLabel={t('filter.allBudgets')}
-            />
-          </div>
 
           {hasActiveFilters && (
             <button
@@ -794,17 +741,6 @@ export default function ProjectsPage({ locale, company, projects: rawProjects, s
             </>
           )}
         </div>
-      
-        {/* Crawlable budget facet links (SEO): the budget dropdown itself isn't
-            crawlable, so keep discoverable links to the preset landing pages. */}
-        <nav aria-label="Browse projects by budget" className="max-w-7xl mx-auto mt-8 flex flex-wrap items-center gap-x-3 gap-y-1 text-xs" style={{ color: TEXT_MUTED }}>
-          <span>{t('filter.budget')}:</span>
-          {BUDGET_PRESETS.map((p) => (
-            <Link key={p.slug} href={`/projects/?budget=${p.slug}`} className="underline-offset-2 hover:underline" style={{ color: TEXT_MID }}>
-              {p.label}
-            </Link>
-          ))}
-        </nav>
       </section>
 
       {/* Internal Cross-Links — /before-after/ chip added on
@@ -872,18 +808,15 @@ export default function ProjectsPage({ locale, company, projects: rawProjects, s
             {[
               {
                 href: `/${locale}/blog/vanity-renovation-cost-vancouver/`,
-                label: locale === 'zh' || locale === 'zh-Hant' ? '梳妆台费用' : 'Vanity cost',
-                range: '$2K–$9K+',
+                label: locale === 'zh' || locale === 'zh-Hant' ? '梳妆台费用' : locale === 'en' ? 'Vanity cost guide' : 'Vanity cost',
               },
               {
                 href: `/${locale}/blog/bathtub-renovation-cost-vancouver/`,
-                label: locale === 'zh' || locale === 'zh-Hant' ? '浴缸费用' : 'Bathtub cost',
-                range: '$2.5K–$12K+',
+                label: locale === 'zh' || locale === 'zh-Hant' ? '浴缸费用' : locale === 'en' ? 'Bathtub cost guide' : 'Bathtub cost',
               },
               {
                 href: `/${locale}/blog/toilet-renovation-cost-vancouver/`,
-                label: locale === 'zh' || locale === 'zh-Hant' ? '马桶费用' : 'Toilet cost',
-                range: '$800–$5K+',
+                label: locale === 'zh' || locale === 'zh-Hant' ? '马桶费用' : locale === 'en' ? 'Toilet cost guide' : 'Toilet cost',
               },
             ].map((p) => (
               <Link
@@ -893,7 +826,6 @@ export default function ProjectsPage({ locale, company, projects: rawProjects, s
                 style={{ backgroundColor: SURFACE_ALT }}
               >
                 <span className="font-semibold" style={{ color: TEXT }}>{p.label}</span>
-                <span className="text-sm font-bold" style={{ color: GOLD }}>{p.range}</span>
               </Link>
             ))}
           </div>

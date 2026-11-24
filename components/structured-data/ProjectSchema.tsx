@@ -18,7 +18,6 @@ interface ProjectSchemaProps {
   serviceType?: string;
   url: string;
   duration?: string;
-  budgetRange?: string;
   spaceType?: string;
   /** BCP-47 locale code (e.g. 'en', 'zh'). When provided, emits
    *  Schema.org `inLanguage` on the WebPage node so Google can match
@@ -44,7 +43,6 @@ export default function ProjectSchema({
   serviceType,
   url,
   duration,
-  budgetRange,
   spaceType,
   locale,
   reviews,
@@ -144,16 +142,8 @@ export default function ProjectSchema({
       // All images live here too — Service image is what Google's rich-result
       // tooling historically read; WebPage image is the authoritative root.
       ...(allImages.length > 0 && { image: allImages }),
-      ...(budgetRange && {
-        offers: {
-          '@type': 'Offer',
-          priceSpecification: {
-            '@type': 'PriceSpecification',
-            priceCurrency: 'CAD',
-            name: budgetRange,
-          },
-        },
-      }),
+      // No `offers` (Ryan 11-24): project pages publish no prices, so the
+      // budget-range PriceSpecification is gone from the schema too.
       // Verified client reviews for THIS project. Author name is abbreviated
       // to first name + last initial (matches the on-page card); reviewBody
       // is the verbatim quote. Deliberately NO aggregateRating here.

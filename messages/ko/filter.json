@@ -5,8 +5,6 @@
     "allLocations": "모든 위치",
     "spaceType": "공간 유형",
     "allSpaceTypes": "모든 공간 유형",
-    "budget": "예산",
-    "allBudgets": "모든 예산",
     "showing": "전시",
     "projects": "{count, plural, other {개 프로젝트}}",
     "clearAll": "필터 지우기",

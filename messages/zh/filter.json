@@ -5,8 +5,6 @@
     "allLocations": "所有地点",
     "spaceType": "空间类型",
     "allSpaceTypes": "所有空间类型",
-    "budget": "预算",
-    "allBudgets": "所有预算",
     "showing": "显示中",
     "projects": "{count, plural, other {个项目}}",
     "clearAll": "清除过滤器",

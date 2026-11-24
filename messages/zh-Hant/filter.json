@@ -5,8 +5,6 @@
     "allLocations": "所有地點",
     "spaceType": "空間類型",
     "allSpaceTypes": "所有空間類型",
-    "budget": "預算",
-    "allBudgets": "所有預算",
     "showing": "顯示中",
     "projects": "{count, plural, other {個項目}}",
     "clearAll": "清除過濾器",

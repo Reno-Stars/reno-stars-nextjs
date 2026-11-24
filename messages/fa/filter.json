@@ -5,8 +5,6 @@
     "allLocations": "همه موقعیت‌ها",
     "spaceType": "نوع فضا",
     "allSpaceTypes": "همه انواع فضا",
-    "budget": "بودجه",
-    "allBudgets": "همه بودجه‌ها",
     "showing": "نمایش",
     "projects": "{count, plural, one {project} other {projects}}",
     "clearAll": "حذف فیلترها",
