@@ -5,6 +5,7 @@ import { ogLocaleMap, type Locale, INDEXABLE_LEAF_LOCALES, isIndexableLeafLocale
 import { getLocalizedProject, getLocalizedSiteWithProjects } from '@/lib/data/projects';
 import ProjectDetailPage from '@/components/pages/ProjectDetailPage';
 import { omitBudget, omitSiteBudget } from '@/lib/projects/omit-budget';
+import { stripProjectPrices, stripSitePrices } from '@/lib/projects/strip-prices';
 import ProjectCategoryPage from '@/components/pages/ProjectCategoryPage';
 import SiteDetailPage from '@/components/pages/SiteDetailPage';
 import { BreadcrumbSchema, ProjectSchema, ProjectCategorySchema, FAQSchema, ItemListSchema, ServiceSchema } from '@/components/structured-data';
@@ -81,7 +82,9 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const leafRobots = isIndexableLocale ? {} : { robots: { index: false, follow: true } as const };
 
   // Check if it's a project
-  const allProjects = await getProjectsFromDb();
+  // Price copy is filtered at the route boundary (lib/projects/strip-prices.ts),
+  // so meta / og / twitter descriptions never carry an amount.
+  const allProjects = (await getProjectsFromDb()).map(stripProjectPrices);
   const project = allProjects.find((p) => p.slug === slug);
 
   if (project) {
@@ -122,7 +125,8 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   }
 
   // Check if it's a site
-  const siteData = await getSiteBySlugFromDb(slug);
+  const rawSite = await getSiteBySlugFromDb(slug);
+  const siteData = rawSite ? stripSitePrices(rawSite) : rawSite;
 
   if (siteData) {
     // Use dedicated SEO fields, fallback to location-enriched title if city exists
@@ -170,13 +174,16 @@ export default async function Page({ params }: PageProps) {
   const { locale, slug } = await params;
   setRequestLocale(locale);
 
-  const [t, company, allProjects, serviceTypeMap, categories] = await Promise.all([
+  const [t, company, rawProjects, serviceTypeMap, categories] = await Promise.all([
     getTranslations({ locale, namespace: 'nav' }),
     getCompanyFromDb(),
     getProjectsFromDb(),
     getServiceTypeToCategory(),
     getCategoriesLocalized(),
   ]);
+  // Every project row below — detail, related cards, category cards, both
+  // JSON-LD schemas, FAQ blocks and the RSC payload — reads price-filtered copy.
+  const allProjects = rawProjects.map(stripProjectPrices);
 
   // Check if it's a category page
   if (await isCategory(slug)) {
@@ -316,7 +323,8 @@ export default async function Page({ params }: PageProps) {
   }
 
   // Check if it's a site
-  const siteData = await getSiteBySlugFromDb(slug);
+  const rawSite = await getSiteBySlugFromDb(slug);
+  const siteData = rawSite ? stripSitePrices(rawSite) : rawSite;
 
   if (siteData) {
     const localizedSite = getLocalizedSiteWithProjects(siteData, locale as Locale);
