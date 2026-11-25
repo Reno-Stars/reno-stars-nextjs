@@ -2,6 +2,7 @@ import { NextIntlClientProvider } from 'next-intl';
 import { getMessages } from 'next-intl/server';
 import { pickMessages } from '@/i18n/pickMessages';
 import { SHELL_NAMESPACES } from '@/i18n/clientNamespaces';
+import { stripClientPrices } from '@/lib/seo/client-price-messages';
 
 interface ClientMessagesProps {
   /**
@@ -32,10 +33,10 @@ export default async function ClientMessages({ ns, children }: ClientMessagesPro
 
   return (
     <NextIntlClientProvider
-      messages={pickMessages(messages as Record<string, unknown>, [
+      messages={stripClientPrices(pickMessages(messages as Record<string, unknown>, [
         ...SHELL_NAMESPACES,
         ...ns,
-      ])}
+      ]))}
     >
       {children}
     </NextIntlClientProvider>

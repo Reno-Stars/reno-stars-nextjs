@@ -1,5 +1,5 @@
 import { Metadata } from "next";
-import { stripPriceDeep, stripPriceTitle, stripPriceProse, filterPriceFaqs } from '@/lib/seo/strip-price-copy';
+import { stripPriceDeep, stripPriceTitle, stripPriceProse, filterPriceFaqs, firstPriceFree } from '@/lib/seo/strip-price-copy';
 
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { ogLocaleMap, type Locale } from "@/i18n/config";
@@ -51,10 +51,11 @@ export async function generateMetadata({
 
   const rated = serpRatingParams(googleReviews);
   // DI-15: no prices on the home page — metadata included (some locales' copy quoted ranges).
-  const title = stripPriceTitle(rated ? t("titleRated", rated) : t("title", years));
-  const description = stripPriceProse(rated
-    ? t("descriptionRated", rated)
-    : t("description", years));
+  // Each candidate stripped on its own; the first non-empty one wins.
+  const title = firstPriceFree(stripPriceTitle, rated ? t("titleRated", rated) : undefined, t("title", years));
+  const description = firstPriceFree(stripPriceProse,
+    rated ? t("descriptionRated", rated) : undefined,
+    t("description", years));
 
   const baseUrl = getBaseUrl();
   const ogImage = buildOgImageUrl(title, description);

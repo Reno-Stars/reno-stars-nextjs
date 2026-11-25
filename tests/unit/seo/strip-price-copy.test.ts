@@ -1,7 +1,7 @@
 import { describe, it, expect } from 'vitest';
 import {
   hasPriceCopy, stripPriceProse, stripPriceTitle, stripPriceMarkdown, stripPriceCopy,
-  stripPriceDeep, filterPriceFaqs, isCostQuestion, stripPriceHtml, hasInsuranceAmount,
+  stripPriceDeep, filterPriceFaqs, isCostQuestion, stripPriceHtml, hasInsuranceAmount, firstPriceFree,
 } from '@/lib/seo/strip-price-copy';
 
 /** Fragments that would betray a clumsy cut. */
@@ -270,5 +270,71 @@ describe('insurance gate losses — ALWAYS KEEP (task 132)', () => {
     const out = stripPriceProse(s);
     expect(out).toContain(keep);
     expect(hasPriceCopy(out)).toBe(false);
+  });
+});
+
+// Task 136 (Captain review): only MILLION-level amounts are insurance amounts.
+// A range or a sub-million amount next to an insurance word is still a price.
+describe('insurance = million-level amounts only (task 136)', () => {
+  it('poly-b title: the $4K–$22K range is stripped, "Insurance-Ready" stays', () => {
+    const t = 'Poly-B Replacement Burnaby | $4K–$22K | Insurance-Ready | Reno Stars';
+    expect(hasPriceCopy(t)).toBe(true);
+    const out = stripPriceTitle(t);
+    expect(out).toBe('Poly-B Replacement Burnaby | Insurance-Ready | Reno Stars');
+    expect(hasPriceCopy(out)).toBe(false);
+  });
+
+  it('"Kitchens $25K–$50K, fully insured." is a price', () => {
+    const s = 'Kitchens $25K–$50K, fully insured.';
+    expect(hasPriceCopy(s)).toBe(true);
+    expect(hasInsuranceAmount(s)).toBe(false);
+    expect(stripPriceProse(s)).not.toMatch(/\$25K|\$50K/);
+  });
+
+  it('keeps the 500万加元责任险 clause, strips 约3万至5万加元', () => {
+    const s = '约3万至5万加元，我们持有500万加元责任险';
+    expect(hasPriceCopy(s)).toBe(true);
+    const out = stripPriceProse(s);
+    expect(out).toContain('我们持有500万加元责任险');
+    expect(out).not.toMatch(/3万|5万加元，/);
+    expect(hasPriceCopy(out)).toBe(false);
+  });
+
+  it('the two verbatim insurance lines are untouched', () => {
+    const cgl = 'All projects include permits, $5M CGL coverage, and a 3-year workmanship warranty.';
+    const zh = '他们还应持有每次事故赔付额至少 $200万 的公众责任险，并为进场施工的所有工人购买 WorkSafeBC 保险。';
+    for (const s of [cgl, zh]) {
+      expect(hasPriceCopy(s), s).toBe(false);
+      expect(hasInsuranceAmount(s), s).toBe(true);
+      expect(stripPriceProse(s)).toBe(s);
+    }
+  });
+});
+
+describe('cost-question matching is word-based; budget is not a price word (task 136)', () => {
+  it.each([
+    'How much does a kitchen renovation cost?', 'What are your fees?', 'Is pricing transparent?',
+    'Are you affordable?', '厨房装修费用是多少？', 'キッチンの価格は？', '비용은 얼마인가요?', '¿Cuánto cuesta?',
+    'Сколько стоит ремонт?', 'Quel est le coût ?',
+  ])('cost question: %s', (q) => expect(isCostQuestion(q)).toBe(true));
+  it.each([
+    'How does it feel to live through a renovation?', 'Do you offer coffee during consultations?',
+    'Can you work within my budget?', '能否在预算内完成？', '예산 안에서 가능한가요?', '¿Pueden trabajar con mi presupuesto?',
+    'Как проходит оценка проекта?', 'Do you handle permits?',
+  ])('not a cost question: %s', (q) => expect(isCostQuestion(q)).toBe(false));
+});
+
+describe('firstPriceFree — strip each candidate, first non-empty wins (task 136)', () => {
+  it('falls through when the first candidate was nothing but a price', () => {
+    expect(firstPriceFree(stripPriceProse, '$25,000–$80,000.', 'Burnaby renovations, licensed and insured.'))
+      .toBe('Burnaby renovations, licensed and insured.');
+    expect(firstPriceFree(stripPriceTitle, '$20K–$55K', undefined, '', 'Kitchen Renovation Surrey | Reno Stars'))
+      .toBe('Kitchen Renovation Surrey | Reno Stars');
+  });
+  it('keeps the first candidate when it survives stripping', () => {
+    expect(firstPriceFree(stripPriceProse, 'Renovations from $25,000. Free quotes.', 'fallback')).toBe('Free quotes.');
+  });
+  it('returns "" only when every candidate is empty after stripping', () => {
+    expect(firstPriceFree(stripPriceProse, '$1,000', null, '$2,000.')).toBe('');
   });
 });

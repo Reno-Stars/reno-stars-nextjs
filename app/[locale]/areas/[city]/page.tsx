@@ -6,7 +6,7 @@ import { getLocalizedArea } from '@/lib/data/areas';
 import AreaPage from '@/components/pages/AreaPage';
 import { BreadcrumbSchema, AreaServiceSchema, FAQSchema } from '@/components/structured-data';
 import { getBaseUrl, buildAlternates, SITE_NAME, pickLocale, buildAlternateLocales, minimalLocalized, slimForClient, deepMinimalLocalized } from '@/lib/utils';
-import { stripPriceDeep, stripPriceTitle, stripPriceProse, stripPriceCopy, filterPriceFaqs } from '@/lib/seo/strip-price-copy';
+import { stripPriceDeep, stripPriceTitle, stripPriceProse, stripPriceCopy, filterPriceFaqs, firstPriceFree } from '@/lib/seo/strip-price-copy';
 import { getLocalizedService } from '@/lib/data/services';
 import { images as siteImages } from '@/lib/data';
 import { getCompanyFromDb, getServicesFromDb, getServiceAreasFromDb, getServiceAreaBySlugFromDb, getFaqsByAreaFromDb, getProjectsByAreaFromDb, getReviewsByCityFromDb } from '@/lib/db/queries';
@@ -315,14 +315,18 @@ async function resolveAreaMeta(
   // DI-15: area pages carry no prices — DB meta, the EN code map and the
   // message fallback alike are filtered here (shared by generateMetadata and
   // the share card). The database is not written.
+  // Each candidate is stripped on its own; the first non-empty one wins, so a
+  // DB meta that was nothing but a price falls through to the next source.
   return {
-    title: stripPriceTitle(localizedArea.metaTitle
-      || enOverride?.title
-      || t('title', { area: localizedArea.name })),
-    description: stripPriceProse(localizedArea.metaDescription
-      || enOverride?.description
-      || localizedArea.description
-      || t('description', { area: localizedArea.name })),
+    title: firstPriceFree(stripPriceTitle,
+      localizedArea.metaTitle,
+      enOverride?.title,
+      t('title', { area: localizedArea.name })),
+    description: firstPriceFree(stripPriceProse,
+      localizedArea.metaDescription,
+      enOverride?.description,
+      localizedArea.description,
+      t('description', { area: localizedArea.name })),
   };
 }
 

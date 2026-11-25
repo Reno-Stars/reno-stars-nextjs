@@ -21,7 +21,7 @@ interface PageProps {
 // notes. Same Next 16 prerender-shell regression; same workaround.
 import { serviceCityOverrides } from '@/lib/data/seo-overrides';
 import { isTestA } from '@/lib/seo/test-a';
-import { stripPriceDeep, stripPriceTitle, stripPriceProse, filterPriceFaqs } from '@/lib/seo/strip-price-copy';
+import { stripPriceDeep, stripPriceTitle, stripPriceProse, filterPriceFaqs, firstPriceFree } from '@/lib/seo/strip-price-copy';
 import ClientMessages from '@/components/ClientMessages';
 
 export const dynamic = 'force-dynamic';
@@ -75,9 +75,11 @@ function buildComboMeta(args: {
   // DI-15: no prices in the SERP/OG title or description of a non-test-A
   // combo. TEST A (lib/seo/test-a.ts) keeps its original copy byte-for-byte;
   // seo-overrides.ts itself is not edited.
+  // Each candidate is stripped on its own (override → template), first
+  // non-empty wins.
   if (!isTestA(locale, serviceSlug, city)) {
-    title = stripPriceTitle(title);
-    description = stripPriceProse(description);
+    title = firstPriceFree(stripPriceTitle, title, t('title', tParams));
+    description = firstPriceFree(stripPriceProse, description, t('description', tParams));
   }
 
   return { title, description };

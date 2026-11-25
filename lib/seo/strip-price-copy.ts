@@ -42,19 +42,32 @@ const INSURANCE = new RegExp(
   ].join('|'),
   'i',
 );
-/** "Million" in the site languages — liability cover is quoted in millions. */
-const MILLION = /^\s?(?:M\b|million|millones|millions|мил|ملي|میلیون|मिलियन|ਮਿਲੀਅਨ|triệu|milyon|百万|百萬|万|萬)/i;
-/** A million-sized amount with an insurance word this close is the liability cover. */
+/** "Million" written after the amount, in the site languages ("$5 million", "$5 मिलियन"). */
+const MILLION_WORD = /^\s?(?:million|millón|millones|millions|milhões|мил|млн|ملي|ملاي|میلیون|मिलियन|ਮਿਲੀਅਨ|triệu|milyon|百万|百萬)/i;
+/** A million-level amount with an insurance word this close is the liability cover. */
 const MILLION_WINDOW = 90;
-/** Any amount directly next to an insurance word ("$5M insured", "CGL de 5 M$"). */
-const ADJACENT_WINDOW = 15;
+/** One number inside an amount: "25,000" / "2.5" / "500". Two of them = a range. */
+const NUMBER = /[0-9٠-٩۰-۹]{1,3}(?:[,.\u00A0\u202F ][0-9٠-٩۰-۹]{3})+|[0-9٠-٩۰-۹]+(?:\.[0-9٠-٩۰-۹]+)?/g;
+
+/**
+ * Liability cover is quoted in MILLIONS: "$5M", "5 M$", "$5 million", "$5 मिलियन",
+ * "500万" / "500萬" / "500만" (≥ 100 万 = ≥ 1 million). Sub-million amounts
+ * ("$25K–$50K", "3万至5万加元") are renovation prices even next to "insured".
+ */
+function isMillionLevel(text: string, end: number, match: string): boolean {
+  if (/[0-9٠-٩۰-۹]\s?[Mm](?![A-Za-z])/.test(match)) return true;
+  if (MILLION_WORD.test(text.slice(end, end + 14))) return true;
+  const wan = /([0-9][0-9,.]*)\s?(?:万|萬|만)/.exec(match);
+  return !!wan && parseFloat(wan[1].replace(/,/g, '')) >= 100;
+}
 
 interface Hit { start: number; end: number }
 
+/** A single million-level amount with an insurance word nearby. A range is always a price. */
 function isInsuranceAmount(text: string, start: number, end: number, match: string): boolean {
-  const millions = /M\b|[0-9]\s?M$/.test(match) || MILLION.test(text.slice(end, end + 12));
-  const win = millions ? MILLION_WINDOW : ADJACENT_WINDOW;
-  return INSURANCE.test(text.slice(Math.max(0, start - win), end + win));
+  if ((match.match(NUMBER) ?? []).length > 1) return false;
+  if (!isMillionLevel(text, end, match)) return false;
+  return INSURANCE.test(text.slice(Math.max(0, start - MILLION_WINDOW), end + MILLION_WINDOW));
 }
 
 /** Price amounts in `text`, insurance amounts excluded. */
@@ -143,9 +156,22 @@ export function stripPriceProse(text: string): string {
     });
   }
   if (hasPriceCopy(out)) {
-    out = out.split(SENTENCE_SPLIT).filter((s) => !hasPriceCopy(s)).join(' ');
+    out = out.split(SENTENCE_SPLIT).map(dropPriceSentence).filter(Boolean).join(' ');
   }
   return tidyProse(out);
+}
+
+/** Clause separators inside one sentence ("约3万至5万加元，我们持有500万加元责任险"). */
+const CLAUSE_SPLIT = /(?<=[,，;；])\s*/;
+
+/**
+ * A sentence that still names a price is dropped — unless it also quotes the
+ * insurance amount (ALWAYS KEEP): then only its price clauses are dropped.
+ */
+function dropPriceSentence(sentence: string): string {
+  if (!hasPriceCopy(sentence)) return sentence;
+  if (!hasInsuranceAmount(sentence)) return '';
+  return sentence.split(CLAUSE_SPLIT).filter((c) => !hasPriceCopy(c)).join(' ');
 }
 
 // ---------------------------------------------------------------------------
@@ -320,24 +346,70 @@ export function stripPriceDeep<T>(value: T, key = ''): T {
   return value;
 }
 
+/**
+ * Strip each candidate SEPARATELY and return the first one that is not empty.
+ * A meta title/description built as `strip(a || b || c)` comes out '' when `a`
+ * was nothing but a price — the fallbacks never get a chance (task 136).
+ */
+export function firstPriceFree(
+  strip: (s: string) => string,
+  ...candidates: ReadonlyArray<string | null | undefined>
+): string {
+  for (const c of candidates) {
+    if (!c) continue;
+    const out = strip(c);
+    if (out && out.trim()) return out;
+  }
+  return '';
+}
+
+/**
+ * Price-strip a next-intl message subtree on the SERVER, before it is
+ * serialized into a client provider's RSC payload (DI-15). Leaves use the
+ * same rules as stripPriceDeep, but a message never becomes undefined (a
+ * missing key would throw in the client): an emptied message is ''.
+ * `skip` subtrees are company facts, not prices (nearMe `trust.*` holds the
+ * bare "$5M" liability stat).
+ */
+export function stripPriceMessages<T>(value: T, skip: ReadonlySet<string> = new Set(), key = ''): T {
+  if (typeof value === 'string') return (stripPriceDeep(value, key) ?? '') as T;
+  if (Array.isArray(value)) return value.map((v) => stripPriceMessages(v, skip, key)) as T;
+  if (value && typeof value === 'object') {
+    const next: Record<string, unknown> = {};
+    for (const [k, v] of Object.entries(value as Record<string, unknown>)) {
+      next[k] = skip.has(k) ? v : stripPriceMessages(v, skip, k);
+    }
+    return next as T;
+  }
+  return value;
+}
+
 // ---------------------------------------------------------------------------
 // FAQs
 // ---------------------------------------------------------------------------
 /** Questions that ask what something COSTS, in the site's 14 languages. */
+// "budget" (and its translations) is NOT a cost word: "Can you work within my
+// budget?" asks about scope, not price (task 136).
+/** Space-delimited scripts: whole words only, so "fee" never matches "feel". */
+const COST_WORDS = [
+  'costs?', 'costing', 'costly', 'prices?', 'priced', 'pricing', 'how much', 'expensive',
+  'cheap(?:er|est|ly)?', 'afford(?:able|ability)?', 'fees?',
+  'costos?', 'costes?', 'precios?', 'cuánto', 'cuanto', 'gastos',
+  'coûts?', 'couts?', 'prix', 'combien',
+  'chi phí', 'giá', 'bao nhiêu',
+  'стоимост\\p{L}*', 'цен(?:а|ы|у|е|ой)', 'сколько',
+  'magkano', 'presyo', 'halaga',
+];
+/** Scripts without word spaces (CJK) or with attached prefixes (Arabic, Persian, Indic): substring. */
+const COST_STEMS = [
+  '费用', '價格', '价格', '多少钱', '多少錢', '費用', '花费', '花費',
+  '価格', 'いくら', '비용', '가격', '얼마',
+  'تكلفة', 'سعر', 'كم ', 'هزینه', 'قیمت', 'چقدر',
+  'लागत', 'कीमत', 'कितना', 'कितनी', 'ਲਾਗਤ', 'ਕੀਮਤ', 'ਕਿੰਨਾ', 'ਕਿੰਨੀ',
+];
 const COST_QUESTION = new RegExp(
-  [
-    'cost', 'price', 'pric', 'how much', 'budget', 'expensive', 'cheap', 'afford', 'fee',
-    '费用', '價格', '价格', '多少钱', '多少錢', '预算', '預算', '費用', '花费', '花費',
-    '費用', '価格', 'いくら', '予算', '비용', '가격', '얼마', '예산',
-    'costo', 'coste', 'precio', 'cuánto', 'cuanto', 'presupuesto',
-    'coût', 'cout', 'prix', 'combien',
-    'chi phí', 'giá', 'bao nhiêu', 'ngân sách',
-    'стоимост', 'цена', 'сколько', 'бюджет',
-    'تكلفة', 'سعر', 'كم ', 'ميزانية', 'هزینه', 'قیمت', 'چقدر', 'بودجه',
-    'लागत', 'कीमत', 'कितना', 'कितनी', 'बजट', 'ਲਾਗਤ', 'ਕੀਮਤ', 'ਕਿੰਨਾ', 'ਕਿੰਨੀ', 'ਬਜਟ',
-    'magkano', 'gastos', 'presyo', 'halaga',
-  ].join('|'),
-  'i',
+  `(?<![\\p{L}\\p{M}])(?:${COST_WORDS.join('|')})(?![\\p{L}\\p{M}])|${COST_STEMS.join('|')}`,
+  'iu',
 );
 
 export function isCostQuestion(question: string): boolean {

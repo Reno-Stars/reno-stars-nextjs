@@ -67,8 +67,36 @@ describe('hardcoded price copy removed from REMOVE surfaces', () => {
 });
 
 describe('ALWAYS KEEP', () => {
-  it('LocalBusiness priceRange "$$" and the sticky call CTA are untouched', () => {
+  it('LocalBusiness JSON-LD priceRange is still "$$"', () => {
     expect(src('components/structured-data/LocalBusinessSchema.tsx')).toMatch(/priceRange: '\$\$'/);
+  });
+
+  // Snapshot of main 4795870b (CI clones depth 1, so base cannot be read from git at test time).
+  const BASE_STICKY_CALL: Record<string, string> = {
+    ar: 'يتصل', en: 'Call', es: 'Llamar', fa: 'تماس بگیرید', fr: 'Appel', hi: 'पुकारना', ja: '電話',
+    ko: '부르다', pa: 'ਕਾਲ ਕਰੋ', ru: 'Вызов', tl: 'Tumawag', vi: 'Gọi', zh: '称呼', 'zh-Hant': '稱呼',
+  };
+  it.each(Object.entries(BASE_STICKY_CALL))('cta.stickyCall (%s) is unchanged vs main 4795870b', (loc, base) => {
+    const cta = JSON.parse(src(`messages/${loc}/cta.json`)) as { cta?: { stickyCall?: string }; stickyCall?: string };
+    expect(cta.cta?.stickyCall ?? cta.stickyCall).toBe(base);
+  });
+
+  const BASE_PO_NUMBER_LINES: Record<string, string[]> = {
+    'components/pages/ProjectsPage.tsx': [
+      'po_number: site.po_number,',
+      'const searchMatch = !searchQuery || [project.title, project.po_number].some((v) => v?.toLowerCase().includes(q));',
+    ],
+    'lib/data/projects.ts': ['po_number: project.po_number,'],
+    'lib/db/project-mappers.ts': ['po_number: row.poNumber ?? undefined,', 'po_number: row.poNumber ?? undefined,'],
+    'lib/db/schema.ts': ["poNumber: varchar('po_number', { length: 50 }),", "poNumber: varchar('po_number', { length: 50 }),"],
+    'lib/types.ts': ['po_number?: string;', 'po_number?: string;', 'po_number?: string;'],
+  };
+  it.each(Object.entries(BASE_PO_NUMBER_LINES))('po_number lines in %s are unchanged vs main 4795870b', (file, base) => {
+    const lines = src(file).split('\n').map((l) => l.trim()).filter((l) => l.includes('po_number'));
+    expect(lines.sort()).toEqual([...base].sort());
+  });
+  it('the strip module never touches po_number', () => {
+    expect(code('lib/seo/strip-price-copy.ts')).not.toMatch(/po_?number/i);
   });
 });
 
