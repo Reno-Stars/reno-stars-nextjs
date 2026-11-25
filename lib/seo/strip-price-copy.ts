@@ -71,13 +71,50 @@ function isInsuranceAmount(text: string, start: number, end: number, match: stri
 }
 
 /** Price amounts in `text`, insurance amounts excluded. */
+/**
+ * Government rebates / grants / subsidies (heat-pump rebates, Greener Homes,
+ * HAFI …) are NOT renovation prices — Ryan 2026-11-25: their amounts STAY.
+ * Latin-script words are matched whole ("grant" ≠ "granite"); "BC Hydro" alone
+ * is not a marker (it also sits next to real prices, e.g. panel upgrades).
+ */
+const SUBSIDY = new RegExp(
+  [
+    String.raw`(?<![\p{L}])(?:rebates?|grants?|subsid\p{L}*|incentives?|top-ups?|HAFI|CleanBC|Greener Homes|Home Adaptation for Independence|subvenci[oó]n\p{L}*|subventions?|грант\p{L}*|субсиди\p{L}*|subsidiya|trợ cấp)(?![\p{L}])`,
+    '补助', '補助', '补贴', '補貼', '拨款', '撥款', '退税', '退稅', '助成金', '補助金', 'リベート', '보조금', '지원금', '환급', '리베이트',
+    'کمک هزینه', 'یارانه', 'منحة', 'منح', 'अनुदान', 'ग्रांट', 'सब्सिडी', 'ਗ੍ਰਾਂਟ', 'ਸਬਸਿਡੀ',
+  ].join('|'),
+  'iu',
+);
+/** Sentence ends: ". " / "! " / "? " and the full-width 。！？ (a "3,000.00" decimal point is not one). */
+const SENTENCE_END = /[.!?।۔؟](?=\s|$)|[。！？\n]/g;
+
+/** The sentence of `text` that holds [start, end). */
+function sentenceAt(text: string, start: number, end: number): string {
+  let from = 0;
+  let to = text.length;
+  SENTENCE_END.lastIndex = 0;
+  let m: RegExpExecArray | null;
+  while ((m = SENTENCE_END.exec(text))) {
+    if (m.index < start) from = m.index + 1;
+    else if (m.index >= end) { to = m.index + 1; break; }
+  }
+  return text.slice(from, to);
+}
+
+/** True when `text` names a government rebate / grant / subsidy (the amounts near it stay). */
+export function isSubsidyText(text: string | undefined | null): boolean {
+  return !!text && SUBSIDY.test(text);
+}
+
 function priceHits(text: string): Hit[] {
   const re = new RegExp(PRICE_SOURCE, 'g');
   const out: Hit[] = [];
   let m: RegExpExecArray | null;
   while ((m = re.exec(text))) {
     const end = m.index + m[0].length;
-    if (!isInsuranceAmount(text, m.index, end, m[0])) out.push({ start: m.index, end });
+    if (!isInsuranceAmount(text, m.index, end, m[0]) && !SUBSIDY.test(sentenceAt(text, m.index, end))) {
+      out.push({ start: m.index, end });
+    }
     if (m[0].length === 0) re.lastIndex++;
   }
   return out;
@@ -427,6 +464,8 @@ export function filterPriceFaqs<T extends { question: string; answer: string }>(
   const out: T[] = [];
   for (const f of faqs) {
     if (!hasPriceCopy(f.answer) && !hasPriceCopy(f.question)) { out.push(f); continue; }
+    // A question about rebates / grants / HAFI keeps its whole answer (Ryan: subsidy amounts stay).
+    if (isSubsidyText(f.question)) { out.push(f); continue; }
     if (hasPriceCopy(f.answer) && isCostQuestion(f.question) && !hasInsuranceAmount(f.answer)) continue;
     const answer = stripPriceCopy(f.answer);
     const question = stripPriceTitle(f.question);
