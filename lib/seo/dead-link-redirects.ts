@@ -148,6 +148,18 @@ export const DEAD_LINK_REDIRECTS: Readonly<Record<string, string>> = {
   "blog/نوسازی-آپارتمان-سازمان-ونکوور-2026": "blog/apartment-building-renovation-vancouver-2026",  // translated slug
   "ब्लॉग/अपार्टमेंट-बिल्डिंग-रेनोवेशन-Vancouver-2026": "blog/apartment-building-renovation-vancouver-2026",  // translated path
   "ब्लॉग/तहखाने-नवीनीकरण-Vancouver-पूर्ण-गाइड": "blog/basement-renovation-vancouver-complete-guide",  // translated path
+  // DI-17 follow-up (task 127/134, Captain approved 2026-11-25): legacy project
+  // slugs once linked from the old service-hub cards (code-fixed in #410), so
+  // these are now inbound/legacy URLs only.
+  "projects/commercial-renovation-skin-lab-granville": "projects/vancouver-skin-lab-commercial-renovation",  // same business and city
+  "projects/coquitlam-white-shaker-cabinets": "projects/kitchen",  // legacy kitchen project, no 1:1 live project → kitchen category hub
+  "projects/richmond-kitchen-bathroom-remodel": "projects/kitchen",  // legacy kitchen project → kitchen category hub
+  "projects/surrey-home-renovation": "projects/kitchen",  // legacy kitchen project → kitchen category hub
+  "projects/bathroom-renovation-delta": "projects/bathroom",  // legacy bathroom project → bathroom category hub
+  "projects/richmond-bathroom-remodel": "projects/bathroom",  // legacy bathroom project → bathroom category hub
+  "projects/bathroom-vanity-west-vancouver": "projects/bathroom",  // legacy bathroom project → bathroom category hub
+  "projects/basement-renovation-vancouver": "services/basement/vancouver",  // basement project category is empty/noindex; same target as …-2026
+  "projects/cabinet-refacing-richmond": "services/cabinet/richmond",  // cabinet project category is empty/noindex
 };
 
 const LOCALE_SET = new Set<string>(locales);
