@@ -271,7 +271,7 @@ export default async function Page({ params }: PageProps) {
   const ogImage = service.image || siteImages.hero;
 
   return (
-    <ClientMessages ns={['areas', 'cta', 'lightbox', 'locationBenefits', 'modal', 'projects', 'share', 'wholeHouse']}>
+    <ClientMessages ns={['areas', 'cta', 'lightbox', 'locationBenefits', 'modal', 'projects', 'share', 'wholeHouse']} keepPrices={!stripPrices}>
       <BreadcrumbSchema items={breadcrumbs} locale={locale} />
       {/* One Service node, provided by the layout Organization (by @id) and
           scoped to this city. The former LocalBusinessAreaSchema here declared
