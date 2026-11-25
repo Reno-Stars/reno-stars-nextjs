@@ -233,11 +233,16 @@ A missing variable fails at FIRST USE, not at boot, so liveness cannot see it.
   **CI cannot catch a stale date**: CI clones with depth 1 and the Docker build excludes `.git`, so
   nothing can recompute it; a forgotten regeneration silently leaves the old date (under-reports, never
   invents). `tests/unit/sitemap/lastmod-policy.test.ts` only checks that every static path has an entry.
-- **The apex `reno-stars.com` returns 530 on every path except `/`** — its DNS
-  record still points at the retired Mac tunnel `aa755801-…`. A root-only
-  Cloudflare redirect rule masks it at `/`. Needs a `DNS:Edit` token or the
-  dashboard; neither the Argo tunnel token nor `CLOUDFLARE_API_TOKEN`
-  (cache-purge scope) can change it. Use `www.` for anything that must work.
+- **The apex `reno-stars.com` is a redirect to `www`, not a site** (verified
+  externally 2026-11-24): `https://reno-stars.com/` and `/en/` both answer
+  `301 → https://www.reno-stars.com/en/`, and locale pages such as `/zh/about/`
+  and `/en/services/kitchen/` answer `301` to the same path on `www`. (Exceptions
+  seen: `/en/projects/` redirects to `www` `/en/`; `/robots.txt` and
+  `/sitemap.xml` answer 200 on the apex itself.) Use `https://www.reno-stars.com`
+  for anything that must work. History: in 2026-08/09 the apex DNS record still
+  pointed at the retired Mac tunnel, so every path except `/` returned
+  Cloudflare 530/1033 — resolved. The blackbox probe now checks apex `/` = 301
+  (no follow) and `www` `/en/` = 200.
 - **The database default ACL auto-grants `agent_ro` SELECT on every new table**
   created by `renostars` (`renostars | r | {agent_ro=r/renostars}`), and
   `agent_ro` is served publicly by `api.reno-stars.com`. **Any new table holding
