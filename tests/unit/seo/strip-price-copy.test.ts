@@ -338,3 +338,11 @@ describe('firstPriceFree — strip each candidate, first non-empty wins (task 13
     expect(firstPriceFree(stripPriceProse, '$1,000', null, '$2,000.')).toBe('');
   });
 });
+
+describe('clause splitting never cuts inside an amount (task 136)', () => {
+  it('a thousands comma is not a clause separator (insurance sentence)', () => {
+    const out = stripPriceProse('Kitchens run $25,000–$50,000, and we carry $5M CGL coverage.');
+    expect(out).toContain('we carry $5M CGL coverage.');
+    expect(out).not.toMatch(/\$25|000–|\$5,|^\s*000/);
+  });
+});

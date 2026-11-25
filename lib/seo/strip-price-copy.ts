@@ -88,8 +88,8 @@ const SUBSIDY = new RegExp(
 /** Sentence ends: ". " / "! " / "? " and the full-width 。！？ (a "3,000.00" decimal point is not one). */
 const SENTENCE_END = /[.!?।۔؟](?=\s|$)|[。！？\n]/g;
 
-/** The sentence of `text` that holds [start, end). */
-function sentenceAt(text: string, start: number, end: number): string {
+/** [from, to) of the sentence of `text` that holds [start, end). */
+function sentenceBounds(text: string, start: number, end: number): [number, number] {
   let from = 0;
   let to = text.length;
   SENTENCE_END.lastIndex = 0;
@@ -98,7 +98,41 @@ function sentenceAt(text: string, start: number, end: number): string {
     if (m.index < start) from = m.index + 1;
     else if (m.index >= end) { to = m.index + 1; break; }
   }
-  return text.slice(from, to);
+  return [from, to];
+}
+
+/** Clause separators inside a sentence (a comma followed by a digit is a thousands separator: "$3,000"). */
+const CLAUSE_SEP = /[，;；]|,(?![0-9])/g;
+/**
+ * Phrasing that marks a rebate amount inside a sentence that names a subsidy
+ * ("BC Hydro offers up to $3,000", "额外 $3,000", "退税可抵 $7–11K", "combined up to $11,000").
+ */
+const SUBSIDY_PHRASE = new RegExp(
+  String.raw`(?<![\p{L}])(?:up to|additional|offsets?|combined|stack|hasta|jusqu|до|tối đa|tới|hanggang)(?![\p{L}])` +
+  '|最高|高达|高達|额外|額外|可抵|抵扣|合计|合計|最大|まで|최대|추가|تا سقف|ما يصل إلى|तक|ਤੱਕ',
+  'iu',
+);
+
+/**
+ * A government rebate / grant / subsidy amount (Ryan 2026-11-25: these STAY).
+ * Its sentence must name the subsidy, and its own clause must either name it
+ * or use rebate phrasing — so in "中央热泵系统安装 $14–22K，退税可抵 $7–11K" the
+ * installation price is still a price and only the rebate amount stays.
+ */
+function isSubsidyAmount(text: string, start: number, end: number): boolean {
+  const [from, to] = sentenceBounds(text, start, end);
+  const sentence = text.slice(from, to);
+  if (!SUBSIDY.test(sentence)) return false;
+  let cFrom = from;
+  let cTo = to;
+  CLAUSE_SEP.lastIndex = from;
+  let m: RegExpExecArray | null;
+  while ((m = CLAUSE_SEP.exec(text)) && m.index < to) {
+    if (m.index < start) cFrom = m.index + 1;
+    else if (m.index >= end) { cTo = m.index; break; }
+  }
+  const clause = text.slice(cFrom, cTo);
+  return SUBSIDY.test(clause) || SUBSIDY_PHRASE.test(clause);
 }
 
 /** True when `text` names a government rebate / grant / subsidy (the amounts near it stay). */
@@ -112,7 +146,7 @@ function priceHits(text: string): Hit[] {
   let m: RegExpExecArray | null;
   while ((m = re.exec(text))) {
     const end = m.index + m[0].length;
-    if (!isInsuranceAmount(text, m.index, end, m[0]) && !SUBSIDY.test(sentenceAt(text, m.index, end))) {
+    if (!isInsuranceAmount(text, m.index, end, m[0]) && !isSubsidyAmount(text, m.index, end)) {
       out.push({ start: m.index, end });
     }
     if (m[0].length === 0) re.lastIndex++;
@@ -199,15 +233,16 @@ export function stripPriceProse(text: string): string {
 }
 
 /** Clause separators inside one sentence ("约3万至5万加元，我们持有500万加元责任险"). */
-const CLAUSE_SPLIT = /(?<=[,，;；])\s*/;
+const CLAUSE_SPLIT = /(?<=[，;；]|,(?![0-9]))\s*/;
 
 /**
  * A sentence that still names a price is dropped — unless it also quotes the
- * insurance amount (ALWAYS KEEP): then only its price clauses are dropped.
+ * insurance amount or names a government subsidy (both ALWAYS KEEP): then only
+ * its price clauses are dropped.
  */
 function dropPriceSentence(sentence: string): string {
   if (!hasPriceCopy(sentence)) return sentence;
-  if (!hasInsuranceAmount(sentence)) return '';
+  if (!hasInsuranceAmount(sentence) && !isSubsidyText(sentence)) return '';
   return sentence.split(CLAUSE_SPLIT).filter((c) => !hasPriceCopy(c)).join(' ');
 }
 
@@ -309,9 +344,25 @@ function dropOrphans(rows: Array<{ orig: string; kept: string | null }>): string
 }
 
 /** Remove price copy from markdown (or plain multi-paragraph text). */
+/**
+ * List items under a lead-in that names a subsidy ("**Available BC Hydro /
+ * provincial rebates:**", "**可申请 BC Hydro / 省级退税：**") are rebate amounts
+ * ("低收入家庭补充：额外 $3,000", "合计可达 $11,000") and stay as written.
+ */
+function subsidyListRows(lines: string[]): boolean[] {
+  let underSubsidyLeadIn = false;
+  return lines.map((line) => {
+    if (!line.trim()) return false;
+    if (LIST_ITEM.test(line)) return underSubsidyLeadIn;
+    underSubsidyLeadIn = /[:：][\s*_]*$/.test(line) && isSubsidyText(line);
+    return false;
+  });
+}
+
 export function stripPriceMarkdown(md: string): string {
   if (!md || !hasPriceCopy(md)) return md;
-  const rows = md.split('\n').map((orig) => ({ orig, kept: stripLine(orig) }));
+  const inSubsidyList = subsidyListRows(md.split('\n'));
+  const rows = md.split('\n').map((orig, i) => ({ orig, kept: inSubsidyList[i] ? orig : stripLine(orig) }));
   return dropEmptyTables(dropOrphans(rows)).join('\n').replace(/\n{3,}/g, '\n\n').trim();
 }
 

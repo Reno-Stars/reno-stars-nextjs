@@ -59,3 +59,57 @@ describe('subsidy rule does not let renovation prices through', () => {
       answer: 'Costs depend on scope: $3,000-$8,000 for safety basics.' }])).toEqual([]);
   });
 });
+
+// Verbatim DB copy (service heat-pump-hvac long description, zh) as served on
+// /zh/services/heat-pump-hvac/surrey/ by main 4795870b — task 136 source check.
+describe('rebate lists and mixed sentences in DB copy (heat-pump service, zh)', () => {
+  const MD = [
+    '| 寒带级中央 + 辅热 | $18,000 – $35,000+ | 整屋、高端配置 |',
+    '',
+    '**可申请 BC Hydro / 省级退税：**',
+    '',
+    '- 热泵退税：最高 **$3,000**（BC Hydro）',
+    '- 加拿大绿色家园补助：最高 **$5,000**（联邦）',
+    '- 低收入家庭补充：额外 **$3,000**（BC Hydro）',
+    '- **合计可达 $11,000**，视资格等级而定',
+    '',
+    '我们代为办理退税申请——包括影响您退税等级的入户能源审计前后流程。',
+    '',
+    '2. **替换 20 年以上燃气炉。** 联邦碳税让现在升级在经济上合算。中央热泵系统安装 $14–22K，退税可抵 $7–11K。',
+  ].join('\n');
+
+  it('keeps every rebate list item under the rebate lead-in, verbatim', () => {
+    const out = stripPriceCopy(MD);
+    for (const line of [
+      '**可申请 BC Hydro / 省级退税：**',
+      '- 热泵退税：最高 **$3,000**（BC Hydro）',
+      '- 加拿大绿色家园补助：最高 **$5,000**（联邦）',
+      '- 低收入家庭补充：额外 **$3,000**（BC Hydro）',
+      '- **合计可达 $11,000**，视资格等级而定',
+    ]) expect(out).toContain(line);
+  });
+
+  it('strips the installation price table row and the installation price clause, keeps the rebate clause', () => {
+    const out = stripPriceCopy(MD);
+    expect(out).not.toContain('$18,000');
+    expect(out).not.toContain('$14–22K');
+    expect(out).toContain('退税可抵 $7–11K');
+    expect(out).toContain('联邦碳税让现在升级在经济上合算。');
+  });
+
+  it('a mixed English sentence: price clause cut, rebate clause kept', () => {
+    const out = stripPriceProse('Central heat pump installs run $14K–$22K, and rebates offset $7K–$11K.');
+    expect(out).not.toMatch(/\$14K|\$22K/);
+    expect(out).toContain('rebates offset $7K–$11K.');
+  });
+
+  it('an English rebate list under its lead-in stays', () => {
+    const md = '**Available BC Hydro / provincial rebates:**\n\n- Heat pump rebate: up to **$3,000**\n- Low-income supplement: an extra **$3,000**\n- **Combined up to $11,000**';
+    expect(stripPriceCopy(md)).toBe(md);
+  });
+
+  it('a price list under a NON-subsidy lead-in is still stripped', () => {
+    const md = '**Typical costs:**\n\n- Single-zone ductless: $4,500 – $7,500\n- Multi-zone: $8,000 – $15,000';
+    expect(stripPriceCopy(md)).not.toMatch(/\$4,500|\$8,000/);
+  });
+});
