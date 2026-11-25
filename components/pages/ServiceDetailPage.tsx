@@ -72,9 +72,16 @@ interface ServiceDetailPageProps {
   /** `url` is the page canonical, derived server-side via buildAlternates so it
    *  cannot drift from the canonical the page declares. */
   share: ShareContext;
+  /**
+   * Whether /projects/<serviceSlug>/ exists as a project category. Services
+   * with no category (heat-pump-hvac, critical-load-panel, realtor) must not
+   * link "View all projects" there — that URL is a 404 (DI-17). False → the
+   * link points at the /projects/ listing instead.
+   */
+  hasProjectCategory?: boolean;
 }
 
-export default function ServiceDetailPage({ locale, serviceSlug, company, service, areas = [], faqs = [], googleRating, googleReviewCount, allServices, clientReviews = [], h1Override, share }: ServiceDetailPageProps) {
+export default function ServiceDetailPage({ locale, serviceSlug, company, service, areas = [], faqs = [], googleRating, googleReviewCount, allServices, clientReviews = [], h1Override, share, hasProjectCategory = true }: ServiceDetailPageProps) {
   const t = useTranslations();
   const tCostGuides = useTranslations('costGuidesSection');
 
@@ -272,7 +279,7 @@ export default function ServiceDetailPage({ locale, serviceSlug, company, servic
       <RelatedProjectsSection
         heading={t('section.ourProjects')}
         projects={relatedProjects}
-        categorySlug={serviceSlug}
+        categorySlug={hasProjectCategory ? serviceSlug : undefined}
       />
 
       {/* /before-after/ inbound — 4th surface of /before-after/ rollout

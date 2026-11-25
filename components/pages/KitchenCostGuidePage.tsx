@@ -437,7 +437,7 @@ export default function KitchenCostGuidePage({ locale, projects, phone, share }:
           <p className="text-sm mt-2" style={{ color: TEXT_MID }}>
             Ready to hire?{' '}
             <Link
-              href={`/${locale}/services/kitchen/`}
+              href="/services/kitchen/"
               className="font-semibold underline hover:no-underline"
               style={{ color: GOLD }}
             >

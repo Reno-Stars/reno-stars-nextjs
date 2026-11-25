@@ -4,7 +4,7 @@ import { notFound } from 'next/navigation';
 import { ogLocaleMap, hasNativeSupport, isIndexableLeafLocale, INDEXABLE_LEAF_LOCALES, type Locale } from '@/i18n/config';
 import { getLocalizedService } from '@/lib/data/services';
 import type { ServiceType } from '@/lib/types';
-import { getCompanyFromDb, getServicesFromDb, getServiceAreasFromDb, getReviewsByServiceType } from '@/lib/db/queries';
+import { getCompanyFromDb, getServicesFromDb, getServiceAreasFromDb, getReviewsByServiceType, getCategorySlugs } from '@/lib/db/queries';
 import { getGoogleReviews } from '@/lib/google-reviews';
 import ServiceDetailPage from '@/components/pages/ServiceDetailPage';
 import { BreadcrumbSchema, ServiceSchema, FAQSchema } from '@/components/structured-data';
@@ -438,6 +438,10 @@ export default async function Page({ params }: PageProps) {
           showOnServicesPage: sv.showOnServicesPage,
         }))}
         clientReviews={clientReviews}
+        // Only link "View all projects" to /projects/<service>/ when that
+        // category exists (DI-17: heat-pump-hvac / critical-load-panel / realtor
+        // have none, so the link was a 404).
+        hasProjectCategory={(await getCategorySlugs()).includes(serviceSlug)}
         h1Override={getServiceH1Override(serviceSlug, locale as Locale)}
         share={{
           url: shareUrl,
