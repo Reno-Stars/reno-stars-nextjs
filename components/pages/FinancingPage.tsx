@@ -161,15 +161,15 @@ export default function FinancingPage({ locale: _locale }: FinancingPageProps) {
               {tCta('showroomTagline')}
             </Link>
           </p>
-          <div className="grid grid-cols-2 md:grid-cols-3 gap-4 max-w-2xl mx-auto">
+          {/* DI-15: the "$30K Avg Kitchen Reno" / "$25K Avg Bathroom Reno" stats
+              were removed (renovation prices); the financing-options count stays. */}
+          <div className="flex flex-wrap justify-center gap-4 max-w-2xl mx-auto">
             {[
-              { label: t("stats.avgKitchen"), value: "$30K" },
-              { label: t("stats.avgBathroom"), value: "$25K" },
               { label: t("stats.financingOptions"), value: "4+" },
             ].map((stat) => (
               <div
                 key={stat.label}
-                className="rounded-xl p-4 text-center"
+                className="rounded-xl p-4 text-center min-w-[10rem]"
                 style={{ backgroundColor: CARD, boxShadow: neu() }}
               >
                 <div

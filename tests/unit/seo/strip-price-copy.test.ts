@@ -136,3 +136,32 @@ describe('FAQs', () => {
     }
   });
 });
+
+describe('mixed HTML + markdown DB copy (regression: Maple Ridge / cabinet hub)', () => {
+  it('strips markdown lines even when the text also holds HTML blocks', () => {
+    const md = [
+      '<div class="note"><p>Free quotes within 48 hours.</p></div>',
+      '',
+      '- **Kitchen renovation:** $22,000–$50,000 (competitive pricing vs Vancouver core)',
+      '- **Permits:** handled for you',
+      '',
+      '| Scope | Vancouver 2026 cost |',
+      '|---|---|',
+      '| 10–15 cabinet doors | $4,000 – $6,500 |',
+      '',
+      '$5M CGL insurance, active WCB coverage, and a 3-year workmanship warranty.',
+    ].join('\n');
+    const out = stripPriceCopy(md);
+    expect(hasPriceCopy(out)).toBe(false);
+    expect(out).toContain('<p>Free quotes within 48 hours.</p>');
+    expect(out).toContain('- **Permits:** handled for you');
+    expect(out).toContain('$5M CGL insurance');
+    expect(out).not.toContain('| Scope |');
+  });
+  it('keeps Chinese liability-insurance amounts', () => {
+    for (const s of ['每个项目均含$500 万综合责任险、WorkSafeBC。', '温哥华装修服务 — 保额 500 万加元']) {
+      expect(hasPriceCopy(s), s).toBe(false);
+    }
+  });
+});
+

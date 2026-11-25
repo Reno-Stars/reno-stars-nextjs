@@ -30,7 +30,7 @@ import { PRICE_SOURCE } from '@/lib/projects/strip-prices';
 const INSURANCE = new RegExp(
   [
     'CGL', 'liabilit', 'insur', 'coverage',            // en
-    '保险', '保險', '保険', '보험', '責任險', '责任险',   // zh / zh-Hant / ja / ko
+    '保险', '保險', '保険', '보험', '責任險', '责任险', '保额', '保額',   // zh / zh-Hant / ja / ko
     'seguro', 'asegura', 'cobertura',                   // es
     'assuran', 'responsabilit', 'couverture',           // fr
     'bảo hiểm', 'страх', 'تأمين', 'مؤمن', 'بیمه',        // vi / ru / ar / fa
@@ -199,10 +199,15 @@ export function stripPriceHtml(html: string): string {
 /** Pick the right mode for a free-form string. */
 export function stripPriceCopy(text: string): string {
   if (!text || !hasPriceCopy(text)) return text;
-  if (/<(p|li|td|h[1-6]|div|ul|ol)[\s>]/i.test(text)) return stripPriceHtml(text);
-  if (text.includes('\n')) return stripPriceMarkdown(text);
-  if (/\s\|\s/.test(text) && text.length < 160) return stripPriceTitle(text);
-  return stripPriceProse(text);
+  // DB long-form copy is often MIXED: markdown lines with some inline HTML
+  // blocks. The HTML pass handles block elements; the line pass then handles
+  // every remaining markdown line (it never sees a price the HTML pass removed).
+  const afterHtml = /<(p|li|td|h[1-6]|div|ul|ol)[\s>]/i.test(text) ? stripPriceHtml(text) : text;
+  if (!hasPriceCopy(afterHtml)) return afterHtml;
+  if (afterHtml.includes('\n')) return stripPriceMarkdown(afterHtml);
+  if (/<[a-z][^>]*>/i.test(afterHtml)) return stripPriceProse(afterHtml);
+  if (/\s\|\s/.test(afterHtml) && afterHtml.length < 160) return stripPriceTitle(afterHtml);
+  return stripPriceProse(afterHtml);
 }
 
 /** Exact-price-only strings (e.g. budget_range "$25,000 - $30,000") become undefined. */
