@@ -121,7 +121,7 @@ describe('/projects/<service>/ for a service with no category → the service pa
     expect(serviceRedirectFor('no-such-thing', services)).toBeNull();
   });
 
-  it.each(['heat-pump-hvac', 'critical-load-panel', 'realtor'])('%s redirects permanently (every locale)', async (slug) => {
+  it.each(['heat-pump-hvac', 'critical-load-panel', 'realtor'])('%s → 308 permanentRedirect to /services/<slug>/ (every locale)', async (slug) => {
     for (const locale of ['en', 'zh', 'ja']) {
       await expect(callPage(slug, locale)).rejects.toThrow(`REDIRECT /${locale}/services/${slug}/`);
     }
@@ -150,8 +150,8 @@ describe('service hubs list REAL projects, not the legacy static list', () => {
     const route = readFileSync('app/[locale]/services/[service-slug]/page.tsx', 'utf8');
     expect(route).toMatch(/getProjectsFromDb\(\)/);
     expect(route).toMatch(/\.filter\(\(p\) => p\.service_type === serviceSlug\)/);
-    // Price handling on hubs is out of this PR's scope (DI-15): no new filter here.
-    expect(route).not.toMatch(/strip-prices|omit-budget/);
+    // Same price treatment as /projects/: stripProjectPrices, then omitBudget.
+    expect(route).toMatch(/\.map\(stripProjectPrices\)\s*\.map\(omitBudget\)/);
     expect(route).toContain('relatedProjects={relatedProjects}');
   });
 });
@@ -164,3 +164,23 @@ describe('no code links to the nonexistent Port Moody home guide', () => {
     expect(hits).toEqual(['components/pages/ServiceLocationPage.tsx']);
   });
 });
+
+describe('service hub project cards carry no prices', () => {
+  it('stripProjectPrices → omitBudget removes budget_range and price copy from a card row', async () => {
+    const { stripProjectPrices } = await import('@/lib/projects/strip-prices');
+    const { omitBudget } = await import('@/lib/projects/omit-budget');
+    const { getLocalizedProject } = await import('@/lib/data/projects');
+    const row = {
+      slug: 'kitchen-x', service_type: 'kitchen', budget_range: '$25,000 - $30,000',
+      title: { en: 'Kitchen X', zh: '厨房X' },
+      description: { en: 'Completed in 4-5 weeks for $25K–$30K. White shaker cabinets.', zh: '4-5 周内完成。' },
+      category: { en: 'Kitchen', zh: '厨房' }, images: [], hero_image: '',
+    };
+    const card = getLocalizedProject(omitBudget(stripProjectPrices(row as never)), 'en');
+    const json = JSON.stringify(card);
+    expect(card.budget_range).toBeUndefined();
+    expect(json).not.toMatch(/\$\s?\d/);
+    expect(json).toContain('White shaker cabinets.');
+  });
+});
+

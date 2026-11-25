@@ -87,3 +87,33 @@ describe('dead internal-link 301 table', () => {
     }
   });
 });
+
+describe('prototype-safe lookup', () => {
+  // A plain-object lookup also matches Object.prototype members: before the
+  // fix /en/constructor/ answered 301 → "/en/function Object() { [native code] }/".
+  const PROTO = ['constructor', 'toString', '__proto__', 'hasOwnProperty', 'valueOf', 'isPrototypeOf'];
+
+  it.each(PROTO)('/en/%s/ is not in the table → no redirect', async (key) => {
+    const { deadLinkRedirectPath } = await import('@/lib/seo/dead-link-redirects');
+    expect(deadLinkRedirectPath(`/en/${key}/`)).toBeNull();
+    expect(deadLinkRedirectPath(`/zh/${key}`)).toBeNull();
+  });
+
+  it('proxy hands /en/constructor/ (and friends) to the router — no 301, no Location', async () => {
+    for (const key of PROTO) {
+      const res = await proxyGet(`/en/${key}/`);
+      expect(res.status, key).not.toBe(301);
+      expect(res.headers.get('location'), key).toBeNull();
+    }
+  });
+
+  it('every one of the 124 real entries still redirects exactly as before', async () => {
+    const { DEAD_LINK_REDIRECTS, deadLinkRedirectPath } = await import('@/lib/seo/dead-link-redirects');
+    const entries = Object.entries(DEAD_LINK_REDIRECTS);
+    expect(entries).toHaveLength(124);
+    for (const [from, to] of entries) {
+      expect(deadLinkRedirectPath(`/en/${from}/`), from).toBe(`/en/${to}/`);
+    }
+  });
+});
+

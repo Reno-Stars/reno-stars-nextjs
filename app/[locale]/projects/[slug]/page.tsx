@@ -391,6 +391,9 @@ export default async function Page({ params }: PageProps) {
   // still point at /projects/<service>/ (DI-17). Send them to the service page.
   // Checked LAST and from live rows, so a real category or project with that
   // slug always wins and this steps aside by itself.
+  // Status: Next's permanentRedirect answers 308 (permanent; search engines
+  // treat it like a 301). Only the proxy table in lib/seo/dead-link-redirects.ts
+  // answers a literal 301 — service slugs are deliberately not hardcoded there.
   const serviceSlugTarget = serviceRedirectFor(slug, await getServicesFromDb());
   if (serviceSlugTarget) permanentRedirect(`/${locale}/services/${serviceSlugTarget}/`);
 

@@ -8,6 +8,8 @@ import { getCompanyFromDb, getServicesFromDb, getServiceAreasFromDb, getReviewsB
 import { getGoogleReviews } from '@/lib/google-reviews';
 import ServiceDetailPage from '@/components/pages/ServiceDetailPage';
 import { getLocalizedProject } from '@/lib/data/projects';
+import { stripProjectPrices } from '@/lib/projects/strip-prices';
+import { omitBudget } from '@/lib/projects/omit-budget';
 import { BreadcrumbSchema, ServiceSchema, FAQSchema } from '@/components/structured-data';
 import { getBaseUrl, buildAlternates, SITE_NAME, truncateMetaDescription, buildAlternateLocales} from '@/lib/utils';
 import { images as siteImages } from '@/lib/data';
@@ -357,13 +359,18 @@ export default async function Page({ params }: PageProps) {
   ]);
   // "Our Projects": up to 3 PUBLISHED projects of this service, newest first,
   // from the database — never the legacy static list (its slugs 404, DI-17).
-  // Only these 3 rows reach the client component. Price handling on service
-  // hubs is deliberately unchanged here (the legacy cards carried budgets too);
-  // it belongs to the separate price-removal scope (DI-15), which keeps the
-  // price filter on the /projects/ routes only.
+  // Only these 3 rows reach the client component, and they get the SAME price
+  // treatment as every /projects/ surface (same order as
+  // app/[locale]/projects/[slug]/page.tsx): stripProjectPrices on the raw row
+  // (price copy in description / meta / FAQ blocks), then omitBudget
+  // (budget_range), so no amount reaches the cards, the ProjectModal or the
+  // RSC payload. This covers these 3 cards ONLY — the rest of the service hub
+  // (long_description, FAQs, offers) is the separate DI-15 scope.
   const relatedProjects = publishedProjects
     .filter((p) => p.service_type === serviceSlug)
     .slice(0, 3)
+    .map(stripProjectPrices)
+    .map(omitBudget)
     .map((p) => getLocalizedProject(p, locale as Locale));
 
   const [t, faqT] = await Promise.all([

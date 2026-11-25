@@ -204,8 +204,19 @@ describe('guards: filtered at every projects-route hand-off, nowhere else', () =
     expect(src).toContain('rawProjects.map(stripProjectPrices)');
     expect(src).toContain('rawSites.map(stripSitePrices)');
   });
-  it('only the two /projects/ routes import the filter — service pages, guides, blog, home do not', () => {
+  it('only the two /projects/ routes + the service hub 3 project cards import the filter — service×city, guides, blog, home do not', () => {
     const users = execSync('git grep -l --untracked "strip-prices" -- app components lib', { encoding: 'utf8' }).trim().split('\n').sort();
-    expect(users).toEqual(['app/[locale]/projects/[slug]/page.tsx', 'app/[locale]/projects/page.tsx']);
+    expect(users).toEqual([
+      'app/[locale]/projects/[slug]/page.tsx',
+      'app/[locale]/projects/page.tsx',
+      // DI-17: the hub's "Our Projects" cards are project rows → same treatment
+      // as /projects/ (strip, then omit budget). Nothing else on the hub is filtered.
+      'app/[locale]/services/[service-slug]/page.tsx',
+    ]);
+  });
+  it('service hub: the filter is applied once, to the related-project rows only, before omitBudget', () => {
+    const src = readFileSync('app/[locale]/services/[service-slug]/page.tsx', 'utf8');
+    expect(src.match(/\.map\(stripProjectPrices\)/g)).toHaveLength(1); // one use
+    expect(src).toMatch(/\.slice\(0, 3\)\s*\.map\(stripProjectPrices\)\s*\.map\(omitBudget\)\s*\.map\(\(p\) => getLocalizedProject\(p, locale as Locale\)\)/);
   });
 });

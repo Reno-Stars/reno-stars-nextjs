@@ -158,6 +158,8 @@ export function deadLinkRedirectPath(pathname: string): string | null {
   try { path = decodeURIComponent(pathname); } catch { /* keep the raw path */ }
   const m = /^\/([^/]+)\/(.+?)\/?$/.exec(path);
   if (!m || !LOCALE_SET.has(m[1])) return null;
-  const target = DEAD_LINK_REDIRECTS[m[2]];
+  // Own keys only: a plain-object lookup would also match Object.prototype
+  // members (/en/constructor/, /en/toString/, /en/__proto__/) and redirect them.
+  const target = Object.hasOwn(DEAD_LINK_REDIRECTS, m[2]) ? DEAD_LINK_REDIRECTS[m[2]] : undefined;
   return target ? `/${m[1]}/${target}/` : null;
 }
