@@ -7,6 +7,7 @@ import type { ServiceType } from '@/lib/types';
 import { getCompanyFromDb, getServicesFromDb, getServiceAreasFromDb, getReviewsByServiceType, getCategorySlugs, getProjectsFromDb } from '@/lib/db/queries';
 import { getGoogleReviews } from '@/lib/google-reviews';
 import ServiceDetailPage from '@/components/pages/ServiceDetailPage';
+import { stripPriceDeep, stripPriceProse, filterPriceFaqs } from '@/lib/seo/strip-price-copy';
 import { getLocalizedProject } from '@/lib/data/projects';
 import { stripProjectPrices } from '@/lib/projects/strip-prices';
 import { omitBudget } from '@/lib/projects/omit-budget';
@@ -19,30 +20,9 @@ interface PageProps {
   params: Promise<{ locale: string; 'service-slug': string }>;
 }
 
-/**
- * Price ranges in CAD per service slug — fed into ServiceSchema's
- * `hasOfferCatalog.priceSpecification` so Google can render a price snippet
- * on SERP listings.
- *
- * 2026-05-04 update: bumped minimums to defensible Vancouver Metro 2026
- * floors. Old numbers (kitchen $14K, whole-house $50K) were below real
- * project minimums — risked customer expectation mismatch and underbid
- * leads. Sourced from current BC contractor labour rates ($85–150/hr
- * trades + WSBC/insurance overhead), 2026 material costs, and competitor
- * floor pricing on HomeStars / RenovationFind / Houzz Vancouver.
- *
- * Per-tier breakdowns live in long_description (cost-guide tables).
- */
-const SERVICE_PRICE_RANGES: Record<string, { min: number; max: number } | undefined> = {
-  kitchen: { min: 25000, max: 150000 },        // refresh→luxury; high-end can hit $300K+
-  bathroom: { min: 20000, max: 80000 },        // powder→luxury ensuite; spa builds $120K+
-  basement: { min: 50000, max: 200000 },       // basic finish→legal suite + premium ensuite
-  'whole-house': { min: 150000, max: 800000 }, // smallest meaningful reno→full-home; luxury $1.5M+
-  commercial: { min: 50000, max: 500000 },     // small refresh→full restaurant/clinic build-out
-  cabinet: { min: 4000, max: 30000 },          // spray refinish→full custom replacement
-  flooring: { min: 8000, max: 35000 },         // bumped from $5K
-  painting: { min: 5000, max: 20000 },         // bumped from $3K
-};
+// DI-15 (2026-11-24, Ryan via Captain): service hubs carry no prices. The former
+// SERVICE_PRICE_RANGES (ServiceSchema offers minPrice/maxPrice) was removed;
+// DB copy (description / long_description) and FAQ answers are filtered at render.
 
 /**
  * Service-specific OG / hero images.
@@ -286,20 +266,22 @@ function buildServiceTitle(serviceTitle: string, locale: Locale, serviceSlug: st
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { locale, 'service-slug': serviceSlug } = await params;
   const services = await getServicesFromDb();
-  const service = services.find((s) => s.slug === serviceSlug);
+  const rawService = services.find((s) => s.slug === serviceSlug);
 
-  if (!service || service.showOnServicesPage === false) {
+  if (!rawService || rawService.showOnServicesPage === false) {
     return { title: 'Service Not Found', robots: { index: false, follow: false } };
   }
+  // DI-15: DB copy reaches the meta description via truncateMetaDescription.
+  const service = stripPriceDeep(rawService);
 
   const localizedService = getLocalizedService(service, locale as Locale);
   const baseUrl = getBaseUrl();
-  const description = (locale === 'en' && enServiceMetaDescriptions[serviceSlug])
+  const description = stripPriceProse((locale === 'en' && enServiceMetaDescriptions[serviceSlug])
     || (locale === 'zh' && zhServiceMetaDescriptions[serviceSlug])
     || (locale === 'zh-Hant' && zhHantServiceMetaDescriptions[serviceSlug])
     || (locale === 'ko' && koServiceMetaDescriptions[serviceSlug])
     || (locale === 'ja' && jaServiceMetaDescriptions[serviceSlug])
-    || truncateMetaDescription(localizedService.long_description || localizedService.description);
+    || truncateMetaDescription(localizedService.long_description || localizedService.description));
 
   const ogImage = service.image || SERVICE_OG_IMAGES[serviceSlug] || siteImages.hero;
 
@@ -341,11 +323,14 @@ export default async function Page({ params }: PageProps) {
   // number of per-slug disk cache entries via getReviewsByServiceType (security
   // #7).
   const services = await getServicesFromDb();
-  const service = services.find((s) => s.slug === serviceSlug);
+  const rawService = services.find((s) => s.slug === serviceSlug);
 
-  if (!service || service.showOnServicesPage === false) {
+  if (!rawService || rawService.showOnServicesPage === false) {
     notFound();
   }
+  // DI-15: the hub's long_description / description (DB, all locales) carry
+  // price tiers; filtered here — the database is untouched.
+  const service = stripPriceDeep(rawService);
   const localizedService = getLocalizedService(service, locale as Locale);
 
   const [company, areas, googleReviews, clientReviews, publishedProjects] = await Promise.all([
@@ -394,11 +379,13 @@ export default async function Page({ params }: PageProps) {
     try { return faqT(key, faqParams); }
     catch { return ''; }
   };
-  const faqs = [
+  const allFaqs = [
     { question: safeFaq(`${serviceSlug}.q1`), answer: safeFaq(`${serviceSlug}.a1`) },
     { question: safeFaq(`${serviceSlug}.q2`), answer: safeFaq(`${serviceSlug}.a2`) },
     { question: safeFaq(`${serviceSlug}.q3`), answer: safeFaq(`${serviceSlug}.a3`) },
   ].filter((f) => f.question && f.answer);
+  // DI-15: priced answers removed; a cost question whose answer quoted amounts is dropped whole.
+  const faqs = filterPriceFaqs(allFaqs);
 
   const serviceHeroImage = service.image || SERVICE_OG_IMAGES[serviceSlug] || siteImages.hero;
 
@@ -434,7 +421,6 @@ export default async function Page({ params }: PageProps) {
           : {})} 
         url={`/${locale}/services/${serviceSlug}/`}
         areaServed={areas.map((a) => a.name.en)}
-        priceRange={SERVICE_PRICE_RANGES[serviceSlug]}
         image={service.image || SERVICE_OG_IMAGES[serviceSlug] || siteImages.hero}
         serviceRadiusKm={50}
       />

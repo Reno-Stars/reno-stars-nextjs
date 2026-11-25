@@ -1,4 +1,5 @@
 import { Metadata } from 'next';
+import { filterPriceFaqs } from '@/lib/seo/strip-price-copy';
 import { getTranslations, setRequestLocale } from 'next-intl/server';
 import { ogLocaleMap, type Locale } from '@/i18n/config';
 import FinancingPage from '@/components/pages/FinancingPage';
@@ -65,7 +66,7 @@ export default async function Page({ params }: PageProps) {
   return (
     <ClientMessages ns={['cta', 'financing']}>
       <BreadcrumbSchema items={breadcrumbs} locale={locale} />
-      <FAQSchema faqs={faqs} locale={locale} />
+      <FAQSchema faqs={filterPriceFaqs(faqs)} locale={locale} />
       <FinancingPage locale={locale as Locale} />
     </ClientMessages>
   );
