@@ -4,6 +4,7 @@ import { getBaseUrl } from '@/lib/utils';
 import { PRIORITY, CHANGEFREQ, STATIC_PAGES, COST_GUIDE_BLOG_SLUGS } from './config';
 import { loadSitemapData, nativeLocalesFor, type SitemapData } from './data';
 import { SERVICE_CITY_LASTMOD_OVERRIDES, TEST_A_FROZEN_LASTMOD, serviceCityLastModKey } from './lastmod-overrides';
+import { BLOG_SLUGS_REDIRECTED_TO_GUIDES } from '@/lib/seo/blog-guide-redirects';
 
 /**
  * The sitemap, split into an index plus per-section files.
@@ -198,8 +199,13 @@ export const SECTIONS: Section[] = [
     // Blog x locale: only locales with a NATIVE body are submitted. The rest
     // render an EN fallback under `robots: noindex`, so listing them would be a
     // contradictory signal (793 URLs, GSC 2026-07-07).
+    // Posts whose URL permanently redirects to a /guides/ page (next.config.ts
+    // 9b1, list in lib/seo/blog-guide-redirects.ts) are skipped: a sitemap must
+    // not list URLs that answer with a redirect (DI-18, 82 URLs on 2026-11-24).
+    // Filtering the ITEMS (not the built entries) keeps every file at CHUNK
+    // posts, so later posts move up into earlier files.
     id: 'blog',
-    items: (d) => d.blogPostSlugs,
+    items: (d) => d.blogPostSlugs.filter((slug: string) => !BLOG_SLUGS_REDIRECTED_TO_GUIDES.has(slug)),
     build: (d, slice) => {
       const entries: MetadataRoute.Sitemap = [];
       for (const slug of slice as string[]) {
