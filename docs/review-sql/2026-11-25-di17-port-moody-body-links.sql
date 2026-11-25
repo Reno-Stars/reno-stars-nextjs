@@ -20,9 +20,11 @@
 --     port-coquitlam-, burnaby-, coquitlam-, langley-, maple-ridge-, new-westminster-,
 --     richmond-, surrey-, vancouver-, west-vancouver-, white-rock-home-renovation-guide-2026
 --
--- NOT changed by this SQL: /<locale>/services/whole-house/port-moody/ (test A)
--- emits the same link from code (components/pages/ServiceLocationPage.tsx:152).
--- Test A is frozen, so that link stays and keeps answering a 301.
+-- NOT changed by this SQL: /<locale>/services/whole-house/port-moody/ emits the same
+-- link from code (the city-guide map in components/pages/ServiceLocationPage.tsx:152),
+-- not from the DB, so no UPDATE here can reach it. That page is NOT one of the 14
+-- frozen test-A pages. The link is left as is (out of scope for this review SQL) and
+-- keeps answering a 301.
 --
 -- Columns that can hold body copy (lib/db/schema.ts):
 --   blog_posts:    excerpt_en, excerpt_zh, content_en, content_zh, localizations (jsonb)

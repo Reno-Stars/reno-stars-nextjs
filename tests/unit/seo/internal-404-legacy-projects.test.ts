@@ -1,4 +1,5 @@
 import { describe, it, expect, vi } from 'vitest';
+import { locales as LOCALES } from '@/i18n/config';
 
 /**
  * DI-17 follow-up (task 127/134): 9 legacy project slugs that were linked from
@@ -23,10 +24,9 @@ const LEGACY: ReadonlyArray<readonly [string, string]> = [
   ['projects/basement-renovation-vancouver', 'services/basement/vancouver'],
   ['projects/cabinet-refacing-richmond', 'services/cabinet/richmond'],
 ];
-const LOCALES = ['en', 'zh', 'ja', 'pa'] as const;
 
 describe('legacy project slugs → 301 (DI-17 follow-up)', () => {
-  it.each(LEGACY)('/<loc>/%s/ → /<loc>/%s/ in en, zh, ja, pa via the real proxy', async (from, to) => {
+  it.each(LEGACY)('/<loc>/%s/ → /<loc>/%s/ in every locale via the real proxy', async (from, to) => {
     for (const loc of LOCALES) {
       const res = await proxyGet(`/${loc}/${from}/`);
       expect(res.status, `${loc} ${from}`).toBe(301);
@@ -41,9 +41,11 @@ describe('legacy project slugs → 301 (DI-17 follow-up)', () => {
       'projects/vancouver-wfh-office-conversion-glass-partition-2026',
     ]) {
       for (const loc of LOCALES) expect(deadLinkRedirectPath(`/${loc}/${slug}/`), `${loc} ${slug}`).toBeNull();
-      const res = await proxyGet(`/en/${slug}/`);
-      expect(res.status, slug).not.toBe(301);
-      expect(res.headers.get('location'), slug).toBeNull();
+      for (const loc of LOCALES) {
+        const res = await proxyGet(`/${loc}/${slug}/`);
+        expect([301, 307, 308], `${loc} ${slug}`).not.toContain(res.status);
+        expect(res.headers.get('location'), `${loc} ${slug}`).toBeNull();
+      }
     }
   });
 
@@ -52,7 +54,7 @@ describe('legacy project slugs → 301 (DI-17 follow-up)', () => {
     expect(old.status).toBe(301);
     expect(new URL(old.headers.get('location')!).pathname).toBe('/en/projects/minimalist-bathroom-renovation-richmond/');
     const proto = await proxyGet('/en/constructor/');
-    expect(proto.status).not.toBe(301);
+    expect([301, 307, 308]).not.toContain(proto.status);
     expect(proto.headers.get('location')).toBeNull();
   });
 });
