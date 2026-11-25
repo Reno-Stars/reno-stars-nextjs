@@ -56,6 +56,8 @@ const NUMBER = /[0-9٠-٩۰-۹]{1,3}(?:[,.\u00A0\u202F ][0-9٠-٩۰-۹]{3})+|[0-
  */
 function isMillionLevel(text: string, end: number, match: string): boolean {
   if (/[0-9٠-٩۰-۹]\s?[Mm](?![A-Za-z])/.test(match)) return true;
+  // Arabic million spelled inside the amount: "5 ملايين دولار" (task 138)
+  if (/[0-9٠-٩۰-۹]\s?(?:مليون|ملايين)/.test(match)) return true;
   if (MILLION_WORD.test(text.slice(end, end + 14))) return true;
   const wan = /([0-9][0-9,.]*)\s?(?:万|萬|만)/.exec(match);
   if (wan) return parseFloat(wan[1].replace(/,/g, '')) >= 100;
@@ -88,10 +90,10 @@ const SUBSIDY = new RegExp(
     '补助', '補助(?![熱暖])', '补贴', '補貼', '拨款', '撥款', '退税', '退稅', '助成金', '補助金', 'リベート', '보조금', '지원금', '환급', '리베이트',
     // Arabic-script words are matched whole: منح sits inside تمنحك ("gives you"),
     // المنحدرات ("slopes") and منحصربه‌فرد ("unique").
-    String.raw`(?<![\p{L}])(?:و?(?:ال|بال|لل|ب|ل))?منح(?:ة|ات)?(?![\p{L}])`,
+    String.raw`(?<![\p{L}])(?:و?(?:ال|بال|لل|ب|ل|كال|ك))?منح(?:ة|ات)?(?![\p{L}])`,
     'کمک هزینه', 'یارانه', 'अनुदान', 'ग्रांट', 'सब्सिडी', 'ਗ੍ਰਾਂਟ', 'ਸਬਸਿਡੀ',
     // the word the translated rebate copy uses in each locale (whole words: ਛੋਟਾ = "small")
-    String.raw`(?<![\p{L}\p{M}])(?:reembolsos?|remises?|rabais|rabats?|скидк\p{L}*|giảm giá|(?:و?(?:ال|بال|لل|ب|ل))?(?:خصم|خصومات)|تخفیف|छूट|ਛੋਟ(?:ਾਂ)?)(?![\p{L}\p{M}])`,
+    String.raw`(?<![\p{L}\p{M}])(?:reembolsos?|remises?|rabais|rabats?|скидк\p{L}*|giảm giá|(?:و?(?:ال|بال|لل|ب|ل|كال|ك))?(?:خصم|خصومات)|تخفیف|छूट|ਛੋਟ(?:ਾਂ)?)(?![\p{L}\p{M}])`,
     '回扣',
   ].join('|'),
   'iu',
@@ -113,13 +115,13 @@ function sentenceBounds(text: string, start: number, end: number): [number, numb
 }
 
 /** Clause separators inside a sentence (a comma followed by a digit is a thousands separator: "$3,000"). */
-const CLAUSE_SEP = /[，;；]|,(?![0-9])/g;
+const CLAUSE_SEP = /[，;；،]|,(?![0-9])/g;
 /**
  * Phrasing that marks a rebate amount inside a sentence that names a subsidy
  * ("BC Hydro offers up to $3,000", "额外 $3,000", "退税可抵 $7–11K", "combined up to $11,000").
  */
 const SUBSIDY_PHRASE = new RegExp(
-  String.raw`(?<![\p{L}])(?:up to|additional|extra|offsets?|combined|stack|hasta|adicional(?:es)?|jusqu|suppl[ée]mentaires?|до|дополнительн\p{L}*|tối đa|tới|thêm|hanggang|karagdagang|تا|إضافية?|اضافی|تصل إلى)(?![\p{L}])` +
+  String.raw`(?<![\p{L}])(?:up to|additional|extra|offsets?|combined|stack|hasta|adicional(?:es)?|jusqu|suppl[ée]mentaires?|до|дополнительн\p{L}*|tối đa|tới|thêm|hanggang|karagdagang|plus|تا|إضافية?|اضافی|تصل إلى|يصل إلى)(?![\p{L}])` +
   '|最高|高达|高達|额外|額外|可抵|抵扣|合计|合計|最大|まで|さらに|追加|최대|추가|تا سقف|ما يصل إلى|तक|अतिरिक्त|ਤੱਕ|ਵਾਧੂ',
   'iu',
 );
@@ -170,9 +172,28 @@ function marksSubsidy(words: string): boolean {
  */
 function isSubsidyAmount(text: string, start: number, end: number): boolean {
   const [from, to] = sentenceBounds(text, start, end);
-  if (!SUBSIDY.test(text.slice(from, to))) return false;
   const [cFrom, cTo] = clauseBounds(text, from, to, start, end);
-  return marksSubsidy(amountContext(text, cFrom, cTo, start, end));
+  const words = amountContext(text, cFrom, cTo, start, end);
+  if (SUBSIDY.test(text.slice(from, to))) return marksSubsidy(words);
+  return isSubsidyTotal(text, from, words);
+}
+
+/** "Combined / in total / 합하면 / الإجمالي …" — the wording of a rebate TOTAL. */
+const SUBSIDY_TOTAL = new RegExp(
+  String.raw`(?<![\p{L}])(?:combined|in total|altogether|en total|au total|в сумме|итого|tổng|kabuuan|الإجمالي|إجمالي|مجتمعة|مجموع|مجموعاً)(?![\p{L}])` +
+  '|合计|合計|总计|總計|合わせて|합하면|합산|합계|कुल|ਕੁੱਲ',
+  'iu',
+);
+
+/**
+ * A rebate TOTAL in a sentence of its own ("이를 합하면 최대 $11,000까지 가능합니다.")
+ * stays when its own words say "total" with rebate phrasing AND the sentence just
+ * before it names a subsidy (task 138). A lone "total up to $50,000" is still a price.
+ */
+function isSubsidyTotal(text: string, from: number, words: string): boolean {
+  if (!SUBSIDY_TOTAL.test(words) || !SUBSIDY_PHRASE.test(words) || from === 0) return false;
+  const [pFrom, pTo] = sentenceBounds(text, Math.max(0, from - 2), Math.max(0, from - 1));
+  return SUBSIDY.test(text.slice(pFrom, pTo));
 }
 
 /** True when `text` names a government rebate / grant / subsidy (the amounts near it stay). */
@@ -232,7 +253,6 @@ const CLAUSE_CUTS: Array<[RegExp, string]> = [
   [new RegExp(String.raw`\s*(?:[,，;；·]|\s[—–-])\s*(?:from|starting (?:at|from)|about|around|roughly|typically|under|over|up to)?\s*${AMT}(?=\s*(?:[,，;；.。!?！？)](?![0-9])|$))`, 'gim'), ''],
 ];
 
-const SENTENCE_SPLIT = /(?<=[.!?。！？।۔؟])\s+|(?<=[。！？])/;
 
 function tidyProse(s: string): string {
   return s
@@ -266,25 +286,58 @@ export function stripPriceProse(text: string): string {
       return match.replace(re, dst);
     });
   }
-  if (hasPriceCopy(out)) {
-    out = out.split(SENTENCE_SPLIT).map(dropPriceSentence).filter(Boolean).join(' ');
-  }
+  if (hasPriceCopy(out)) out = dropPriceSentences(out);
   return tidyProse(out);
 }
 
-/** Clause separators inside one sentence ("约3万至5万加元，我们持有500万加元责任险"). */
-const CLAUSE_SPLIT = /(?<=[，;；]|,(?![0-9]))\s*/;
+/** Join kept pieces: CJK punctuation is not followed by a space ("…独立屋。PEX…"). */
+function joinKept(parts: readonly string[]): string {
+  return parts.reduce((acc, s) => (acc ? acc + (/[。！？，；：]$/.test(acc) ? '' : ' ') + s : s), '');
+}
+
+/** [start, end) pieces of `text` split by `re` (a global regex matching the separators). */
+function pieces(text: string, re: RegExp): Array<[number, number]> {
+  const out: Array<[number, number]> = [];
+  let last = 0;
+  for (const m of text.matchAll(re)) {
+    const at = m.index ?? 0;
+    out.push([last, at]);
+    last = at + m[0].length;
+  }
+  out.push([last, text.length]);
+  return out.filter(([a, b]) => text.slice(a, b).trim());
+}
+
+const SENTENCE_GAP = /(?<=[.!?。！？।۔؟])\s+|(?<=[。！？])(?=\S)/g;
+const CLAUSE_GAP = /(?<=[，;；،]|,(?![0-9]))\s*/g;
 
 /**
- * A sentence that still names a price is dropped — unless it also quotes the
+ * Drop every sentence that still names a price — unless it also quotes the
  * insurance amount or names a government subsidy (both ALWAYS KEEP): then only
- * its price clauses are dropped.
+ * its price clauses go. Prices are found on the WHOLE text, so a rebate total
+ * that leans on the previous sentence ("…BC Hydro 충전… 이를 합하면 최대 $11,000")
+ * is judged in context, not as a lone sentence.
  */
-function dropPriceSentence(sentence: string): string {
-  if (!hasPriceCopy(sentence)) return sentence;
-  if (!hasInsuranceAmount(sentence) && !isSubsidyText(sentence)) return '';
-  return sentence.split(CLAUSE_SPLIT).filter((c) => !hasPriceCopy(c)).join(' ');
+function dropPriceSentences(text: string): string {
+  const hits = priceHits(text);
+  const inside = (a: number, b: number) => hits.some((h) => h.start >= a && h.end <= b);
+  const kept = pieces(text, SENTENCE_GAP).map(([a, b]) => {
+    const sentence = text.slice(a, b);
+    if (!inside(a, b)) return sentence;
+    if (!hasInsuranceAmount(sentence) && !isSubsidyText(sentence)) return '';
+    const end = /[.!?。！？।۔؟]\s*$/.exec(sentence)?.[0].trim() ?? '';
+    const clauses = pieces(sentence, CLAUSE_GAP)
+      .filter(([ca, cb]) => !inside(a + ca, a + cb))
+      .map(([ca, cb]) => sentence.slice(ca, cb));
+    const body = joinKept(clauses)
+      .replace(/[\s,，;；،:：·—–-]+$/, '')
+      .replace(/^[\s,，;；،:：·—–-]+/, '')
+      .replace(/[.!?。！？।۔؟]$/, '');
+    return body ? body + end : '';
+  });
+  return joinKept(kept.filter(Boolean));
 }
+
 
 // ---------------------------------------------------------------------------
 // Titles / headings / labels
@@ -483,14 +536,15 @@ export function stripPriceDeep<T>(value: T, key = ''): T {
  */
 export function firstPriceFree(
   strip: (s: string) => string,
-  ...candidates: ReadonlyArray<string | null | undefined>
+  candidates: ReadonlyArray<string | null | undefined>,
+  fallback: string,
 ): string {
   for (const c of candidates) {
     if (!c) continue;
     const out = strip(c);
     if (out && out.trim()) return out;
   }
-  return '';
+  return fallback;
 }
 
 /**

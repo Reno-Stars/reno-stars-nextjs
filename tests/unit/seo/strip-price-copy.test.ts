@@ -324,18 +324,19 @@ describe('cost-question matching is word-based; budget is not a price word (task
   ])('not a cost question: %s', (q) => expect(isCostQuestion(q)).toBe(false));
 });
 
-describe('firstPriceFree — strip each candidate, first non-empty wins (task 136)', () => {
+describe('firstPriceFree — strip each candidate, first non-empty wins (task 136/138)', () => {
   it('falls through when the first candidate was nothing but a price', () => {
-    expect(firstPriceFree(stripPriceProse, '$25,000–$80,000.', 'Burnaby renovations, licensed and insured.'))
+    expect(firstPriceFree(stripPriceProse, ['$25,000–$80,000.', 'Burnaby renovations, licensed and insured.'], 'Reno Stars'))
       .toBe('Burnaby renovations, licensed and insured.');
-    expect(firstPriceFree(stripPriceTitle, '$20K–$55K', undefined, '', 'Kitchen Renovation Surrey | Reno Stars'))
+    expect(firstPriceFree(stripPriceTitle, ['$20K–$55K', undefined, '', 'Kitchen Renovation Surrey | Reno Stars'], 'Reno Stars'))
       .toBe('Kitchen Renovation Surrey | Reno Stars');
   });
   it('keeps the first candidate when it survives stripping', () => {
-    expect(firstPriceFree(stripPriceProse, 'Renovations from $25,000. Free quotes.', 'fallback')).toBe('Free quotes.');
+    expect(firstPriceFree(stripPriceProse, ['Renovations from $25,000. Free quotes.', 'other'], 'Reno Stars')).toBe('Free quotes.');
   });
-  it('returns "" only when every candidate is empty after stripping', () => {
-    expect(firstPriceFree(stripPriceProse, '$1,000', null, '$2,000.')).toBe('');
+  it('returns the explicit fallback, never "", when every candidate strips to empty', () => {
+    expect(firstPriceFree(stripPriceProse, ['$1,000', null, '$2,000.'], 'Surrey | Reno Stars')).toBe('Surrey | Reno Stars');
+    expect(firstPriceFree(stripPriceTitle, ['$20K–$55K'], 'Reno Stars')).not.toBe('');
   });
 });
 

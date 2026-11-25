@@ -52,10 +52,11 @@ export async function generateMetadata({
   const rated = serpRatingParams(googleReviews);
   // DI-15: no prices on the home page — metadata included (some locales' copy quoted ranges).
   // Each candidate stripped on its own; the first non-empty one wins.
-  const title = firstPriceFree(stripPriceTitle, rated ? t("titleRated", rated) : undefined, t("title", years));
+  // Last fallback is a non-empty, price-free string (never '').
+  const title = firstPriceFree(stripPriceTitle,
+    [rated ? t("titleRated", rated) : undefined, t("title", years)], "Reno Stars");
   const description = firstPriceFree(stripPriceProse,
-    rated ? t("descriptionRated", rated) : undefined,
-    t("description", years));
+    [rated ? t("descriptionRated", rated) : undefined, t("description", years)], title);
 
   const baseUrl = getBaseUrl();
   const ogImage = buildOgImageUrl(title, description);

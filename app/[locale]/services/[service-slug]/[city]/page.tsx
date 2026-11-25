@@ -78,8 +78,9 @@ function buildComboMeta(args: {
   // Each candidate is stripped on its own (override → template), first
   // non-empty wins.
   if (!isTestA(locale, serviceSlug, city)) {
-    title = firstPriceFree(stripPriceTitle, title, t('title', tParams));
-    description = firstPriceFree(stripPriceProse, description, t('description', tParams));
+    // The last fallback is non-empty and price-free (never '').
+    title = firstPriceFree(stripPriceTitle, [title, t('title', tParams)], 'Reno Stars');
+    description = firstPriceFree(stripPriceProse, [description, t('description', tParams)], title);
   }
 
   return { title, description };

@@ -317,17 +317,15 @@ async function resolveAreaMeta(
   // the share card). The database is not written.
   // Each candidate is stripped on its own; the first non-empty one wins, so a
   // DB meta that was nothing but a price falls through to the next source.
-  return {
-    title: firstPriceFree(stripPriceTitle,
-      localizedArea.metaTitle,
-      enOverride?.title,
-      t('title', { area: localizedArea.name })),
-    description: firstPriceFree(stripPriceProse,
-      localizedArea.metaDescription,
-      enOverride?.description,
-      localizedArea.description,
-      t('description', { area: localizedArea.name })),
-  };
+  // The last fallback is non-empty and price-free (never '').
+  const title = firstPriceFree(stripPriceTitle,
+    [localizedArea.metaTitle, enOverride?.title, t('title', { area: localizedArea.name })],
+    `${localizedArea.name} | Reno Stars`);
+  const description = firstPriceFree(stripPriceProse,
+    [localizedArea.metaDescription, enOverride?.description, localizedArea.description,
+      t('description', { area: localizedArea.name })],
+    title);
+  return { title, description };
 }
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
