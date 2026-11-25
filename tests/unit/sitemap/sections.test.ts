@@ -37,6 +37,9 @@ const PROJECTS = Array.from({ length: 320 }, (_, i) => ({
   updatedAt: new Date('2026-02-02T00:00:00.000Z'),
   heroImageUrl: i % 2 === 0 ? `https://img.example/p${i}.jpg` : null,
   locationCity: 'Burnaby',
+  // Both categories have projects, so both hubs are listed (an empty category
+  // is left out — DI-16, tests/unit/projects/empty-category.test.ts).
+  serviceType: i % 2 === 0 ? 'kitchen' : 'bathroom',
 }));
 const SITES = Array.from({ length: 40 }, (_, i) => ({
   slug: `site-${i}`,

@@ -1,5 +1,6 @@
 import { LOCALE_TO_DB_SUFFIX } from '@/lib/utils';
 import { resolveBlogDates } from '@/lib/blog-dates';
+import { categoriesWithProjects } from '@/lib/projects/empty-category';
 import {
   getProjectSlugsFromDb,
   getSiteSlugsFromDb,
@@ -129,6 +130,8 @@ export async function loadSitemapData() {
     );
   /** /services/<slug>/: the service row, and the newest project of that service it features. */
   const serviceHubLastMod = (slug: string) => latestOf(serviceDateMap.get(slug), projectsByService.get(slug));
+  /** Categories with ≥1 published project (null = unknown, see lib/projects/empty-category.ts). */
+  const projectCategoriesWithProjects = categoriesWithProjects(projectRows.map(p => p.serviceType));
   /** /projects/<category>/: the newest project in that category (no projects → no lastmod). */
   const categoryLastMod = (category: string) => projectsByService.get(category);
   /** /areas/<slug>/: the area row and the newest project in that city. */
@@ -157,6 +160,7 @@ export async function loadSitemapData() {
     staticPageLastMod,
     serviceHubLastMod,
     categoryLastMod,
+    projectCategoriesWithProjects,
     areaLastMod,
     serviceCityLastMod,
     nativeKeysBySlug: new Map(blogPostRows.map(r => [r.slug, new Set(r.nativeContentKeys ?? [])])),

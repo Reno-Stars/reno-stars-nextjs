@@ -137,11 +137,14 @@ describe('each URL class reads its own source', () => {
     expect(entry('en/blog/undated/')!.lastModified).toBeUndefined();
   });
 
-  it('project hubs: the newest project in that category; empty category omits it', () => {
+  it('project hubs: the newest project in that category; an empty category is not listed at all', () => {
     for (const loc of LOCALES) {
       expect(lm(entry(`${loc}/projects/kitchen/`))).toBe(iso(D('05-20')));
       expect(lm(entry(`${loc}/projects/bathroom/`))).toBe(iso(D('04-01')));
-      expect(entry(`${loc}/projects/commercial/`)!.lastModified).toBeUndefined();
+      // DI-16: no published commercial project → the hub renders "No projects
+      // found", is noindex, and is left out of the sitemap (it used to be
+      // listed with no <lastmod>).
+      expect(entry(`${loc}/projects/commercial/`)).toBeUndefined();
     }
   });
 
