@@ -79,7 +79,7 @@ export const SERVICE_CITY_BLOG_LINKS: Partial<Record<ServiceType, Array<{ city: 
     { city: 'Maple Ridge', slug: 'maple-ridge-home-renovation-guide-2026' },
     { city: 'New Westminster', slug: 'new-westminster-home-renovation-guide-2026' },
     { city: 'Port Coquitlam', slug: 'port-coquitlam-home-renovation-guide-2026' },
-    { city: 'Port Moody', slug: 'port-moody-home-renovation-guide-2026' },
+    { city: 'Port Moody', slug: 'whole-house-renovation-port-moody-2026' },
     { city: 'White Rock', slug: 'white-rock-home-renovation-guide-2026' },
   ],
 };

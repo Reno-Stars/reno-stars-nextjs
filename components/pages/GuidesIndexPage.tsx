@@ -327,7 +327,7 @@ export default function GuidesIndexPage({ locale: _locale }: GuidesIndexPageProp
               { href: '/blog/west-vancouver-home-renovation-guide-2026',  label: 'West Vancouver Guide' },
               { href: '/blog/new-westminster-home-renovation-guide-2026', label: 'New Westminster Guide' },
               { href: '/blog/port-coquitlam-home-renovation-guide-2026',  label: 'Port Coquitlam Guide' },
-              { href: '/blog/port-moody-home-renovation-guide-2026',      label: 'Port Moody Guide' },
+              { href: '/blog/whole-house-renovation-port-moody-2026',      label: 'Port Moody Guide' },
               { href: '/blog/white-rock-home-renovation-guide-2026',      label: 'White Rock Guide' },
             ] as const).map(({ href, label }) => (
               <Link

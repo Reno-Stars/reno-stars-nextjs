@@ -75,7 +75,8 @@ describe('locale-aware Link never gets a second locale prefix', () => {
         const tag = before.slice(before.lastIndexOf('<')).match(/^<(\w+)/)?.[1];
         if (tag === 'Link') offenders.push(`${f}: <Link href={\`/\${locale}…`);
       }
-      for (const _ of src.matchAll(/href:\s*`\/\$\{locale\}\//g)) offenders.push(`${f}: href: \`/\${locale}/…\``);
+      const dataHrefs = src.match(/href:\s*`\/\$\{locale\}\//g) ?? [];
+      for (let i = 0; i < dataHrefs.length; i++) offenders.push(`${f}: href: \`/\${locale}/…\``);
     }
     expect(offenders).toEqual([]);
   });
@@ -135,5 +136,31 @@ describe('/projects/<service>/ for a service with no category → the service pa
     }
     await expect(callPage('no-such-thing')).rejects.toThrow('NOT_FOUND');
     expect(nav.permanentRedirect).not.toHaveBeenCalled();
+  });
+});
+
+describe('service hubs list REAL projects, not the legacy static list', () => {
+  // lib/data/projects.ts holds a pre-DB static list whose slugs
+  // (coquitlam-white-shaker-cabinets, cabinet-refacing-richmond, …) no longer
+  // exist; the hub's "Our Projects" cards linked there in all 14 locales.
+  it('ServiceDetailPage takes relatedProjects from the route; the route reads published DB rows', () => {
+    const page = readFileSync('components/pages/ServiceDetailPage.tsx', 'utf8');
+    expect(page).not.toMatch(/getAllProjectsLocalized/);
+    expect(page).toMatch(/relatedProjects = \[\]/);
+    const route = readFileSync('app/[locale]/services/[service-slug]/page.tsx', 'utf8');
+    expect(route).toMatch(/getProjectsFromDb\(\)/);
+    expect(route).toMatch(/\.filter\(\(p\) => p\.service_type === serviceSlug\)/);
+    // Price handling on hubs is out of this PR's scope (DI-15): no new filter here.
+    expect(route).not.toMatch(/strip-prices|omit-budget/);
+    expect(route).toContain('relatedProjects={relatedProjects}');
+  });
+});
+
+describe('no code links to the nonexistent Port Moody home guide', () => {
+  it('only the TEST A template (ServiceLocationPage, left untouched) still names it; the 301 covers it', () => {
+    const hits = [...tsxFiles('components'), ...tsxFiles('app')]
+      .concat(['components/areas/areaPageData.ts', 'components/services/serviceDetailLinks.ts'])
+      .filter((f) => readFileSync(f, 'utf8').includes('port-moody-home-renovation-guide-2026'));
+    expect(hits).toEqual(['components/pages/ServiceLocationPage.tsx']);
   });
 });

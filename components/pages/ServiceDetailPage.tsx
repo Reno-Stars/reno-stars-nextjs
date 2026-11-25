@@ -4,9 +4,9 @@ import { useMemo } from 'react';
 import { useTranslations } from 'next-intl';
 import OptimizedImage from '@/components/OptimizedImage';
 import type { Locale } from '@/i18n/config';
-import type { Company, Service, ServiceAreaLink, ServiceLink, ServiceType } from '@/lib/types';
+import type { Company, LocalizedProject, Service, ServiceAreaLink, ServiceLink, ServiceType } from '@/lib/types';
 import type { AreaReviewDisplay } from '@/lib/project-reviews';
-import { getLocalizedService, getAllProjectsLocalized } from '@/lib/data';
+import { getLocalizedService } from '@/lib/data';
 import { pickLocale } from '@/lib/utils';
 import CTASection from '@/components/CTASection';
 import ZhTrustLine from '@/components/ZhTrustSignals';
@@ -79,16 +79,22 @@ interface ServiceDetailPageProps {
    * link points at the /projects/ listing instead.
    */
   hasProjectCategory?: boolean;
+  /**
+   * Up to 3 published projects of this service, from the DATABASE (localized,
+   * price-stripped, budget omitted — built by the route). This used to come
+   * from the legacy static list in lib/data/projects.ts, whose slugs
+   * (coquitlam-white-shaker-cabinets, cabinet-refacing-richmond, …) no longer
+   * exist, so every service hub in all 14 locales linked to 404s (DI-17).
+   */
+  relatedProjects?: LocalizedProject[];
 }
 
-export default function ServiceDetailPage({ locale, serviceSlug, company, service, areas = [], faqs = [], googleRating, googleReviewCount, allServices, clientReviews = [], h1Override, share, hasProjectCategory = true }: ServiceDetailPageProps) {
+export default function ServiceDetailPage({ locale, serviceSlug, company, service, areas = [], faqs = [], googleRating, googleReviewCount, allServices, clientReviews = [], h1Override, share, hasProjectCategory = true, relatedProjects = [] }: ServiceDetailPageProps) {
   const t = useTranslations();
   const tCostGuides = useTranslations('costGuidesSection');
 
   const localizedService = useMemo(() => getLocalizedService(service, locale), [service, locale]);
   const costGuideCopy = COST_GUIDE_LINK_COPY[locale];
-  const allProjects = useMemo(() => getAllProjectsLocalized(locale), [locale]);
-  const relatedProjects = useMemo(() => allProjects.filter((p) => p.service_type === serviceSlug).slice(0, 3), [allProjects, serviceSlug]);
   const benefits = localizedService.benefits && localizedService.benefits.length > 0
     ? localizedService.benefits
     : [

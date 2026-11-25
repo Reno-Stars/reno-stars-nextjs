@@ -100,7 +100,7 @@ export const CITY_BLOG_CLUSTERS: Record<string, CityBlogLink[]> = {
     { label: 'Kitchen', slug: 'kitchen-renovation-port-moody-bc-2026' },
     { label: 'Bathroom', slug: 'bathroom-renovation-port-moody-2026' },
     { label: 'Basement', slug: 'basement-renovations-port-moody' },
-    { label: 'Home Guide', slug: 'port-moody-home-renovation-guide-2026' },
+    { label: 'Home Guide', slug: 'whole-house-renovation-port-moody-2026' },
     { label: 'Pre-Sale', slug: 'pre-sale-renovation-port-moody-bc-2026' },
     { label: 'Cabinets', slug: 'cabinet-resurfacing-port-moody-cost-guide' },
   ],

@@ -5,6 +5,7 @@ import { routing, locales, defaultLocale, type Locale } from './i18n/config';
 import { verifyToken } from './lib/admin/auth';
 import { ASSET_ORIGIN, PROD_ORIGIN } from './lib/storage';
 import { retiredBudgetRedirectPath } from './lib/projects/retired-budget-pages';
+import { deadLinkRedirectPath } from './lib/seo/dead-link-redirects';
 
 const intlMiddleware = createMiddleware(routing);
 
@@ -116,6 +117,13 @@ export default function proxy(request: NextRequest): NextResponse {
   const retiredBudgetTarget = retiredBudgetRedirectPath(pathname);
   if (retiredBudgetTarget) {
     return addSecurityHeaders(NextResponse.redirect(new URL(retiredBudgetTarget, request.url), 301));
+  }
+
+  // Internal links written wrong in DATABASE content (renamed projects, typos,
+  // machine-translated paths) → the live page, 301 (DI-17). See the table.
+  const deadLinkTarget = deadLinkRedirectPath(pathname);
+  if (deadLinkTarget) {
+    return addSecurityHeaders(NextResponse.redirect(new URL(deadLinkTarget, request.url), 301));
   }
 
   // Redirect old /process route to /workflow

@@ -4,9 +4,10 @@ import { notFound } from 'next/navigation';
 import { ogLocaleMap, hasNativeSupport, isIndexableLeafLocale, INDEXABLE_LEAF_LOCALES, type Locale } from '@/i18n/config';
 import { getLocalizedService } from '@/lib/data/services';
 import type { ServiceType } from '@/lib/types';
-import { getCompanyFromDb, getServicesFromDb, getServiceAreasFromDb, getReviewsByServiceType, getCategorySlugs } from '@/lib/db/queries';
+import { getCompanyFromDb, getServicesFromDb, getServiceAreasFromDb, getReviewsByServiceType, getCategorySlugs, getProjectsFromDb } from '@/lib/db/queries';
 import { getGoogleReviews } from '@/lib/google-reviews';
 import ServiceDetailPage from '@/components/pages/ServiceDetailPage';
+import { getLocalizedProject } from '@/lib/data/projects';
 import { BreadcrumbSchema, ServiceSchema, FAQSchema } from '@/components/structured-data';
 import { getBaseUrl, buildAlternates, SITE_NAME, truncateMetaDescription, buildAlternateLocales} from '@/lib/utils';
 import { images as siteImages } from '@/lib/data';
@@ -345,14 +346,25 @@ export default async function Page({ params }: PageProps) {
   }
   const localizedService = getLocalizedService(service, locale as Locale);
 
-  const [company, areas, googleReviews, clientReviews] = await Promise.all([
+  const [company, areas, googleReviews, clientReviews, publishedProjects] = await Promise.all([
     getCompanyFromDb(),
     getServiceAreasFromDb(),
     getGoogleReviews(),
     // Verified client reviews whose linked project has this validated
     // service_type (projects.service_type values ARE service slugs). ≤3, newest first.
     getReviewsByServiceType(serviceSlug),
+    getProjectsFromDb(),
   ]);
+  // "Our Projects": up to 3 PUBLISHED projects of this service, newest first,
+  // from the database — never the legacy static list (its slugs 404, DI-17).
+  // Only these 3 rows reach the client component. Price handling on service
+  // hubs is deliberately unchanged here (the legacy cards carried budgets too);
+  // it belongs to the separate price-removal scope (DI-15), which keeps the
+  // price filter on the /projects/ routes only.
+  const relatedProjects = publishedProjects
+    .filter((p) => p.service_type === serviceSlug)
+    .slice(0, 3)
+    .map((p) => getLocalizedProject(p, locale as Locale));
 
   const [t, faqT] = await Promise.all([
     getTranslations({ locale, namespace: 'nav' }),
@@ -442,6 +454,7 @@ export default async function Page({ params }: PageProps) {
         // category exists (DI-17: heat-pump-hvac / critical-load-panel / realtor
         // have none, so the link was a 404).
         hasProjectCategory={(await getCategorySlugs()).includes(serviceSlug)}
+        relatedProjects={relatedProjects}
         h1Override={getServiceH1Override(serviceSlug, locale as Locale)}
         share={{
           url: shareUrl,
