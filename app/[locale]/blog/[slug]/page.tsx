@@ -4,6 +4,7 @@ import { notFound } from 'next/navigation';
 import { locales, ogLocaleMap, type Locale } from '@/i18n/config';
 import { getLocalizedBlogPost } from '@/lib/data';
 import BlogPostPage from '@/components/pages/BlogPostPage';
+import { toBlogPostView } from '@/lib/data/blog-post-view';
 import { getLocalizedService, getLocalizedArea } from '@/lib/data';
 import { BreadcrumbSchema, ArticleSchema, ArticleJsonLd, FAQSchema } from '@/components/structured-data';
 import { getBaseUrl, buildAlternates, SITE_NAME, truncateMetaDescription, buildAlternateLocales} from '@/lib/utils';
@@ -255,7 +256,9 @@ export default async function Page({ params }: PageProps) {
       />
       <BlogPostPage
         locale={locale as Locale}
-        post={post}
+        // ONE locale only — the full post (14 languages of body copy) used to be
+        // serialised into every blog page's RSC payload (DI-19).
+        post={toBlogPostView(post, locale as Locale)}
         company={company}
         // Slim projections: the client component renders only slug+title link
         // chips. Passing the full Service/ServiceArea rows (every locale of

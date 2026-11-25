@@ -27,8 +27,8 @@ blogContentRenderer.use({
 });
 import { expandMarkdownLinksInHeadings } from '@/lib/utils';
 import { normalizeInternalLinks } from '@/lib/markdown-html';
-import type { Company, BlogPost } from '@/lib/types';
-import { resolveBlogDates } from '@/lib/blog-dates';
+import type { Company } from '@/lib/types';
+import type { BlogPostView } from '@/lib/data/blog-post-view';
 import { flooredReviewCount } from '@/lib/project-reviews';
 
 const BLOG_SANITIZE_OPTIONS: IOptions = {
@@ -38,7 +38,6 @@ const BLOG_SANITIZE_OPTIONS: IOptions = {
     img: ['src', 'alt', 'width', 'height', 'loading'],
   },
 };
-import { getLocalizedBlogPost } from '@/lib/data';
 import ShareBar from '@/components/share/ShareBar';
 import type { ShareContext } from '@/lib/share/types';
 import VisualBreadcrumb from '@/components/VisualBreadcrumb';
@@ -52,7 +51,10 @@ interface RelatedAreaLink { slug: string; name: string }
 
 interface BlogPostPageProps {
   locale: Locale;
-  post: BlogPost;
+  /** ONE locale's copy, localised on the server (lib/data/blog-post-view.ts).
+   *  Never the multi-locale BlogPost: every client prop is serialised into the
+   *  page's RSC payload (DI-19). */
+  post: BlogPostView;
   company: Company;
   /** Slim slug+title projections — see app/[locale]/blog/[slug]/page.tsx. */
   services?: RelatedLink[];
@@ -68,7 +70,7 @@ interface BlogPostPageProps {
 export default function BlogPostPage({ locale, post, company, services = [], areas = [], reviewCount, share }: BlogPostPageProps) {
   const t = useTranslations();
   const tCostGuides = useTranslations('costGuidesSection');
-  const localizedPost = useMemo(() => getLocalizedBlogPost(post, locale), [post, locale]);
+  const localizedPost = post;
   const localizedServices = services;
   const localizedAreas = areas;
   // Live review count floored to the nearest 5 for the "75+" social-proof style
@@ -83,13 +85,10 @@ export default function BlogPostPage({ locale, post, company, services = [], are
   // SEO-builder cron) can never surface as a fake on-page freshness claim.
   // resolveBlogDates also handles unstable_cache's JSON serialization (Date
   // columns arrive as strings on cache hits) and unparseable values.
-  const { publishedAt, updatedAt } = useMemo(() => {
-    const { datePublished, dateModified } = resolveBlogDates(post);
-    return {
-      publishedAt: datePublished ? new Date(datePublished) : null,
-      updatedAt: dateModified ? new Date(dateModified) : null,
-    };
-  }, [post]);
+  const { publishedAt, updatedAt } = useMemo(() => ({
+    publishedAt: post.datePublished ? new Date(post.datePublished) : null,
+    updatedAt: post.dateModified ? new Date(post.dateModified) : null,
+  }), [post.datePublished, post.dateModified]);
 
   return (
     <div className="min-h-screen" style={{ backgroundColor: SURFACE }}>
