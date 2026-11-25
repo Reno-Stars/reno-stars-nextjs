@@ -30,7 +30,7 @@ import { PRICE_SOURCE } from '@/lib/projects/strip-prices';
 const INSURANCE = new RegExp(
   [
     'CGL', 'liabilit', 'insur', 'coverage',            // en
-    '保险', '保險', '保険', '보험', '責任險', '责任险', '保额', '保額',   // zh / zh-Hant / ja / ko
+    '保险', '保險', '保険', '보험', '責任險', '责任险', '保额', '保額', '投保', '보장',   // zh / zh-Hant / ja / ko
     'seguro', 'asegura', 'cobertura',                   // es
     'assuran', 'responsabilit', 'couverture',           // fr
     'bảo hiểm', 'страх', 'تأمين', 'مؤمن', 'بیمه',        // vi / ru / ar / fa
@@ -111,10 +111,25 @@ function tidyProse(s: string): string {
 }
 
 /** Remove price copy from one plain-text run (no markdown structure). */
+/** True when [start, end) of `text` holds a real (non-insurance) price. */
+function spanHasPrice(text: string, start: number, end: number): boolean {
+  return priceHits(text).some((h) => h.start >= start && h.end <= end);
+}
+
 export function stripPriceProse(text: string): string {
   if (!text || !hasPriceCopy(text)) return text;
   let out = text;
-  for (const [re, dst] of CLAUSE_CUTS) out = out.replace(re, dst);
+  // Each cut fires only when the clause holds a REAL price — never on an
+  // insurance clause such as "($5M CGL minimum)" (ALWAYS KEEP).
+  for (const [re, dst] of CLAUSE_CUTS) {
+    const src = out;
+    out = src.replace(re, (...args: unknown[]) => {
+      const match = args[0] as string;
+      const offset = args[args.length - 2] as number;
+      if (!spanHasPrice(src, offset, offset + match.length)) return match;
+      return match.replace(re, dst);
+    });
+  }
   if (hasPriceCopy(out)) {
     out = out.split(SENTENCE_SPLIT).filter((s) => !hasPriceCopy(s)).join(' ');
   }

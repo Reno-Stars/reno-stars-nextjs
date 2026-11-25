@@ -196,3 +196,19 @@ describe('orphans left by a removal', () => {
   });
 });
 
+describe('clause cuts never remove an insurance clause', () => {
+  it('keeps "($5M CGL minimum)" while removing "($500–$2,000)"', () => {
+    const s = 'You will need: insurance certificates ($5M CGL minimum), a detailed scope of work, a damage deposit ($500–$2,000), and a signed alteration agreement.';
+    const out = stripPriceProse(s);
+    expect(out).toContain('($5M CGL minimum)');
+    expect(out).not.toMatch(/\$500/);
+    expect(out).toContain('a signed alteration agreement.');
+  });
+  it('keeps ko / zh-Hant coverage wording', () => {
+    for (const s of ['Google 5성급 평점, 20년 이상, 500만 달러 보장.', 'Kitsilano，東溫哥華，公寓和分層。投保 500 萬加元。免費報價。']) {
+      expect(hasPriceCopy(s), s).toBe(false);
+      expect(stripPriceCopy(s)).toBe(s);
+    }
+  });
+});
+
