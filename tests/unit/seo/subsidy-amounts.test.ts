@@ -185,6 +185,7 @@ describe('the translated rebate wording keeps rebate amounts in every locale', (
 
   it.each([
     ['es', '**Reembolsos de BC Hydro/Provincia disponibles:**', '- Recarga para personas de bajos ingresos calificadas por ingresos: **$3,000 adicionales** (BC Hydro)'],
+    ['ar', '**خصومات BC Hydro / المقاطعة المتاحة:**', '- زيادة الدخل المنخفض المؤهل للدخل: **3000 دولار إضافية** (BC Hydro)'],
     ['fr', '**Remises BC Hydro/Province disponibles :**', '- Complément pour faible revenu admissible : **3 000 $ supplémentaires** (BC Hydro)'],
   ])('%s: a top-up item under the rebate lead-in stays', (_loc, lead, item) => {
     const md = `${lead}\n\n${item}`;

@@ -115,7 +115,7 @@ const CLAUSE_SEP = /[，;；]|,(?![0-9])/g;
  * ("BC Hydro offers up to $3,000", "额外 $3,000", "退税可抵 $7–11K", "combined up to $11,000").
  */
 const SUBSIDY_PHRASE = new RegExp(
-  String.raw`(?<![\p{L}])(?:up to|additional|extra|offsets?|combined|stack|hasta|adicional(?:es)?|jusqu|suppl[ée]mentaires?|до|дополнительн\p{L}*|tối đa|tới|thêm|hanggang|karagdagang|تا|إضافي|اضافی|تصل إلى)(?![\p{L}])` +
+  String.raw`(?<![\p{L}])(?:up to|additional|extra|offsets?|combined|stack|hasta|adicional(?:es)?|jusqu|suppl[ée]mentaires?|до|дополнительн\p{L}*|tối đa|tới|thêm|hanggang|karagdagang|تا|إضافية?|اضافی|تصل إلى)(?![\p{L}])` +
   '|最高|高达|高達|额外|額外|可抵|抵扣|合计|合計|最大|まで|さらに|追加|최대|추가|تا سقف|ما يصل إلى|तक|अतिरिक्त|ਤੱਕ|ਵਾਧੂ',
   'iu',
 );
