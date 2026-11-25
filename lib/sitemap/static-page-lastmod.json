@@ -48,9 +48,9 @@
       }
     },
     "/projects": {
-      "lastmod": "2026-11-24T23:23:20.000Z",
+      "lastmod": "2026-11-25T05:04:10.000Z",
       "from": "code",
-      "commit": "ada1969b4f17",
+      "commit": "d6a07b6f7245",
       "code": [
         "app/[locale]/projects/page.tsx",
         "components/ImageBadge.tsx",
@@ -93,9 +93,9 @@
       }
     },
     "/guides": {
-      "lastmod": "2026-09-24T22:42:08.000Z",
-      "from": "copy:guides.index",
-      "commit": "8014378d1e56",
+      "lastmod": "2026-11-25T06:00:11.000Z",
+      "from": "code",
+      "commit": "2d79d36aa7b3",
       "code": [
         "app/[locale]/guides/page.tsx",
         "components/pages/GuidesIndexPage.tsx"
@@ -203,9 +203,9 @@
       }
     },
     "/guides/kitchen-renovation-cost-vancouver": {
-      "lastmod": "2026-09-24T22:42:08.000Z",
-      "from": "copy:guides.kitchenCost",
-      "commit": "8014378d1e56",
+      "lastmod": "2026-11-25T05:04:10.000Z",
+      "from": "code",
+      "commit": "d6a07b6f7245",
       "code": [
         "app/[locale]/guides/kitchen-renovation-cost-vancouver/page.tsx",
         "components/pages/KitchenCostGuidePage.tsx"
@@ -231,9 +231,9 @@
       }
     },
     "/guides/whole-house-renovation-cost-vancouver": {
-      "lastmod": "2026-09-24T21:56:14.000Z",
+      "lastmod": "2026-11-25T06:00:11.000Z",
       "from": "code",
-      "commit": "fbeab9996823",
+      "commit": "2d79d36aa7b3",
       "code": [
         "app/[locale]/guides/whole-house-renovation-cost-vancouver/page.tsx",
         "components/pages/WholeHouseCostGuidePage.tsx"
