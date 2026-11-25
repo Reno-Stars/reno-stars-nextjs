@@ -257,6 +257,9 @@ const CLAUSE_CUTS: Array<[RegExp, string]> = [
 function tidyProse(s: string): string {
   return s
     .replace(/[ \t]{2,}/g, ' ')
+    // CJK sentences are not space-separated: a string we edit leaves no "。 " behind,
+    // including the copy's own space after a cut ("項目（3.5 萬…）。 Moody" → "項目。Moody").
+    .replace(/([。！？])[ \t]+(?=\S)/g, '$1')
     .replace(/\s+([,.;:!?，。；：！？)）])/g, '$1')
     .replace(/([,，;；:：])\s*([.。!?！？])/g, '$2')
     .replace(/([.。])\s*\1+/g, '$1')

@@ -99,6 +99,15 @@ describe('CJK sentences rejoin without a space after 。', () => {
     expect(out).toBe('我们持有$500万保险。三年保修。');
     expect(out).not.toMatch(/。 /);
   });
+  it('a parenthetical price cut leaves no "。 " (verbatim zh-Hant / zh Port Moody area copy)', () => {
+    expect(stripPriceProse('穆迪港位於 Heritage Woods 的行政住宅推動了更高端的全廚房項目（3.5 萬至 6 萬加元）。 Moody Centre 的舊庫存有更實用的更新預算。'))
+      .toBe('穆迪港位於 Heritage Woods 的行政住宅推動了更高端的全廚房項目。Moody Centre 的舊庫存有更實用的更新預算。');
+    expect(stripPriceProse('有時是結構改造。 2-6 個月，$50K-$200K+。')).toBe('有時是結構改造。2-6 個月。');
+  });
+  it('a string with no price keeps its own spacing (untouched)', () => {
+    const s = '投保 500 萬加元。 布倫特伍德大都會鎮。 免費報價。';
+    expect(stripPriceProse(s)).toBe(s);
+  });
   it('Latin sentences are still joined with a space', () => {
     expect(stripPriceProse('Kitchens from $25,000. Licensed. Insured.')).toBe('Licensed. Insured.');
   });
