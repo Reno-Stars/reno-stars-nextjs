@@ -2,7 +2,7 @@
 
 ## Sitemap
 
-Served as a **sitemap index** at `/sitemap.xml` (`app/sitemap.xml/route.ts`) pointing at per-section files at `/sitemaps/<section>-<n>.xml` (`app/sitemaps/[file]/route.ts`), built by `lib/sitemap/sections.ts`. Split on 2026-09-02: a single `force-dynamic` sitemap rebuilt all 5,825 URLs (12.3 MB of XML) per request and concurrent crawls exhausted the pod's heap, crash-looping production. Each file now builds at most 150 source items. Still rendered per request so newly published content appears immediately, with `s-maxage=300` so Cloudflare absorbs crawl bursts. `/sitemap.xml` keeps its URL, so robots.txt and Search Console are unchanged. Service slugs use static `serviceTypeToCategory` mapping. Project slugs, site slugs, blog post slugs, and service areas are all fetched from the database via `getProjectSlugsFromDb()`, `getSiteSlugsFromDb()`, `getBlogPostSlugsFromDb()`, and `getServiceAreasFromDb()`. Individual project, site, and blog post entries use actual `updated_at` timestamps from the database for `lastModified` (via date maps). Static pages, service pages, service+location combo pages, category pages, and area pages all use a fixed `STATIC_LAST_MODIFIED` date constant (not `new Date()`) to avoid misleading "updated" signals on every deploy — update this constant when making significant content changes. Includes:
+Served as a **sitemap index** at `/sitemap.xml` (`app/sitemap.xml/route.ts`) pointing at per-section files at `/sitemaps/<section>-<n>.xml` (`app/sitemaps/[file]/route.ts`), built by `lib/sitemap/sections.ts`. Split on 2026-09-02: a single `force-dynamic` sitemap rebuilt all 5,825 URLs (12.3 MB of XML) per request and concurrent crawls exhausted the pod's heap, crash-looping production. Each file now builds at most 150 source items. Still rendered per request so newly published content appears immediately, with `s-maxage=300` so Cloudflare absorbs crawl bursts. `/sitemap.xml` keeps its URL, so robots.txt and Search Console are unchanged. Service slugs use static `serviceTypeToCategory` mapping. Project slugs, site slugs, blog post slugs, and service areas are all fetched from the database via `getProjectSlugsFromDb()`, `getSiteSlugsFromDb()`, `getBlogPostSlugsFromDb()`, and `getServiceAreasFromDb()`. Individual project, site, and blog post entries use actual `updated_at` timestamps from the database for `lastModified` (via date maps). Static pages, service pages, service+location combo pages, category pages, and area pages all use a fixed `STATIC_LAST_MODIFIED` date constant (not `new Date()`) to avoid misleading "updated" signals on every deploy — update this constant when making significant content changes. *(Superseded 2026-11-24 by PR #405 — see "lastmod policy" below.)* Includes:
 
 - Static pages (home, services, projects, blog, contact, benefits, design, workflow, areas, about, showroom, guides, reviews)
 - All service detail pages
@@ -14,6 +14,12 @@ Served as a **sitemap index** at `/sitemap.xml` (`app/sitemap.xml/route.ts`) poi
 - Service area pages
 
 Each entry includes hreflang alternates for `en`, `zh`, and `x-default`.
+
+### lastmod policy (since 2026-11-24, PR #405 / DI-12 #2)
+
+Every URL carries the date of its **own** content — never a site-wide value, never the request or build time; no honest date ⇒ the entry omits `<lastmod>`. Sources per section are documented at the top of `lib/sitemap/sections.ts`; the 14 test-A service×city URLs are frozen in `lib/sitemap/lastmod-overrides.ts` (`TEST_A_FROZEN_LASTMOD`) until the experiment is read out.
+
+**Static pages use a committed manifest, `lib/sitemap/static-page-lastmod.json`.** It holds each static path's last git change to its route file, the components only it imports, and the next-intl namespaces it reads (compared key by key). **After changing any static page — code or copy — run `pnpm sitemap:lastmod` (full git history required) and commit the regenerated JSON in the same PR.** CI cannot detect a stale entry (depth-1 checkout; `.git` is excluded from the Docker build), so a skipped regeneration silently keeps the old date.
 
 ## Structured Data (JSON-LD)
 

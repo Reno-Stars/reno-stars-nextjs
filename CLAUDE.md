@@ -85,6 +85,7 @@ pnpm test:run             # Vitest single run
 pnpm test:e2e             # Playwright headless
 pnpm site-visit:sync      # Pull quoting catalog → data/site-visit/catalog.json
 pnpm site-visit:check     # Verify committed catalog against authored copy (CI-safe)
+pnpm sitemap:lastmod      # Regenerate lib/sitemap/static-page-lastmod.json (needs full git history) — run after ANY static-page code or copy change
 ```
 
 ## Key Architecture Decisions
@@ -226,6 +227,12 @@ A missing variable fails at FIRST USE, not at boot, so liveness cannot see it.
 
 - `DATABASE_URL` required at build time (layout.tsx fetches from DB during pre-rendering).
 - The sitemap requires a DB connection for dynamic slugs (`lib/sitemap/data.ts`).
+- **Static-page sitemap `<lastmod>` comes from a COMMITTED manifest** (`lib/sitemap/static-page-lastmod.json`,
+  since DI-12 #2, PR #405). After changing any static page — its route, its own components, or its
+  copy in `messages/` — run `pnpm sitemap:lastmod` and commit the regenerated JSON in the same PR.
+  **CI cannot catch a stale date**: CI clones with depth 1 and the Docker build excludes `.git`, so
+  nothing can recompute it; a forgotten regeneration silently leaves the old date (under-reports, never
+  invents). `tests/unit/sitemap/lastmod-policy.test.ts` only checks that every static path has an entry.
 - **The apex `reno-stars.com` returns 530 on every path except `/`** — its DNS
   record still points at the retired Mac tunnel `aa755801-…`. A root-only
   Cloudflare redirect rule masks it at `/`. Needs a `DNS:Edit` token or the
