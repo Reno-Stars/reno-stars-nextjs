@@ -8,9 +8,10 @@ import { NextResponse } from 'next/server';
  * caches it; tapping a matching URL from Mail / Messages opens the app
  * directly instead of Safari + the /signup fallback page.
  *
- * appIDs format: "<TEAM_ID>.<BUNDLE_ID>". Team 72C25NASFQ + bundle
- * com.geoclockr.app.mobile match the iOS production build registered
- * in App Store Connect.
+ * appIDs format: "<TEAM_ID>.<BUNDLE_ID>". 4YW4C5W9FB.com.renostars.companion
+ * is the public App Store app; 72C25NASFQ.com.geoclockr.app.mobile is the
+ * TestFlight / dev-client build. Both must stay listed while either is
+ * installed on a phone.
  *
  * Components: only /signup?invite=<anything> is app-handled. Every other
  * page on this domain still loads in Safari as normal.
@@ -28,7 +29,7 @@ const AASA = {
   applinks: {
     details: [
       {
-        appIDs: ['72C25NASFQ.com.geoclockr.app.mobile'],
+        appIDs: ['4YW4C5W9FB.com.renostars.companion', '72C25NASFQ.com.geoclockr.app.mobile'],
         components: [
           {
             '/': '/signup',
