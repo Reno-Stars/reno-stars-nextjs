@@ -354,9 +354,9 @@
       }
     },
     "/renovation-near-me": {
-      "lastmod": "2026-11-25T08:21:10.000Z",
+      "lastmod": "2026-11-25T19:19:11.000Z",
       "from": "code",
-      "commit": "e1c06f74c2b2",
+      "commit": "9797cbc2245c",
       "code": [
         "app/[locale]/renovation-near-me/page.tsx",
         "components/pages/NearMePage.tsx"
