@@ -86,6 +86,9 @@ const SUBSIDY = new RegExp(
     // المنحدرات ("slopes") and منحصربه‌فرد ("unique").
     String.raw`(?<![\p{L}])(?:و?(?:ال|بال|لل|ب|ل))?منح(?:ة|ات)?(?![\p{L}])`,
     'کمک هزینه', 'یارانه', 'अनुदान', 'ग्रांट', 'सब्सिडी', 'ਗ੍ਰਾਂਟ', 'ਸਬਸਿਡੀ',
+    // the word the translated rebate copy uses in each locale (whole words: ਛੋਟਾ = "small")
+    String.raw`(?<![\p{L}\p{M}])(?:reembolsos?|remises?|rabais|rabats?|скидк\p{L}*|giảm giá|(?:و?(?:ال|بال|لل|ب|ل))?(?:خصم|خصومات)|تخفیف|छूट|ਛੋਟ(?:ਾਂ)?)(?![\p{L}\p{M}])`,
+    '回扣',
   ].join('|'),
   'iu',
 );
@@ -112,7 +115,7 @@ const CLAUSE_SEP = /[，;；]|,(?![0-9])/g;
  * ("BC Hydro offers up to $3,000", "额外 $3,000", "退税可抵 $7–11K", "combined up to $11,000").
  */
 const SUBSIDY_PHRASE = new RegExp(
-  String.raw`(?<![\p{L}])(?:up to|additional|extra|offsets?|combined|stack|hasta|adicional(?:es)?|jusqu|suppl[ée]mentaire|до|дополнительн\p{L}*|tối đa|tới|thêm|hanggang|karagdagang|تا|إضافي|اضافی|تصل إلى)(?![\p{L}])` +
+  String.raw`(?<![\p{L}])(?:up to|additional|extra|offsets?|combined|stack|hasta|adicional(?:es)?|jusqu|suppl[ée]mentaires?|до|дополнительн\p{L}*|tối đa|tới|thêm|hanggang|karagdagang|تا|إضافي|اضافی|تصل إلى)(?![\p{L}])` +
   '|最高|高达|高達|额外|額外|可抵|抵扣|合计|合計|最大|まで|さらに|追加|최대|추가|تا سقف|ما يصل إلى|तक|अतिरिक्त|ਤੱਕ|ਵਾਧੂ',
   'iu',
 );

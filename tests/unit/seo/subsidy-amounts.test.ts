@@ -166,3 +166,32 @@ describe('a subsidy word inside another word does not keep prices', () => {
     expect(out).toContain('- Heat pump rebate: up to $3,000');
   });
 });
+
+// Verbatim rebate list items from the translated heat-pump service copy (main 4795870b).
+describe('the translated rebate wording keeps rebate amounts in every locale', () => {
+  it.each([
+    ['es', 'Reembolso por bomba de calor: hasta $3000 (BC Hydro)'],
+    ['fr', 'Rabais sur les thermopompes : jusqu\'à 3 000$ (BC Hydro)'],
+    ['ru', 'Скидка на тепловой насос: до 3000 долларов США (BC Hydro)'],
+    ['vi', 'Giảm giá bơm nhiệt: lên tới $3.000 (BC Hydro)'],
+    ['ar', 'خصم على المضخة الحرارية: يصل إلى 3000 دولار (BC Hydro)'],
+    ['fa', 'تخفیف پمپ حرارتی: تا 3000 دلار (BC Hydro)'],
+    ['zh-Hant', '熱泵回扣：高達 $3,000 （BC Hydro）'],
+    ['hi', 'हीट पंप छूट: $3,000 तक (बीसी हाइड्रो)'],
+    ['pa', 'ਹੀਟ ਪੰਪ ਛੋਟ: $3,000 ਤੱਕ (BC Hydro)'],
+  ])('%s: %s', (_loc, line) => {
+    expect(stripPriceProse(line)).toBe(line);
+  });
+
+  it.each([
+    ['es', '**Reembolsos de BC Hydro/Provincia disponibles:**', '- Recarga para personas de bajos ingresos calificadas por ingresos: **$3,000 adicionales** (BC Hydro)'],
+    ['fr', '**Remises BC Hydro/Province disponibles :**', '- Complément pour faible revenu admissible : **3 000 $ supplémentaires** (BC Hydro)'],
+  ])('%s: a top-up item under the rebate lead-in stays', (_loc, lead, item) => {
+    const md = `${lead}\n\n${item}`;
+    expect(stripPriceCopy(md)).toBe(md);
+  });
+
+  it('ਛੋਟਾ ("small") is not ਛੋਟ (rebate): a small-bathroom price is still stripped', () => {
+    expect(isSubsidyText('ਛੋਟਾ ਬਾਥਰੂਮ')).toBe(false);
+  });
+});
