@@ -235,10 +235,10 @@ A missing variable fails at FIRST USE, not at boot, so liveness cannot see it.
   invents). `tests/unit/sitemap/lastmod-policy.test.ts` only checks that every static path has an entry.
 - **The apex `reno-stars.com` is a redirect to `www`, not a site** (verified
   externally 2026-11-24): `https://reno-stars.com/` and `/en/` both answer
-  `301 → https://www.reno-stars.com/en/`, and locale pages such as `/zh/about/`
-  and `/en/services/kitchen/` answer `301` to the same path on `www`. (Exceptions
-  seen: `/en/projects/` redirects to `www` `/en/`; `/robots.txt` and
-  `/sitemap.xml` answer 200 on the apex itself.) Use `https://www.reno-stars.com`
+  `301 → https://www.reno-stars.com/en/`, and locale pages such as `/zh/about/`,
+  `/en/services/kitchen/` and `/en/projects/` answer `301` to the same path on
+  `www`. (Exception seen: `/robots.txt` and `/sitemap.xml` answer 200 on the
+  apex itself.) Use `https://www.reno-stars.com`
   for anything that must work. History: in 2026-08/09 the apex DNS record still
   pointed at the retired Mac tunnel, so every path except `/` returned
   Cloudflare 530/1033 — resolved. The blackbox probe now checks apex `/` = 301
