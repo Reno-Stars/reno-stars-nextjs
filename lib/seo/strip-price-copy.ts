@@ -80,8 +80,12 @@ function isInsuranceAmount(text: string, start: number, end: number, match: stri
 const SUBSIDY = new RegExp(
   [
     String.raw`(?<![\p{L}])(?:rebates?|grants?|subsid\p{L}*|incentives?|top-ups?|HAFI|CleanBC|Greener Homes|Home Adaptation for Independence|subvenci[oó]n\p{L}*|subventions?|грант\p{L}*|субсиди\p{L}*|subsidiya|trợ cấp)(?![\p{L}])`,
-    '补助', '補助', '补贴', '補貼', '拨款', '撥款', '退税', '退稅', '助成金', '補助金', 'リベート', '보조금', '지원금', '환급', '리베이트',
-    'کمک هزینه', 'یارانه', 'منحة', 'منح', 'अनुदान', 'ग्रांट', 'सब्सिडी', 'ਗ੍ਰਾਂਟ', 'ਸਬਸਿਡੀ',
+    // 補助 also means "auxiliary" in Japanese: 補助熱 / 補助暖房 (backup heat) is not a subsidy.
+    '补助', '補助(?![熱暖])', '补贴', '補貼', '拨款', '撥款', '退税', '退稅', '助成金', '補助金', 'リベート', '보조금', '지원금', '환급', '리베이트',
+    // Arabic-script words are matched whole: منح sits inside تمنحك ("gives you"),
+    // المنحدرات ("slopes") and منحصربه‌فرد ("unique").
+    String.raw`(?<![\p{L}])(?:و?(?:ال|بال|لل|ب|ل))?منح(?:ة|ات)?(?![\p{L}])`,
+    'کمک هزینه', 'یارانه', 'अनुदान', 'ग्रांट', 'सब्सिडी', 'ਗ੍ਰਾਂਟ', 'ਸਬਸਿਡੀ',
   ].join('|'),
   'iu',
 );
@@ -108,21 +112,13 @@ const CLAUSE_SEP = /[，;；]|,(?![0-9])/g;
  * ("BC Hydro offers up to $3,000", "额外 $3,000", "退税可抵 $7–11K", "combined up to $11,000").
  */
 const SUBSIDY_PHRASE = new RegExp(
-  String.raw`(?<![\p{L}])(?:up to|additional|offsets?|combined|stack|hasta|jusqu|до|tối đa|tới|hanggang)(?![\p{L}])` +
-  '|最高|高达|高達|额外|額外|可抵|抵扣|合计|合計|最大|まで|최대|추가|تا سقف|ما يصل إلى|तक|ਤੱਕ',
+  String.raw`(?<![\p{L}])(?:up to|additional|extra|offsets?|combined|stack|hasta|adicional(?:es)?|jusqu|suppl[ée]mentaire|до|дополнительн\p{L}*|tối đa|tới|thêm|hanggang|karagdagang|تا|إضافي|اضافی|تصل إلى)(?![\p{L}])` +
+  '|最高|高达|高達|额外|額外|可抵|抵扣|合计|合計|最大|まで|さらに|追加|최대|추가|تا سقف|ما يصل إلى|तक|अतिरिक्त|ਤੱਕ|ਵਾਧੂ',
   'iu',
 );
 
-/**
- * A government rebate / grant / subsidy amount (Ryan 2026-11-25: these STAY).
- * Its sentence must name the subsidy, and its own clause must either name it
- * or use rebate phrasing — so in "中央热泵系统安装 $14–22K，退税可抵 $7–11K" the
- * installation price is still a price and only the rebate amount stays.
- */
-function isSubsidyAmount(text: string, start: number, end: number): boolean {
-  const [from, to] = sentenceBounds(text, start, end);
-  const sentence = text.slice(from, to);
-  if (!SUBSIDY.test(sentence)) return false;
+/** [from, to) of the clause of `text` (inside [from, to)) that holds [start, end). */
+function clauseBounds(text: string, from: number, to: number, start: number, end: number): [number, number] {
   let cFrom = from;
   let cTo = to;
   CLAUSE_SEP.lastIndex = from;
@@ -131,8 +127,45 @@ function isSubsidyAmount(text: string, start: number, end: number): boolean {
     if (m.index < start) cFrom = m.index + 1;
     else if (m.index >= end) { cTo = m.index; break; }
   }
-  const clause = text.slice(cFrom, cTo);
-  return SUBSIDY.test(clause) || SUBSIDY_PHRASE.test(clause);
+  return [cFrom, cTo];
+}
+
+/** Characters after an amount that may still mark it ("$5,000 तक", "3000 دلار اضافی"). */
+const SUBSIDY_TAIL = 12;
+
+/** The words that belong to ONE amount: since the previous amount in its clause, plus a short tail. */
+function amountContext(text: string, cFrom: number, cTo: number, start: number, end: number): string {
+  const re = new RegExp(PRICE_SOURCE, 'g');
+  let leadFrom = cFrom;
+  let tailTo = Math.min(cTo, end + SUBSIDY_TAIL);
+  re.lastIndex = cFrom;
+  let m: RegExpExecArray | null;
+  while ((m = re.exec(text)) && m.index < cTo) {
+    if (m[0].length === 0) { re.lastIndex++; continue; }
+    if (m.index + m[0].length <= start) leadFrom = m.index + m[0].length;
+    else if (m.index >= end) { tailTo = Math.min(tailTo, m.index); break; }
+  }
+  return text.slice(leadFrom, start) + ' ' + text.slice(end, tailTo);
+}
+
+/** True when `words` name a subsidy or use rebate phrasing ("up to", "额外", "तक" …). */
+function marksSubsidy(words: string): boolean {
+  return SUBSIDY.test(words) || SUBSIDY_PHRASE.test(words);
+}
+
+/**
+ * A government rebate / grant / subsidy amount (Ryan 2026-11-25: these STAY).
+ * Its sentence must name the subsidy, and the words of the amount itself — since
+ * the previous amount in its clause, plus a short tail — must name it or use
+ * rebate phrasing. So in "中央热泵系统安装 $14–22K，退税可抵 $7–11K" and in the
+ * comma-less "열 펌프 중앙 시스템은 $14–22K를 설치하고 … 리베이트는 $7–11K를 상쇄" the
+ * installation price is still a price and only the rebate amount stays.
+ */
+function isSubsidyAmount(text: string, start: number, end: number): boolean {
+  const [from, to] = sentenceBounds(text, start, end);
+  if (!SUBSIDY.test(text.slice(from, to))) return false;
+  const [cFrom, cTo] = clauseBounds(text, from, to, start, end);
+  return marksSubsidy(amountContext(text, cFrom, cTo, start, end));
 }
 
 /** True when `text` names a government rebate / grant / subsidy (the amounts near it stay). */
@@ -353,7 +386,9 @@ function subsidyListRows(lines: string[]): boolean[] {
   let underSubsidyLeadIn = false;
   return lines.map((line) => {
     if (!line.trim()) return false;
-    if (LIST_ITEM.test(line)) return underSubsidyLeadIn;
+    // the item itself must carry rebate wording too: a "(before rebates):" lead-in
+    // over installation costs does not make those costs rebates.
+    if (LIST_ITEM.test(line)) return underSubsidyLeadIn && marksSubsidy(line);
     underSubsidyLeadIn = /[:：][\s*_]*$/.test(line) && isSubsidyText(line);
     return false;
   });

@@ -113,3 +113,56 @@ describe('rebate lists and mixed sentences in DB copy (heat-pump service, zh)', 
     expect(stripPriceCopy(md)).not.toMatch(/\$4,500|\$8,000/);
   });
 });
+
+// Task 136 final gate (head 5a684109): pages where a subsidy word was matched by
+// accident and real prices stayed. Text verbatim from main 4795870b on :3101.
+describe('a subsidy word inside another word does not keep prices', () => {
+  it('ar /areas/burnaby/: "تمنحك" ("gives you") is not "منح" (grants) — the cost list is stripped', () => {
+    const md = [
+      'تمنحك مشاريع Burnaby المكتملة لدينا معايير واقعية لتخطيط ميزانيتك:',
+      '',
+      '- **تجديد الحمامات:** 20,000 دولار - 32,000 دولار حسب النطاق.',
+      '- **التجديدات التجارية:** 8000 دولار - 25000 دولار لمساحات البيع بالتجزئة والتجارية.',
+    ].join('\n');
+    const out = stripPriceCopy(md);
+    expect(isSubsidyText('تمنحك مشاريع Burnaby المكتملة')).toBe(false);
+    expect(out).not.toMatch(/20,000|32,000|8000|25000/);
+  });
+
+  it('ar /areas/west-vancouver/: "المنحدرات" ("slopes") is not a grant', () => {
+    const s = 'يؤثر على المنحدرات أو الصرف أو الهياكل الاستنادية؛ ميزانية تتراوح بين 1500 و3500 دولار لهذه المراجعة عند الاقتضاء.';
+    expect(isSubsidyText(s)).toBe(false);
+    expect(stripPriceProse(s)).not.toMatch(/1500|3500/);
+  });
+
+  it('fa /areas/richmond/: "منحصربه‌فرد" ("unique") is not a grant', () => {
+    const s = 'دو حمام با دستشویی مهمان منحصربه‌فرد : ۳۳,۰۰۰ تا ۳۵,۰۰۰ دلار، ۶ تا ۸ هفته';
+    expect(isSubsidyText(s)).toBe(false);
+    expect(hasPriceCopy(stripPriceProse(s))).toBe(false);
+  });
+
+  it('Arabic grant words still count: "منحة" / "المنح"', () => {
+    expect(isSubsidyText('منحة المنازل الأكثر خضرة')).toBe(true);
+    expect(isSubsidyText('ما هي المنح المتاحة؟')).toBe(true);
+    expect(isSubsidyText('امنح منزلك مظهرًا جديدًا')).toBe(false);
+  });
+
+  it('ja heat-pump: 補助熱 (backup heat) is not 補助 (subsidy) — the install-cost row is stripped', () => {
+    const md = '|寒冷地用ダクト + 補助熱 | $18,000 – $35,000+ |家全体、プレミアム層 |\n\n**BC Hydro / 州のリベートが利用可能:**\n\n- ヒートポンプ リベート: 最大 **$3,000** (BC Hydro)';
+    const out = stripPriceCopy(md);
+    expect(out).not.toContain('$18,000');
+    expect(out).toContain('- ヒートポンプ リベート: 最大 **$3,000** (BC Hydro)');
+  });
+
+  it('ko heat-pump: an install price in the same comma-less sentence as a rebate is still a price', () => {
+    const s = '열 펌프 중앙 시스템은 $14~22K를 설치하고 운영되며 리베이트는 $7~11K를 상쇄할 수 있습니다.';
+    expect(stripPriceProse(s)).not.toContain('$14~22K');
+  });
+
+  it('a "(before rebates):" lead-in does not keep the installation costs listed under it', () => {
+    const md = '**Real Vancouver heat pump install costs (before rebates):**\n\n- Ducted cold-climate: $18,000 – $35,000+\n- Heat pump rebate: up to $3,000';
+    const out = stripPriceCopy(md);
+    expect(out).not.toContain('$18,000');
+    expect(out).toContain('- Heat pump rebate: up to $3,000');
+  });
+});
