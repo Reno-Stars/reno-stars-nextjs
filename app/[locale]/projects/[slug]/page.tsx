@@ -6,6 +6,7 @@ import { getLocalizedProject, getLocalizedSiteWithProjects } from '@/lib/data/pr
 import ProjectDetailPage from '@/components/pages/ProjectDetailPage';
 import { omitBudget, omitSiteBudget } from '@/lib/projects/omit-budget';
 import { stripProjectPrices, stripSitePrices } from '@/lib/projects/strip-prices';
+import { categoriesWithProjects, isEmptyCategory, EMPTY_CATEGORY_ROBOTS } from '@/lib/projects/empty-category';
 import ProjectCategoryPage from '@/components/pages/ProjectCategoryPage';
 import SiteDetailPage from '@/components/pages/SiteDetailPage';
 import { BreadcrumbSchema, ProjectSchema, ProjectCategorySchema, FAQSchema, ItemListSchema, ServiceSchema } from '@/components/structured-data';
@@ -50,9 +51,17 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     const title = t('title', { category: categoryName });
     const description = t('description', { category: categoryName });
 
+    // No published project in this category → the page is only "No projects
+    // found": noindex, but keep follow (DI-16). Same rule the sitemap uses
+    // (lib/projects/empty-category.ts); evaluated per request, so publishing a
+    // project restores `index` with no code change. Non-empty hubs: unchanged.
+    const withProjects = categoriesWithProjects((await getProjectsFromDb()).map((p) => p.service_type));
+    const emptyCategoryRobots = isEmptyCategory(slug, withProjects) ? { robots: EMPTY_CATEGORY_ROBOTS } : {};
+
     return {
       title,
       description,
+      ...emptyCategoryRobots,
       alternates: buildAlternates(`/projects/${slug}/`, locale),
       openGraph: {
         title,

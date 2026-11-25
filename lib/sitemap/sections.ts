@@ -3,6 +3,7 @@ import { locales, INDEXABLE_LEAF_LOCALES, INDEXABLE_SERVICE_CITY_LOCALES } from 
 import { getBaseUrl } from '@/lib/utils';
 import { PRIORITY, CHANGEFREQ, STATIC_PAGES, COST_GUIDE_BLOG_SLUGS } from './config';
 import { loadSitemapData, nativeLocalesFor, type SitemapData } from './data';
+import { isEmptyCategory } from '@/lib/projects/empty-category';
 import { SERVICE_CITY_LASTMOD_OVERRIDES, TEST_A_FROZEN_LASTMOD, serviceCityLastModKey } from './lastmod-overrides';
 import { BLOG_SLUGS_REDIRECTED_TO_GUIDES } from '@/lib/seo/blog-guide-redirects';
 
@@ -153,8 +154,14 @@ export const SECTIONS: Section[] = [
     // Project category hubs. (The budget-tier pages were retired 2026-11-24 —
     // they now 301 to /projects/, see lib/projects/retired-budget-pages.ts.)
     id: 'project-hubs',
+    // A category with no published project renders only "No projects found"
+    // and is served noindex — never submit it (DI-16). Same rule as the page:
+    // lib/projects/empty-category.ts. Re-evaluated on every request, so it
+    // comes back by itself once a project in that category is published.
     items: (d) => [
-      ...d.categorySlugs.map((category: string) => ({
+      ...d.categorySlugs
+        .filter((category: string) => !isEmptyCategory(category, d.projectCategoriesWithProjects))
+        .map((category: string) => ({
         path: `/projects/${category}`,
         priority: PRIORITY.hub,
         changeFrequency: CHANGEFREQ.monthly,
