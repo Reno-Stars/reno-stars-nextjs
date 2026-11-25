@@ -1,4 +1,5 @@
 import { Metadata } from 'next';
+import { filterPriceFaqs } from '@/lib/seo/strip-price-copy';
 import { getTranslations, setRequestLocale } from 'next-intl/server';
 import { ogLocaleMap, type Locale } from '@/i18n/config';
 import NearMePage from '@/components/pages/NearMePage';
@@ -11,11 +12,9 @@ import ClientMessages from '@/components/ClientMessages';
 
 interface PageProps { params: Promise<{ locale: string }>; }
 
-// Single source for this page's price band (finding #9/#24). Used by the meta
-// description, the ServiceSchema serviceDescription, and the ServiceSchema
-// priceRange prop so the three can never drift. Do NOT re-type the band inline.
-const PRICE_RANGE = { min: 15000, max: 72000 } as const;
-const PRICE_BAND = `$${PRICE_RANGE.min / 1000}K-$${PRICE_RANGE.max / 1000}K`;
+// DI-15 (2026-11-24, Ryan via Captain): near-me pages carry no prices — the
+// former PRICE_BAND (meta + serviceDescription) and the ServiceSchema
+// priceRange offers were removed; message copy is filtered at render.
 
 // This page canonicalizes onto /services/kitchen/ (see generateMetadata) — it is
 // NOT self-canonical. Single source for that path so the declared canonical and
@@ -31,8 +30,8 @@ function getPageMeta(locale: string): { title: string; description: string; ogIm
   // Keeps the keyword, geo, scope, price band, timeline + insurance — drops
   // the 3-city list (already on-page) and the redundant "Free quotes" tail.
   const description = isZh
-    ? `大温哥华附近专业厨房装修：定制橱柜、石英石台面、瓷砖墙面、电器升级。${PRICE_BAND}，4-8周完工。五星好评，免费估价。`
-    : `Kitchen renovation near you across Metro Vancouver — custom cabinets, quartz countertops, full design-build. ${PRICE_BAND}, 4-8 wks. $5M insured.`;
+    ? `大温哥华附近专业厨房装修：定制橱柜、石英石台面、瓷砖墙面、电器升级。4-8周完工。五星好评，免费估价。`
+    : `Kitchen renovation near you across Metro Vancouver — custom cabinets, quartz countertops, full design-build. 4-8 wks. $5M insured.`;
   return { title, description, ogImage: buildOgImageUrl(title, description) };
 }
 
@@ -75,8 +74,8 @@ export default async function Page({ params }: PageProps) {
   const isZh = locale === 'zh';
   const serviceName = isZh ? '厨房装修' : 'Kitchen Renovation';
   const serviceDescription = isZh
-    ? `大温哥华附近专业厨房装修：定制橱柜、石英石台面、设计建造一站式。${PRICE_BAND}，4-8周完工。`
-    : `Full design-build kitchen renovation across Metro Vancouver — custom cabinets, quartz countertops, appliance integration. ${PRICE_BAND}, 4-8 wks.`;
+    ? `大温哥华附近专业厨房装修：定制橱柜、石英石台面、设计建造一站式。4-8周完工。`
+    : `Full design-build kitchen renovation across Metro Vancouver — custom cabinets, quartz countertops, appliance integration. 4-8 wks.`;
   const { title, ogImage } = getPageMeta(locale);
   // Share URL is DERIVED from the canonical this page declares (the same
   // CANONICAL_PATH generateMetadata passes to buildAlternates) rather than
@@ -87,14 +86,13 @@ export default async function Page({ params }: PageProps) {
   return (
     <ClientMessages ns={['nearMe', 'share']}>
       <BreadcrumbSchema items={breadcrumbs} locale={locale} />
-      <FAQSchema faqs={faqs} locale={locale} />
+      <FAQSchema faqs={filterPriceFaqs(faqs)} locale={locale} />
       <ServiceSchema
         company={company}
         serviceName={serviceName}
         serviceDescription={serviceDescription}
         url={`/${locale}/kitchen-renovation-near-me/`}
         areaServed={areas.map((a) => a.name.en)}
-        priceRange={PRICE_RANGE}
         serviceRadiusKm={50}
       />
       <NearMePage

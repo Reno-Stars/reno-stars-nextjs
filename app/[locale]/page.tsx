@@ -1,4 +1,5 @@
 import { Metadata } from "next";
+import { stripPriceDeep, stripPriceTitle, stripPriceProse, filterPriceFaqs } from '@/lib/seo/strip-price-copy';
 
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { ogLocaleMap, type Locale } from "@/i18n/config";
@@ -49,10 +50,11 @@ export async function generateMetadata({
   const years = { years: company.yearsExperience };
 
   const rated = serpRatingParams(googleReviews);
-  const title = rated ? t("titleRated", rated) : t("title", years);
-  const description = rated
+  // DI-15: no prices on the home page — metadata included (some locales' copy quoted ranges).
+  const title = stripPriceTitle(rated ? t("titleRated", rated) : t("title", years));
+  const description = stripPriceProse(rated
     ? t("descriptionRated", rated)
-    : t("description", years);
+    : t("description", years));
 
   const baseUrl = getBaseUrl();
   const ogImage = buildOgImageUrl(title, description);
@@ -129,14 +131,16 @@ export default async function Page({ params }: PageProps) {
       href: `/projects/${p.slug}`,
     }));
   const localizedBadges = trustBadges.map((b) => pickLocale(b, locale));
-  const localizedFaqs = faqs.map((f) => ({
+  // DI-15: FAQ answers and blog-card titles shown on the home page carry no
+  // prices (the blog posts themselves keep theirs).
+  const localizedFaqs = filterPriceFaqs(faqs.map((f) => ({
     id: f.id,
     question: pickLocale(f.question, locale),
     answer: pickLocale(f.answer, locale),
-  }));
+  })));
   const localizedBlogPosts = blogPosts
     .slice(0, 5)
-    .map((p) => ({ slug: p.slug, title: pickLocale(p.title, locale) }));
+    .map((p) => ({ slug: p.slug, title: stripPriceTitle(pickLocale(p.title, locale)) }));
   const localizedShowroom = {
     address: company.address,
     phone: company.phone,
@@ -302,7 +306,9 @@ export default async function Page({ params }: PageProps) {
       <HomePage
         locale={locale}
         company={company}
-        services={services.filter(s => s.showOnServicesPage !== false)}
+        // DI-15: service card copy is DB text ("typical investment $25K–$150K");
+        // filtered here, the database is untouched.
+        services={services.filter(s => s.showOnServicesPage !== false).map((sv) => stripPriceDeep(sv))}
         googleReviews={googleReviews}
         gallery={galleryProjects}
         trustBadges={localizedBadges}

@@ -1,6 +1,7 @@
 "use client";
 
 import { useTranslations } from "next-intl";
+import { stripPriceCopy, filterPriceFaqs } from "@/lib/seo/strip-price-copy";
 import Link from "next/link";
 import { MapPin, Star, ShieldCheck, Clock, Phone, ArrowRight } from "lucide-react";
 import OptimizedImage from "@/components/OptimizedImage";
@@ -79,7 +80,16 @@ interface Props {
 }
 
 export default function NearMePage({ locale, areas, h1Override, googleRating, reviewCount, variant, nearbyProjects = [], nearbyExact = true, share, shareItemId }: Props) {
-  const t = useTranslations("nearMe");
+  const tRaw = useTranslations("nearMe");
+  // DI-15: near-me pages carry no prices. The nearMe message copy (service
+  // blurbs, FAQ answers — in all 14 languages) quotes price bands; every
+  // rendered string is filtered here, keeping the catalogue untouched.
+  const t = ((key: string, values?: Record<string, string | number>) =>
+    stripPriceCopy(tRaw(key as never, values as never))) as unknown as typeof tRaw;
+  // FAQs: a cost question whose answer quoted amounts is dropped whole.
+  const faqItems = filterPriceFaqs(
+    [1, 2, 3, 4, 5, 6].map((n) => ({ n, question: tRaw(`faq.q${n}` as never), answer: tRaw(`faq.a${n}` as never) })),
+  );
 
   // Live reviews rating for the trust stat — only when the SSOT actually has
   // reviews (guards against rendering a rating when the count is 0). Falls back
@@ -355,17 +365,17 @@ export default function NearMePage({ locale, areas, h1Override, googleRating, re
             {t("faq.heading")}
           </h2>
           <div className="space-y-4">
-            {[1, 2, 3, 4, 5, 6].map((n) => (
+            {faqItems.map(({ n, question, answer }) => (
               <details
                 key={n}
                 className="p-5 rounded-xl"
                 style={{ backgroundColor: CARD, boxShadow: neu() }}
               >
                 <summary className="cursor-pointer font-semibold" style={{ color: NAVY }}>
-                  {t(`faq.q${n}`)}
+                  {question}
                 </summary>
                 <p className="mt-3" style={{ color: TEXT_MID }}>
-                  {t(`faq.a${n}`)}
+                  {answer}
                 </p>
               </details>
             ))}
