@@ -70,6 +70,18 @@ function priceHits(text: string): Hit[] {
   return out;
 }
 
+/** True when `text` quotes an insurance amount ("$5M CGL", "至少 $200万 的公众责任险"). */
+export function hasInsuranceAmount(text: string | undefined | null): boolean {
+  if (!text) return false;
+  const re = new RegExp(PRICE_SOURCE, 'g');
+  let m: RegExpExecArray | null;
+  while ((m = re.exec(text))) {
+    if (isInsuranceAmount(text, m.index, m.index + m[0].length, m[0])) return true;
+    if (m[0].length === 0) re.lastIndex++;
+  }
+  return false;
+}
+
 /** True when `text` names a price (insurance amounts excluded). */
 export function hasPriceCopy(text: string | undefined | null): boolean {
   return !!text && priceHits(text).length > 0;
@@ -334,14 +346,16 @@ export function isCostQuestion(question: string): boolean {
 
 /**
  * Strip price copy from localized FAQ items. A cost question whose answer
- * quoted amounts is dropped whole (stripping would leave it unanswered); any
- * other answer is stripped and dropped only if nothing meaningful is left.
+ * quoted amounts is dropped whole (stripping would leave it unanswered) —
+ * UNLESS its answer also quotes the insurance amount: Ryan requires the $5M
+ * CGL kept in every locale, so that answer is stripped of prices and kept.
+ * Any other answer is stripped and dropped only if nothing meaningful is left.
  */
 export function filterPriceFaqs<T extends { question: string; answer: string }>(faqs: readonly T[]): T[] {
   const out: T[] = [];
   for (const f of faqs) {
     if (!hasPriceCopy(f.answer) && !hasPriceCopy(f.question)) { out.push(f); continue; }
-    if (hasPriceCopy(f.answer) && isCostQuestion(f.question)) continue;
+    if (hasPriceCopy(f.answer) && isCostQuestion(f.question) && !hasInsuranceAmount(f.answer)) continue;
     const answer = stripPriceCopy(f.answer);
     const question = stripPriceTitle(f.question);
     if (!answer || answer.replace(/<[^>]+>/g, '').trim().length < 20 || !question) continue;

@@ -1,7 +1,7 @@
 import { describe, it, expect } from 'vitest';
 import {
   hasPriceCopy, stripPriceProse, stripPriceTitle, stripPriceMarkdown, stripPriceCopy,
-  stripPriceDeep, filterPriceFaqs, isCostQuestion, stripPriceHtml,
+  stripPriceDeep, filterPriceFaqs, isCostQuestion, stripPriceHtml, hasInsuranceAmount,
 } from '@/lib/seo/strip-price-copy';
 
 /** Fragments that would betray a clumsy cut. */
@@ -222,3 +222,53 @@ describe('French insured wording (regression: /fr/areas/* meta)', () => {
   });
 });
 
+
+// Task 132: the two insurance-token losses measured by the per-locale gate.
+// Strings are verbatim (DB copy via scripts/insert-striking-distance-faqs-2026-06-02.py
+// and the local scan of /zh/services/bathroom/delta/; the Delta answer is an excerpt).
+describe('insurance gate losses — ALWAYS KEEP (task 132)', () => {
+  const BURNABY_Q = 'How much does a basement renovation cost in Burnaby?';
+  const BURNABY_A =
+    'Basement renovations in Burnaby typically run $40,000–$120,000 depending on scope. '
+    + 'A basic finish — drywall, flooring, lighting and a 3-piece bathroom — starts around $40,000–$60,000 '
+    + 'and works well for newer Brentwood and Metrotown townhouses. Mid-range projects with a second '
+    + 'bathroom and small kitchenette run $60,000–$95,000 — typical for legal suite conversions in The '
+    + 'Heights and South Burnaby. High-end legal suites with separate entrance, full kitchen, and premium '
+    + 'finishes can exceed $100,000. Sloped lots around Capitol Hill and Burnaby Mountain may require '
+    + 'additional drainage and waterproofing work. All projects include permits, $5M CGL coverage, and a '
+    + '3-year workmanship warranty.';
+
+  it('a cost FAQ that also quotes "$5M CGL coverage" is kept with its prices stripped', () => {
+    const out = filterPriceFaqs([{ question: BURNABY_Q, answer: BURNABY_A }]);
+    expect(out).toHaveLength(1);
+    expect(out[0].answer).toContain('All projects include permits, $5M CGL coverage, and a 3-year workmanship warranty.');
+    expect(hasPriceCopy(out[0].answer)).toBe(false);
+    expect(out[0].answer).not.toMatch(/\$40,000|\$100,000/);
+  });
+
+  it('a cost FAQ with prices and no insurance amount is still dropped whole', () => {
+    const a = 'Basement renovations in Burnaby typically run $40,000–$120,000 depending on scope.';
+    expect(filterPriceFaqs([{ question: BURNABY_Q, answer: a }])).toEqual([]);
+  });
+
+  const DELTA_A =
+    '在三角洲（Delta）选择合适的装修承包商，第一步是核实 BC 省的执照资质。所有承接金额超过 $1,000 工程的承包商，都必须在 Consumer Protection BC 注册。'
+    + '他们还应持有每次事故赔付额至少 $200万 的公众责任险，并为进场施工的所有工人购买 WorkSafeBC 保险';
+
+  it('keeps the zh Delta "至少 $200万 的公众责任险" line', () => {
+    expect(hasInsuranceAmount(DELTA_A)).toBe(true);
+    const out = filterPriceFaqs([{ question: '在三角洲（Delta）如何选择合适的装修承包商？', answer: DELTA_A }]);
+    expect(out).toHaveLength(1);
+    expect(out[0].answer).toContain('他们还应持有每次事故赔付额至少 $200万 的公众责任险');
+  });
+
+  it.each([
+    ['zh-Hant', '溫哥華橱櫃翻新 — 噴漆整修$4K–$8K，換門板$8K–$18K，全定製更換$20K–$50K。500萬保險，櫃下燈、水盆、水龍頭等水電部分最長3年保固。免費報價。', '500萬保險'],
+    ['ko', '밴쿠버 캐비닛 리노베이션 — 도장 $4K–$8K, 도어 교체 $8K–$18K, 맞춤 제작 $20K–$50K. 500만 보험, 3년 공법 보증. 무료 견적.', '500만 보험'],
+    ['ja', 'バンクーバーのキャビネットリノベーション — 塗装仕上げ$4K〜$8K、ドア交換$8K〜$18K、完全カスタム$20K〜$50K。500万保険、3年工事保証。無料見積もり。', '500万保険'],
+  ])('cabinet hub meta (%s) keeps the insurance amount', (_loc, s, keep) => {
+    const out = stripPriceProse(s);
+    expect(out).toContain(keep);
+    expect(hasPriceCopy(out)).toBe(false);
+  });
+});
