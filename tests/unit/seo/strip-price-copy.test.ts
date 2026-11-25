@@ -165,3 +165,34 @@ describe('mixed HTML + markdown DB copy (regression: Maple Ridge / cabinet hub)'
   });
 });
 
+describe('orphans left by a removal', () => {
+  it('drops a lead-in whose list was removed, and a heading whose section was emptied', () => {
+    const md = [
+      '## Maple Ridge Home Renovation Costs',
+      '',
+      'Real pricing from our Maple Ridge projects:',
+      '',
+      '- **Kitchen renovation:** $22,000–$50,000',
+      '- **Bathroom renovation:** $15,000–$35,000+',
+      '',
+      '## Why Maple Ridge homeowners choose us',
+      '',
+      'We include everything below:',
+      '',
+      '- Permits handled',
+      '- $5M CGL insurance',
+    ].join('\n');
+    const out = stripPriceMarkdown(md);
+    expect(out).not.toContain('Maple Ridge Home Renovation Costs');
+    expect(out).not.toContain('Real pricing from our Maple Ridge projects:');
+    expect(out).toContain('## Why Maple Ridge homeowners choose us');
+    expect(out).toContain('We include everything below:');   // untouched: its list survived
+    expect(out).toContain('- $5M CGL insurance');
+  });
+  it('keeps the $5M liability trust stat in every language', () => {
+    for (const s of ['500 万加元 责任+工资赔偿金', '500 萬加元 責任+WCB', '500만 달러 책임 + WCB', '$5M Liability + WCB']) {
+      expect(hasPriceCopy(s), s).toBe(false);
+    }
+  });
+});
+

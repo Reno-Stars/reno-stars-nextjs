@@ -36,6 +36,9 @@ const INSURANCE = new RegExp(
     'bảo hiểm', 'страх', 'تأمين', 'مؤمن', 'بیمه',        // vi / ru / ar / fa
     'बीमा', 'सीजीएल', 'कवरेज', 'ਬੀਮਾ', 'ਬੀਮਿ', 'ਕਵਰੇਜ',   // hi / pa
     'nakaseguro', 'siguro', 'assicura',                  // tl / it-style
+    // plain "liability" — near a MILLION-sized amount only (see MILLION_WINDOW):
+    // trust stats like "500 万加元 责任+工资赔偿金" ("$5M liability + WCB").
+    '责任', '責任', '책임', 'ответствен', 'مسؤولية', 'مسئولیت', 'दायित्व', 'ਦੇਣਦਾਰੀ', 'trách nhiệm', 'pananagutan',
   ].join('|'),
   'i',
 );
@@ -177,11 +180,49 @@ function dropEmptyTables(lines: string[]): string[] {
   return out;
 }
 
+const isListOrRow = (l: string) => LIST_ITEM.test(l) || /^\s*\|/.test(l);
+const isLeadIn = (l: string) => /[:：]\s*(?:\*\*|__)?\s*$/.test(l) && !HEADING.test(l) && !LIST_ITEM.test(l);
+
+/**
+ * Lines left orphaned by a removal: a lead-in ("Real pricing from our projects:")
+ * whose list / table was dropped entirely, and a heading whose whole section
+ * was emptied. Only lines next to a REMOVAL are touched — pre-existing copy
+ * keeps its shape.
+ */
+function dropOrphans(rows: Array<{ orig: string; kept: string | null }>): string[] {
+  const kept = rows.map((r) => r.kept);
+  const nextNonBlank = (i: number) => { for (let j = i + 1; j < rows.length; j++) if (rows[j].orig.trim()) return j; return -1; };
+  // 1. lead-ins whose following block was removed and nothing list-like survives after them
+  for (let i = 0; i < rows.length; i++) {
+    const k = kept[i];
+    if (k === null || !isLeadIn(k)) continue;
+    const j = nextNonBlank(i);
+    if (j < 0 || kept[j] !== null) continue;              // the next block was not removed
+    let m = j; while (m < rows.length && (!rows[m].orig.trim() || kept[m] === null)) m++;
+    if (m >= rows.length || !isListOrRow(kept[m] ?? '')) kept[i] = null;
+  }
+  // 2. headings whose section lost lines and now has no kept content
+  for (let i = 0; i < rows.length; i++) {
+    const h = HEADING.exec(kept[i] ?? '');
+    if (!h) continue;
+    const level = (h[1].match(/#/g) ?? []).length;
+    let lost = false, content = false;
+    for (let j = i + 1; j < rows.length; j++) {
+      const hj = HEADING.exec(rows[j].orig);
+      if (hj && (hj[1].match(/#/g) ?? []).length <= level) break;
+      if (!rows[j].orig.trim()) continue;
+      if (kept[j] === null) lost = true; else content = true;
+    }
+    if (lost && !content) kept[i] = null;
+  }
+  return kept.filter((l): l is string => l !== null);
+}
+
 /** Remove price copy from markdown (or plain multi-paragraph text). */
 export function stripPriceMarkdown(md: string): string {
   if (!md || !hasPriceCopy(md)) return md;
-  const lines = md.split('\n').map(stripLine).filter((l): l is string => l !== null);
-  return dropEmptyTables(lines).join('\n').replace(/\n{3,}/g, '\n\n').trim();
+  const rows = md.split('\n').map((orig) => ({ orig, kept: stripLine(orig) }));
+  return dropEmptyTables(dropOrphans(rows)).join('\n').replace(/\n{3,}/g, '\n\n').trim();
 }
 
 const BLOCK_EL = /<(p|li|td|th|dd|dt|h[1-6]|figcaption)(\s[^>]*)?>([\s\S]*?)<\/\1>/gi;
