@@ -1,6 +1,6 @@
 import { Metadata } from 'next';
 import { getTranslations, setRequestLocale } from 'next-intl/server';
-import { notFound } from 'next/navigation';
+import { notFound, permanentRedirect } from 'next/navigation';
 import { ogLocaleMap, type Locale, INDEXABLE_LEAF_LOCALES, isIndexableLeafLocale } from '@/i18n/config';
 import { getLocalizedProject, getLocalizedSiteWithProjects } from '@/lib/data/projects';
 import ProjectDetailPage from '@/components/pages/ProjectDetailPage';
@@ -14,7 +14,8 @@ import { getJsonLdFromBlocks } from '@/lib/blocks/json-ld';
 import type { Block } from '@/lib/blocks/types';
 import { getBaseUrl, buildAlternates, SITE_NAME, truncateMetaDescription, pickLocale, pickLocaleOptional, buildAlternateLocales} from '@/lib/utils';
 import { images as siteImages } from '@/lib/data';
-import { getCompanyFromDb, getProjectsFromDb, getSiteBySlugFromDb, getServiceTypeToCategory, getCategoriesLocalized, getCategorySlugs, getServiceBlocksBySlug, getProjectReviews } from '@/lib/db/queries';
+import { getCompanyFromDb, getProjectsFromDb, getSiteBySlugFromDb, getServiceTypeToCategory, getCategoriesLocalized, getCategorySlugs, getServiceBlocksBySlug, getProjectReviews, getServicesFromDb } from '@/lib/db/queries';
+import { serviceRedirectFor } from '@/lib/projects/service-redirect';
 import ClientMessages from '@/components/ClientMessages';
 
 interface PageProps {
@@ -382,6 +383,19 @@ export default async function Page({ params }: PageProps) {
       </ClientMessages>
     );
   }
+
+  // A SERVICE slug that is neither a category nor a project/site — e.g.
+  // /projects/heat-pump-hvac/. Services without a project category
+  // (heat-pump-hvac, critical-load-panel, realtor) used to 404 here, yet the
+  // service×city pages' "View all projects" link and the project breadcrumb
+  // still point at /projects/<service>/ (DI-17). Send them to the service page.
+  // Checked LAST and from live rows, so a real category or project with that
+  // slug always wins and this steps aside by itself.
+  // Status: Next's permanentRedirect answers 308 (permanent; search engines
+  // treat it like a 301). Only the proxy table in lib/seo/dead-link-redirects.ts
+  // answers a literal 301 — service slugs are deliberately not hardcoded there.
+  const serviceSlugTarget = serviceRedirectFor(slug, await getServicesFromDb());
+  if (serviceSlugTarget) permanentRedirect(`/${locale}/services/${serviceSlugTarget}/`);
 
   // Not found
   notFound();

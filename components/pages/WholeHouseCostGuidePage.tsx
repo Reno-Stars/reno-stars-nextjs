@@ -333,7 +333,7 @@ export default function WholeHouseCostGuidePage({ locale, projects, phone, share
             {' · '}
             <Link href="/blog/port-coquitlam-home-renovation-guide-2026" className="underline hover:no-underline" style={{ color: GOLD }}>Port Coquitlam</Link>
             {' · '}
-            <Link href="/blog/port-moody-home-renovation-guide-2026" className="underline hover:no-underline" style={{ color: GOLD }}>Port Moody</Link>
+            <Link href="/blog/whole-house-renovation-port-moody-2026" className="underline hover:no-underline" style={{ color: GOLD }}>Port Moody</Link>
             {' · '}
             <Link href="/blog/white-rock-home-renovation-guide-2026" className="underline hover:no-underline" style={{ color: GOLD }}>White Rock</Link>
           </p>

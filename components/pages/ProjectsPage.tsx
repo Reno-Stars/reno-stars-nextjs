@@ -807,21 +807,24 @@ export default function ProjectsPage({ locale, company, projects: rawProjects, s
           <div className="grid gap-3 sm:grid-cols-3">
             {[
               {
-                href: `/${locale}/blog/vanity-renovation-cost-vancouver/`,
+                href: '/blog/vanity-renovation-cost-vancouver/',
                 label: locale === 'zh' || locale === 'zh-Hant' ? '梳妆台费用' : locale === 'en' ? 'Vanity cost guide' : 'Vanity cost',
               },
               {
-                href: `/${locale}/blog/bathtub-renovation-cost-vancouver/`,
+                href: '/blog/bathtub-renovation-cost-vancouver/',
                 label: locale === 'zh' || locale === 'zh-Hant' ? '浴缸费用' : locale === 'en' ? 'Bathtub cost guide' : 'Bathtub cost',
               },
               {
-                href: `/${locale}/blog/toilet-renovation-cost-vancouver/`,
+                href: '/blog/toilet-renovation-cost-vancouver/',
                 label: locale === 'zh' || locale === 'zh-Hant' ? '马桶费用' : locale === 'en' ? 'Toilet cost guide' : 'Toilet cost',
               },
             ].map((p) => (
+              // `Link` (@/navigation) adds the locale itself — the hrefs above
+              // must NOT carry one, or every locale renders /<loc>/<loc>/blog/…
+              // (a 404; DI-17, 2026-11-24).
               <Link
                 key={p.href}
-                href={p.href as '/blog/vanity-renovation-cost-vancouver/'}
+                href={p.href}
                 className="rounded-xl p-4 flex flex-col gap-1 transition-transform hover:scale-[1.02]"
                 style={{ backgroundColor: SURFACE_ALT }}
               >
