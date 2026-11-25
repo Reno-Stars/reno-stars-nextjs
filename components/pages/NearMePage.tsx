@@ -84,8 +84,13 @@ export default function NearMePage({ locale, areas, h1Override, googleRating, re
   // DI-15: near-me pages carry no prices. The nearMe message copy (service
   // blurbs, FAQ answers — in all 14 languages) quotes price bands; every
   // rendered string is filtered here, keeping the catalogue untouched.
-  const t = ((key: string, values?: Record<string, string | number>) =>
-    stripPriceCopy(tRaw(key as never, values as never))) as unknown as typeof tRaw;
+  // `trust.*` are company facts, not prices: the "$5M" stat value sits in its
+  // own element with "Liability + WCB" as a separate label, so it must never
+  // go through the filter (ALWAYS KEEP).
+  const t = ((key: string, values?: Record<string, string | number>) => {
+    const s = tRaw(key as never, values as never) as string;
+    return key.startsWith('trust.') ? s : stripPriceCopy(s);
+  }) as unknown as typeof tRaw;
   // FAQs: a cost question whose answer quoted amounts is dropped whole.
   const faqItems = filterPriceFaqs(
     [1, 2, 3, 4, 5, 6].map((n) => ({ n, question: tRaw(`faq.q${n}` as never), answer: tRaw(`faq.a${n}` as never) })),

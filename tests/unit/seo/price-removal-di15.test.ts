@@ -71,3 +71,11 @@ describe('ALWAYS KEEP', () => {
     expect(src('components/structured-data/LocalBusinessSchema.tsx')).toMatch(/priceRange: '\$\$'/);
   });
 });
+
+describe('ALWAYS KEEP — near-me trust stats', () => {
+  it('trust.* message values (e.g. the bare "$5M" stat) bypass the filter', () => {
+    const s = src('components/pages/NearMePage.tsx');
+    expect(s).toContain("return key.startsWith('trust.') ? s : stripPriceCopy(s);");
+  });
+});
+
