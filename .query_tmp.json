@@ -1,0 +1,3 @@
+{
+  "sql": "SELECT COUNT(*) FROM blog_posts WHERE title_zh IS NULL"
+}
