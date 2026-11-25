@@ -117,7 +117,7 @@ function getEnAreaOverrides(): Record<string, { title: string; description: stri
   richmond: {
     title: 'Bathroom Renovation Richmond BC — Kitchen & Home | Reno Stars',
     description:
-      'Bathroom renovation Richmond BC: $15K–$35K. Kitchen $20K–$32K. 11 real Richmond projects — Steveston, Brighouse, Terra Nova, Cambie. $5M insured.',
+      'Bathroom renovation Richmond BC: $15K–$35K. Kitchen $20K–$32K. 11 Richmond projects — Steveston, Brighouse, Cambie. $5M insured.',
   },
   // 2026-05-15 GSC retune: page sat at pos 23.3 / 99 imp for 7d. Top
   // non-brand query is "reno surrey" (42 imp pos 7.1) — already near top,
@@ -162,7 +162,7 @@ function getEnAreaOverrides(): Record<string, { title: string; description: stri
   'west-vancouver': {
     title: 'Bathroom Renovation West Vancouver — Kitchen & Home | Reno Stars',
     description:
-      'Bathroom renovation West Vancouver: verified $57K–$60K projects. Kitchen ($29K–$33K), whole-house & suite. Caulfeild, Dundarave, Ambleside. $5M insured.',
+      'Bathroom renovation West Vancouver: verified $57K–$60K. Kitchen ($29K–$33K), whole-house & suite. Caulfeild, Dundarave, Ambleside. $5M insured.',
   },
   'new-westminster': {
     title: 'New Westminster Renovations (2026) | Quay Condos | Reno Stars',
