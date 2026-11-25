@@ -24,5 +24,6 @@ export * from './queries/service-areas';
 export * from './queries/blog';
 export * from './queries/content';
 export * from './queries/guide-projects';
+export * from './queries/sitemap-dates';
 export * from './queries/video';
 export * from './queries/social-posts';

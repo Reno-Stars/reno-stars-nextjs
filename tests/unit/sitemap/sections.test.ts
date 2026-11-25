@@ -85,6 +85,8 @@ vi.mock('@/lib/db/queries', () => ({
   getCategorySlugs: async () => ['kitchen', 'bathroom'],
   getServicesFromDb: async () => SERVICES,
   getVideoWatchEntriesFromDb: async () => VIDEOS,
+  getServiceDatesForSitemap: async () => [],
+  getServiceAreaDatesForSitemap: async () => [],
 }));
 
 const importSections = async () => await import('@/lib/sitemap/sections');

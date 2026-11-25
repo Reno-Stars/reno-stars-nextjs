@@ -8,25 +8,49 @@ import {
   getCategorySlugs,
   getServicesFromDb,
   getVideoWatchEntriesFromDb,
+  getServiceDatesForSitemap,
+  getServiceAreaDatesForSitemap,
 } from '@/lib/db/queries';
+import STATIC_PAGE_LASTMOD from './static-page-lastmod.json';
+
+/** Latest of several ISO timestamps; `undefined` when none is known (never "now"). */
+export function latestOf(...values: (string | undefined | null)[]): string | undefined {
+  let best: string | undefined;
+  for (const v of values) if (v && (!best || v > best)) best = v;
+  return best;
+}
+
+const iso = (d: Date | null | undefined): string | undefined => (d ? d.toISOString() : undefined);
 
 /**
- * Loads every row the sitemap sections derive their URLs from.
+ * Static pages whose body also lists database rows: their honest lastmod is the
+ * later of the page's own code/copy date (static-page-lastmod.json) and the date
+ * of the rows they render. Every other static page uses the manifest date alone.
+ */
+const STATIC_PAGE_DATA_SOURCES: Record<string, ('projects' | 'sites' | 'blog' | 'services' | 'areas')[]> = {
+  '': ['projects', 'sites', 'blog'], // home: project gallery + latest posts
+  '/projects': ['projects', 'sites'],
+  '/before-after': ['projects'],
+  '/blog': ['blog'],
+  '/services': ['services'],
+  '/areas': ['areas'],
+};
+
+/**
+ * Loads every row the sitemap sections derive their URLs — and their <lastmod>
+ * — from.
  *
- * Lifted VERBATIM from the former single-function `app/sitemap.ts` (2026-09-02)
- * when the sitemap was split into per-file sections. The queries, the honest
- * blog-date gate, the image maps and the per-area lastmod are unchanged.
+ * LASTMOD POLICY (DI-12 #2, 2026-11-24): every URL carries the date of ITS OWN
+ * content, never a site-wide maximum, never the request or build time. Where a
+ * URL has no honest date the entry omits <lastmod> rather than inventing one.
+ * See lib/sitemap/sections.ts for which source each section uses.
  *
- * Each sitemap FILE calls this once. That is deliberate: the rows are small
- * (slugs + timestamps + one image URL each), whereas what actually exhausted
- * the pod's heap was expanding 5,825 URLs x 14 hreflang alternates into entry
- * objects and serialising 12.3 MB of XML in a single request. Splitting the
- * ENTRY building is what bounds the memory; re-reading a few thousand slug rows
- * per file is cheap now that Postgres is in-cluster.
+ * Each sitemap FILE calls this once. The rows are small (slugs + timestamps +
+ * one image URL each); what exhausted the pod's heap in 2026-09 was expanding
+ * every URL x 14 hreflang alternates and serialising 12.3 MB of XML at once.
  */
 export async function loadSitemapData() {
-  const now = new Date().toISOString();
-  const [projectRows, siteRows, blogPostRows, serviceAreas, categorySlugs, allServices, videoEntries] = await Promise.all([
+  const [projectRows, siteRows, blogPostRows, serviceAreas, categorySlugs, allServices, videoEntries, serviceDates, areaDates] = await Promise.all([
     getProjectSlugsFromDb(),
     getSiteSlugsFromDb(),
     getBlogPostSlugsFromDb(),
@@ -34,34 +58,33 @@ export async function loadSitemapData() {
     getCategorySlugs(),
     getServicesFromDb(),
     getVideoWatchEntriesFromDb(),
+    getServiceDatesForSitemap(),
+    getServiceAreaDatesForSitemap(),
   ]);
-  const projectDateMap = new Map(projectRows.map(r => [r.slug, r.updatedAt?.toISOString() ?? now]));
-  const siteDateMap = new Map(siteRows.map(r => [r.slug, r.updatedAt?.toISOString() ?? now]));
+
+  // Leaf dates: the row's own updated_at. A row without one gets NO entry in the
+  // map, so its URL omits <lastmod> (it used to fall back to the request time,
+  // which changed on every crawl).
+  const projectDateMap = new Map<string, string>();
+  for (const r of projectRows) { const d = iso(r.updatedAt); if (d) projectDateMap.set(r.slug, d); }
+  const siteDateMap = new Map<string, string>();
+  for (const r of siteRows) { const d = iso(r.updatedAt); if (d) siteDateMap.set(r.slug, d); }
   // Blog <lastmod> runs the SAME honest-dates gate as the page's BlogPosting
-  // JSON-LD (lib/blog-dates.ts): a genuine admin content edit (content_updated_at
-  // meaningfully after publication) → that edit date; otherwise → the published
-  // date. Raw updated_at here previously advertised bulk-script stamps (29 posts
-  // shared one 2026-07-10 stamp) as freshness while the pages themselves omitted
-  // dateModified — contradictory signals to Google on the same URLs (2026-07-13
-  // review finding). content_updated_at is a plain column read, so this no longer
-  // costs the O(n^2) cluster subquery it used to (finding #28).
-  const blogDateMap = new Map(blogPostRows.map(r => {
+  // JSON-LD (lib/blog-dates.ts): a genuine admin content edit → that date;
+  // otherwise → the published date. Raw updated_at is never used (bulk scripts
+  // stamp it). No date → no entry → no <lastmod>.
+  const blogDateMap = new Map<string, string>();
+  for (const r of blogPostRows) {
     const { datePublished, dateModified } = resolveBlogDates({
       published_at: r.publishedAt,
       created_at: r.createdAt,
       content_updated_at: r.contentUpdatedAt,
     });
-    return [r.slug, dateModified ?? datePublished ?? now];
-  }));
+    const d = dateModified ?? datePublished;
+    if (d) blogDateMap.set(r.slug, d);
+  }
 
-  // Image-URL maps for image-sitemap support. Next.js MetadataRoute.Sitemap
-  // accepts an `images: string[]` field per entry — the renderer adds the
-  // `xmlns:image="http://www.google.com/schemas/sitemap-image/1.1"` namespace
-  // and emits `<image:image><image:loc>URL</image:loc></image:image>` per
-  // image. Lifts image-search traffic (Google Images, Bing Visual Search)
-  // for renovation project galleries + blog hero images + service-area
-  // city photos. Verified Next.js sitemap renderer supports this at
-  // node_modules/next/dist/build/webpack/loaders/metadata/resolve-route-data.js:109.
+  // Image-URL maps for image-sitemap support (unchanged).
   const projectImageMap = new Map(projectRows.filter(r => r.heroImageUrl).map(r => [r.slug, r.heroImageUrl!]));
   const siteImageMap = new Map(siteRows.filter(r => r.heroImageUrl).map(r => [r.slug, r.heroImageUrl!]));
   const blogImageMap = new Map(blogPostRows.filter(r => r.featuredImageUrl).map(r => [r.slug, r.featuredImageUrl!]));
@@ -70,34 +93,51 @@ export async function loadSitemapData() {
   const blogPostSlugs = blogPostRows.map(r => r.slug);
   const serviceSlugs = allServices.filter(s => s.showOnServicesPage !== false).map(s => s.slug);
 
-  // Use the latest DB timestamp as the lastmod for static pages — gives Google
-  // a real "site updated" signal that moves when content changes.
-  const allDates = [
-    ...Array.from(projectDateMap.values()),
-    ...Array.from(siteDateMap.values()),
-    ...Array.from(blogDateMap.values()),
-  ];
-  const staticLastModified = allDates.length > 0
-    ? allDates.sort().slice(-1)[0]
-    : now;
-
-  // Per-area lastmod: latest project updatedAt where the project's location
-  // matches the area name. Falls back to staticLastModified for areas with
-  // no completed projects yet.
-  const areaLastModMap = new Map<string, string>();
-  for (const area of serviceAreas) {
-    const cityName = area.name.en.toLowerCase();
-    const latestProjectDate = projectRows
-      .filter(p => p.locationCity?.toLowerCase() === cityName)
-      .map(p => p.updatedAt?.toISOString() ?? '')
-      .filter(Boolean)
-      .sort()
-      .slice(-1)[0];
-    areaLastModMap.set(area.slug, latestProjectDate || staticLastModified);
+  // Row-level dates for hub pages, keyed the way those pages select their rows.
+  const serviceDateMap = new Map<string, string>();
+  for (const r of serviceDates) { const d = iso(r.updatedAt); if (d) serviceDateMap.set(r.slug, d); }
+  const areaDateMap = new Map<string, string>();
+  for (const r of areaDates) { const d = iso(r.updatedAt); if (d) areaDateMap.set(r.slug, d); }
+  const projectsByService = new Map<string, string>();       // service_type -> latest project
+  const projectsByCity = new Map<string, string>();          // city (lower-case) -> latest project
+  const projectsByServiceCity = new Map<string, string>();   // `${service}|${city}` -> latest project
+  const bump = (m: Map<string, string>, k: string, d: string) => { const cur = m.get(k); if (!cur || d > cur) m.set(k, d); };
+  for (const p of projectRows) {
+    const d = iso(p.updatedAt);
+    if (!d) continue;
+    const city = p.locationCity?.toLowerCase();
+    if (p.serviceType) bump(projectsByService, p.serviceType, d);
+    if (city) bump(projectsByCity, city, d);
+    if (p.serviceType && city) bump(projectsByServiceCity, `${p.serviceType}|${city}`, d);
   }
+  const areaCityBySlug = new Map(serviceAreas.map(a => [a.slug, a.name.en.toLowerCase()]));
+
+  const latestOfMap = (m: Map<string, string>) => latestOf(...m.values());
+  const dataSourceDate = {
+    projects: latestOfMap(projectDateMap),
+    sites: latestOfMap(siteDateMap),
+    blog: latestOfMap(blogDateMap),
+    services: latestOf(...serviceSlugs.map(s => serviceDateMap.get(s))),
+    areas: latestOf(...serviceAreas.map(a => areaDateMap.get(a.slug))),
+  };
+
+  /** Static page: its code/copy date from git (manifest), plus the rows it lists. */
+  const staticPageLastMod = (path: string): string | undefined =>
+    latestOf(
+      STATIC_PAGE_LASTMOD.pages[path as keyof typeof STATIC_PAGE_LASTMOD.pages]?.lastmod,
+      ...(STATIC_PAGE_DATA_SOURCES[path] ?? []).map(src => dataSourceDate[src]),
+    );
+  /** /services/<slug>/: the service row, and the newest project of that service it features. */
+  const serviceHubLastMod = (slug: string) => latestOf(serviceDateMap.get(slug), projectsByService.get(slug));
+  /** /projects/<category>/: the newest project in that category (no projects → no lastmod). */
+  const categoryLastMod = (category: string) => projectsByService.get(category);
+  /** /areas/<slug>/: the area row and the newest project in that city. */
+  const areaLastMod = (slug: string) => latestOf(areaDateMap.get(slug), projectsByCity.get(areaCityBySlug.get(slug) ?? ''));
+  /** /services/<service>/<area>/ default: the service row, the area row, and projects of that service in that city. */
+  const serviceCityLastMod = (service: string, area: string) =>
+    latestOf(serviceDateMap.get(service), areaDateMap.get(area), projectsByServiceCity.get(`${service}|${areaCityBySlug.get(area) ?? ''}`));
 
   return {
-    now,
     projectRows,
     siteRows,
     blogPostRows,
@@ -114,8 +154,11 @@ export async function loadSitemapData() {
     siteSlugs,
     blogPostSlugs,
     serviceSlugs,
-    staticLastModified,
-    areaLastModMap,
+    staticPageLastMod,
+    serviceHubLastMod,
+    categoryLastMod,
+    areaLastMod,
+    serviceCityLastMod,
     nativeKeysBySlug: new Map(blogPostRows.map(r => [r.slug, new Set(r.nativeContentKeys ?? [])])),
   };
 }
