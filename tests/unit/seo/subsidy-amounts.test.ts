@@ -196,3 +196,18 @@ describe('the translated rebate wording keeps rebate amounts in every locale', (
     expect(isSubsidyText('ਛੋਟਾ ਬਾਥਰੂਮ')).toBe(false);
   });
 });
+
+// Task 136 keep-check on 9ec5e0c6: two insurance lines were lost (main 4795870b text, verbatim).
+describe('insurance lines found lost by the keep-check stay', () => {
+  it('zh /services/realtor/ (DB list item): "$500万CGL责任险" — the 万 after the matched amount counts', () => {
+    const md = '## 为什么选择Reno Stars\n\n- 在大温哥华超过20年装修经验\n- $500万CGL责任险 + 有效WCB覆盖\n- 固定合同报价，无隐藏费用';
+    expect(stripPriceCopy(md)).toBe(md);
+  });
+  it('pa /areas/port-coquitlam/: "$5M ਬੀਮੇ" (oblique form of ਬੀਮਾ) is insurance', () => {
+    const s = 'Citadel Heights ਅਤੇ Oxford Heights ਤੋਂ ਮੈਰੀ ਹਿੱਲ ਅਤੇ ਸ਼ੌਗਨੇਸੀ ਗੇਟ ਤੱਕ, ਅਸੀਂ $5M ਬੀਮੇ ਅਤੇ 3-ਸਾਲ ਦੀ ਵਾਰੰਟੀ ਦੁਆਰਾ ਸਮਰਥਤ ਗੁਣਵੱਤਾ ਵਾਲੀ ਕਾਰੀਗਰੀ ਪ੍ਰਦਾਨ ਕਰਦੇ ਹਾਂ।';
+    expect(stripPriceCopy(s)).toBe(s);
+  });
+  it('a sub-million 万 amount next to "CGL 保险" is still a price', () => {
+    expect(hasPriceCopy('厨房装修约 $30万 起，含 CGL 保险')).toBe(true);
+  });
+});

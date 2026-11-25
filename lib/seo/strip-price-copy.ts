@@ -34,7 +34,7 @@ const INSURANCE = new RegExp(
     'seguro', 'asegura', 'cobertura',                   // es
     'assur', 'responsabilit', 'couverture',             // fr (assuré / assurés / assurance)
     'bảo hiểm', 'страх', 'تأمين', 'مؤمن', 'بیمه',        // vi / ru / ar / fa
-    'बीमा', 'सीजीएल', 'कवरेज', 'ਬੀਮਾ', 'ਬੀਮਿ', 'ਕਵਰੇਜ',   // hi / pa
+    'बीमा', 'बीमे', 'सीजीएल', 'कवरेज', 'ਬੀਮਾ', 'ਬੀਮੇ', 'ਬੀਮਿ', 'ਕਵਰੇਜ',   // ਬੀਮੇ / बीमे: oblique form   // hi / pa
     'nakaseguro', 'siguro', 'assicura',                  // tl / it-style
     // plain "liability" — near a MILLION-sized amount only (see MILLION_WINDOW):
     // trust stats like "500 万加元 责任+工资赔偿金" ("$5M liability + WCB").
@@ -58,7 +58,11 @@ function isMillionLevel(text: string, end: number, match: string): boolean {
   if (/[0-9٠-٩۰-۹]\s?[Mm](?![A-Za-z])/.test(match)) return true;
   if (MILLION_WORD.test(text.slice(end, end + 14))) return true;
   const wan = /([0-9][0-9,.]*)\s?(?:万|萬|만)/.exec(match);
-  return !!wan && parseFloat(wan[1].replace(/,/g, '')) >= 100;
+  if (wan) return parseFloat(wan[1].replace(/,/g, '')) >= 100;
+  // "$500万CGL责任险": the amount match can stop before the 万 that follows it
+  const nums = match.match(NUMBER) ?? [];
+  return nums.length === 1 && /^\s?(?:万|萬|만)/.test(text.slice(end, end + 3)) &&
+    parseFloat(nums[0].replace(/,/g, '')) >= 100;
 }
 
 interface Hit { start: number; end: number }
