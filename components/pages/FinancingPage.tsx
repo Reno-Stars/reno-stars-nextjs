@@ -169,7 +169,7 @@ export default function FinancingPage({ locale: _locale }: FinancingPageProps) {
             ].map((stat) => (
               <div
                 key={stat.label}
-                className="rounded-xl p-4 text-center min-w-[10rem]"
+                className="rounded-xl p-4 text-center"
                 style={{ backgroundColor: CARD, boxShadow: neu() }}
               >
                 <div
