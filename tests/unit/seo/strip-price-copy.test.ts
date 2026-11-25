@@ -212,3 +212,13 @@ describe('clause cuts never remove an insurance clause', () => {
   });
 });
 
+describe('French insured wording (regression: /fr/areas/* meta)', () => {
+  it.each([
+    'Burke Mountain à Westwood Plateau. 5 M$ assurés, devis gratuits.',
+    'Matériaux de qualité côtière, assuré 5 M$, garantie 3 ans. Estimations gratuites.',
+  ])('keeps %s', (s) => {
+    expect(hasPriceCopy(s)).toBe(false);
+    expect(stripPriceProse(s)).toBe(s);
+  });
+});
+

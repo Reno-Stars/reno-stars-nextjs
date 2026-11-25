@@ -32,7 +32,7 @@ const INSURANCE = new RegExp(
     'CGL', 'liabilit', 'insur', 'coverage',            // en
     '保险', '保險', '保険', '보험', '責任險', '责任险', '保额', '保額', '投保', '보장',   // zh / zh-Hant / ja / ko
     'seguro', 'asegura', 'cobertura',                   // es
-    'assuran', 'responsabilit', 'couverture',           // fr
+    'assur', 'responsabilit', 'couverture',             // fr (assuré / assurés / assurance)
     'bảo hiểm', 'страх', 'تأمين', 'مؤمن', 'بیمه',        // vi / ru / ar / fa
     'बीमा', 'सीजीएल', 'कवरेज', 'ਬੀਮਾ', 'ਬੀਮਿ', 'ਕਵਰੇਜ',   // hi / pa
     'nakaseguro', 'siguro', 'assicura',                  // tl / it-style
