@@ -122,7 +122,7 @@ const CLAUSE_SEP = /[，;；،]|,(?![0-9])/g;
  */
 const SUBSIDY_PHRASE = new RegExp(
   String.raw`(?<![\p{L}])(?:up to|additional|extra|offsets?|combined|stack|hasta|adicional(?:es)?|jusqu|suppl[ée]mentaires?|до|дополнительн\p{L}*|tối đa|tới|thêm|hanggang|karagdagang|plus|تا|إضافية?|اضافی|تصل إلى|يصل إلى)(?![\p{L}])` +
-  '|最高|高达|高達|额外|額外|可抵|抵扣|合计|合計|最大|まで|さらに|追加|최대|추가|تا سقف|ما يصل إلى|तक|अतिरिक्त|ਤੱਕ|ਵਾਧੂ',
+  '|最高|高达|高達|额外|額外|可抵|抵扣|合计|合計|最大|まで|さらに|追加|최대|최고|추가|تا سقف|ما يصل إلى|तक|अतिरिक्त|ਤੱਕ|ਵਾਧੂ',
   'iu',
 );
 

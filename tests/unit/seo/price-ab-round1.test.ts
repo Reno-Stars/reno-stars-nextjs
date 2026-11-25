@@ -63,6 +63,10 @@ describe('rebate totals', () => {
     const a = 'تقدم BC Hydro منحة تصل إلى 3,000 دولار. الإجمالي يصل إلى 11,000 دولار.';
     expect(stripPriceProse(a)).toBe(a);
   });
+  it('ko "합계 최고 $11,000" total after a rebate sentence stays', () => {
+    const a = 'BC Hydro 리베이트는 최대 $3,000입니다. 합계 최고 $11,000입니다.';
+    expect(stripPriceProse(a)).toBe(a);
+  });
   it('en "grants up to … plus … combined up to" stays whole', () => {
     const a = 'Federal grants up to $5,000 plus $3,000 from BC Hydro, combined up to $11,000.';
     expect(stripPriceProse(a)).toBe(a);
