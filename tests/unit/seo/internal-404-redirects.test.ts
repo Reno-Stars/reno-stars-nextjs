@@ -107,10 +107,10 @@ describe('prototype-safe lookup', () => {
     }
   });
 
-  it('every one of the 124 real entries still redirects exactly as before', async () => {
+  it('every real entry (124 from #410 + 9 legacy projects) redirects exactly as listed', async () => {
     const { DEAD_LINK_REDIRECTS, deadLinkRedirectPath } = await import('@/lib/seo/dead-link-redirects');
     const entries = Object.entries(DEAD_LINK_REDIRECTS);
-    expect(entries).toHaveLength(124);
+    expect(entries).toHaveLength(133);
     for (const [from, to] of entries) {
       expect(deadLinkRedirectPath(`/en/${from}/`), from).toBe(`/en/${to}/`);
     }
