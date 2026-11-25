@@ -1,11 +1,10 @@
 /**
  * Per-URL `<lastmod>` overrides for the service×city sitemap section.
  *
- * The section's default lastmod is `areaLastModMap.get(area.slug)` — the latest
- * project `updated_at` in that CITY — so every service and every locale for one
- * city shares a single timestamp (Surrey / West Vancouver / Langley all carry
- * 2026-06-02T07:37:24.452Z, Maple Ridge 2026-06-24T03:04:12.252Z). That value is
- * a project-catalogue stamp, not the date the page itself last changed.
+ * (History: until 2026-11-24 the section's default lastmod was the latest
+ * project `updated_at` in the CITY, shared by every service and locale for that
+ * city. Since DI-12 #2 the default is the page's own inputs — see
+ * `serviceCityLastMod` in data.ts — and test A is frozen below.)
  *
  * For the zh-Hant URLs below, GSC shows Google last crawled them 2026-07-11 to
  * 2026-08-01, BEFORE the pages actually changed, and the shared stamp predates
@@ -44,3 +43,34 @@ export const SERVICE_CITY_LASTMOD_OVERRIDES: Readonly<Record<string, string>> = 
 export function serviceCityLastModKey(locale: string, serviceSlug: string, areaSlug: string): string {
   return `${locale}/services/${serviceSlug}/${areaSlug}`;
 }
+
+/**
+ * TEST A — FROZEN until the experiment is read out (DI-12 #2, 2026-11-24).
+ * 「测试 A 冻结至读数后统一」
+ *
+ * The 14 service×city URLs of SEO test A (experiment + control pairs) keep the
+ * exact <lastmod> they carried in the live sitemap on 2026-11-24 15:46 PT, so the
+ * lastmod policy change cannot alter how Google recrawls the experiment's pages.
+ * Values are copied verbatim from that snapshot
+ * (dev_queue 113_spec/testA_lastmod_before.csv). They were derived from
+ * project timestamps, so without this freeze they would keep moving.
+ *
+ * These win over every other source, including SERVICE_CITY_LASTMOD_OVERRIDES.
+ * Remove the whole block in one change after test A is read out.
+ */
+export const TEST_A_FROZEN_LASTMOD: Readonly<Record<string, string>> = {
+  'en/services/kitchen/richmond': '2026-11-16T19:54:08.573Z',
+  'en/services/kitchen/delta': '2026-10-21T01:14:25.669Z',
+  'en/services/kitchen/coquitlam': '2026-08-08T01:22:30.955Z',
+  'en/services/kitchen/north-vancouver': '2026-08-08T01:22:30.955Z',
+  'en/services/basement/north-vancouver': '2026-08-08T01:22:30.955Z',
+  'en/services/basement/burnaby': '2026-10-21T19:41:54.209Z',
+  'en/services/basement/langley': '2026-06-02T07:37:24.452Z',
+  'en/services/basement/port-moody': '2026-11-16T20:49:55.487Z',
+  'en/services/cabinet/delta': '2026-10-21T01:14:25.669Z',
+  'en/services/cabinet/port-moody': '2026-11-16T20:49:55.487Z',
+  'en/services/bathroom/port-coquitlam': '2026-11-16T20:49:55.487Z',
+  'en/services/bathroom/white-rock': '2026-11-16T20:49:55.487Z',
+  'en/services/heat-pump-hvac/port-moody': '2026-11-16T20:49:55.487Z',
+  'en/services/critical-load-panel/langley': '2026-06-02T07:37:24.452Z',
+};

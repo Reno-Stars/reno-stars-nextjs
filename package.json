@@ -28,6 +28,7 @@
     "typecheck": "tsc --noEmit",
     "site-visit:sync": "node scripts/sync-site-visit-catalog.mjs",
     "site-visit:check": "node scripts/sync-site-visit-catalog.mjs --check",
+    "sitemap:lastmod": "node scripts/sitemap-static-lastmod.mjs",
     "db:generate": "drizzle-kit generate",
     "db:migrate": "drizzle-kit migrate",
     "db:push": "drizzle-kit push",

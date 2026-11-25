@@ -60,14 +60,12 @@ export const STATIC_PAGES: { path: string; priority: number; changeFrequency: 'w
     ? [{ path: '/awards', priority: PRIORITY.secondary, changeFrequency: CHANGEFREQ.yearly }]
     : []),
   { path: '/careers',                                        priority: PRIORITY.secondary, changeFrequency: CHANGEFREQ.monthly },
-  // High-intent "near me" landing pages — full metadata + Service/FAQ schema,
-  // indexable, but were absent from the sitemap (crawlers found them via
-  // internal links only).
+  // High-intent "near me" landing page — self-canonical, indexable.
+  // The four room pages (/kitchen-, /bathroom-, /basement-, /whole-house-renovation-near-me)
+  // were REMOVED from the sitemap on 2026-11-24 (DI-12 #2): their canonical points at
+  // /services/<room>/, so listing them sent "submitted URL is not canonical" to Search
+  // Console. The pages themselves are unchanged and still served.
   { path: '/renovation-near-me',                             priority: PRIORITY.secondary, changeFrequency: CHANGEFREQ.monthly },
-  { path: '/kitchen-renovation-near-me',                     priority: PRIORITY.secondary, changeFrequency: CHANGEFREQ.monthly },
-  { path: '/bathroom-renovation-near-me',                    priority: PRIORITY.secondary, changeFrequency: CHANGEFREQ.monthly },
-  { path: '/basement-renovation-near-me',                    priority: PRIORITY.secondary, changeFrequency: CHANGEFREQ.monthly },
-  { path: '/whole-house-renovation-near-me',                 priority: PRIORITY.secondary, changeFrequency: CHANGEFREQ.monthly },
   { path: '/before-after',                                   priority: PRIORITY.hub,       changeFrequency: CHANGEFREQ.monthly },
   { path: '/privacy',                                        priority: PRIORITY.secondary, changeFrequency: CHANGEFREQ.yearly },
   { path: '/terms',                                          priority: PRIORITY.secondary, changeFrequency: CHANGEFREQ.yearly },

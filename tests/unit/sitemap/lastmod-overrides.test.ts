@@ -1,11 +1,11 @@
 import { describe, it, expect, vi } from 'vitest';
 
 /**
- * The service×city sitemap section's default lastmod is a per-CITY project
- * stamp shared by every service and locale in that city. The override table
- * exists to move ONE URL's lastmod without touching its en / zh siblings or any
- * other city. These tests pin exactly that: an override changes the keyed URL
- * only, and every key is well-formed so a typo cannot silently become a no-op.
+ * The service×city section's default lastmod is the page's own inputs (service
+ * row, area row, projects of that service in that city — DI-12 #2). The override
+ * table moves ONE URL's lastmod without touching its en / zh siblings or any
+ * other city, and the test-A table freezes 14 URLs. These tests pin exactly
+ * that, and that every key is well-formed so a typo cannot become a no-op.
  */
 
 const LOCALES = ['en', 'zh', 'zh-Hant', 'ja'] as const;
@@ -25,10 +25,11 @@ vi.mock('@/lib/blog-dates', () => ({
 }));
 
 const CITY_STAMP = new Date('2026-06-02T07:37:24.452Z');
+const SERVICE_ROW = new Date('2026-03-01T00:00:00.000Z');
 vi.mock('@/lib/db/queries', () => ({
   getProjectSlugsFromDb: async () => [
-    { slug: 'p-surrey', updatedAt: CITY_STAMP, heroImageUrl: null, locationCity: 'Surrey' },
-    { slug: 'p-langley', updatedAt: CITY_STAMP, heroImageUrl: null, locationCity: 'Langley' },
+    { slug: 'p-surrey', updatedAt: CITY_STAMP, heroImageUrl: null, locationCity: 'Surrey', serviceType: 'kitchen' },
+    { slug: 'p-langley', updatedAt: CITY_STAMP, heroImageUrl: null, locationCity: 'Langley', serviceType: 'kitchen' },
   ],
   getSiteSlugsFromDb: async () => [],
   getBlogPostSlugsFromDb: async () => [],
@@ -42,6 +43,11 @@ vi.mock('@/lib/db/queries', () => ({
     { slug: 'critical-load-panel', showOnServicesPage: true },
   ],
   getVideoWatchEntriesFromDb: async () => [],
+  getServiceDatesForSitemap: async () => [
+    { slug: 'kitchen', updatedAt: SERVICE_ROW },
+    { slug: 'critical-load-panel', updatedAt: SERVICE_ROW },
+  ],
+  getServiceAreaDatesForSitemap: async () => [],
 }));
 
 const lastmodOf = (entries: { url: string; lastModified?: string | Date }[], path: string) => {
@@ -63,7 +69,7 @@ describe('service×city lastmod overrides', () => {
     }
   });
 
-  it('moves only the keyed URL; sibling locales and other cities keep the city stamp', async () => {
+  it('moves only the keyed URL; siblings keep their own-input date; test A stays frozen', async () => {
     const { buildSitemapFile } = await import('@/lib/sitemap/sections');
     const entries = (await buildSitemapFile('service-areas-0'))!;
     expect(entries).toHaveLength(2 * 2 * 3);
@@ -72,20 +78,22 @@ describe('service×city lastmod overrides', () => {
     expect(lastmodOf(entries, 'zh-Hant/services/kitchen/surrey')).toBe('2026-09-24T23:23:15.000Z');
     expect(lastmodOf(entries, 'zh-Hant/services/critical-load-panel/langley')).toBe('2026-09-24T23:23:15.000Z');
 
-    // Same page, other locales: untouched. en/critical-load-panel/langley is a
-    // test-A CONTROL page and must keep the shared stamp.
+    // en/critical-load-panel/langley is a test-A CONTROL page: frozen value.
+    expect(lastmodOf(entries, 'en/services/critical-load-panel/langley')).toBe('2026-06-02T07:37:24.452Z');
+
+    // Same page, other locales / same city other service: the page's OWN inputs.
+    // kitchen has a project in Surrey and Langley (CITY_STAMP, later than the
+    // service row); critical-load-panel has none, so only its service row counts.
+    for (const path of ['en/services/kitchen/surrey', 'zh/services/kitchen/surrey', 'zh-Hant/services/kitchen/langley']) {
+      expect(lastmodOf(entries, path), path).toBe(CITY_STAMP.toISOString());
+    }
     for (const path of [
-      'en/services/kitchen/surrey',
-      'zh/services/kitchen/surrey',
-      'en/services/critical-load-panel/langley',
       'zh/services/critical-load-panel/langley',
-      // Same city, a service with no override: untouched in every locale.
       'en/services/critical-load-panel/surrey',
       'zh/services/critical-load-panel/surrey',
       'zh-Hant/services/critical-load-panel/surrey',
-      'zh-Hant/services/kitchen/langley',
     ]) {
-      expect(lastmodOf(entries, path), path).toBe(CITY_STAMP.toISOString());
+      expect(lastmodOf(entries, path), path).toBe(SERVICE_ROW.toISOString());
     }
   });
 });

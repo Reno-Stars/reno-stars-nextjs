@@ -192,10 +192,11 @@ export async function getAllProjectsAdmin() {
 // cachedQuery: a 300s-cached slug list was tried (2026-07-03) and a stale entry
 // dropped a live blog from the sitemap after a restart. Sitemap traffic is
 // crawler-only + low volume, so the per-request DB read is negligible.
-export async function getProjectSlugsFromDb(): Promise<{ slug: string; updatedAt: Date | null; locationCity: string | null; heroImageUrl: string | null }[]> {
+export async function getProjectSlugsFromDb(): Promise<{ slug: string; updatedAt: Date | null; locationCity: string | null; heroImageUrl: string | null; serviceType: string | null }[]> {
   return uncachedQuery('getProjectSlugsFromDb', async () => {
     const rows = await db
-      .select({ slug: projectsTable.slug, updatedAt: projectsTable.updatedAt, locationCity: projectsTable.locationCity, heroImageUrl: projectsTable.heroImageUrl })
+      // serviceType: sitemap-only consumer (per-category / per-service lastmod).
+      .select({ slug: projectsTable.slug, updatedAt: projectsTable.updatedAt, locationCity: projectsTable.locationCity, heroImageUrl: projectsTable.heroImageUrl, serviceType: projectsTable.serviceType })
       .from(projectsTable)
       .where(eq(projectsTable.isPublished, true));
     return rows;

@@ -3,7 +3,7 @@ import { locales, INDEXABLE_LEAF_LOCALES, INDEXABLE_SERVICE_CITY_LOCALES } from 
 import { getBaseUrl } from '@/lib/utils';
 import { PRIORITY, CHANGEFREQ, STATIC_PAGES, COST_GUIDE_BLOG_SLUGS } from './config';
 import { loadSitemapData, nativeLocalesFor, type SitemapData } from './data';
-import { SERVICE_CITY_LASTMOD_OVERRIDES, serviceCityLastModKey } from './lastmod-overrides';
+import { SERVICE_CITY_LASTMOD_OVERRIDES, TEST_A_FROZEN_LASTMOD, serviceCityLastModKey } from './lastmod-overrides';
 
 /**
  * The sitemap, split into an index plus per-section files.
@@ -18,6 +18,19 @@ import { SERVICE_CITY_LASTMOD_OVERRIDES, serviceCityLastModKey } from './lastmod
  * `tests/unit/sitemap/sections.test.ts` asserts the union of every file equals
  * what a single combined build produces, so a section can never silently drop
  * URLs the old sitemap carried.
+ *
+ * <lastmod> (DI-12 #2, 2026-11-24): each URL carries its OWN content date —
+ *   pages          git date of the page's code + copy (static-page-lastmod.json),
+ *                  or later rows for pages that list rows (home, /projects, /blog…)
+ *   services       the service row + the newest project of that service
+ *   service-areas  TEST A frozen → 9 zh-Hant overrides → service row, area row and
+ *                  projects of that service in that city
+ *   project-hubs   newest project in the category
+ *   projects       the project's / site's own updated_at
+ *   blog           honest blog date (lib/blog-dates.ts)
+ *   areas          the area row + newest project in that city
+ *   videos         the video's own updated_at
+ * No date → the entry has no <lastmod>. Never a site-wide value, never "now".
  */
 
 const BASE_URL = getBaseUrl();
@@ -56,13 +69,13 @@ interface PathEntry {
   lastModified?: string;
 }
 
-function expandPaths(items: PathEntry[], fallbackLastMod: string): MetadataRoute.Sitemap {
+function expandPaths(items: PathEntry[]): MetadataRoute.Sitemap {
   const entries: MetadataRoute.Sitemap = [];
   for (const { path, priority, changeFrequency, lastModified } of items) {
     for (const locale of locales) {
       entries.push({
         url: `${BASE_URL}/${locale}${path}/`,
-        lastModified: lastModified ?? fallbackLastMod,
+        ...(lastModified && { lastModified }),
         alternates: buildAlternates(path),
         priority,
         changeFrequency,
@@ -87,7 +100,8 @@ export const SECTIONS: Section[] = [
   {
     id: 'pages',
     items: () => STATIC_PAGES,
-    build: (d, slice) => expandPaths(slice as PathEntry[], d.staticLastModified),
+    build: (d, slice) =>
+      expandPaths((slice as PathEntry[]).map((p) => ({ ...p, lastModified: d.staticPageLastMod(p.path) }))),
   },
   {
     id: 'services',
@@ -98,8 +112,8 @@ export const SECTIONS: Section[] = [
           path: `/services/${slug}`,
           priority: PRIORITY.serviceLeaf,
           changeFrequency: CHANGEFREQ.monthly,
+          lastModified: d.serviceHubLastMod(slug),
         })),
-        d.staticLastModified,
       ),
   },
   {
@@ -115,14 +129,15 @@ export const SECTIONS: Section[] = [
       for (const slug of slice as string[]) {
         for (const area of d.serviceAreas) {
           for (const locale of SERVICE_CITY_LOCALES) {
+            const key = serviceCityLastModKey(locale, slug, area.slug);
+            // Test A frozen first, then the per-URL overrides (lastmod-overrides.ts),
+            // then the page's own inputs. No input dated → no <lastmod>.
+            const lastModified = TEST_A_FROZEN_LASTMOD[key]
+              ?? SERVICE_CITY_LASTMOD_OVERRIDES[key]
+              ?? d.serviceCityLastMod(slug, area.slug);
             entries.push({
               url: `${BASE_URL}/${locale}/services/${slug}/${area.slug}/`,
-              // Per-URL override first (see lastmod-overrides.ts), then the
-              // city's latest project stamp, then the site-wide fallback.
-              lastModified:
-                SERVICE_CITY_LASTMOD_OVERRIDES[serviceCityLastModKey(locale, slug, area.slug)]
-                ?? d.areaLastModMap.get(area.slug)
-                ?? d.staticLastModified,
+              ...(lastModified && { lastModified }),
               alternates: buildAlternates(`/services/${slug}/${area.slug}`, SERVICE_CITY_LOCALES),
               priority: PRIORITY.serviceArea,
               changeFrequency: CHANGEFREQ.monthly,
@@ -144,7 +159,8 @@ export const SECTIONS: Section[] = [
         changeFrequency: CHANGEFREQ.monthly,
       })),
     ],
-    build: (d, slice) => expandPaths(slice as PathEntry[], d.staticLastModified),
+    build: (d, slice) =>
+      expandPaths((slice as PathEntry[]).map((p) => ({ ...p, lastModified: d.categoryLastMod(p.path.slice('/projects/'.length)) }))),
   },
   {
     // Project and site leaves. Minor locales are dropped for the same reason as
@@ -163,11 +179,11 @@ export const SECTIONS: Section[] = [
       const entries: MetadataRoute.Sitemap = [];
       for (const { slug, kind } of slice as { slug: string; kind: 'project' | 'site' }[]) {
         const image = kind === 'project' ? d.projectImageMap.get(slug) : d.siteImageMap.get(slug);
-        const dateMap = kind === 'project' ? d.projectDateMap : d.siteDateMap;
+        const lastModified = (kind === 'project' ? d.projectDateMap : d.siteDateMap).get(slug);
         for (const locale of PROJECT_LEAF_LOCALES) {
           entries.push({
             url: `${BASE_URL}/${locale}/projects/${slug}/`,
-            lastModified: dateMap.get(slug) ?? d.now,
+            ...(lastModified && { lastModified }),
             alternates: buildAlternates(`/projects/${slug}`),
             priority: PRIORITY.projectLeaf,
             changeFrequency: CHANGEFREQ.yearly,
@@ -192,10 +208,11 @@ export const SECTIONS: Section[] = [
         const nativeKeys = d.nativeKeysBySlug.get(slug) ?? new Set<string>();
         const nativeLocales = nativeLocalesFor(nativeKeys, locales);
         const alternates = buildAlternates(`/blog/${slug}`, nativeLocales);
+        const lastModified = d.blogDateMap.get(slug);
         for (const locale of nativeLocales) {
           entries.push({
             url: `${BASE_URL}/${locale}/blog/${slug}/`,
-            lastModified: d.blogDateMap.get(slug) ?? d.now,
+            ...(lastModified && { lastModified }),
             alternates,
             priority: isCostGuide ? PRIORITY.guide : PRIORITY.blog,
             changeFrequency: CHANGEFREQ.monthly,
@@ -215,9 +232,8 @@ export const SECTIONS: Section[] = [
           path: `/areas/${area.slug}`,
           priority: PRIORITY.area,
           changeFrequency: CHANGEFREQ.monthly,
-          lastModified: d.areaLastModMap.get(area.slug) ?? d.staticLastModified,
+          lastModified: d.areaLastMod(area.slug),
         })),
-        d.staticLastModified,
       ),
   },
   {
@@ -233,7 +249,7 @@ export const SECTIONS: Section[] = [
           const isZh = locale === 'zh';
           entries.push({
             url: `${BASE_URL}/${locale}/videos/${v.slug}/`,
-            lastModified: (v.updatedAt ?? new Date()).toISOString(),
+            ...(v.updatedAt && { lastModified: v.updatedAt.toISOString() }),
             alternates: buildAlternates(`/videos/${v.slug}`, [...PROJECT_LEAF_LOCALES]),
             priority: PRIORITY.projectLeaf,
             changeFrequency: CHANGEFREQ.yearly,
@@ -242,7 +258,8 @@ export const SECTIONS: Section[] = [
               thumbnail_loc: v.thumbnailUrl,
               description: (isZh ? v.descriptionZh : v.descriptionEn) || (isZh ? v.titleZh : v.titleEn),
               content_loc: v.videoUrl,
-              publication_date: (v.uploadDate ?? new Date()).toISOString(),
+              // No upload date → omit the tag rather than claim "published now".
+              ...(v.uploadDate && { publication_date: v.uploadDate.toISOString() }),
             }],
           });
         }
@@ -266,16 +283,33 @@ function pageCount(length: number): number {
   return Math.max(1, Math.ceil(length / CHUNK));
 }
 
-/** Every sitemap file that currently exists, in index order. */
+/** The latest <lastmod> among a file's entries; undefined when none carries one. */
+export function maxLastMod(entries: MetadataRoute.Sitemap): string | undefined {
+  let best: string | undefined;
+  for (const e of entries) {
+    const v = e.lastModified instanceof Date ? e.lastModified.toISOString() : e.lastModified;
+    if (v && (!best || v > best)) best = v;
+  }
+  return best;
+}
+
+/**
+ * Every sitemap file that currently exists, in index order, each with the
+ * latest <lastmod> of the URLs it contains (deterministic; omitted when none of
+ * its URLs carries one). Files are built one at a time and discarded, so the
+ * memory bound that motivated the split still holds.
+ */
 export async function listSitemapFiles(
   data?: SitemapData,
-): Promise<{ file: string; lastModified: string }[]> {
+): Promise<{ file: string; lastModified?: string }[]> {
   const d = data ?? (await loadSitemapData());
-  const files: { file: string; lastModified: string }[] = [];
+  const files: { file: string; lastModified?: string }[] = [];
   for (const section of SECTIONS) {
-    const count = pageCount(section.items(d).length);
+    const items = section.items(d);
+    const count = pageCount(items.length);
     for (let page = 0; page < count; page++) {
-      files.push({ file: `${section.id}-${page}`, lastModified: d.staticLastModified });
+      const lastModified = maxLastMod(section.build(d, items.slice(page * CHUNK, (page + 1) * CHUNK)));
+      files.push({ file: `${section.id}-${page}`, ...(lastModified && { lastModified }) });
     }
   }
   return files;
