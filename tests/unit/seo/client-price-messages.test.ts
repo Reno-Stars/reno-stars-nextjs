@@ -41,3 +41,28 @@ describe('nearMe client messages are price-free (all locales)', () => {
     expect(s).toContain('messages={stripClientPrices(pickMessages(');
   });
 });
+
+describe('NearMePage gets area LINKS only, never full service-area rows (task 136)', () => {
+  it('nearMeAreaLinks keeps slug + name and drops everything else', async () => {
+    const { nearMeAreaLinks } = await import('@/lib/seo/client-price-messages');
+    const row = {
+      slug: 'vancouver', name: { en: 'Vancouver', zh: '温哥华' },
+      content: { en: 'Kitchen renovations from $14,000 to $72,000.' }, description: { en: '$25K–$80K' },
+    };
+    const out = nearMeAreaLinks([row]);
+    expect(out).toEqual([{ slug: 'vancouver', name: { en: 'Vancouver', zh: '温哥华' } }]);
+    expect(JSON.stringify(out)).not.toMatch(/\$/);
+  });
+
+  it.each(['kitchen', 'bathroom', 'basement', 'whole-house', ''])('%s-near-me route passes nearMeAreaLinks(areas)', (v) => {
+    const s = readFileSync(`app/[locale]/${v ? `${v}-` : ''}renovation-near-me/page.tsx`, 'utf8');
+    expect(s).toContain('areas={nearMeAreaLinks(areas)}');
+    expect(s).not.toContain('areas={areas}');
+  });
+
+  it('NearMePage props are typed as links, not ServiceArea rows', () => {
+    const s = readFileSync('components/pages/NearMePage.tsx', 'utf8');
+    expect(s).toContain('areas: NearMeAreaLink[];');
+    expect(s).not.toMatch(/areas: ServiceArea\[\]/);
+  });
+});

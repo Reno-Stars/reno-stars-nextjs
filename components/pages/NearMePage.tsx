@@ -8,7 +8,7 @@ import OptimizedImage from "@/components/OptimizedImage";
 import ShareBar from "@/components/share/ShareBar";
 import type { Locale } from "@/i18n/config";
 import type { ShareContext } from "@/lib/share/types";
-import type { ServiceArea } from "@/lib/types";
+import type { NearMeAreaLink } from "@/lib/seo/client-price-messages";
 import {
   NAVY,
   GOLD,
@@ -46,7 +46,7 @@ export interface NearbyProject {
 
 interface Props {
   locale: Locale;
-  areas: ServiceArea[];
+  areas: NearMeAreaLink[];
   /** Service-specific H1 override. If provided, replaces the generic
    *  t("hero.h1") text so each near-me sub-page targets a distinct
    *  service query rather than duplicating "Looking for a renovation

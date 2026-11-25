@@ -1,5 +1,6 @@
 import { Metadata } from 'next';
 import { filterPriceFaqs, stripPriceTitle, stripPriceProse } from '@/lib/seo/strip-price-copy';
+import { nearMeAreaLinks } from '@/lib/seo/client-price-messages';
 import { getTranslations, setRequestLocale } from 'next-intl/server';
 import { ogLocaleMap, type Locale } from '@/i18n/config';
 import NearMePage from '@/components/pages/NearMePage';
@@ -111,7 +112,7 @@ export default async function Page({ params }: PageProps) {
       />
       <NearMePage
         locale={locale as Locale}
-        areas={areas}
+        areas={nearMeAreaLinks(areas)}
         googleRating={googleReviews.rating}
         reviewCount={googleReviews.userRatingCount}
         share={{ url: shareUrl, title: meta.title, imageUrl: meta.ogImage }}

@@ -18,3 +18,18 @@ export function stripClientPrices(picked: Record<string, unknown>): Record<strin
   }
   return out;
 }
+
+/** The only area fields NearMePage renders: a link (slug) and its label (name). */
+export interface NearMeAreaLink {
+  slug: string;
+  name: Record<string, string> & { en: string };
+}
+
+/**
+ * Project service-area rows down to link data BEFORE they reach the client
+ * NearMePage. Passing the full rows serialized every area's long content, in
+ * all 14 locales, into the RSC payload (~1 MB, with renovation prices).
+ */
+export function nearMeAreaLinks(areas: ReadonlyArray<{ slug: string; name: NearMeAreaLink['name'] }>): NearMeAreaLink[] {
+  return areas.map(({ slug, name }) => ({ slug, name }));
+}

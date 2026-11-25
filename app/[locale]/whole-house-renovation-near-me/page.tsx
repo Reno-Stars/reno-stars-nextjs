@@ -1,5 +1,6 @@
 import { Metadata } from 'next';
 import { filterPriceFaqs } from '@/lib/seo/strip-price-copy';
+import { nearMeAreaLinks } from '@/lib/seo/client-price-messages';
 import { getTranslations, setRequestLocale } from 'next-intl/server';
 import { ogLocaleMap, type Locale } from '@/i18n/config';
 import NearMePage from '@/components/pages/NearMePage';
@@ -93,7 +94,7 @@ export default async function Page({ params }: PageProps) {
       />
       <NearMePage
         locale={locale as Locale}
-        areas={areas}
+        areas={nearMeAreaLinks(areas)}
         h1Override={isZh ? '附近全屋翻新 — Metro Vancouver' : 'Whole-House Renovation Near Me in Metro Vancouver'}
         googleRating={googleReviews.rating}
         reviewCount={googleReviews.userRatingCount}
