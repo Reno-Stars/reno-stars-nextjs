@@ -398,3 +398,33 @@ describe('task 153c: Japanese 「が、」 is a clause break — the rebate clau
     expect(stripPriceProse(s)).toBe(s);
   });
 });
+
+describe('task 153c: a meta that falls back to a price-free source keeps its insurance claim', () => {
+  it.each([
+    [
+      'Bathroom renovation Burnaby: $18K–$35K. Kitchen $25K–$55K, basement $30K–$80K. $5M insured. Metrotown, Brentwood. Free quote.',
+      'Trusted kitchen, bathroom, and whole-house renovations for Burnaby homes, condos, and townhouses.',
+      'Trusted kitchen, bathroom, and whole-house renovations for Burnaby homes, condos, and townhouses. $5M insured.',
+    ],
+    [
+      'Bathroom renovation West Vancouver from $35K–$60K+, plus kitchen &amp; whole-house builds. British Properties, Ambleside. 3-yr warranty. $5M insured. Free quote.',
+      'Luxury kitchen and bathroom renovations in West Vancouver, designed for upscale waterfront and hillside homes.',
+      'Luxury kitchen and bathroom renovations in West Vancouver, designed for upscale waterfront and hillside homes. $5M insured.',
+    ],
+    [
+      '列治文浴室装修$12K–$45K。展厅Gordon Way 21300号，英粤普双语服务。Steveston，Brighouse，City Centre。$500万保险，免费报价。',
+      'Richmond 值得信赖的装修团队，负责公寓和住宅的厨房、浴室以及全屋改造。',
+      'Richmond 值得信赖的装修团队，负责公寓和住宅的厨房、浴室以及全屋改造。$500万保险，免费报价。',
+    ],
+  ])('%s', (meta, desc, want) => {
+    const out = firstIntactText([meta, desc], 'x');
+    expect(out).toBe(want);
+    expect(hasPriceCopy(out)).toBe(false);
+  });
+  it('no insurance in the priced meta → the fallback is unchanged', () => {
+    expect(firstIntactText(['Kitchens from $20K. Call us.', 'Trusted renovations.'], 'x')).toBe('Trusted renovations.');
+  });
+  it('an intact first candidate is returned as is', () => {
+    expect(firstIntactText(['$5M insured. Free quote.', 'b'], 'x')).toBe('$5M insured. Free quote.');
+  });
+});

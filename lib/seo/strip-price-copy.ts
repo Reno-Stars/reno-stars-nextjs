@@ -704,8 +704,25 @@ export function firstIntactText(
   candidates: ReadonlyArray<string | null | undefined>,
   fallback: string,
 ): string {
-  const intact = candidates.find((c) => c && c.trim() && !hasPriceCopy(c));
-  return intact ?? firstPriceFree(stripPriceProse, candidates, fallback);
+  const at = candidates.findIndex((c) => c && c.trim() && !hasPriceCopy(c));
+  if (at < 0) return firstPriceFree(stripPriceProse, candidates, fallback);
+  return withInsuranceOf(candidates[at] as string, candidates.slice(0, at));
+}
+
+/**
+ * The insurance claim of a priced source that was passed over ("… $5M insured. Free quote.") rides
+ * along on the price-free text that replaced it — insurance is ALWAYS KEEP (task 153c).
+ */
+function withInsuranceOf(chosen: string, skipped: ReadonlyArray<string | null | undefined>): string {
+  if (hasInsuranceAmount(chosen)) return chosen;
+  const source = skipped.find((c) => hasInsuranceAmount(c));
+  if (!source) return chosen;
+  const sentences = stripPriceProse(source).match(/[^.!?。！？]*[.!?。！？]+\s*|[^.!?。！？]+$/g) ?? [];
+  const claim = sentences.filter((x) => hasInsuranceAmount(x) && !hasPriceCopy(x)).map((x) => x.trim());
+  if (!claim.length) return chosen;
+  const body = chosen.trim();
+  const cjk = /[。！？]$/.test(body);
+  return body + (cjk ? '' : ' ') + claim.join(cjk ? '' : ' ');
 }
 
 export function firstPriceFree(
