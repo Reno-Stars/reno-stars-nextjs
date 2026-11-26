@@ -152,7 +152,11 @@ function tidyJoin(l: string, r: string): string {
 // A price range whose only duration is a note on one of its amounts
 // ---------------------------------------------------------------------------
 const PAREN = /[(（]([^()（）]*)[)）]/g;
-const LINK = /\[[^\]]+\]\([^)]*\)[A-Za-z]*/g;
+/** The word that makes two amounts ONE range ("from $X (…) to $Y"), in every locale's copy. */
+const RANGE_WORD = /(?<![\p{L}\p{M}])(?:to|à|hasta|до|đến|hanggang|bis|إلى|تا|से|ਤੋਂ)(?![\p{L}\p{M}])|到|至|から|부터|에서|〜|(?:^|\s)[-–—~～](?:\s|$)/u;
+/** A markdown link — also the "[text] (/url/)" some translations wrote with a space. */
+const LINK = /\[[^\]]+\]\s?\([^)]*\)[A-Za-z]*/g;
+const HAS_LINK = /\[[^\]]+\]\s?\([^)]*\)/;
 const RANGE_LEAD = /\s*(?:from|desde|de|à partir de|从|從|价格从|價格從|từ|mula|يتراوح من|من|از|от)\s*$/i;
 
 /**
@@ -178,12 +182,14 @@ export function salvageRangeNotes(
   if (!notes.every(follows)) return null;
   // a range ("from $X (…) to $Y") or a linked service name: one plain "costs $X (8–10 weeks)" is a JOINS case
   const before0 = sentence.slice(0, Math.min(...hits.map((h) => h.start)));
-  if (hits.length < 2 && !LINK.test(before0)) return null;
-  LINK.lastIndex = 0;
+  if (hits.length < 2 && !HAS_LINK.test(before0)) return null;
   // "costs $X (8–10 weeks); converting … runs $Y (6–8 weeks)" is two clauses, not one range (task 151b)
-  let span = sentence.slice(Math.min(...hits.map((h) => h.start)), Math.max(...hits.map((h) => h.end)));
-  span = span.replace(PAREN, '');
-  if (/[;；]/.test(span)) return null;
+  // — and so is "costs $X (8–10 weeks), while … runs $Y (6–8 weeks)": any clause separator in the
+  // text BETWEEN the amounts (outside notes; the amounts' own thousands commas are not looked at)
+  const sorted = [...hits].sort((x, y) => x.start - y.start);
+  const gaps = sorted.slice(1).map((h, i) => sentence.slice(sorted[i].end, h.start).replace(PAREN, '')).join(' ');
+  if (/[;；]/.test(gaps)) return null;
+  if (hits.length >= 2 && !RANGE_WORD.test(gaps)) return null;
 
   const first = Math.min(...hits.map((h) => h.start));
   const before = sentence.slice(0, first);
