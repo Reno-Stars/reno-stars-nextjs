@@ -6,7 +6,7 @@ import { getLocalizedArea } from '@/lib/data/areas';
 import AreaPage from '@/components/pages/AreaPage';
 import { BreadcrumbSchema, AreaServiceSchema, FAQSchema } from '@/components/structured-data';
 import { getBaseUrl, buildAlternates, SITE_NAME, pickLocale, buildAlternateLocales, minimalLocalized, slimForClient, deepMinimalLocalized } from '@/lib/utils';
-import { stripPriceDeep, stripPriceTitle, stripPriceProse, stripPriceCopy, filterPriceFaqs, firstPriceFree } from '@/lib/seo/strip-price-copy';
+import { stripPriceDeep, stripPriceTitle, stripPriceCopy, filterPriceFaqs, firstPriceFree, firstIntactText } from '@/lib/seo/strip-price-copy';
 import { getLocalizedService } from '@/lib/data/services';
 import { images as siteImages } from '@/lib/data';
 import { getCompanyFromDb, getServicesFromDb, getServiceAreasFromDb, getServiceAreaBySlugFromDb, getFaqsByAreaFromDb, getProjectsByAreaFromDb, getReviewsByCityFromDb } from '@/lib/db/queries';
@@ -318,10 +318,14 @@ async function resolveAreaMeta(
   // Each candidate is stripped on its own; the first non-empty one wins, so a
   // DB meta that was nothing but a price falls through to the next source.
   // The last fallback is non-empty and price-free (never '').
+  // A stripped title that lost the city name falls through to the next source (task 153: ja Richmond).
+  const named = (s: string | undefined) =>
+    (s && s.includes(localizedArea.name) && !stripPriceTitle(s).includes(localizedArea.name) ? undefined : s);
   const title = firstPriceFree(stripPriceTitle,
-    [localizedArea.metaTitle, enOverride?.title, t('title', { area: localizedArea.name })],
+    [named(localizedArea.metaTitle), named(enOverride?.title), t('title', { area: localizedArea.name })],
     `${localizedArea.name} | Reno Stars`);
-  const description = firstPriceFree(stripPriceProse,
+  // A meta that carried a price gives way to the next price-free source, a complete sentence (task 153).
+  const description = firstIntactText(
     [localizedArea.metaDescription, enOverride?.description, localizedArea.description,
       t('description', { area: localizedArea.name })],
     title);

@@ -58,7 +58,8 @@ const NUMBER = /[0-9٠-٩۰-۹]{1,3}(?:[,.\u00A0\u202F ][0-9٠-٩۰-۹]{3})+|[0-
 function isMillionLevel(text: string, end: number, match: string): boolean {
   if (/[0-9٠-٩۰-۹]\s?[Mm](?![A-Za-z])/.test(match)) return true;
   // Arabic million spelled inside the amount: "5 ملايين دولار" (task 138)
-  if (/[0-9٠-٩۰-۹]\s?(?:مليون|ملايين)/.test(match)) return true;
+  // … and, since task 153 lets a magnitude word sit inside the amount, "بیمه 5 میلیون دلاری" / "5 млн долларов"
+  if (/[0-9٠-٩۰-۹]\s?(?:مليون|ملايين|میلیون|млн|million)/.test(match)) return true;
   if (MILLION_WORD.test(text.slice(end, end + 14))) return true;
   const wan = /([0-9][0-9,.]*)\s?(?:万|萬|만)/.exec(match);
   if (wan) return parseFloat(wan[1].replace(/,/g, '')) >= 100;
@@ -255,18 +256,26 @@ const CLAUSE_CUTS: Array<[RegExp, string]> = [
 ];
 
 
+const PAIR_LIST = () => new RegExp(
+  String.raw`(^|[.!?。！？\n]\s*)[^.!?。！？\n]{0,80}?\s[—–-]\s${AMT}(?:\s*[,，;；،]\s*[^.!?。！？\n,，;；،]{1,40}?\s[—–-]\s${AMT})+\s*[.。]?`,
+  'g',
+);
+
 function tidyProse(s: string): string {
   return s
     .replace(/[ \t]{2,}/g, ' ')
     // CJK sentences are not space-separated: a string we edit leaves no "。 " behind,
     // including the copy's own space after a cut ("項目（3.5 萬…）。 Moody" → "項目。Moody").
     .replace(/([。！？])[ \t]+(?=\S)/g, '$1')
-    .replace(/\s+([,.;:!?，。；：！？)）])/g, '$1')
+    // French typography keeps its space before " : " ("pour la même portée : plus de maison…", task 153)
+    .replace(/\s+([,.;:!?，。；：！？)）])/g, (m: string, c: string, at: number, all: string) =>
+      (m === ` ${c}` && c === ':' && /\p{L}/u.test(all[at - 1] ?? '') && / /.test(all[at + 2] ?? '') ? m : c))
     .replace(/([,，;；:：])\s*([.。!?！？])/g, '$2')
     .replace(/([.。])\s*\1+/g, '$1')
     .replace(/[(（]\s*[)）]/g, '')
     // "Richmond BC: $12K–$45K, plus basement suites" → "Richmond BC, plus basement suites" (task 152)
-    .replace(/:\s+(plus|and)\s/g, ', $1 ')
+    // (never French " : ", which is the language's own spacing: "pour la même portée : plus de maison…", task 153)
+    .replace(/(?<=\S):\s+(plus|and)\s/g, ', $1 ')
     .replace(/^[\s,，;；:：·—–-]+/, '')
     .replace(/[\s,，;；:：·—–-]+$/, (m) => (/[.。]/.test(m) ? '.' : ''))
     .trim();
@@ -280,7 +289,9 @@ function spanHasPrice(text: string, start: number, end: number): boolean {
 
 export function stripPriceProse(text: string): string {
   if (!text || !hasPriceCopy(text)) return text;
-  let out = text;
+  // "Реальные затраты на проект: ванные комнаты — 20–32 тыс. долларов, кухни — 30–40 тыс. долларов." — a sentence
+  // that is only "noun — amount" pairs goes whole; the dash cuts below would leave "ванные комнаты — кухни." (task 153)
+  let out = text.replace(PAIR_LIST(), (m: string, lead: string) => (hasDuration(m) || !hasPriceCopy(m) ? m : lead));
   // Each cut fires only when the clause holds a REAL price — never on an
   // insurance clause such as "($5M CGL minimum)" (ALWAYS KEEP).
   for (const [re, dst] of CLAUSE_CUTS) {
@@ -314,7 +325,10 @@ const PRICE_BACKREF = new RegExp(
   ].join('|'),
   'iu',
 );
+/** A clause comparing to a fee that was cut: "兰里乡…审批需要 3–5 周；兰里市收费相近，审批约 4–6 周" (task 153). */
+const CLAUSE_BACKREF = /(收费|收費|费用|費用)(相近|相若|类似|類似|差不多)[，,]\s*/g;
 function dropPriceBackrefs(text: string): string {
+  text = text.replace(CLAUSE_BACKREF, '');
   if (!PRICE_BACKREF.test(text)) return text;
   return joinKept(pieces(text, SENTENCE_GAP).map(([a, b]) => text.slice(a, b)).filter((x) => !PRICE_BACKREF.test(x)));
 }
@@ -360,7 +374,8 @@ function pieces(text: string, re: RegExp, skip?: (at: number) => boolean): Array
   return out.filter(([a, b]) => text.slice(a, b).trim());
 }
 
-const SENTENCE_GAP = /(?<=[.!?。！？।۔؟])\s+|(?<=[。！？])(?=\S)/g;
+/** Abbreviations whose period is not a sentence end ("(см. наш [Справочник…])" — task 153). */
+const SENTENCE_GAP = /(?<=[.!?。！？।۔؟])(?<!(?:^|[\s(（])(?:см|ср|тыс|млн|т\.е|т\.к|e\.g|i\.e|approx|vs|a\.m|p\.m)\.)\s+|(?<=[。！？])(?=\S)/g;
 const CLAUSE_GAP = /(?<=[，;；،]|,(?![0-9٠-٩۰-۹]))\s*/g;
 
 /** True when `at` sits inside ( … ) / （ … ） of `text`: a comma there does not end a clause. */
@@ -398,7 +413,8 @@ function continuesAmount(sentence: string, at: number, hits: ReadonlyArray<{ sta
 function dropPriceSentences(text: string): string {
   const hits = priceHits(text);
   const inside = (a: number, b: number) => hits.some((h) => h.start >= a && h.end <= b);
-  const kept = pieces(text, SENTENCE_GAP).map(([a, b]) => {
+  // never split inside an amount: "25–150 тыс. долларов США" has a sentence-looking gap after "тыс." (task 153)
+  const kept = pieces(text, SENTENCE_GAP, (at) => hits.some((h) => h.start < at && at < h.end)).map(([a, b]) => {
     const sentence = text.slice(a, b);
     if (!inside(a, b)) return sentence;
     const timed = hasDuration(sentence);
@@ -447,11 +463,21 @@ function dropPriceSentences(text: string): string {
  * "Kitchen Renovation Surrey | $20K–$55K | Reno Stars" → "Kitchen Renovation Surrey | Reno Stars";
  * "Budget Kitchen Renovation: $16,000–$27,000" → "Budget Kitchen Renovation".
  */
+const TITLE_AMOUNT = () => new RegExp(String.raw`\s*(?:[:：—–-]|\bfrom\b|\bunder\b|\bstarting (?:at|from)\b|\bот\b|\bdesde\b|\bà partir de\b|از)?\s*${AMT}\s*(?:真實報價|真实报价|起)?`, 'giu');
+/** The amounts (and a "from / от / از" lead-in) cut out of one title cell; '' when nothing with words is left. */
+function cutTitleAmounts(cell: string): string {
+  const rest = cell.replace(TITLE_AMOUNT(), ' ').replace(/\s{2,}/g, ' ').replace(/^[\s:：—–-]+|[\s:：—–-]+$/g, '').trim();
+  return /^(?:from|under|starting|real data|real|от|از|desde)?$/i.test(rest) ? '' : rest;
+}
+
 export function stripPriceTitle(title: string): string {
   if (!title || !hasPriceCopy(title)) return title;
   let out = title;
   if (out.includes('|')) {
-    out = out.split('|').map((s) => s.trim()).filter((s) => s && !hasPriceCopy(s)).join(' | ');
+    // A cell that is only an amount goes; a cell with words keeps them: "浴室リフォーム | Richmond $12,000～$45,000 | Reno Stars"
+    // → "浴室リフォーム | Richmond | Reno Stars" — the city must stay in the title (task 153).
+    out = out.split('|').map((s) => s.trim()).map((s) => (hasPriceCopy(s) ? cutTitleAmounts(s) : s))
+      .filter((s) => s && /\p{L}{2}/u.test(s) && !hasPriceCopy(s)).join(' | ');
   }
   if (hasPriceCopy(out)) {
     out = out.replace(
@@ -622,7 +648,8 @@ export function stripPriceDeep<T>(value: T, key = ''): T {
   if (Array.isArray(value)) {
     let changed = false;
     const next = value.map((v) => { const n = stripPriceDeep(v, key); if (n !== v) changed = true; return n; });
-    return (changed ? next : value) as T;
+    // A list item that was nothing but a price goes — an emptied highlight renders as a blank bullet (task 153).
+    return (changed ? next.filter((n, i) => !(typeof value[i] === 'string' && value[i] && n === '')) : value) as T;
   }
   if (value && typeof value === 'object' && !(value instanceof Date)) {
     let changed = false;
@@ -644,6 +671,19 @@ export function stripPriceDeep<T>(value: T, key = ''): T {
  * A meta title/description built as `strip(a || b || c)` comes out '' when `a`
  * was nothing but a price — the fallbacks never get a chance (task 136).
  */
+/**
+ * Meta descriptions (task 153): the first candidate that never carried a price wins as written — a stored meta whose
+ * lead sentence was a price list must not ship as its leftover tail ("Lynn Valley, Deep Cove. 3-yr warranty. …") or
+ * with its "see real project prices" line. Only when every candidate carries a price is one stripped.
+ */
+export function firstIntactText(
+  candidates: ReadonlyArray<string | null | undefined>,
+  fallback: string,
+): string {
+  const intact = candidates.find((c) => c && c.trim() && !hasPriceCopy(c));
+  return intact ?? firstPriceFree(stripPriceProse, candidates, fallback);
+}
+
 export function firstPriceFree(
   strip: (s: string) => string,
   candidates: ReadonlyArray<string | null | undefined>,

@@ -1,5 +1,7 @@
 import { describe, it, expect } from 'vitest';
-import { stripPriceProse, stripPriceMarkdown, filterPriceFaqs, hasDuration, hasPriceCopy } from '@/lib/seo/strip-price-copy';
+import { stripPriceProse, stripPriceMarkdown, filterPriceFaqs, hasDuration, hasPriceCopy, stripPriceDeep, stripPriceTitle, firstIntactText } from '@/lib/seo/strip-price-copy';
+import { stripClientPrices } from '@/lib/seo/client-price-messages';
+import task153Cases from './fixtures/task153-cases.json';
 import { areaContentRenderer } from '@/lib/seo/area-markdown';
 
 /** Task 145: a duration that shares a sentence with a price stays; only the price goes. */
@@ -289,5 +291,72 @@ describe('task 152: no fragments in FAQ answers / project cards / meta after a p
   it('"주방" (kitchen) after an amount is not a duration ("$55,000 주방" ≠ "55,000 weeks")', () => {
     expect(hasDuration('$35,000~$55,000 주방 개조')).toBe(false);
     expect(hasDuration('2~3주')).toBe(true);
+  });
+});
+
+/**
+ * Task 153 (Captain CAP-13): amounts written with a "thousand / million" word — fa "20 تا 80 هزار دلار",
+ * ru "25–150 тыс. долларов США" / "15–72 тысяч долларов", "80 000–200 000 и более долларов США" — are prices.
+ * Cases are the live fa / ru strings (service cards, Burnaby highlights, Richmond / North Vancouver meta,
+ * area bodies, ru nearMe) run through the page's own stripPriceDeep / stripClientPrices.
+ */
+type Case153 = { id: string; key: string; base: unknown; want: unknown; needles: string[] };
+const task153 = task153Cases as Case153[];
+const anyText = (v: unknown): string => (Array.isArray(v) ? v.join('\n') : String(v ?? ''));
+describe('task 153: "N thousand dollars" amounts (fa / ru and the other locales) are prices', () => {
+  it.each(task153.map((c) => [c.id, c] as const))('%s', (_id, c) => {
+    const out = c.key === 'nearMe'
+      ? (stripClientPrices({ x: c.base }) as { x: unknown }).x
+      : (stripPriceDeep({ [c.key]: c.base }) as Record<string, unknown>)[c.key];
+    expect(out).toEqual(c.want);
+    const text = anyText(out);
+    expect(hasPriceCopy(text)).toBe(false);
+    for (const n of c.needles) expect(text).not.toContain(n);
+    // every duration the base states survives unless its whole price-only sentence went
+    for (const d of anyText(c.want).match(DUR152) ?? []) expect(text).toContain(d);
+  });
+
+  it('the magnitude words of every locale join the number to its currency', () => {
+    for (const s of ['20 تا 80 هزار دلار', '25–150 тыс. долларов США', 'от 4 тысяч долларов', '15–72 тысячи долларов',
+      '1 млн долларов', '50 nghìn đô la', '20 हजार डॉलर', '20 हज़ार डॉलर', '20 ਹਜ਼ਾਰ ਡਾਲਰ', '20 mil dólares',
+      '20 mille dollars', '20 thousand dollars', '80 000–200 000 и более долларов США', 'لوکس 100 هزار دلار +']) {
+      expect(hasPriceCopy(s), s).toBe(true);
+    }
+  });
+
+  it('"Обычно 4–8 недель." survives; insurance with a million word stays', () => {
+    expect(stripPriceProse('Обычно 4–8 недель, 15–72 тысяч долларов.')).toBe('Обычно 4–8 недель.');
+    const fa = 'بیمه 5 میلیون دلاری CGL، پوشش فعال WCB و 3 سال ضمانت کار. قیمت رایگان ظرف 48 ساعت.';
+    expect(stripPriceProse(fa)).toBe(fa);
+    const ru = 'Страхование гражданской ответственности на 5 млн долларов, покрытие WCB.';
+    expect(stripPriceProse(ru)).toBe(ru);
+  });
+
+  it('an area meta that carried a price gives way to the next price-free source (a complete sentence)', () => {
+    expect(firstIntactText(['North Vancouver renovations: kitchen $30K–$65K. Lynn Valley, Deep Cove. Free quote.', undefined,
+      'High-end kitchen and bathroom renovations for North Vancouver homes.'], 'x'))
+      .toBe('High-end kitchen and bathroom renovations for North Vancouver homes.');
+    expect(firstIntactText(['Kitchen from $30K.', 'Bath from $20K. Free quote.'], 'fallback')).toBe('Free quote.');
+  });
+
+  it('a title cell keeps its words when only its amount goes (ja Richmond keeps the city)', () => {
+    expect(stripPriceTitle('浴室リフォーム | Richmond $12,000～$45,000 | Reno Stars')).toBe('浴室リフォーム | Richmond | Reno Stars');
+    expect(stripPriceTitle('Kitchen Renovation Surrey | $20K–$55K | Reno Stars')).toBe('Kitchen Renovation Surrey | Reno Stars');
+    expect(stripPriceTitle('Bathroom Reno | From $12K | Reno Stars')).toBe('Bathroom Reno | Reno Stars');
+  });
+
+  it('zh Langley: "兰里市收费相近" goes with the fee it compared to', () => {
+    expect(stripPriceProse('兰里乡的二级套房许可证费用为 $1,500–$3,000（审批 3–5 周）；兰里市收费相近，审批约 4–6 周。'))
+      .toBe('兰里乡的二级套房许可证审批需要 3–5 周；兰里市审批约 4–6 周。');
+  });
+
+  it('fr keeps its " : " in a sentence that had no price', () => {
+    expect(stripPriceProse('Les coûts sont inférieurs de 5 à 10 % pour la même portée : plus de maison par dollar. Cuisine 15 000 $.'))
+      .toBe('Les coûts sont inférieurs de 5 à 10 % pour la même portée : plus de maison par dollar.');
+  });
+
+  it('"(см. наш [Справочник…])" is not split at "см." — no "- наш [Справочник" fragment', () => {
+    const md = '- **Ремонт ванной комнаты:** 18 000–35 000 долларов США (см. наш [Справочник](/en/guides/x/))\n- **Срок:** 4–6 недель.';
+    expect(stripPriceMarkdown(md)).not.toMatch(/^- наш/m);
   });
 });

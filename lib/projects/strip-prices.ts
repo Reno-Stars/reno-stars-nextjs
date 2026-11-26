@@ -149,13 +149,26 @@ const NUM = `${D}{1,3}(?:[,.\u066C\u00A0\u202F ]\u200B*${D}{3})+(?:[.\u066B]${D}
  * ألف / آلاف (thousand) and مليون / ملايين (million): "25 ألف دولار - 72 ألف دولار" (task 138).
  */
 const MAG = `(?:\\s?(?:[KkMm]|万|萬|만)(?![A-Za-z])|\\s?(?:ألف|آلاف|مليون|ملايين)(?![\\u0600-\\u06FF]))?`;
+/**
+ * Spelled "thousand" / "million" between the number and the currency (task 153 — Captain CAP-13):
+ * fa "20 تا 80 هزار دلار", ru "25–150 тыс. долларов США" / "15–72 тысяч долларов", vi "nghìn/ngàn",
+ * hi "हजार/हज़ार", pa "ਹਜ਼ਾਰ", es "mil", fr "mille", en "thousand", tl "libong". Optional, so every
+ * amount that matched before still matches the same way.
+ */
+const MAG_WORD =
+  `(?:\\s(?:هزار|میلیون)(?![\\u0600-\\u06FF])` +
+  `|\\s(?:тыс\\.|тысяч[аи]?|млн\\.?)(?![а-яё])` +
+  `|\\s(?:thousand|mille|mil|nghìn|ngàn|libong)(?![A-Za-zÀ-ỹ])` +
+  `|\\s(?:हजार|हज़ार|ਹਜ਼ਾਰ|ਹਜਾਰ))?`;
+/** "80 000–200 000 и более долларов США", "$X or more", "100 هزار دلار و بیشتر" — wording between amount and currency. */
+const MORE = `(?:\\s(?:и более|или более|or more|o más|ou plus|و بیشتر|يا بیشتر))?`;
 const CUR_PRE = `(?:CA\\$|C\\$|US\\$|CAD\\s?\\$?|\\$)`;
 const CUR_POST =
   '(?:\\$|USD|CAD|加元|加幣|加币|美元|美金|dollars?|dólares|đô la|долларов(?:\\s+США)?|доллара|долл\\.|دولار(?:\\s+أمريكي)?|دلار(?:ی)?|डॉलर|ਡਾਲਰ|ドル|달러)';
 const SEP = '\\s?(?:–|—|-|~|～|〜|to|à|a|et|y|至|到|إلى|و|تا|đến|से|ਤੋਂ|до)\\s?';
-const PRE_AMT = `${CUR_PRE}\\s?(?:${NUM})${MAG}`;
-const POST_AMT = `(?:${NUM})${MAG}\\s?${CUR_POST}`;
-const BARE = `(?:${NUM})${MAG}`;
+const PRE_AMT = `${CUR_PRE}\\s?(?:${NUM})${MAG}${MAG_WORD}`;
+const POST_AMT = `(?:${NUM})${MAG}${MAG_WORD}${MORE}\\s?${CUR_POST}`;
+const BARE = `(?:${NUM})${MAG}${MAG_WORD}`;
 /** One amount or range, with the currency written before and/or after. */
 /** "$200K+" and the spaced "200 ألف دولار +" (not "$5,000 + tax", where text follows). */
 const PLUS = `(?:\\+|\\s\\+(?!\\s*[A-Za-z0-9$]))?`;
