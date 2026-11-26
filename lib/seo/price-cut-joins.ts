@@ -110,6 +110,23 @@ const JOINS: Join[] = [
     const t = /^(\s*در\s+[0-9۰-۹]+(?:\s*(?:تا|-|–)\s*[0-9۰-۹]+)?\s*(?:هفته|ماه|روز))\s+هزینه\s+دارد/.exec(r);
     return t ? [l, `${t[1]} انجام می‌شود${r.slice(t[0].length)}`] : null;
   },
+  // "costs $X and takes 2–3 weeks" (en/fr/es/ru/vi): the cost verb goes, the duration verb stays (task 151b)
+  (l, r) => {
+    const m = /\s*(?<![A-Za-zÀ-ɏ])(?:costs?|coûte(?:nt)?|cuestan?|стоит|có giá)(?:\s+(?:entre|between))?\s*$/i.exec(l);
+    const t = /^\s*(?:and|et|y|и|và)\s+(?=\S)/i.exec(r);
+    return m && t ? [l.slice(0, m.index), ' ' + r.slice(t[0].length)] : null;
+  },
+  // fr / vi "… 2 à 3 semaines et avec un budget de $X, la rénovation" → "… 2 à 3 semaines, la rénovation"
+  (l, r) => {
+    const m = /\s*(?:(?<![A-Za-zÀ-ɏ])et\s+)?avec\s+un\s+(?:budget|investissement)\s+(?:compris\s+entre|de)\s*$|\s*với\s+(?:khoản\s+đầu\s+tư|ngân\s+sách)(?:\s+từ)?\s*$/i.exec(l);
+    return m && /^\s*(?:[,.;]|$)/.test(r) ? [l.slice(0, m.index), r.trimStart()] : null;
+  },
+  // hi "एनसुइट की लागत $X है और इसमें 3-5 सप्ताह लगते हैं" → "एनसुइट में 3-5 सप्ताह लगते हैं"
+  (l, r) => {
+    const m = /\s*की\s+लागत\s*$/.exec(l);
+    const t = /^\s*है\s+और\s+इसमें\s+/.exec(r);
+    return m && t ? [l.slice(0, m.index) + ' में ', r.slice(t[0].length)] : null;
+  },
 ];
 
 /** Repair the two sides of one cut. */
@@ -163,6 +180,10 @@ export function salvageRangeNotes(
   const before0 = sentence.slice(0, Math.min(...hits.map((h) => h.start)));
   if (hits.length < 2 && !LINK.test(before0)) return null;
   LINK.lastIndex = 0;
+  // "costs $X (8–10 weeks); converting … runs $Y (6–8 weeks)" is two clauses, not one range (task 151b)
+  let span = sentence.slice(Math.min(...hits.map((h) => h.start)), Math.max(...hits.map((h) => h.end)));
+  span = span.replace(PAREN, '');
+  if (/[;；]/.test(span)) return null;
 
   const first = Math.min(...hits.map((h) => h.start));
   const before = sentence.slice(0, first);

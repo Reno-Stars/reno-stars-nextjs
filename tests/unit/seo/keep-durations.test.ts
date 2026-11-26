@@ -198,3 +198,40 @@ describe('task 151: no sentence fragments after a price is cut (verbatim area co
     expect(stripPriceProse('보증이 있으며 3~5주가 소요되고 2~3주 내에 시작할 수 있으며 비용은 $26,000~$32,000입니다.')).toBe('보증이 있으며 3~5주가 소요되고 2~3주 내에 시작할 수 있습니다.');
   });
 });
+
+describe('task 151b: two-clause cost FAQs and empty "budget of" clauses (live area pages)', () => {
+  it.each([
+    ['en Maple Ridge FAQ: both subjects and both durations stay; the price-only follow-on goes',
+      'Converting an unfinished basement to a legal suite costs $65,000–$95,000 (8–10 weeks); converting a finished basement runs $45,000–$70,000 (6–8 weeks). A cosmetic refresh of an existing suite starts at $20,000–$35,000.',
+      'Converting an unfinished basement to a legal suite takes 8–10 weeks; converting a finished basement takes 6–8 weeks.'],
+    ['en Port Coquitlam FAQ (order reversed, "typically costs")',
+      'A finished-to-legal-suite conversion typically costs $45,000–$70,000 (6–8 weeks); an unfinished basement conversion runs $65,000–$95,000 (8–10 weeks).',
+      'A finished-to-legal-suite conversion typically takes 6–8 weeks; an unfinished basement conversion takes 8–10 weeks.'],
+    ['fr Burnaby: "et avec un budget de … $," goes',
+      "Achevée en 2 à 3 semaines et avec un budget de 23 000 à 25 000 $, la rénovation a permis à l'entreprise de rouvrir avec une vitrine améliorée.",
+      "Achevée en 2 à 3 semaines, la rénovation a permis à l'entreprise de rouvrir avec une vitrine améliorée."],
+    ['fr Burnaby: "coûte entre … et prend" → "prend"',
+      'Une mise à jour standard (nouvelle vanité, carrelage, luminaires et éclairage) coûte entre 20 000 et 25 000 dollars et prend 2 à 3 semaines.',
+      'Une mise à jour standard (nouvelle vanité, carrelage, luminaires et éclairage) prend 2 à 3 semaines.'],
+    ['fr Burnaby: "coûte entre 28 000 $ et 32 000 $ et prend"',
+      'Une salle de bain principale complète avec des fonctionnalités personnalisées et une baignoire autoportante coûte entre 28 000 $ et 32 000 $ et prend 3 à 5 semaines.',
+      'Une salle de bain principale complète avec des fonctionnalités personnalisées et une baignoire autoportante prend 3 à 5 semaines.'],
+    ['fr Vancouver: "avec un investissement de …," goes, "4 à 5 mois" stays',
+      "Le projet a duré 4 à 5 mois avec un investissement de 345 000 à 360 000 $, couvrant une refonte complète de l'intérieur.",
+      "Le projet a duré 4 à 5 mois, couvrant une refonte complète de l'intérieur."],
+    ['vi Vancouver: "với khoản đầu tư từ …," goes',
+      'Dự án kéo dài 4–5 tháng với khoản đầu tư từ $345.000 đến $360.000, bao gồm việc thiết kế lại toàn bộ nội thất.',
+      'Dự án kéo dài 4–5 tháng, bao gồm việc thiết kế lại toàn bộ nội thất.'],
+    ['vi Burnaby: "với ngân sách từ …," goes',
+      'Hoàn thành trong vòng 2-3 tuần với ngân sách từ $23.000–$25.000, việc cải tạo đã giúp doanh nghiệp mở cửa trở lại với mặt tiền cửa hàng được nâng cấp.',
+      'Hoàn thành trong vòng 2-3 tuần, việc cải tạo đã giúp doanh nghiệp mở cửa trở lại với mặt tiền cửa hàng được nâng cấp.'],
+    ['hi Burnaby: "की लागत … है और इसमें" → "में"',
+      'कस्टम सुविधाओं और फ्रीस्टैंडिंग टब के साथ एक पूर्ण मास्टर एनसुइट की लागत $28,000-$32,000 है और इसमें 3-5 सप्ताह लगते हैं।',
+      'कस्टम सुविधाओं और फ्रीस्टैंडिंग टब के साथ एक पूर्ण मास्टर एनसुइट में 3-5 सप्ताह लगते हैं।'],
+  ])('%s', (_name, src, want) => {
+    const out = stripPriceProse(src);
+    expect(out).toBe(want);
+    expect(hasPriceCopy(out)).toBe(false);
+    expect(out).not.toMatch(/costs:|budget de,|investissement de,|entre et|từ,|लागत है/);
+  });
+});
