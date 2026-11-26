@@ -385,3 +385,16 @@ describe('task 153b: no "real prices" title segment once the prices are gone; fr
     expect(stripPriceProse(fr)).toBe('Les coûts sont inférieurs de 5 à 10 % pour la même portée : plus de maison par dollar.');
   });
 });
+
+describe('task 153c: Japanese 「が、」 is a clause break — the rebate clause stays, the cost clause goes', () => {
+  it('ja heat-pump: install cost dropped, rebate kept', () => {
+    const ja = '連邦炭素価格設定により、これは経済的に適切な判断となります。ヒートポンプセントラルシステムの設置費用は 14,000 ～ 22,000 ドルですが、リベートで 7 ～ 11,000 ドルを相殺できます。';
+    const out = stripPriceProse(ja);
+    expect(out).toBe('連邦炭素価格設定により、これは経済的に適切な判断となります。リベートで 7 ～ 11,000 ドルを相殺できます。');
+    expect(hasPriceCopy(out)).toBe(false);
+  });
+  it('a 「が、」 sentence without a price is untouched', () => {
+    const s = '工期は約 4 週間ですが、天候により変わります。';
+    expect(stripPriceProse(s)).toBe(s);
+  });
+});

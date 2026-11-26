@@ -117,7 +117,7 @@ function sentenceBounds(text: string, start: number, end: number): [number, numb
 }
 
 /** Clause separators inside a sentence (a comma followed by a digit is a thousands separator: "$3,000"). */
-const CLAUSE_SEP = /[，;；،]|,(?![0-9٠-٩۰-۹])/g;
+const CLAUSE_SEP = /[，;；،]|が、|,(?![0-9٠-٩۰-۹])/g;
 /**
  * Phrasing that marks a rebate amount inside a sentence that names a subsidy
  * ("BC Hydro offers up to $3,000", "额外 $3,000", "退税可抵 $7–11K", "combined up to $11,000").
@@ -135,7 +135,7 @@ function clauseBounds(text: string, from: number, to: number, start: number, end
   CLAUSE_SEP.lastIndex = from;
   let m: RegExpExecArray | null;
   while ((m = CLAUSE_SEP.exec(text)) && m.index < to) {
-    if (m.index < start) cFrom = m.index + 1;
+    if (m.index < start) cFrom = m.index + m[0].length;
     else if (m.index >= end) { cTo = m.index; break; }
   }
   return [cFrom, cTo];
@@ -376,7 +376,8 @@ function pieces(text: string, re: RegExp, skip?: (at: number) => boolean): Array
 
 /** Abbreviations whose period is not a sentence end ("(см. наш [Справочник…])" — task 153). */
 const SENTENCE_GAP = /(?<=[.!?。！？।۔؟])(?<!(?:^|[\s(（])(?:см|ср|тыс|млн|т\.е|т\.к|e\.g|i\.e|approx|vs|a\.m|p\.m)\.)\s+|(?<=[。！？])(?=\S)/g;
-const CLAUSE_GAP = /(?<=[，;；،]|,(?![0-9٠-٩۰-۹]))\s*/g;
+/** Japanese 「…ですが、…」 joins a priced clause to a rebate one: a clause break too (task 153c). */
+const CLAUSE_GAP = /(?<=[，;；،]|が、|,(?![0-9٠-٩۰-۹]))\s*/g;
 
 /** True when `at` sits inside ( … ) / （ … ） of `text`: a comma there does not end a clause. */
 function inParens(text: string, at: number): boolean {
