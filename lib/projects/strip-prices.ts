@@ -138,8 +138,8 @@ const compiled = SENTENCE_RULES.map((r) => ({
 // Generic amount detection
 // ---------------------------------------------------------------------------
 const D = '[0-9٠-٩۰-۹]';
-/** 25,000 · 25.000 · 25 000 (incl. NBSP / narrow NBSP) · 2.7 · 345000 */
-const NUM = `${D}{1,3}(?:[,.\u00A0\u202F ]${D}{3})+(?:\\.${D}+)?|${D}+(?:\\.${D}+)?`;
+/** 25,000 · 25.000 · 25 000 (incl. NBSP / narrow NBSP, and zero-width spaces after the separator: "32 \u200B\u200B000") · 2.7 · 345000 */
+const NUM = `${D}{1,3}(?:[,.\u00A0\u202F ]\u200B*${D}{3})+(?:\\.${D}+)?|${D}+(?:\\.${D}+)?`;
 /**
  * Magnitude after the number: K / M / 万 / 萬 / 만, and the Arabic spelled forms
  * ألف / آلاف (thousand) and مليون / ملايين (million): "25 ألف دولار - 72 ألف دولار" (task 138).
@@ -148,7 +148,7 @@ const MAG = `(?:\\s?(?:[KkMm]|万|萬|만)(?![A-Za-z])|\\s?(?:ألف|آلاف|م
 const CUR_PRE = `(?:CA\\$|C\\$|US\\$|CAD\\s?\\$?|\\$)`;
 const CUR_POST =
   '(?:\\$|USD|CAD|加元|加幣|dollars?|dólares|đô la|долларов(?:\\s+США)?|доллара|долл\\.|دولار(?:\\s+أمريكي)?|دلار(?:ی)?|डॉलर|ਡਾਲਰ|ドル|달러)';
-const SEP = '\\s?(?:–|—|-|~|to|à|a|et|y|至|到|إلى|و|تا|đến|से|ਤੋਂ|до)\\s?';
+const SEP = '\\s?(?:–|—|-|~|～|〜|to|à|a|et|y|至|到|إلى|و|تا|đến|से|ਤੋਂ|до)\\s?';
 const PRE_AMT = `${CUR_PRE}\\s?(?:${NUM})${MAG}`;
 const POST_AMT = `(?:${NUM})${MAG}\\s?${CUR_POST}`;
 const BARE = `(?:${NUM})${MAG}`;

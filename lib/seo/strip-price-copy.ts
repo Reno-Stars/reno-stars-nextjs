@@ -25,6 +25,7 @@
  * whole rather than left hollow (filterPriceFaqs).
  */
 import { PRICE_SOURCE } from '@/lib/projects/strip-prices';
+import { joinAroundCut, salvageRangeNotes } from '@/lib/seo/price-cut-joins';
 
 /** Insurance wording in all 14 site languages. An amount near one is NOT a price. */
 const INSURANCE = new RegExp(
@@ -306,14 +307,11 @@ export function hasDuration(text: string): boolean {
   return DURATION.test(text);
 }
 
-/** Words that only introduce the amount that follows ("and costs", "for", "约"). */
-const PRICE_LEAD = /(?:\s*(?:[,，、،]\s*)?(?:(?<![A-Za-zÀ-ɏ])(?:and|or|et|y)\s+)?(?<![A-Za-zÀ-ɏ])(?:costs?|costing|priced at|for|at|about|around|roughly|approximately|from|starting at|to|à|coûte|cuesta|约|約|大约|大約|费用|費用|价格|價格|و?(?:يكلف|تكلف)(?:\s+ما)?(?:\s+بين)?|يتراوح\s+بين|ما\s+بين|بين|بتكلفة|حوالي|و?تبلغ\s+تكلفة\s+\S+))?\s*$/i;
-
 /** Remove the [start, end) price spans from a clause that keeps its duration. */
 function cutPriceSpans(clause: string, spans: ReadonlyArray<[number, number]>): string {
   let out = clause;
   for (const [s, e] of [...spans].sort((x, y) => y[0] - x[0])) {
-    out = out.slice(0, s).replace(PRICE_LEAD, '') + out.slice(e);
+    out = joinAroundCut(out.slice(0, s), out.slice(e));
   }
   return out;
 }
@@ -358,6 +356,9 @@ function inParens(text: string, at: number): boolean {
  * that leans on the previous sentence ("…BC Hydro 충전… 이를 합하면 최대 $11,000")
  * is judged in context, not as a lone sentence.
  */
+/** "**[Minimalist Bathroom](/en/projects/…/):**" — a lead label with nothing after its colon. */
+const isLabelOnly = (s: string) => /^[\s*_`>#-]*\S[^.!?。！？]{0,200}[:：][\s*_`]*$/.test(s);
+
 function dropPriceSentences(text: string): string {
   const hits = priceHits(text);
   const inside = (a: number, b: number) => hits.some((h) => h.start >= a && h.end <= b);
@@ -366,15 +367,24 @@ function dropPriceSentences(text: string): string {
     if (!inside(a, b)) return sentence;
     const timed = hasDuration(sentence);
     if (!timed && !hasInsuranceAmount(sentence) && !isSubsidyText(sentence)) return '';
+    // "from $18K (3-4 weeks, …) to $35K+ for …": the duration is only a note on an amount (task 151)
+    const rel = hits.filter((h) => h.start >= a && h.end <= b).map((h) => ({ start: h.start - a, end: h.end - a }));
+    const salvaged = timed && !hasInsuranceAmount(sentence) && !isSubsidyText(sentence)
+      ? salvageRangeNotes(sentence, rel, hasDuration) : null;
+    if (salvaged) return salvaged;
     const end = /[.!?。！？।۔؟]\s*$/.exec(sentence)?.[0].trim() ?? '';
     const clauses = pieces(sentence, CLAUSE_GAP, (at) => inParens(sentence, at))
       .map(([ca, cb]) => {
         const clause = sentence.slice(ca, cb);
         if (!inside(a + ca, a + cb)) return clause;
-        // A clause that also states a duration keeps it: only the price span goes (task 145).
-        if (!hasDuration(clause)) return '';
         const spans = hits.filter((h) => h.start >= a + ca && h.end <= a + cb)
           .map((h) => [h.start - a - ca, h.end - a - ca] as [number, number]);
+        // A clause that also states a duration keeps it: only the price span goes (task 145).
+        // One without a duration goes — except the label it carried ("**Project:** $15K, 2-3 weeks", task 151).
+        if (!hasDuration(clause)) {
+          const label = cutPriceSpans(clause, spans).replace(/[\s,，;；،、]+$/, '');
+          return isLabelOnly(label) ? label : '';
+        }
         return cutPriceSpans(clause, spans);
       })
       .filter((c) => c.trim() && /[^\s,，;；،:：·—–-]/.test(c));

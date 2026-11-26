@@ -52,7 +52,8 @@ describe('synthetic duration + price sentences (verify.json)', () => {
 describe('Persian / Arabic digits after a comma are a thousands separator, not a clause break', () => {
   it('fa: "۳۳,۰۰۰ تا ۳۵,۰۰۰ دلار" goes whole, "۶ تا ۸ هفته" stays', () => {
     const out = stripPriceProse('دو حمام با دستشویی مهمان: ۳۳,۰۰۰ تا ۳۵,۰۰۰ دلار، ۶ تا ۸ هفته');
-    expect(out).toBe('۶ تا ۸ هفته');
+    // the label in front of the cut price stays (task 151)
+    expect(out).toBe('دو حمام با دستشویی مهمان: ۶ تا ۸ هفته');
     expect(hasPriceCopy(out)).toBe(false);
   });
 });
@@ -60,12 +61,12 @@ describe('Persian / Arabic digits after a comma are a thousands separator, not a
 describe('area copy: a duration between two prices (verbatim DB area copy)', () => {
   it('Coquitlam: "(5-6 weeks …)" stays, both prices go', () => {
     const out = stripPriceProse('Real Coquitlam project pricing from our portfolio: kitchen renovations from $25,000–$27,000 (5-6 weeks for a budget-friendly condo kitchen with quartz countertops) to $35,000+ for custom layouts.');
-    expect(out).toContain('(5-6 weeks for a budget-friendly condo kitchen with quartz countertops)');
+    expect(out).toBe('kitchen renovations: 5-6 weeks for a budget-friendly condo kitchen with quartz countertops.');
     expect(hasPriceCopy(out)).toBe(false);
   });
   it('Maple Ridge: a comma inside the parenthetical does not split it', () => {
     const out = stripPriceProse('Real Maple Ridge project pricing: bathroom renovations from $18,000–$21,000 (3-4 weeks, including custom glass door and tiled walls) to $35,000+ for full master bath suites with heated floors.');
-    expect(out).toContain('(3-4 weeks, including custom glass door and tiled walls)');
+    expect(out).toBe('bathroom renovations: 3-4 weeks, including custom glass door and tiled walls.');
     expect(hasPriceCopy(out)).toBe(false);
   });
 });
@@ -91,9 +92,8 @@ describe('task 148: durations in cost FAQs, tables and Arabic area copy stay', (
     const out = filterPriceFaqs([{ question: 'How much does a basement suite cost in West Vancouver?',
       answer: 'A full unfinished-to-suite conversion typically costs $65,000–$95,000 (8–10 weeks) given the higher labour and finish standards. A finished-basement conversion runs $45,000–$70,000 (6–8 weeks). A building permit and stamped drawings are required.' }]);
     expect(out).toHaveLength(1);
-    expect(out[0].answer).toContain('(8–10 weeks)');
-    expect(out[0].answer).toContain('(6–8 weeks)');
-    expect(out[0].answer).toContain('typically (8–10 weeks)');
+    expect(out[0].answer).toContain('typically takes 8–10 weeks given the higher labour');
+    expect(out[0].answer).toContain('A finished-basement conversion takes 6–8 weeks.');
     expect(hasPriceCopy(out[0].answer)).toBe(false);
   });
   it('a cost FAQ with no duration (and no insurance) is still dropped', () => {
@@ -106,7 +106,7 @@ describe('task 148: durations in cost FAQs, tables and Arabic area copy stay', (
   });
   it('zh Richmond: "$15,000–$18,000（2–3 周）" keeps （2–3 周）', () => {
     const out = stripPriceProse('标准翻新（壁挂式浴室柜、无框淋浴、地铁砖）为 $15,000–$18,000（2–3 周）。');
-    expect(out).toContain('（2–3 周）');
+    expect(out).toBe('标准翻新（壁挂式浴室柜、无框淋浴、地铁砖）需要 2–3 周。');
     expect(hasPriceCopy(out)).toBe(false);
   });
   it('a table row with a duration keeps it and empties only the price cell', () => {
@@ -120,7 +120,8 @@ describe('task 149: Korean "~" ranges survive strip + area markdown render', () 
   it('the stripper keeps (2~3주 …) and 5~6주 when the $ ranges go', () => {
     const out = stripPriceMarkdown(coquitlam);
     expect(out).toContain('5~6주');
-    expect(out).toContain('(2~3주 표준 샤워 전환)');
+    expect(out).toContain('[욕실 리모델링](/en/guides/bathroom-renovation-cost-vancouver/): 2~3주 표준 샤워 전환.');
+    expect(out).not.toMatch(/부터|까지/);
     expect(hasPriceCopy(out)).toBe(false);
   });
   it('the area renderer prints "~" literally (no strikethrough pairing): 5~6주 / 2~3주 / 6~8주', () => {
@@ -134,5 +135,66 @@ describe('task 149: Korean "~" ranges survive strip + area markdown render', () 
   });
   it('a real double-tilde stays literal too (copy never uses strikethrough)', () => {
     expect(areaContentRenderer.parse('a ~~b~~ c') as string).toContain('~~b~~');
+  });
+});
+
+/**
+ * Task 151: what a cut price leaves behind must read as a sentence — no "비용은입니다", "총의",
+ * "(…)부터(…)", "and costs.", "cuesta entre en" — and no half of a range ("25,000 ～").
+ * Verbatim area-copy lines from the DB, all 14 locales' families.
+ */
+const FRAGMENT = /비용(?:은|이)\s*(?:입니다|[.,])|에입니다|(?:^|\s)총의|[)）](?:부터|에서|까지)|경우까지|에서까지|(?:^|\s)(?:and costs|totaling|cuesta entre|coûte entre|y cuesta|et coûte|и стоит|có giá)\s*[.,]?\s*(?:$|en\s|\.)|totaling over|[从從]\s*[（(]|[0-9],[0-9]{3}\s*～\s*(?![0-9])|総額|耗资|耗資/;
+
+describe('task 151: no sentence fragments after a price is cut (verbatim area copy)', () => {
+  it.each([
+    ["burnaby [ko]", "- **[욕실 개조](/en/guides/bathroom-renovation-cost-vancouver/)s:** 범위에 따라 $20,000~$32,000. 표준 욕실 업데이트(새 세면대, 타일, 설비) 비용은 2~3주에 $20,000~$25,000입니다. 맞춤형 기능을 갖춘 전체 마스터 욕실은 3~5주가 걸리며 비용은 $26,000~$32,000입니다.",
+      "- 표준 욕실 업데이트(새 세면대, 타일, 설비) 기간은 2~3주입니다. 맞춤형 기능을 갖춘 전체 마스터 욕실은 3~5주가 걸립니다."],
+    ["delta [ko]", "실제 Delta 프로젝트 가격: [욕실 개조](/en/guides/bathroom-renovation-cost-vancouver/) $15,000~$20,000(표준 3개 부품)부터 $40,000~$43,000(욕실 3개 반 패키지, 6~8주 — 가장 인기 있는 Delta 범위). [주방 개조](/en/guides/kitchen-renovation-cost-vancouver/)는 새로 고치는 데 $28,000부터 Tsawwassen 해안가 주택의 맞춤형 아일랜드 레이아웃을 위해 $60,000 이상입니다.",
+      "[욕실 개조](/en/guides/bathroom-renovation-cost-vancouver/): 욕실 3개 반 패키지, 6~8주 — 가장 인기 있는 Delta 범위."],
+    ["delta [ko]", "욕실 리노베이션 시공업체를 찾는 Delta 주택 소유자는 우리 팀이 해당 지역의 주택 스타일에 정통하다는 것을 알게 될 것입니다. 우리는 최근 6~8주에 걸쳐 총 $40,000~$43,000의 [Delta에서 욕실 3개 반 개조](/en/projects/3-and-a-half-bathroom-renovation-delta/)를 완료했습니다. 이는 현재까지 가장 포괄적인 Delta 욕실 프로젝트입니다.",
+      "욕실 리노베이션 시공업체를 찾는 Delta 주택 소유자는 우리 팀이 해당 지역의 주택 스타일에 정통하다는 것을 알게 될 것입니다. 우리는 최근 6~8주에 걸쳐 [Delta에서 욕실 3개 반 개조](/en/projects/3-and-a-half-bathroom-renovation-delta/)를 완료했습니다. 이는 현재까지 가장 포괄적인 Delta 욕실 프로젝트입니다."],
+    ["coquitlam [ko]", "당사 포트폴리오의 실제 Coquitlam 프로젝트 가격: [주방 개조](/en/guides/kitchen-renovation-cost-vancouver/) $25,000~$27,000(쿼츠 조리대가 있는 예산 친화적인 콘도 주방의 경우 5~6주)부터 사용자 정의 레이아웃의 경우 $35,000+까지. [욕실 리모델링](/en/guides/bathroom-renovation-cost-vancouver/) 타일로 마감된 맞춤형 유리 샤워실의 경우 $14,000~$17,000(2~3주 표준 샤워 전환)에서 $25,000+까지입니다. Westwood Plateau 및 Burke Mountain의 콘도 개조는 시작하기 전에 스트라타 승인이 필요합니다. 우리는 신청 서류 작업을 처리하고 귀하의 스트라타 협의회와 협력합니다.",
+      "[주방 개조](/en/guides/kitchen-renovation-cost-vancouver/): 쿼츠 조리대가 있는 예산 친화적인 콘도 주방의 경우 5~6주. [욕실 리모델링](/en/guides/bathroom-renovation-cost-vancouver/): 2~3주 표준 샤워 전환. Westwood Plateau 및 Burke Mountain의 콘도 개조는 시작하기 전에 스트라타 승인이 필요합니다. 우리는 신청 서류 작업을 처리하고 귀하의 스트라타 협의회와 협력합니다."],
+    ["burnaby [en]", "- **[bathroom renovation](/en/guides/bathroom-renovation-cost-vancouver/)s:** $20,000–$32,000 depending on scope. A standard bathroom update (new vanity, tile, fixtures) runs $20,000–$25,000 in 2–3 weeks. A full master ensuite with custom features takes 3–5 weeks and costs $26,000–$32,000.",
+      "- A standard bathroom update (new vanity, tile, fixtures) runs in 2–3 weeks. A full master ensuite with custom features takes 3–5 weeks."],
+    ["burnaby [fr]", "- **[rénovation de la salle de bain](/en/guides/bathroom-renovation-cost-vancouver/)s :** 20 000 $ à 32 000 $ selon l'ampleur. Une mise à jour standard d'une salle de bain (nouvelle vanité, carrelage, luminaires) coûte entre 20 000 et 25 000 dollars en 2 à 3 semaines. Une salle de bain principale complète avec des fonctionnalités personnalisées prend 3 à 5 semaines et coûte entre 26 000 et 32 ​​000 $.",
+      "- Une mise à jour standard d'une salle de bain (nouvelle vanité, carrelage, luminaires) se réalise en 2 à 3 semaines. Une salle de bain principale complète avec des fonctionnalités personnalisées prend 3 à 5 semaines."],
+    ["burnaby [es]", "- **[renovación de baños](/es/guides/bathroom-renovation-cost-vancouver/)s:** $20 000–$32 000 según el alcance. Una actualización estándar del baño (tocador nuevo, azulejos, accesorios) cuesta entre $20 000 y $25 000 en 2 a 3 semanas. Un baño principal completo con características personalizadas tarda de 3 a 5 semanas y cuesta entre 26 000 y 32 000 dólares.",
+      "- Una actualización estándar del baño (tocador nuevo, azulejos, accesorios) se completa en 2 a 3 semanas. Un baño principal completo con características personalizadas tarda de 3 a 5 semanas."],
+    ["burnaby [ja]", "- **[浴室の改修](/en/guides/bathroom-renovation-cost-vancouver/)s:** 範囲に応じて 20,000 ～ 32,000 ドル。標準的なバスルームの更新 (新しい洗面化粧台、タイル、設備) には、2 ～ 3 週間で 20,000 ～ 25,000 ドルかかります。カスタム機能を備えた完全なマスターエンスイートには 3 ～ 5 週間かかり、費用は 26,000 ～ 32,000 ドルです。",
+      "- 標準的なバスルームの更新 (新しい洗面化粧台、タイル、設備) には、2 ～ 3 週間かかります。カスタム機能を備えた完全なマスターエンスイートには 3 ～ 5 週間かかります。"],
+    ["delta [ja]", "バスルーム改修請負業者を探している Delta 住宅所有者は、その地域の住宅スタイルに精通した私たちのチームを見つけるでしょう。私たちは最近、[Delta の 3 つ半のバスルームの改修](/en/projects/three-and-a-half-bathroom-renovation-delta/) を 6 ～ 8 週間で総額 40,000 ～ 43,000 ドルかけて完了しました。これは、これまでで最も包括的な Delta バスルームプロジェクトです。",
+      "バスルーム改修請負業者を探している Delta 住宅所有者は、その地域の住宅スタイルに精通した私たちのチームを見つけるでしょう。私たちは最近、[Delta の 3 つ半のバスルームの改修](/en/projects/three-and-a-half-bathroom-renovation-delta/) を 6 ～ 8 週間で完了しました。これは、これまでで最も包括的な Delta バスルームプロジェクトです。"],
+    ["maple-ridge [zh]", "真正的枫树岭项目定价：[浴室翻新](/en/guides/bathroom-renovation-cost-vancouver/)从 18,000 加元至 21,000 加元（3-4 周，包括定制玻璃门和瓷砖墙）到 35,000 加元以上，带加热地板的全套主浴室套房。 [厨房装修](/en/guides/kitchen-renovation-cost-vancouver/)从橱柜+台面翻新25,000加元到内部和重建布局50,000+加元。",
+      "[浴室翻新](/en/guides/bathroom-renovation-cost-vancouver/)：3-4 周，包括定制玻璃门和瓷砖墙。"],
+    ["delta [en]", "Delta homeowners searching for bathroom renovation contractors will find our team well-versed in the area's housing styles. We recently completed a [three-and-a-half bathroom renovation in Delta](/en/projects/three-and-a-half-bathroom-renovation-delta/) totaling $40,000–$43,000 over 6-8 weeks — our most comprehensive Delta bathroom project to date.",
+      "Delta homeowners searching for bathroom renovation contractors will find our team well-versed in the area's housing styles. We recently completed a [three-and-a-half bathroom renovation in Delta](/en/projects/three-and-a-half-bathroom-renovation-delta/) over 6-8 weeks — our most comprehensive Delta bathroom project to date."],
+    ["coquitlam [en]", "Real Coquitlam project pricing from our portfolio: [kitchen renovation](/en/guides/kitchen-renovation-cost-vancouver/)s from $25,000–$27,000 (5-6 weeks for a budget-friendly condo kitchen with quartz countertops) to $35,000+ for custom layouts. [bathroom renovation](/en/guides/bathroom-renovation-cost-vancouver/)s from $14,000–$17,000 (2-3 week standard shower conversion) to $25,000+ for tiled walk-in showers with custom glass. Condo renovations in Westwood Plateau and Burke Mountain require strata approval before starting — we handle the application paperwork and coordinate with your strata council.",
+      "[kitchen renovation](/en/guides/kitchen-renovation-cost-vancouver/)s: 5-6 weeks for a budget-friendly condo kitchen with quartz countertops. [bathroom renovation](/en/guides/bathroom-renovation-cost-vancouver/)s: 2-3 week standard shower conversion. Condo renovations in Westwood Plateau and Burke Mountain require strata approval before starting — we handle the application paperwork and coordinate with your strata council."],
+    ["richmond [ja]", "- **[カスタム機能を備えた 2 つのバスルーム](/en/projects/two-bathroom-renovation-with-custom-features-in-richmond/):** 25,000 ～ 28,000 ドル、4 ～ 5 週間",
+      "- **[カスタム機能を備えた 2 つのバスルーム](/en/projects/two-bathroom-renovation-with-custom-features-in-richmond/):** 4 ～ 5 週間"],
+    ["richmond [en]", "- **[Minimalist Bathroom Renovation](/en/projects/minimalist-bathroom-renovation-in-richmond/):** $15,000–$18,000, 2-3 weeks",
+      "- **[Minimalist Bathroom Renovation](/en/projects/minimalist-bathroom-renovation-in-richmond/):** 2-3 weeks"],
+    ["burnaby [ru]", "- **[ремонт ванной комнаты](/en/guides/bathroom-renovation-cost-vancouver/)s:** 20 000–32 000 долларов США в зависимости от объема. Стандартное обновление ванной комнаты (новый туалетный столик, плитка, сантехника) стоит 20–25 000 долларов за 2–3 недели. Полная главная ванная комната с индивидуальными функциями занимает 3–5 недель и стоит 26 000–32 000 долларов.",
+      "- Стандартное обновление ванной комнаты (новый туалетный столик, плитка, сантехника) выполняется за 2–3 недели. Полная главная ванная комната с индивидуальными функциями занимает 3–5 недель."],
+  ])('%s', (_name, src, want) => {
+    const out = stripPriceMarkdown(src);
+    expect(out).toBe(want);
+    expect(hasPriceCopy(out)).toBe(false);
+    expect(out).not.toMatch(FRAGMENT);
+    // every duration in the source survives
+    for (const d of src.match(/[0-9]+\s?[-–~～]\s?[0-9]+\s?(?=주|週|周|weeks?|semaines|semanas|недел)/g) ?? []) expect(out).toContain(d);
+  });
+  it('fr: a range written with zero-width spaces ("32 \u200B\u200B000 $") is one price, no "26 000 et 32" left', () => {
+    const out = stripPriceProse('Une salle de bain principale prend 3 à 5 semaines et coûte entre 26 000 et 32 \u200B\u200B000 $.');
+    expect(out).toBe('Une salle de bain principale prend 3 à 5 semaines.');
+  });
+  it('ja: "15,000～$18,000" / "25,000 ～ 28,000 ドル" go whole — the label stays, no "～、"', () => {
+    expect(stripPriceProse('**[2 つのバスルーム](/en/projects/x/):** $15,000～$18,000、2～3 週間')).toBe('**[2 つのバスルーム](/en/projects/x/):** 2～3 週間');
+    expect(stripPriceProse('**[2 つのバスルーム](/en/projects/x/):** 25,000 ～ 28,000 ドル、4 ～ 5 週間')).toBe('**[2 つのバスルーム](/en/projects/x/):** 4 ～ 5 週間');
+  });
+  it('ko: a verb before "비용은 $X입니다" becomes final: 걸리며 → 걸립니다, 있으며 → 있습니다', () => {
+    expect(stripPriceProse('전체 욕실은 3~5주가 걸리며 비용은 $26,000~$32,000입니다.')).toBe('전체 욕실은 3~5주가 걸립니다.');
+    expect(stripPriceProse('보증이 있으며 3~5주가 소요되고 2~3주 내에 시작할 수 있으며 비용은 $26,000~$32,000입니다.')).toBe('보증이 있으며 3~5주가 소요되고 2~3주 내에 시작할 수 있습니다.');
   });
 });
