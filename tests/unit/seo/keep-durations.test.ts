@@ -1,5 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import { stripPriceProse, stripPriceMarkdown, filterPriceFaqs, hasDuration, hasPriceCopy } from '@/lib/seo/strip-price-copy';
+import { areaContentRenderer } from '@/lib/seo/area-markdown';
 
 /** Task 145: a duration that shares a sentence with a price stays; only the price goes. */
 
@@ -111,5 +112,27 @@ describe('task 148: durations in cost FAQs, tables and Arabic area copy stay', (
   it('a table row with a duration keeps it and empties only the price cell', () => {
     expect(stripPriceMarkdown('| Scope | Cost | Time |\n|---|---|---|\n| Suite | $65K–$95K | 8–10 weeks |\n| Rec room | $50K–$90K | |'))
       .toBe('| Scope | Cost | Time |\n|---|---|---|\n| Suite | | 8–10 weeks |');
+  });
+});
+
+describe('task 149: Korean "~" ranges survive strip + area markdown render', () => {
+  const coquitlam = '[주방 개조](/en/guides/kitchen-renovation-cost-vancouver/)(쿼츠 조리대가 있는 예산 친화적인 콘도 주방의 경우 5~6주)부터 사용자 정의 레이아웃의 경우 $35,000+까지. [욕실 리모델링](/en/guides/bathroom-renovation-cost-vancouver/) 타일로 마감된 맞춤형 유리 샤워실의 경우 $14,000~$17,000(2~3주 표준 샤워 전환)에서 $25,000+까지입니다.\n\nWestwood Plateau 및 Burke Mountain의 콘도 개조는 시작하기 전에 스트라타 승인이 필요합니다.';
+  it('the stripper keeps (2~3주 …) and 5~6주 when the $ ranges go', () => {
+    const out = stripPriceMarkdown(coquitlam);
+    expect(out).toContain('5~6주');
+    expect(out).toContain('(2~3주 표준 샤워 전환)');
+    expect(hasPriceCopy(out)).toBe(false);
+  });
+  it('the area renderer prints "~" literally (no strikethrough pairing): 5~6주 / 2~3주 / 6~8주', () => {
+    const html = areaContentRenderer.parse(stripPriceMarkdown(coquitlam)) as string;
+    expect(html).toContain('5~6주');
+    expect(html).toContain('2~3주');
+    expect(html).not.toContain('<del>');
+    const delta = areaContentRenderer.parse('우리는 최근 6~8주에 걸쳐 총 $40,000~$43,000의 개조를 완료했습니다.') as string;
+    expect(delta).toContain('6~8주');
+    expect(delta).toContain('$40,000~$43,000');
+  });
+  it('a real double-tilde stays literal too (copy never uses strikethrough)', () => {
+    expect(areaContentRenderer.parse('a ~~b~~ c') as string).toContain('~~b~~');
   });
 });
