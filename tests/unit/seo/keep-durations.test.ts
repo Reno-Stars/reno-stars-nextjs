@@ -56,6 +56,19 @@ describe('Persian / Arabic digits after a comma are a thousands separator, not a
   });
 });
 
+describe('area copy: a duration between two prices (verbatim DB area copy)', () => {
+  it('Coquitlam: "(5-6 weeks …)" stays, both prices go', () => {
+    const out = stripPriceProse('Real Coquitlam project pricing from our portfolio: kitchen renovations from $25,000–$27,000 (5-6 weeks for a budget-friendly condo kitchen with quartz countertops) to $35,000+ for custom layouts.');
+    expect(out).toContain('(5-6 weeks for a budget-friendly condo kitchen with quartz countertops)');
+    expect(hasPriceCopy(out)).toBe(false);
+  });
+  it('Maple Ridge: a comma inside the parenthetical does not split it', () => {
+    const out = stripPriceProse('Real Maple Ridge project pricing: bathroom renovations from $18,000–$21,000 (3-4 weeks, including custom glass door and tiled walls) to $35,000+ for full master bath suites with heated floors.');
+    expect(out).toContain('(3-4 weeks, including custom glass door and tiled walls)');
+    expect(hasPriceCopy(out)).toBe(false);
+  });
+});
+
 describe('ranges with the currency after each number are ONE price', () => {
   it.each(['15 ألف دولار - 72 ألف دولار', '15 000 $ à 72 000 $', '8000 加元到 20000 加元'])('%s', (s) => {
     expect(stripPriceProse(`A, ${s}.`)).toBe('A.');

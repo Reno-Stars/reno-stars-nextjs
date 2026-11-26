@@ -307,7 +307,7 @@ export function hasDuration(text: string): boolean {
 }
 
 /** Words that only introduce the amount that follows ("and costs", "for", "约"). */
-const PRICE_LEAD = /(?:\s*(?:[,，、،]\s*)?(?:(?:and|or|et|y)\s+)?(?:costs?|costing|priced at|for|at|about|around|roughly|approximately|from|starting at|coûte|cuesta|约|約|大约|大約|费用|費用|价格|價格))?\s*$/i;
+const PRICE_LEAD = /(?:\s*(?:[,，、،]\s*)?(?:(?:and|or|et|y)\s+)?(?:costs?|costing|priced at|for|at|about|around|roughly|approximately|from|starting at|to|à|coûte|cuesta|约|約|大约|大約|费用|費用|价格|價格))?\s*$/i;
 
 /** Remove the [start, end) price spans from a clause that keeps its duration. */
 function cutPriceSpans(clause: string, spans: ReadonlyArray<[number, number]>): string {
@@ -324,11 +324,12 @@ function joinKept(parts: readonly string[]): string {
 }
 
 /** [start, end) pieces of `text` split by `re` (a global regex matching the separators). */
-function pieces(text: string, re: RegExp): Array<[number, number]> {
+function pieces(text: string, re: RegExp, skip?: (at: number) => boolean): Array<[number, number]> {
   const out: Array<[number, number]> = [];
   let last = 0;
   for (const m of text.matchAll(re)) {
     const at = m.index ?? 0;
+    if (skip?.(at)) continue;
     out.push([last, at]);
     last = at + m[0].length;
   }
@@ -338,6 +339,17 @@ function pieces(text: string, re: RegExp): Array<[number, number]> {
 
 const SENTENCE_GAP = /(?<=[.!?。！？।۔؟])\s+|(?<=[。！？])(?=\S)/g;
 const CLAUSE_GAP = /(?<=[，;；،]|,(?![0-9٠-٩۰-۹]))\s*/g;
+
+/** True when `at` sits inside ( … ) / （ … ） of `text`: a comma there does not end a clause. */
+function inParens(text: string, at: number): boolean {
+  let depth = 0;
+  for (let i = 0; i < at; i++) {
+    const c = text[i];
+    if (c === '(' || c === '（') depth++;
+    else if ((c === ')' || c === '）') && depth > 0) depth--;
+  }
+  return depth > 0;
+}
 
 /**
  * Drop every sentence that still names a price — unless it also quotes the
@@ -355,7 +367,7 @@ function dropPriceSentences(text: string): string {
     const timed = hasDuration(sentence);
     if (!timed && !hasInsuranceAmount(sentence) && !isSubsidyText(sentence)) return '';
     const end = /[.!?。！？।۔؟]\s*$/.exec(sentence)?.[0].trim() ?? '';
-    const clauses = pieces(sentence, CLAUSE_GAP)
+    const clauses = pieces(sentence, CLAUSE_GAP, (at) => inParens(sentence, at))
       .map(([ca, cb]) => {
         const clause = sentence.slice(ca, cb);
         if (!inside(a + ca, a + cb)) return clause;
