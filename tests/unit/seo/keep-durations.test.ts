@@ -424,6 +424,14 @@ describe('task 153c: a meta that falls back to a price-free source keeps its ins
   it('no insurance in the priced meta → the fallback is unchanged', () => {
     expect(firstIntactText(['Kitchens from $20K. Call us.', 'Trusted renovations.'], 'x')).toBe('Trusted renovations.');
   });
+  it('only the text the page rendered lends its claim — not a later priced source (en Richmond)', () => {
+    const meta = 'Kitchen & bathroom renovation Richmond BC: $12K–$45K, plus basement suites. 3-yr warranty. Free quote.';
+    const later = 'Kitchens from $20K. $5M insured.';
+    expect(firstIntactText([meta, later, "Richmond's trusted renovation team."], 'x'))
+      .toBe("Richmond's trusted renovation team.");
+    expect(firstIntactText([null, '', 'Kitchens from $20K. $5M insured.', 'Trusted renovations.'], 'x'))
+      .toBe('Trusted renovations. $5M insured.');
+  });
   it('an intact first candidate is returned as is', () => {
     expect(firstIntactText(['$5M insured. Free quote.', 'b'], 'x')).toBe('$5M insured. Free quote.');
   });

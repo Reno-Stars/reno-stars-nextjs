@@ -710,13 +710,15 @@ export function firstIntactText(
 }
 
 /**
- * The insurance claim of a priced source that was passed over ("… $5M insured. Free quote.") rides
+ * The insurance claim of the priced text the page used to render ("… $5M insured. Free quote.") rides
  * along on the price-free text that replaced it — insurance is ALWAYS KEEP (task 153c).
  */
 function withInsuranceOf(chosen: string, skipped: ReadonlyArray<string | null | undefined>): string {
   if (hasInsuranceAmount(chosen)) return chosen;
-  const source = skipped.find((c) => hasInsuranceAmount(c));
-  if (!source) return chosen;
+  // Only the text the page rendered before (the first non-empty source) — never a claim from a
+  // later source the page never showed (en Richmond would gain a "$5M insured" it did not have).
+  const source = skipped.find((c) => c && c.trim());
+  if (!source || !hasInsuranceAmount(source)) return chosen;
   const sentences = stripPriceProse(source).match(/[^.!?。！？]*[.!?。！？]+\s*|[^.!?。！？]+$/g) ?? [];
   const claim = sentences.filter((x) => hasInsuranceAmount(x) && !hasPriceCopy(x)).map((x) => x.trim());
   if (!claim.length) return chosen;
