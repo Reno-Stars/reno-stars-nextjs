@@ -158,7 +158,8 @@ const PLUS = `(?:\\+|\\s\\+(?!\\s*[A-Za-z0-9$]))?`;
 export const PRICE_SOURCE =
   `(?:${PRE_AMT}(?:${SEP}(?:${PRE_AMT}|${POST_AMT}|${BARE}))?${PLUS}` +
   `|${BARE}${SEP}(?:${PRE_AMT}|${POST_AMT})${PLUS}` +
-  `|${POST_AMT}${PLUS})`;
+  // currency after EACH number: "15 ألف دولار - 72 ألف دولار", "15 000 $ à 72 000 $", "8000 加元到 20000 加元"
+  `|${POST_AMT}(?:${SEP}(?:${PRE_AMT}|${POST_AMT}|${BARE}))?${PLUS})`;
 
 /**
  * Insurance amounts are not prices ("$5M CGL", "500 万ドルの CGL 保険", "$5 मिलियन तक सीजीएल बीमा").

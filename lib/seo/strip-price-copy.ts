@@ -115,7 +115,7 @@ function sentenceBounds(text: string, start: number, end: number): [number, numb
 }
 
 /** Clause separators inside a sentence (a comma followed by a digit is a thousands separator: "$3,000"). */
-const CLAUSE_SEP = /[，;；،]|,(?![0-9])/g;
+const CLAUSE_SEP = /[，;；،]|,(?![0-9٠-٩۰-۹])/g;
 /**
  * Phrasing that marks a rebate amount inside a sentence that names a subsidy
  * ("BC Hydro offers up to $3,000", "额外 $3,000", "退税可抵 $7–11K", "combined up to $11,000").
@@ -248,9 +248,9 @@ const CLAUSE_CUTS: Array<[RegExp, string]> = [
   // Parenthetical holding an amount: "(about $5,000)", "($9–$17/sqft installed)".
   [new RegExp(String.raw`\s*[(（][^()（）]{0,80}?${AMT}[^()（）]{0,80}?[)）]`, 'g'), ''],
   // Leading amount before a comma / middle dot / semicolon / dash: "$20K–$55K, 3–5 weeks."
-  [new RegExp(String.raw`(^|[.!?。！？:：]\s*|\s[—–-]\s|·\s*)${AMT}\s*(?:[,，;；·](?![0-9])|\s[—–-])\s*`, 'g'), '$1'],
+  [new RegExp(String.raw`(^|[.!?。！？:：]\s*|\s[—–-]\s|·\s*)${AMT}\s*(?:[,，;；·](?![0-9٠-٩۰-۹])|\s[—–-])\s*`, 'g'), '$1'],
   // Trailing / middle amount after a separator: "…, $20K–$55K", " — $1.5K+", " · $4K".
-  [new RegExp(String.raw`\s*(?:[,，;；·]|\s[—–-])\s*(?:from|starting (?:at|from)|about|around|roughly|typically|under|over|up to)?\s*${AMT}(?=\s*(?:[,，;；.。!?！？)](?![0-9])|$))`, 'gim'), ''],
+  [new RegExp(String.raw`\s*(?:[,，;；،·]|\s[—–-])\s*(?:from|starting (?:at|from)|about|around|roughly|typically|under|over|up to)?\s*${AMT}(?=\s*(?:[,，;；،.。!?！？।)](?![0-9٠-٩۰-۹])|$))`, 'gim'), ''],
 ];
 
 
@@ -293,6 +293,31 @@ export function stripPriceProse(text: string): string {
   return tidyProse(out);
 }
 
+/**
+ * Durations ("4-8 weeks", "4 à 8 semaines", "4-8 أسابيع", "4-8 ਹਫ਼ਤੇ", "5–6周", "1-2 週") are not
+ * prices: a sentence that states one is never dropped whole — only its price goes (task 145).
+ */
+const DURATION = new RegExp(
+  String.raw`[0-9٠-٩۰-۹]+(?:\s?(?:[-–—~～]|to|à|a|bis|до|đến|से|ਤੋਂ|إلى|تا|〜)\s?[0-9٠-٩۰-۹]+)?\s?` +
+  String.raw`(?:weeks?|wks?|days?|months?|semaines?|semanas?|jours?|mois|meses|días|周|週|天|个月|個月|週間|ヶ月|か月|주|개월|недел\p{L}*|месяц\p{L}*|tuần|tháng|ngày|linggo|buwan|araw|सप्ताह|हफ़्ते|हफ्ते|महीने|ਹਫ਼ਤੇ|ਹਫ਼ਤਿਆਂ|ਹਫ਼ਤਾ|ਮਹੀਨੇ|أسابيع|أسبوع|أسبوعين|أشهر|شهر|أيام|هفته|ماه)`,
+  'iu',
+);
+export function hasDuration(text: string): boolean {
+  return DURATION.test(text);
+}
+
+/** Words that only introduce the amount that follows ("and costs", "for", "约"). */
+const PRICE_LEAD = /(?:\s*(?:[,，、،]\s*)?(?:(?:and|or|et|y)\s+)?(?:costs?|costing|priced at|for|at|about|around|roughly|approximately|from|starting at|coûte|cuesta|约|約|大约|大約|费用|費用|价格|價格))?\s*$/i;
+
+/** Remove the [start, end) price spans from a clause that keeps its duration. */
+function cutPriceSpans(clause: string, spans: ReadonlyArray<[number, number]>): string {
+  let out = clause;
+  for (const [s, e] of [...spans].sort((x, y) => y[0] - x[0])) {
+    out = out.slice(0, s).replace(PRICE_LEAD, '') + out.slice(e);
+  }
+  return out;
+}
+
 /** Join kept pieces: CJK punctuation is not followed by a space ("…独立屋。PEX…"). */
 function joinKept(parts: readonly string[]): string {
   return parts.reduce((acc, s) => (acc ? acc + (/[。！？，；：]$/.test(acc) ? '' : ' ') + s : s), '');
@@ -312,7 +337,7 @@ function pieces(text: string, re: RegExp): Array<[number, number]> {
 }
 
 const SENTENCE_GAP = /(?<=[.!?。！？।۔؟])\s+|(?<=[。！？])(?=\S)/g;
-const CLAUSE_GAP = /(?<=[，;；،]|,(?![0-9]))\s*/g;
+const CLAUSE_GAP = /(?<=[，;；،]|,(?![0-9٠-٩۰-۹]))\s*/g;
 
 /**
  * Drop every sentence that still names a price — unless it also quotes the
@@ -327,11 +352,20 @@ function dropPriceSentences(text: string): string {
   const kept = pieces(text, SENTENCE_GAP).map(([a, b]) => {
     const sentence = text.slice(a, b);
     if (!inside(a, b)) return sentence;
-    if (!hasInsuranceAmount(sentence) && !isSubsidyText(sentence)) return '';
+    const timed = hasDuration(sentence);
+    if (!timed && !hasInsuranceAmount(sentence) && !isSubsidyText(sentence)) return '';
     const end = /[.!?。！？।۔؟]\s*$/.exec(sentence)?.[0].trim() ?? '';
     const clauses = pieces(sentence, CLAUSE_GAP)
-      .filter(([ca, cb]) => !inside(a + ca, a + cb))
-      .map(([ca, cb]) => sentence.slice(ca, cb));
+      .map(([ca, cb]) => {
+        const clause = sentence.slice(ca, cb);
+        if (!inside(a + ca, a + cb)) return clause;
+        // A clause that also states a duration keeps it: only the price span goes (task 145).
+        if (!hasDuration(clause)) return '';
+        const spans = hits.filter((h) => h.start >= a + ca && h.end <= a + cb)
+          .map((h) => [h.start - a - ca, h.end - a - ca] as [number, number]);
+        return cutPriceSpans(clause, spans);
+      })
+      .filter((c) => c.trim() && /[^\s,，;；،:：·—–-]/.test(c));
     const body = joinKept(clauses)
       .replace(/[\s,，;；،:：·—–-]+$/, '')
       .replace(/^[\s,，;；،:：·—–-]+/, '')
