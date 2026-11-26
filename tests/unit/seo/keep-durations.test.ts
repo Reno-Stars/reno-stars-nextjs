@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { stripPriceProse, hasDuration, hasPriceCopy } from '@/lib/seo/strip-price-copy';
+import { stripPriceProse, stripPriceMarkdown, filterPriceFaqs, hasDuration, hasPriceCopy } from '@/lib/seo/strip-price-copy';
 
 /** Task 145: a duration that shares a sentence with a price stays; only the price goes. */
 
@@ -82,5 +82,34 @@ describe('hasDuration recognises fr / pa / ar / CJK forms', () => {
   it('a year or a price is not a duration', () => {
     expect(hasDuration('2026')).toBe(false);
     expect(hasDuration('$15K-$72K')).toBe(false);
+  });
+});
+
+describe('task 148: durations in cost FAQs, tables and Arabic area copy stay', () => {
+  it('a cost FAQ whose answer states a duration is kept, price-free (West Vancouver basement FAQ)', () => {
+    const out = filterPriceFaqs([{ question: 'How much does a basement suite cost in West Vancouver?',
+      answer: 'A full unfinished-to-suite conversion typically costs $65,000–$95,000 (8–10 weeks) given the higher labour and finish standards. A finished-basement conversion runs $45,000–$70,000 (6–8 weeks). A building permit and stamped drawings are required.' }]);
+    expect(out).toHaveLength(1);
+    expect(out[0].answer).toContain('(8–10 weeks)');
+    expect(out[0].answer).toContain('(6–8 weeks)');
+    expect(out[0].answer).toContain('typically (8–10 weeks)');
+    expect(hasPriceCopy(out[0].answer)).toBe(false);
+  });
+  it('a cost FAQ with no duration (and no insurance) is still dropped', () => {
+    expect(filterPriceFaqs([{ question: 'How much does a kitchen cost?', answer: 'Kitchens run $25,000–$55,000 depending on finishes and layout changes.' }])).toEqual([]);
+  });
+  it('ar Burnaby: "ويستغرق من 2 إلى 3 أسابيع" stays when the price goes', () => {
+    expect(stripPriceProse('يكلف ما بين 20000 إلى 25000 دولار ويستغرق من 2 إلى 3 أسابيع.')).toBe('ويستغرق من 2 إلى 3 أسابيع.');
+    expect(stripPriceProse('يستغرق الحمام الرئيسي الكامل مع الميزات المخصصة من 3 إلى 5 أسابيع ويكلف 26000 إلى 32000 دولار.'))
+      .toBe('يستغرق الحمام الرئيسي الكامل مع الميزات المخصصة من 3 إلى 5 أسابيع.');
+  });
+  it('zh Richmond: "$15,000–$18,000（2–3 周）" keeps （2–3 周）', () => {
+    const out = stripPriceProse('标准翻新（壁挂式浴室柜、无框淋浴、地铁砖）为 $15,000–$18,000（2–3 周）。');
+    expect(out).toContain('（2–3 周）');
+    expect(hasPriceCopy(out)).toBe(false);
+  });
+  it('a table row with a duration keeps it and empties only the price cell', () => {
+    expect(stripPriceMarkdown('| Scope | Cost | Time |\n|---|---|---|\n| Suite | $65K–$95K | 8–10 weeks |\n| Rec room | $50K–$90K | |'))
+      .toBe('| Scope | Cost | Time |\n|---|---|---|\n| Suite | | 8–10 weeks |');
   });
 });

@@ -307,7 +307,7 @@ export function hasDuration(text: string): boolean {
 }
 
 /** Words that only introduce the amount that follows ("and costs", "for", "约"). */
-const PRICE_LEAD = /(?:\s*(?:[,，、،]\s*)?(?:(?:and|or|et|y)\s+)?(?:costs?|costing|priced at|for|at|about|around|roughly|approximately|from|starting at|to|à|coûte|cuesta|约|約|大约|大約|费用|費用|价格|價格))?\s*$/i;
+const PRICE_LEAD = /(?:\s*(?:[,，、،]\s*)?(?:(?<![A-Za-zÀ-ɏ])(?:and|or|et|y)\s+)?(?<![A-Za-zÀ-ɏ])(?:costs?|costing|priced at|for|at|about|around|roughly|approximately|from|starting at|to|à|coûte|cuesta|约|約|大约|大約|费用|費用|价格|價格|و?(?:يكلف|تكلف)(?:\s+ما)?(?:\s+بين)?|يتراوح\s+بين|ما\s+بين|بين|بتكلفة|حوالي|و?تبلغ\s+تكلفة\s+\S+))?\s*$/i;
 
 /** Remove the [start, end) price spans from a clause that keeps its duration. */
 function cutPriceSpans(clause: string, spans: ReadonlyArray<[number, number]>): string {
@@ -419,9 +419,18 @@ const HEADING = /^(\s*#{1,6}\s+)(.*)$/;
 /** A line reduced to a bare label ("Budget refresh:", "**Mid-range**:") carries nothing. */
 const isBareLabel = (s: string) => /^[\s*_`>#-]*[^.!?。！？]{0,60}[:：][\s*_`]*$/.test(s) || /^[\s*_`.,，;；:：·—–-]*$/.test(s);
 
+/**
+ * A table row with an amount is dropped — unless it states a duration (task 145):
+ * then only its price cells are emptied ("| Suite | $65K–$95K | 8–10 weeks |" → "| Suite |  | 8–10 weeks |").
+ */
+function stripTableRow(line: string): string | null {
+  if (!hasDuration(line)) return null;
+  return line.split('|').map((cell) => (hasPriceCopy(cell) && !hasDuration(cell) ? ' ' : hasPriceCopy(cell) ? ` ${stripPriceProse(cell.trim())} ` : cell)).join('|');
+}
+
 function stripLine(line: string): string | null {
   if (!hasPriceCopy(line)) return line;
-  if (/^\s*\|/.test(line)) return null;                         // table row with an amount
+  if (/^\s*\|/.test(line)) return stripTableRow(line);         // table row with an amount
   const h = HEADING.exec(line);
   if (h) {
     const t = stripPriceTitle(h[2]);
@@ -662,7 +671,9 @@ export function filterPriceFaqs<T extends { question: string; answer: string }>(
     if (!hasPriceCopy(f.answer) && !hasPriceCopy(f.question)) { out.push(f); continue; }
     // A question about rebates / grants / HAFI keeps its whole answer (Ryan: subsidy amounts stay).
     if (isSubsidyText(f.question)) { out.push(f); continue; }
-    if (hasPriceCopy(f.answer) && isCostQuestion(f.question) && !hasInsuranceAmount(f.answer)) continue;
+    // A cost FAQ is dropped whole — unless its answer also quotes the insurance amount or states a
+    // duration (task 145): then it keeps a price-free answer ("… (8–10 weeks)").
+    if (hasPriceCopy(f.answer) && isCostQuestion(f.question) && !hasInsuranceAmount(f.answer) && !hasDuration(f.answer)) continue;
     const answer = stripPriceCopy(f.answer);
     const question = stripPriceTitle(f.question);
     if (!answer || answer.replace(/<[^>]+>/g, '').trim().length < 20 || !question) continue;
