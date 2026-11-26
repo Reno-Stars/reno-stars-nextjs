@@ -26,6 +26,124 @@ type Join = (left: string, right: string) => [string, string] | null;
  * repaired pair, or null when it does not apply. First match wins.
  */
 const JOINS: Join[] = [
+  // ---- task 152 -------------------------------------------------------------------------------
+  // en "permit fees … run $X, with a 3–5 week processing window" / "run $X in fees with 3–5 weeks of
+  // processing" → "permits … come with a 3–5 week processing window" (the fee is gone, the wait stays)
+  (l, r) => {
+    const m = /(?<![A-Za-z])(runs?|costs?|are|is)(\s+(?:typically|usually|approximately|about|roughly))?\s*$/i.exec(l);
+    const t = /^\s*(?:in\s+(?:permit\s+)?fees\s*)?,?\s*with\s+(?=\S)/i.exec(r);
+    if (!m || !t || !SHORT_DUR.test(r)) return null;
+    const plural = /^(?:run|cost|are)$/i.test(m[1]);
+    const subject = l.slice(0, m.index).replace(/\bpermit fees\b/i, 'permits').replace(/\bfees for\b/i, 'permits for');
+    const many = plural || /permits/i.test(subject);
+    const rest = r.slice(t[0].length);
+    // "with 3–5 weeks of processing time" → "take 3–5 weeks of processing time"; "with a 3–5 week window" → "come with a …"
+    if (/^[0-9]+(?:\s?[-–]\s?[0-9]+)?\s?(?:weeks?|days?|months?)\s+of\s/i.test(rest)) return [subject + (many ? 'take ' : 'takes '), rest];
+    return [subject + (many ? 'come with ' : 'comes with '), rest];
+  },
+  // en "starts at $X (3–4 weeks)" → "takes 3–4 weeks" (the 151 costs/runs rule, for "start(s) at")
+  (l, r) => {
+    const m = /(?<![A-Za-z])(starts|start)\s+at\s*$/i.exec(l);
+    const t = /^\s*\(([^()]*)\)/.exec(r);
+    if (!m || !t || !SHORT_DUR.test(t[1])) return null;
+    return [l.slice(0, m.index) + (/s$/i.test(m[1]) ? 'takes' : 'take'), ` ${t[1].trim()}${r.slice(t[0].length)}`];
+  },
+  // en "homes in Burnaby's $X range sell" → "homes in Burnaby sell"; "homes in the $X range sit" → "homes sit"
+  (l, r) => {
+    if (!/^\s*(?:price\s+)?range\b/i.test(r)) return null;
+    const pos = /([A-Z][\w.-]*)['’]s\s*$/.exec(l);
+    if (pos) return [l.slice(0, pos.index) + pos[1], r.replace(/^\s*(?:price\s+)?range/i, '')];
+    const the = /\s+in\s+the\s*$/i.exec(l);
+    return the ? [l.slice(0, the.index), r.replace(/^\s*(?:price\s+)?range/i, '')] : null;
+  },
+  // "add $X and 1–2 weeks of …" → "add 1–2 weeks of …": a conjunction that only joined the amount to a duration
+  (l, r) => (/(?<![A-Za-zÀ-ɏ])(?:add|adds|adding|plus)\s*$/i.test(l) && /^\s*(?:and|et|y|и|và)\s+(?=[0-9])/i.test(r)
+    ? [l, ' ' + r.replace(/^\s*(?:and|et|y|и|và)\s+/i, '')] : null),
+  // zh "费用通常为 $X（工期 8–10 周）" → "通常需要 8–10 周"; "许可证费用为 $X（审批 3–5 周）" → "许可证审批需要 3–5 周";
+  // "表面翻新起价 $X（3–4 周）" → "表面翻新需要 3–4 周"; "通常需要 $X（工期 8–10 周）" → "通常需要 8–10 周"
+  (l, r) => {
+    const m = /(?:费用|費用|造价|造價|售价|售價)?(通常|一般)?(?:需要|需|约为|約為|为|為|约|約|起价为|起價為|起价|起價)\s*$/.exec(l);
+    const t = /^\s*（\s*(工期|施工期|审批|審批)?\s*([^（）]*?)\s*）/.exec(r);
+    if (!m || !t || !SHORT_DUR.test(t[2])) return null;
+    const head = l.slice(0, m.index) + (m[1] ?? '');
+    const verb = t[1] && /审批|審批/.test(t[1]) ? `${t[1]}需要 ` : '需要 ';
+    return [head + verb, t[2] + r.slice(t[0].length)];
+  },
+  // zh "标准更新——…——费用为 $X，需要 2 至 3 周" / zh-Hant "標準翻新（…）約 $X，工期 2–3 周":
+  // the subject stays, the cost words go ("——" already separates it, so no comma after it)
+  (l, r) => {
+    const m = /(?:的)?(?:费用|費用|售价|售價|价格|價格|造价|造價)?(?:通常|一般)?(?:大约|大約|约|約)?(?:为|為|是)?\s*$/.exec(l);
+    const t = /^\s*[，,]\s*(?=需要|工期|需時|需时|耗时|耗時|施工期)/.exec(r);
+    if (!m || !m[0].trim() || !t) return null;
+    const head = l.slice(0, m.index).replace(/\s+$/, '');
+    return [head + (/[—–]$/.test(head) ? '' : '，'), r.slice(t[0].length)];
+  },
+  // zh "会额外增加 $X 费用和 1–2 周的水管工程量" → "会额外增加 1–2 周的水管工程量"
+  (l, r) => (/^\s*(?:的)?(?:费用|費用)(?:和|及|与|與)\s*/.test(r) ? [l.replace(/\s+$/, ' '), r.replace(/^\s*(?:的)?(?:费用|費用)(?:和|及|与|與)\s*/, '')] : null),
+  // zh-Hant "在2-3周內以 $X 的預算完成" → "在2-3周內完成"
+  (l, r) => (/(?:以|用)\s*$/.test(l) && /^\s*的(?:预算|預算)/.test(r) ? [l.replace(/\s*(?:以|用)\s*$/, ''), r.replace(/^\s*的(?:预算|預算)/, '')] : null),
+  // Project cards: "Completed within 2–3 weeks and a $X budget, …" / "spanned 4–5 months with a $X investment,"
+  // → "Completed within 2–3 weeks, …" — the budget phrase only carried the amount (every locale's copy)
+  (l, r) => {
+    const pairs: Array<[RegExp, RegExp]> = [
+      [/\s+(?:and|with|on|for)\s+(?:a|an)\s*$/i, /^\s*(?:total\s+)?(?:budget|investment|price tag)\b/i],
+      [/\s+(?:at\s+)?isang\s*$/i, /^\s*na\s+(?:budget|badyet|pamumuhunan)\b/i],
+      [/\s+(?:और|तथा)\s*$/, /^\s*(?:के|का|की)\s+(?:बजट|निवेश)(?:\s+(?:में|पर|से))?/],
+      [/\s+(?:ਅਤੇ)\s*$/, /^\s*(?:ਦੇ|ਦਾ|ਦੀ)\s+(?:ਬਜਟ|ਨਿਵੇਸ਼)(?:\s+(?:ਵਿੱਚ|ਨਾਲ))?/],
+      [/\s*(?:,?\s*(?:и\s+)?с\s+(?:бюджетом|инвестициями)(?:\s+в(?:\s+размере)?)?)\s*$/i, /^(?:\s*долларов(?:\s+США)?)?/i],
+      [/\s+و?(?:بميزانية|باستثمار)(?:\s+(?:قدره|تتراوح|تبلغ))?(?:\s+ما)?(?:\s+بين)?\s*$/, /^/],
+      [/\s+(?:و\s+)?(?:بودجه|با\s+سرمایه\s*گذاری|با\s+سرمایه‌گذاری)\s*$/, /^/],
+    ];
+    for (const [lead, tail] of pairs) {
+      const m = lead.exec(l);
+      const t = m && tail.exec(r);
+      if (m && t) return [l.slice(0, m.index), r.slice(t[0].length)];
+    }
+    return null;
+  },
+  // ar "(…) يتراوح بين X و Y دولار في 2-3 أسابيع" → "(…) يستغرق 2-3 أسابيع"
+  (l, r) => {
+    const m = /\s*(?:ي|ت)تراوح\s+(?:ما\s+)?(?:بين|من)\s*$/.exec(l);
+    const t = /^\s*(?:في|خلال)\s+(?=[0-9٠-٩])/.exec(r);
+    return m && t ? [l.slice(0, m.index) + ' يستغرق ', r.slice(t[0].length)] : null;
+  },
+  // tl "ay nagkakahalaga ng $X at tumatagal ng 2–3 linggo" → "ay tumatagal ng 2–3 linggo"
+  (l, r) => (/\s*nagkakahalaga\s+ng\s*$/i.test(l) && /^\s*at\s+(?=\S)/i.test(r)
+    ? [l.replace(/\s*nagkakahalaga\s+ng\s*$/i, ''), ' ' + r.replace(/^\s*at\s+/i, '')] : null),
+  // pa "— $X ਵਿੱਚ ਆਉਂਦੀ ਹੈ ਅਤੇ 2–3 ਹਫ਼ਤੇ ਲੈਂਦੀ ਹੈ" → "— 2–3 ਹਫ਼ਤੇ ਲੈਂਦੀ ਹੈ"
+  (l, r) => {
+    const t = /^\s*ਵਿੱਚ\s+(?:ਆਉਂਦੀ|ਆਉਂਦਾ|ਪੈਂਦੀ|ਪੈਂਦਾ|ਹੁੰਦੀ|ਹੁੰਦਾ)\s+ਹੈ\s+ਅਤੇ\s+/.exec(r);
+    return t ? [l, ' ' + r.slice(t[0].length)] : null;
+  },
+  // hi "- $X तक चलता है और इसमें 2-3 सप्ताह लगते हैं" → "- इसमें 2-3 सप्ताह लगते हैं"
+  (l, r) => {
+    const t = /^\s*(?:तक\s+)?(?:चलता|चलती|होता|होती)\s+है\s+और\s+(?=इसमें|इसे)/.exec(r);
+    return t ? [l, ' ' + r.slice(t[0].length)] : null;
+  },
+  // ar "يكلف ما بين X ويستغرق …" / "تبلغ تكلفة S ما بين X ويستغرق …" → "… يستغرق …" / "S يستغرق …"
+  (l, r) => {
+    const t = /^\s*و(يستغرق|تستغرق)(?=\s)/.exec(r);
+    if (!t) return null;
+    const head = l.replace(PRICE_LEAD, '').replace(/(^|[.،:]\s*|\s[-—–]\s*)تبلغ\s+تكلفة\s+/, '$1');
+    return [head, ' ' + t[1] + r.slice(t[0].length)];
+  },
+  // fa "بین X دلار هزینه دارد و ۲ تا ۳ هفته طول می‌کشد" → "۲ تا ۳ هفته طول می‌کشد"
+  (l, r) => {
+    const t = /^\s*هزینه\s+دارد\s+و\s+/.exec(r);
+    return t ? [l.replace(/\s*(?:بین|حدود|از)\s*$/, ''), ' ' + r.slice(t[0].length)] : null;
+  },
+  // A sentence that OPENS with the amount phrase before a duration ("D'un coût compris entre X et Y $ sur
+  // 9 à 11 semaines, le projet …"): the cost phrase goes and the duration opens the sentence.
+  (l, r) => {
+    const m = /(^|[.!?]\s+)(?:D['’]un\s+coût\s+(?:compris\s+entre|de)|Với\s+mức\s+giá(?:\s+từ)?|بقيمة(?:\s+تتراوح)?(?:\s+ما)?(?:\s+بين)?|با\s+قیمت|Por\s+un\s+(?:costo|coste)\s+de|At\s+a\s+cost\s+of)\s*$/i.exec(l);
+    if (!m || !/^\s*(?:sur|en|pendant|trong(?:\s+vòng)?|على\s+مدار|خلال|طی|در|durante|en|over|in)\s/i.test(r)) return null;
+    const rest = r.trimStart();
+    return [l.slice(0, m.index) + m[1], rest.charAt(0).toUpperCase() + rest.slice(1)];
+  },
+  // ru "Проект стоимостью X долларов в течение 9–11 недель" → "Проект в течение 9–11 недель"
+  (l, r) => (/\s*стоимостью\s*$/i.test(l) && /^\s*(?:в течение|за)\s/i.test(r) ? [l.replace(/\s*стоимостью\s*$/i, ''), r] : null),
+  // hi / pa "9-11 सप्ताहों में $X पर, …" / "9-11 ਹਫ਼ਤਿਆਂ ਵਿੱਚ $X ਵਿੱਚ, …" → "9-11 सप्ताहों में, …"
+  (l, r) => (/^\s*(?:पर|में|ਵਿੱਚ|ਤੇ|'ਤੇ)\s*[,،]/.test(r) ? [l.replace(/\s+$/, ''), r.replace(/^\s*(?:पर|में|ਵਿੱਚ|ਤੇ|'ਤੇ)\s*/, '')] : null),
   // ko "S 비용은 2~3주에 $X입니다" → "S 기간은 2~3주입니다"
   (l, r) => {
     const m = new RegExp(String.raw`비용(?:은|이)\s*(${KO_DUR})에\s*$`).exec(l);
@@ -62,19 +180,23 @@ const JOINS: Join[] = [
   // pa "$X ਦੀ ਕੁੱਲ ਮਿਲਾ ਕੇ ਇੱਕ [ਪ੍ਰੋਜੈਕਟ]" → "ਇੱਕ [ਪ੍ਰੋਜੈਕਟ]"
   (l, r) => (/^\s*ਦੀ\s+ਕੁੱਲ\s+ਮਿਲਾ\s+ਕੇ\s/.test(r) ? [l, r.replace(/^\s*ਦੀ\s+ਕੁੱਲ\s+ਮਿਲਾ\s+ਕੇ/, '')] : null),
   // "Pricing: $X from luxury …" (pa/hi word order): the range word after a label goes with the amount
-  (l, r) => (/[:：]\s*$/.test(l) && /^\s*(?:ਤੋਂ|से)\s/.test(r) ? [l, r.replace(/^\s*(?:ਤੋਂ|से)/, '')] : null),
+  // — and a label that NAMES the price ("ਅਸਲ … ਪ੍ਰੋਜੈਕਟ ਦੀ ਕੀਮਤ:" = "real project pricing:") goes with it (task 152)
+  (l, r) => {
+    if (!/[:：]\s*$/.test(l) || !/^\s*(?:ਤੋਂ|से)\s/.test(r)) return null;
+    const rest = r.replace(/^\s*(?:ਤੋਂ|से)\s*/, '');
+    const label = /(^|\n|[.!?।]\s+)([^\n.!?।:：]*(?:ਦੀ\s+ਕੀਮਤ|ਕੀਮਤਾਂ|की\s+कीमत|कीमतें|मूल्य\s+निर्धारण)[^\n.!?।:：]*)[:：]\s*$/.exec(l);
+    return label ? [l.slice(0, label.index) + label[1], rest] : [l, ' ' + rest];
+  },
   // "typically costs $X (8–10 weeks)" → "typically takes 8–10 weeks"; zh "为 $X（2–3 周）" → "需要 2–3 周"
   (l, r) => {
     const m = /(?<![A-Za-z])(costs|cost|runs|run)\s*$/i.exec(l);
     const t = /^\s*\(([^()]*)\)/.exec(r);
     if (!m || !t || !SHORT_DUR.test(t[1])) return null;
-    return [l.slice(0, m.index) + (/s$/i.test(m[1]) ? 'takes' : 'take'), ` ${t[1].trim()}${r.slice(t[0].length)}`];
+    // "Township permit fees … run $X (3–5 weeks processing)" → "Township permits … take 3–5 weeks processing"
+    const subject = l.slice(0, m.index).replace(/\bpermit fees\b/i, 'permits');
+    return [subject + (/s$/i.test(m[1]) ? 'takes' : 'take'), ` ${t[1].trim()}${r.slice(t[0].length)}`];
   },
-  (l, r) => {
-    const m = /(?:约为|約為|为|為|约|約)\s*$/.exec(l);
-    const t = /^\s*（([^（）]*)）/.exec(r);
-    return m && t && SHORT_DUR.test(t[1]) ? [l.slice(0, m.index) + '需要 ', t[1].trim() + r.slice(t[0].length)] : null;
-  },
+  // zh "为 $X（2–3 周）" → "需要 2–3 周": see the task 152 zh rule above (it also drops 费用 / 工期 / 起价)
   // ko "(…5~6주)부터 사용자 정의 레이아웃의 경우 $35,000+까지" → "(…5~6주)": the "from … to $Y" half goes
   (l, r) => {
     const m = /[)）]\s*부터[^()（）]*$/.exec(l);
@@ -206,4 +328,47 @@ export function salvageRangeNotes(
   const cjk = /[぀-ヿ㐀-鿿]/.test(notes.map((n) => n.inner).join(''));
   const body = notes.map((n) => n.inner.trim()).join(cjk ? '；' : '; ');
   return (head ? head + (cjk ? '：' : ': ') + body : body) + keepTail + end;
+}
+
+// ---------------------------------------------------------------------------
+// "costs $X for … (8–10 weeks), or $Y to … (6–8 weeks)" — task 152
+// ---------------------------------------------------------------------------
+const NOTE_PHRASE = String.raw`([^()（）.;:!?]{1,90}?)\s*\(([^()]*)\)`;
+const COST_VERB = /(?<![A-Za-z])(cost ranges from|costs?|runs?|ranges? from)\s*$/i;
+
+/**
+ * "A legal secondary suite typically costs $65K–$95K for a standard conversion (8–10 weeks), or
+ * $45K–$70K to convert a finished basement (6–8 weeks)." — each amount is followed by what it buys and
+ * that job's duration. Cutting the amounts leaves "typically for a standard conversion (8–10 weeks)";
+ * the sentence is rebuilt as "typically takes 8–10 weeks for a standard conversion, or 6–8 weeks to
+ * convert a finished basement." Returns null unless EVERY amount has that shape and the verb is a
+ * cost verb.
+ */
+export function rewriteNotedAmounts(
+  sentence: string,
+  hits: ReadonlyArray<{ start: number; end: number }>,
+  hasDuration: (s: string) => boolean,
+): string | null {
+  if (!hits.length) return null;
+  const sorted = [...hits].sort((a, b) => a.start - b.start);
+  const verb = COST_VERB.exec(sentence.slice(0, sorted[0].start));
+  if (!verb) return null;
+  const parts: string[] = [];
+  let at = sorted[0].start;
+  for (let i = 0; i < sorted.length; i++) {
+    const h = sorted[i];
+    const glue = sentence.slice(at, h.start);
+    if (i > 0 && !/^\s*,?\s*(?:or|and|to|while|whereas)\s+$/i.test(glue)) return null;
+    const m = new RegExp('^' + NOTE_PHRASE).exec(sentence.slice(h.end));
+    if (!m || !hasDuration(m[2]) || hits.some((x) => x.start > h.end && x.start < h.end + m[0].length)) return null;
+    const dur = m[2].trim();
+    const phrase = m[1].trim();
+    parts.push((i > 0 ? glue.replace(/\s+$/, ' ') : '') + `${dur} ${phrase}`);
+    at = h.end + m[0].length;
+  }
+  const v = verb[1].toLowerCase();
+  const newVerb = v === 'cost ranges from' ? 'time ranges from' : /ranges? from/.test(v) ? v : /s$/.test(v) ? 'takes' : 'take';
+  let body = parts.join('');
+  if (/ranges? from$/.test(newVerb)) body = body.replace(/,?\s+or\s+/i, ' to ');
+  return sentence.slice(0, verb.index) + newVerb + ' ' + body + sentence.slice(at);
 }

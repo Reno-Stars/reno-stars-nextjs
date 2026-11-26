@@ -100,7 +100,8 @@ describe('task 148: durations in cost FAQs, tables and Arabic area copy stay', (
     expect(filterPriceFaqs([{ question: 'How much does a kitchen cost?', answer: 'Kitchens run $25,000–$55,000 depending on finishes and layout changes.' }])).toEqual([]);
   });
   it('ar Burnaby: "ويستغرق من 2 إلى 3 أسابيع" stays when the price goes', () => {
-    expect(stripPriceProse('يكلف ما بين 20000 إلى 25000 دولار ويستغرق من 2 إلى 3 أسابيع.')).toBe('ويستغرق من 2 إلى 3 أسابيع.');
+    // task 152: the "و" ("and") only joined the cost verb to the duration verb — it goes with the cost
+    expect(stripPriceProse('يكلف ما بين 20000 إلى 25000 دولار ويستغرق من 2 إلى 3 أسابيع.')).toBe('يستغرق من 2 إلى 3 أسابيع.');
     expect(stripPriceProse('يستغرق الحمام الرئيسي الكامل مع الميزات المخصصة من 3 إلى 5 أسابيع ويكلف 26000 إلى 32000 دولار.'))
       .toBe('يستغرق الحمام الرئيسي الكامل مع الميزات المخصصة من 3 إلى 5 أسابيع.');
   });
@@ -239,5 +240,54 @@ describe('task 151b: two-clause cost FAQs and empty "budget of" clauses (live ar
     expect(out).toBe(want);
     expect(hasPriceCopy(out)).toBe(false);
     expect(out).not.toMatch(/costs:|budget de,|investissement de,|entre et|từ,|लागत है/);
+  });
+});
+
+// ---------------------------------------------------------------------------
+// Task 152 (Captain CAP-13 re-audit of 9d9c3333): everything the area page renders — FAQ answers
+// (incl. the EN fallback), project cards, meta, body. BASE = verbatim raw field from the live site
+// (local DB where the live copy differs); WANT = the hand-reviewed render. `needle` = the broken
+// fragment Captain saw on the branch.
+// ---------------------------------------------------------------------------
+import task152 from './fixtures/task152-cases.json';
+import { stripPriceCopy } from '@/lib/seo/strip-price-copy';
+
+const DUR152 = /[0-9٠-٩۰-۹]+(?:\s?(?:[-–—~～]|to|à|a|bis|до|đến|से|ਤੋਂ|إلى|تا|至)\s?[0-9٠-٩۰-۹]+)?\s?(?:weeks?|months?|semaines?|mois|недел\p{L}*|месяц\p{L}*|tuần|tháng|linggo|सप्ताह\p{L}*|ਹਫ਼ਤ\p{L}*|أسابيع|أسبوع\p{L}*|أشهر|هفته|ماه|周|週|个月|個月)/gu;
+const durKey = (d: string) => d.replace(/\s/g, '').replace(/[٠-٩]/g, (c) => String(c.charCodeAt(0) - 0x660)).replace(/[۰-۹]/g, (c) => String(c.charCodeAt(0) - 0x6f0));
+
+describe('task 152: no fragments in FAQ answers / project cards / meta after a price is cut', () => {
+  it.each(task152.map((c) => [c.id, c] as const))('%s', (_id, c) => {
+    const out = c.fn === 'markdown' ? stripPriceMarkdown(c.base) : stripPriceCopy(c.base);
+    expect(out).toBe(c.want);
+    expect(hasPriceCopy(out)).toBe(false);
+    expect(out).not.toContain(c.needle.trim());
+    // every duration of the base text that is not inside a dropped price-only sentence survives
+    const kept = new Set((out.match(DUR152) ?? []).map(durKey));
+    for (const d of (c.want ?? '').match(DUR152) ?? []) expect(kept.has(durKey(d))).toBe(true);
+  });
+
+  it('Persian digits with U+066C ARABIC THOUSANDS SEPARATOR are one amount (fa Burnaby leak)', () => {
+    expect(hasPriceCopy('بین ۲۰٬۰۰۰ تا ۲۵٬۰۰۰ دلار هزینه دارد')).toBe(true);
+    const fa = 'یک بروزرسانی استاندارد شامل روشویی جدید، کاشی، شیرآلات و روشنایی بین ۲۰٬۰۰۰ تا ۲۵٬۰۰۰ دلار هزینه دارد و ۲ تا ۳ هفته طول می‌کشد. یک مستر انسوئیت کامل با ویژگی‌های سفارشی و وان تک‌پایه بین ۲۸٬۰۰۰ تا ۳۲٬۰۰۰ دلار هزینه دارد و ۳ تا ۵ هفته طول می‌کشد.';
+    const out = stripPriceCopy(fa);
+    expect(out).toBe('یک بروزرسانی استاندارد شامل روشویی جدید، کاشی، شیرآلات و روشنایی ۲ تا ۳ هفته طول می‌کشد. یک مستر انسوئیت کامل با ویژگی‌های سفارشی و وان تک‌پایه ۳ تا ۵ هفته طول می‌کشد.');
+    expect(out).not.toMatch(/[۰-۹]٬|٬\s/);
+  });
+
+  it('"美元" is a currency: "20,000 美元至 32,000 美元" is a price', () => {
+    expect(hasPriceCopy('浴室翻新费用通常为 20,000 美元至 32,000 美元。')).toBe(true);
+    expect(stripPriceCopy('标准更新——新的浴室柜、瓷砖、固定装置和照明——费用为 20,000 至 25,000 美元，需要 2 至 3 周。'))
+      .toBe('标准更新——新的浴室柜、瓷砖、固定装置和照明——需要 2 至 3 周。');
+  });
+
+  it('a "these prices include…" sentence goes once the prices are gone, and only then', () => {
+    expect(stripPriceCopy('浴室翻新费用通常为 20,000 加元至 32,000 加元。这些价格包括劳动力、材料和许可证。')).toBe('');
+    expect(stripPriceCopy('These prices include labour, materials and permits.')).toBe('These prices include labour, materials and permits.');
+    expect(stripPriceCopy('Bathrooms run $20,000–$32,000. A refresh takes 2–3 weeks. These prices include labour.')).toBe('A refresh takes 2–3 weeks.');
+  });
+
+  it('"주방" (kitchen) after an amount is not a duration ("$55,000 주방" ≠ "55,000 weeks")', () => {
+    expect(hasDuration('$35,000~$55,000 주방 개조')).toBe(false);
+    expect(hasDuration('2~3주')).toBe(true);
   });
 });

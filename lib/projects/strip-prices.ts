@@ -138,8 +138,12 @@ const compiled = SENTENCE_RULES.map((r) => ({
 // Generic amount detection
 // ---------------------------------------------------------------------------
 const D = '[0-9٠-٩۰-۹]';
-/** 25,000 · 25.000 · 25 000 (incl. NBSP / narrow NBSP, and zero-width spaces after the separator: "32 \u200B\u200B000") · 2.7 · 345000 */
-const NUM = `${D}{1,3}(?:[,.\u00A0\u202F ]\u200B*${D}{3})+(?:\\.${D}+)?|${D}+(?:\\.${D}+)?`;
+/**
+ * 25,000 · 25.000 · 25 000 (incl. NBSP / narrow NBSP, and zero-width spaces after the separator: "32 \u200B\u200B000") · 2.7 · 345000
+ * · Persian / Arabic "۲۰٬۰۰۰" (U+066C ARABIC THOUSANDS SEPARATOR) and "۲٫۵" (U+066B decimal separator) — task 152:
+ * without them only the "۰۰۰ دلار" tail of "۲۰٬۰۰۰ تا ۲۵٬۰۰۰ دلار" was cut and "۲۰٬۰۰۰ تا ۲۵٬" stayed on the page.
+ */
+const NUM = `${D}{1,3}(?:[,.\u066C\u00A0\u202F ]\u200B*${D}{3})+(?:[.\u066B]${D}+)?|${D}+(?:[.\u066B]${D}+)?`;
 /**
  * Magnitude after the number: K / M / 万 / 萬 / 만, and the Arabic spelled forms
  * ألف / آلاف (thousand) and مليون / ملايين (million): "25 ألف دولار - 72 ألف دولار" (task 138).
@@ -147,7 +151,7 @@ const NUM = `${D}{1,3}(?:[,.\u00A0\u202F ]\u200B*${D}{3})+(?:\\.${D}+)?|${D}+(?:
 const MAG = `(?:\\s?(?:[KkMm]|万|萬|만)(?![A-Za-z])|\\s?(?:ألف|آلاف|مليون|ملايين)(?![\\u0600-\\u06FF]))?`;
 const CUR_PRE = `(?:CA\\$|C\\$|US\\$|CAD\\s?\\$?|\\$)`;
 const CUR_POST =
-  '(?:\\$|USD|CAD|加元|加幣|dollars?|dólares|đô la|долларов(?:\\s+США)?|доллара|долл\\.|دولار(?:\\s+أمريكي)?|دلار(?:ی)?|डॉलर|ਡਾਲਰ|ドル|달러)';
+  '(?:\\$|USD|CAD|加元|加幣|加币|美元|美金|dollars?|dólares|đô la|долларов(?:\\s+США)?|доллара|долл\\.|دولار(?:\\s+أمريكي)?|دلار(?:ی)?|डॉलर|ਡਾਲਰ|ドル|달러)';
 const SEP = '\\s?(?:–|—|-|~|～|〜|to|à|a|et|y|至|到|إلى|و|تا|đến|से|ਤੋਂ|до)\\s?';
 const PRE_AMT = `${CUR_PRE}\\s?(?:${NUM})${MAG}`;
 const POST_AMT = `(?:${NUM})${MAG}\\s?${CUR_POST}`;

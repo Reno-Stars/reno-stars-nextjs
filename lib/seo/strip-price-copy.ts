@@ -25,7 +25,7 @@
  * whole rather than left hollow (filterPriceFaqs).
  */
 import { PRICE_SOURCE } from '@/lib/projects/strip-prices';
-import { joinAroundCut, salvageRangeNotes } from '@/lib/seo/price-cut-joins';
+import { joinAroundCut, salvageRangeNotes, rewriteNotedAmounts } from '@/lib/seo/price-cut-joins';
 
 /** Insurance wording in all 14 site languages. An amount near one is NOT a price. */
 const INSURANCE = new RegExp(
@@ -265,6 +265,8 @@ function tidyProse(s: string): string {
     .replace(/([,，;；:：])\s*([.。!?！？])/g, '$2')
     .replace(/([.。])\s*\1+/g, '$1')
     .replace(/[(（]\s*[)）]/g, '')
+    // "Richmond BC: $12K–$45K, plus basement suites" → "Richmond BC, plus basement suites" (task 152)
+    .replace(/:\s+(plus|and)\s/g, ', $1 ')
     .replace(/^[\s,，;；:：·—–-]+/, '')
     .replace(/[\s,，;；:：·—–-]+$/, (m) => (/[.。]/.test(m) ? '.' : ''))
     .trim();
@@ -291,7 +293,30 @@ export function stripPriceProse(text: string): string {
     });
   }
   if (hasPriceCopy(out)) out = dropPriceSentences(out);
+  // "这些价格包括劳动力…" / "These prices include…" only made sense next to the amounts (task 152)
+  if (!hasPriceCopy(out)) out = dropPriceBackrefs(out);
   return tidyProse(out);
+}
+
+/**
+ * A sentence that only refers back to amounts that are gone: "这些价格包括劳动力、材料和许可证。",
+ * "These prices include labour…", "وتشمل هذه الأسعار…", "این قیمت‌ها شامل…" (task 152). Only called
+ * on text that HAD prices and has none left.
+ */
+const PRICE_BACKREF = new RegExp(
+  [
+    String.raw`(?<![\p{L}])(?:these|those|the above|all) (?:prices|price ranges|costs|figures|estimates)(?![\p{L}])`,
+    String.raw`(?<![\p{L}])(?:estos|esos) (?:precios|costos|rangos)(?![\p{L}])`, String.raw`(?<![\p{L}])ces (?:prix|tarifs|coûts|montants)(?![\p{L}])`,
+    String.raw`(?<![\p{L}])эт(?:и|о)[\s ]+(?:цен\p{L}*|стоимост\p{L}*)`, String.raw`(?:các|những) mức giá (?:này|trên)`, String.raw`(?<![\p{L}])(?:ang )?mga presyong ito(?![\p{L}])`,
+    '这些价格', '這些價格', '以上价格', '以上價格', '上述价格', '上述價格', 'これらの価格', 'この価格', '이 가격', '이러한 가격', '위 가격',
+    'هذه الأسعار', 'هذه التكاليف', 'این قیمت‌ها', 'این قیمتها', 'این هزینه‌ها',
+    'इन कीमतों', 'ये कीमतें', 'इन लागतों', 'ਇਨ੍ਹਾਂ ਕੀਮਤਾਂ', 'ਇਹ ਕੀਮਤਾਂ', 'ਇਨ੍ਹਾਂ ਲਾਗਤਾਂ',
+  ].join('|'),
+  'iu',
+);
+function dropPriceBackrefs(text: string): string {
+  if (!PRICE_BACKREF.test(text)) return text;
+  return joinKept(pieces(text, SENTENCE_GAP).map(([a, b]) => text.slice(a, b)).filter((x) => !PRICE_BACKREF.test(x)));
 }
 
 /**
@@ -300,7 +325,7 @@ export function stripPriceProse(text: string): string {
  */
 const DURATION = new RegExp(
   String.raw`[0-9٠-٩۰-۹]+(?:\s?(?:[-–—~～]|to|à|a|bis|до|đến|से|ਤੋਂ|إلى|تا|〜)\s?[0-9٠-٩۰-۹]+)?\s?` +
-  String.raw`(?:weeks?|wks?|days?|months?|semaines?|semanas?|jours?|mois|meses|días|周|週|天|个月|個月|週間|ヶ月|か月|주|개월|недел\p{L}*|месяц\p{L}*|tuần|tháng|ngày|linggo|buwan|araw|सप्ताह|हफ़्ते|हफ्ते|महीने|ਹਫ਼ਤੇ|ਹਫ਼ਤਿਆਂ|ਹਫ਼ਤਾ|ਮਹੀਨੇ|أسابيع|أسبوع|أسبوعين|أشهر|شهر|أيام|هفته|ماه)`,
+  String.raw`(?:weeks?|wks?|days?|months?|semaines?|semanas?|jours?|mois|meses|días|周|週|天|个月|個月|週間|ヶ月|か月|주(?![방택])|개월|недел\p{L}*|месяц\p{L}*|tuần|tháng|ngày|linggo|buwan|araw|सप्ताह|हफ़्ते|हफ्ते|महीने|ਹਫ਼ਤੇ|ਹਫ਼ਤਿਆਂ|ਹਫ਼ਤਾ|ਮਹੀਨੇ|أسابيع|أسبوع|أسبوعين|أشهر|شهر|أيام|هفته|ماه)`,
   'iu',
 );
 export function hasDuration(text: string): boolean {
@@ -359,6 +384,17 @@ function inParens(text: string, at: number): boolean {
 /** "**[Minimalist Bathroom](/en/projects/…/):**" — a lead label with nothing after its colon. */
 const isLabelOnly = (s: string) => /^[\s*_`>#-]*\S[^.!?。！？]{0,200}[:：][\s*_`]*$/.test(s);
 
+/**
+ * "…suite run $1,500–$3,500, with a 3–5 week processing window" / "約 $20,000–$25,000，工期 2–3 周":
+ * the clause after the comma is the timed predicate OF the priced one — split there, the priced half
+ * (with its subject) is dropped and "with a 3–5 week …" / "工期 2–3 周" is left alone (task 152).
+ */
+const TIMED_PREDICATE = /^\s*(?:with\s|工期|需要|需時|需时|耗时|耗時|施工期)/i;
+function continuesAmount(sentence: string, at: number, hits: ReadonlyArray<{ start: number; end: number }>): boolean {
+  // `at` is just after the separator (CLAUSE_GAP matches behind it)
+  return TIMED_PREDICATE.test(sentence.slice(at)) && hits.some((h) => h.end <= at && /^[\s,，;；،]*$/.test(sentence.slice(h.end, at)));
+}
+
 function dropPriceSentences(text: string): string {
   const hits = priceHits(text);
   const inside = (a: number, b: number) => hits.some((h) => h.start >= a && h.end <= b);
@@ -372,8 +408,12 @@ function dropPriceSentences(text: string): string {
     const salvaged = timed && !hasInsuranceAmount(sentence) && !isSubsidyText(sentence)
       ? salvageRangeNotes(sentence, rel, hasDuration) : null;
     if (salvaged) return salvaged;
+    // "costs $X for a standard conversion (8–10 weeks), or $Y to convert … (6–8 weeks)" (task 152)
+    const rewritten = timed && !hasInsuranceAmount(sentence) && !isSubsidyText(sentence)
+      ? rewriteNotedAmounts(sentence, rel, hasDuration) : null;
+    if (rewritten) return rewritten;
     const end = /[.!?。！？।۔؟]\s*$/.exec(sentence)?.[0].trim() ?? '';
-    const clauses = pieces(sentence, CLAUSE_GAP, (at) => inParens(sentence, at))
+    const clauses = pieces(sentence, CLAUSE_GAP, (at) => inParens(sentence, at) || continuesAmount(sentence, at, rel))
       .map(([ca, cb]) => {
         const clause = sentence.slice(ca, cb);
         if (!inside(a + ca, a + cb)) return clause;
@@ -389,6 +429,8 @@ function dropPriceSentences(text: string): string {
       })
       .filter((c) => c.trim() && /[^\s,，;；،:：·—–-]/.test(c));
     const body = joinKept(clauses)
+      // "装修费用方面：未完工的毛坯空间需要 8–10 周" — the amounts are gone, what is left is the time (task 152)
+      .replace(/(费用|費用|成本)方面([:：])/g, '工期方面$2')
       .replace(/[\s,，;；،:：·—–-]+$/, '')
       .replace(/^[\s,，;；،:：·—–-]+/, '')
       .replace(/[.!?。！？।۔؟]$/, '');
