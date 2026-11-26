@@ -267,9 +267,9 @@ function tidyProse(s: string): string {
     // CJK sentences are not space-separated: a string we edit leaves no "。 " behind,
     // including the copy's own space after a cut ("項目（3.5 萬…）。 Moody" → "項目。Moody").
     .replace(/([。！？])[ \t]+(?=\S)/g, '$1')
-    // French typography keeps its space before " : " ("pour la même portée : plus de maison…", task 153)
+    // French typography keeps its (non-breaking) space before " : " ("pour la même portée : plus de maison…", task 153)
     .replace(/\s+([,.;:!?，。；：！？)）])/g, (m: string, c: string, at: number, all: string) =>
-      (m === ` ${c}` && c === ':' && /\p{L}/u.test(all[at - 1] ?? '') && / /.test(all[at + 2] ?? '') ? m : c))
+      (/^[ \u00A0\u202F]:$/.test(m) && /\p{L}/u.test(all[at - 1] ?? '') && / /.test(all[at + 2] ?? '') ? m : c))
     .replace(/([,，;；:：])\s*([.。!?！？])/g, '$2')
     .replace(/([.。])\s*\1+/g, '$1')
     .replace(/[(（]\s*[)）]/g, '')
@@ -470,9 +470,32 @@ function cutTitleAmounts(cell: string): string {
   return /^(?:from|under|starting|real data|real|от|از|desde)?$/i.test(rest) ? '' : rest;
 }
 
+/**
+ * A title cell that only advertises prices, with no amount left to back it (task 153b — "| Precios reales |",
+ * "| Реальные цены |", "| قیمت واقعی |", "| 실제 가격 |", "| Real Costs |" on area pages whose prices are gone).
+ */
+const PRICE_TALK_CELL = new RegExp(
+  '^(?:' + [
+    String.raw`real(?: project)? (?:prices?|pricing|costs?)`, String.raw`actual (?:prices?|costs?)`,
+    String.raw`precios? reales`, String.raw`costos? reales`, String.raw`prix réels`, String.raw`coûts réels`,
+    String.raw`реальн\p{L}* (?:цен\p{L}*|стоимост\p{L}*)`, String.raw`giá (?:thật|thực tế)`,
+    String.raw`(?:totoong|tunay na) (?:presyo|pagpepresyo)`,
+    'قیمت واقعی', 'قیمت‌های واقعی', 'التسعير الحقيقي', 'الأسعار الحقيقية', 'الأسعار الفعلية',
+    'ਅਸਲ ਕੀਮਤ(?:ਾਂ)?', 'वास्तविक (?:कीमत(?:ें)?|मूल्य)', '실제 가격', '実質価格', '実際の価格',
+    '实际价格', '實際價格', '真实价格', '真實價格', '真实报价', '真實報價',
+  ].join('|') + ')$',
+  'iu',
+);
+const dropPriceTalkCells = (t: string) =>
+  (t.includes('|') ? t.split('|').map((c) => c.trim()).filter((c) => c && !PRICE_TALK_CELL.test(c)).join(' | ') : t);
+
 export function stripPriceTitle(title: string): string {
-  if (!title || !hasPriceCopy(title)) return title;
-  let out = title;
+  if (!title) return title;
+  if (!hasPriceCopy(title)) {
+    if (!title.includes('|') || !title.split('|').some((c) => PRICE_TALK_CELL.test(c.trim()))) return title;
+    return dropPriceTalkCells(title);
+  }
+  let out = dropPriceTalkCells(title);
   if (out.includes('|')) {
     // A cell that is only an amount goes; a cell with words keeps them: "浴室リフォーム | Richmond $12,000～$45,000 | Reno Stars"
     // → "浴室リフォーム | Richmond | Reno Stars" — the city must stay in the title (task 153).

@@ -360,3 +360,28 @@ describe('task 153: "N thousand dollars" amounts (fa / ru and the other locales)
     expect(stripPriceMarkdown(md)).not.toMatch(/^- наш/m);
   });
 });
+
+describe('task 153b: no "real prices" title segment once the prices are gone; fr NBSP colon', () => {
+  it.each([
+    ['Renovaciones de baños Delta BC | Precios reales | Reno Stars', 'Renovaciones de baños Delta BC | Reno Stars'],
+    ['ਬਾਥਰੂਮ ਦੀ ਮੁਰੰਮਤ Delta BC | ਅਸਲ ਕੀਮਤ | Reno Stars', 'ਬਾਥਰੂਮ ਦੀ ਮੁਰੰਮਤ Delta BC | Reno Stars'],
+    ['بازسازی حمام Delta بریتیش کلمبیا | قیمت واقعی | Reno Stars', 'بازسازی حمام Delta بریتیش کلمبیا | Reno Stars'],
+    ['Ремонт ванной комнаты Delta BC | Реальные цены | Reno Stars', 'Ремонт ванной комнаты Delta BC | Reno Stars'],
+    ['تجديدات الحمام Delta BC | التسعير الحقيقي | Reno Stars', 'تجديدات الحمام Delta BC | Reno Stars'],
+    ['バスルームの改修 Delta BC |実質価格 | Reno Stars', 'バスルームの改修 Delta BC | Reno Stars'],
+    ['욕실 개조 Delta BC | 실제 가격 | Reno Stars', '욕실 개조 Delta BC | Reno Stars'],
+    ['Cải tạo phòng tắm Delta BC | Giá thật | Reno Stars', 'Cải tạo phòng tắm Delta BC | Reno Stars'],
+    ['Home Renovations Vancouver (2026) | Real Costs | Reno Stars', 'Home Renovations Vancouver (2026) | Reno Stars'],
+  ])('%s', (title, want) => {
+    expect(stripPriceTitle(title)).toBe(want);
+  });
+  it('titles without a price-talk cell are untouched (same reference)', () => {
+    const t = 'Delta装修承包商 | 厨房浴室地下室翻新 | Reno Stars';
+    expect(stripPriceTitle(t)).toBe(t);
+    expect(stripPriceTitle('Real Costs of Renovation in Vancouver')).toBe('Real Costs of Renovation in Vancouver');
+  });
+  it('fr "portée : plus" (non-breaking space, as in the DB copy) keeps its colon', () => {
+    const fr = 'Les coûts sont inférieurs de 5 à 10 % pour la même portée : plus de maison par dollar. Cuisine 15 000 $.';
+    expect(stripPriceProse(fr)).toBe('Les coûts sont inférieurs de 5 à 10 % pour la même portée : plus de maison par dollar.');
+  });
+});
