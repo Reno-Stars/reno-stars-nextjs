@@ -22,6 +22,44 @@ function addFinalB(syllable: string): string | null {
 type Join = (left: string, right: string) => [string, string] | null;
 
 /**
+ * Task 155 — an amount used as an ATTRIBUTE of a noun ("A $1.5K \"cabinet refresh\" you see on Kijiji…"): the word that
+ * tied the amount to the noun goes with it, so the noun phrase reads on its own in every locale.
+ *   es "«renovación de gabinete» de $1,5 mil que se ve" → "«renovación de gabinete» que se ve"
+ *   fr "« rafraîchissement d'armoire » de 1,5 000 $ que vous voyez" → "… » que vous voyez"
+ *   ru "«Обновление шкафа» за 1,5 тысячи долларов, которое" → "«Обновление шкафа», которое"
+ *   vi "\"làm mới tủ\" trị giá 1,5 nghìn đô la mà bạn thấy" → "\"làm mới tủ\" mà bạn thấy"
+ *   ar "\"تحديث الخزانة\" الذي تبلغ قيمته 1.5 ألف دولار والذي تراه" → "\"تحديث الخزانة\" الذي تراه"
+ *   ko "볼 수 있는 1500달러짜리 \"캐비닛…\"" → "볼 수 있는 \"캐비닛…\""; ja "見かける 15,000 ドルの「…」" → "見かける「…」"
+ *   zh "看到的价值 1,500 加元的“橱柜翻新”" → "看到的“橱柜翻新”"; fa "… 1.5 هزار دلاری که …" → "… که …"; hi "$1.5K का \"…\"" / tl "Ang $1.5K na \"…\"" → the quote
+ */
+const ATTRIBUTIVE: Join[] = [
+  (l, r) => (/\s+de\s*$/i.test(l) && /^\s*(?:que|qui)\s/i.test(r) ? [l.replace(/\s+de\s*$/i, ' '), r] : null),
+  (l, r) => (/\s+за\s*$/i.test(l) && /^\s*,\s*котор/i.test(r) ? [l.replace(/\s+за\s*$/i, ''), r] : null),
+  (l, r) => (/\s+(?:trị giá|có giá|giá)\s*$/i.test(l) && /^\s*mà\s/i.test(r) ? [l.replace(/\s+(?:trị giá|có giá|giá)\s*$/i, ' '), r] : null),
+  (l, r) => {
+    const m = /\s+(?:الذي|التي)\s+(?:تبلغ|يبلغ)\s+(?:قيمته|قيمتها|سعره|سعرها)\s*$/.exec(l);
+    return m && /^\s*و?(?:الذي|التي)\s/.test(r) ? [l.slice(0, m.index) + ' ', r.replace(/^\s*و(?=الذي|التي)/, '')] : null;
+  },
+  (l, r) => (/^짜리/.test(r.trimStart()) && /\S\s*$/.test(l) ? [l, r.trimStart().replace(/^짜리/, '')] : null),
+  (l, r) => (/^\s*の(?=[「『"“\p{L}])/u.test(r) && /[\p{L}]\s*$/u.test(l) ? [l.replace(/\s+$/, ''), r.replace(/^\s*の/, '')] : null),
+  (l, r) => (/^\s*的(?=[“"「\p{L}])/u.test(r) && /\p{L}\s*$/u.test(l)
+    ? [l.replace(/(?:价值|價值|售价|售價)?\s*$/, ''), r.replace(/^\s*的/, '')] : null),
+  (l, r) => (/^\s*(?:का|की|के)\s+(?=["“])/.test(r) ? [l, ' ' + r.replace(/^\s*(?:का|की|के)\s+/, '')] : null),
+  (l, r) => (/(?:^|\s)Ang\s*$/i.test(l) && /^\s*na\s+(?=["“])/i.test(r) ? [l, ' ' + r.replace(/^\s*na\s+/i, '')] : null),
+  // fa "یک \"نوسازی کابینت\" 1.5 هزار دلاری که در Kijiji … مشاهده می کنید" → "یک \"نوسازی کابینت\" که در Kijiji …"
+  (l, r) => (/["”»\u0600-\u06FF]\s*$/.test(l) && /^\s*که\s/.test(r) ? [l, r] : null),
+];
+
+/** The repaired text around an attributive amount cut, or null when the amount is not used that way. */
+export function attributiveJoin(left: string, right: string): string | null {
+  for (const rule of ATTRIBUTIVE) {
+    const hit = rule(left, right);
+    if (hit) return tidyJoin(hit[0], hit[1]);
+  }
+  return null;
+}
+
+/**
  * Each rule sees the text before the cut (`left`) and after it (`right`) and returns the
  * repaired pair, or null when it does not apply. First match wins.
  */
@@ -249,6 +287,8 @@ const JOINS: Join[] = [
     const t = /^\s*है\s+और\s+इसमें\s+/.exec(r);
     return m && t ? [l.slice(0, m.index) + ' में ', r.slice(t[0].length)] : null;
   },
+  // last: the specific cost / budget phrasings above win ("在2-3周內以 $X 的預算完成" is not an attributive 的)
+  ...ATTRIBUTIVE,
 ];
 
 /** Repair the two sides of one cut. */

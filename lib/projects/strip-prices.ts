@@ -143,7 +143,16 @@ const D = '[0-9٠-٩۰-۹]';
  * · Persian / Arabic "۲۰٬۰۰۰" (U+066C ARABIC THOUSANDS SEPARATOR) and "۲٫۵" (U+066B decimal separator) — task 152:
  * without them only the "۰۰۰ دلار" tail of "۲۰٬۰۰۰ تا ۲۵٬۰۰۰ دلار" was cut and "۲۰٬۰۰۰ تا ۲۵٬" stayed on the page.
  */
-const NUM = `${D}{1,3}(?:[,.\u066C\u00A0\u202F ]\u200B*${D}{3})+(?:[.\u066B]${D}+)?|${D}+(?:[.\u066B]${D}+)?`;
+/**
+ * Comma-decimal amounts are ONE number (task 155 — Captain CAP-15): es "$1,5 mil", vi "$1,5K" / "1,5 nghìn",
+ * ru "1,5 тысячи", and fr's "1,5 000 $" (a mistranslated $1.5K). Only "1"/"$1" used to match, which left
+ * ",5 mil" / "за 1," on the cabinet hub. A comma decimal counts only right before a magnitude, so
+ * "1,500" and lists such as "1,2 et 3" are untouched.
+ */
+const NUM_COMMA_DEC =
+  `${D}{1,3},${D}{1,2}(?=\\s?(?:[KkMm](?![A-Za-z])|万|萬|만|mil(?![A-Za-zÀ-ỹ])|mille|nghìn|ngàn|тыс|тысяч|млн|ألف|آلاف|هزار|हजार|हज़ार|ਹਜ਼ਾਰ))` +
+  `|${D}{1,3},${D}[\u00A0\u202F ]${D}{3}(?!${D})`;
+const NUM = `${NUM_COMMA_DEC}|${D}{1,3}(?:[,.\u066C\u00A0\u202F ]\u200B*${D}{3})+(?:[.\u066B]${D}+)?|${D}+(?:[.\u066B]${D}+)?`;
 /**
  * Magnitude after the number: K / M / 万 / 萬 / 만, and the Arabic spelled forms
  * ألف / آلاف (thousand) and مليون / ملايين (million): "25 ألف دولار - 72 ألف دولار" (task 138).

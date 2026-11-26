@@ -25,7 +25,7 @@
  * whole rather than left hollow (filterPriceFaqs).
  */
 import { PRICE_SOURCE } from '@/lib/projects/strip-prices';
-import { joinAroundCut, salvageRangeNotes, rewriteNotedAmounts } from '@/lib/seo/price-cut-joins';
+import { attributiveJoin, joinAroundCut, salvageRangeNotes, rewriteNotedAmounts } from '@/lib/seo/price-cut-joins';
 
 /** Insurance wording in all 14 site languages. An amount near one is NOT a price. */
 const INSURANCE = new RegExp(
@@ -246,11 +246,15 @@ const AMT = `(?:${P})${UNIT}`;
  * Clause cuts that read cleanly once removed, applied before the sentence
  * fallback. Each consumes its connector so no "starting from ," / "– ." is left.
  */
+/** Words that open a clause standing for the amount just before it: "…, c'est ce que", "— это то", "is what". */
+const AMOUNT_BACKREF = String.raw`(?:c['’]est|ce sont|это|вот|es lo|son lo|eso es|is what|is the|that['’]s|là|đó là|هي|هو|هذا|هذه)(?![\p{L}])`;
 const CLAUSE_CUTS: Array<[RegExp, string]> = [
   // Parenthetical holding an amount: "(about $5,000)", "($9–$17/sqft installed)".
   [new RegExp(String.raw`\s*[(（][^()（）]{0,80}?${AMT}[^()（）]{0,80}?[)）]`, 'g'), ''],
   // Leading amount before a comma / middle dot / semicolon / dash: "$20K–$55K, 3–5 weeks."
-  [new RegExp(String.raw`(^|[.!?。！？:：]\s*|\s[—–-]\s|·\s*)${AMT}\s*(?:[,，;；·](?![0-9٠-٩۰-۹])|\s[—–-])\s*`, 'g'), '$1'],
+  // Not when what follows only points back at the amount: "25 000 $, c'est ce que coûte réellement…", "25 тысяч
+  // долларов — это то, во что…" lose their subject that way; the sentence fallback drops them whole (task 155).
+  [new RegExp(String.raw`(^|[.!?。！？:：]\s*|\s[—–-]\s|·\s*)${AMT}\s*(?:[,，;；·](?![0-9٠-٩۰-۹])|\s[—–-])(?!\s*${AMOUNT_BACKREF})\s*`, 'gu'), '$1'],
   // Trailing / middle amount after a separator: "…, $20K–$55K", " — $1.5K+", " · $4K".
   [new RegExp(String.raw`\s*(?:[,，;；،·]|\s[—–-])\s*(?:from|starting (?:at|from)|about|around|roughly|typically|under|over|up to)?\s*${AMT}(?=\s*(?:[,，;；،.。!?！？।)](?![0-9٠-٩۰-۹])|$))`, 'gim'), ''],
 ];
@@ -346,6 +350,27 @@ export function hasDuration(text: string): boolean {
   return DURATION.test(text);
 }
 
+/**
+ * The clause with every price span cut as an ATTRIBUTE ("«Обновление шкафа» за X, которое…" → "«Обновление шкафа», которое…"),
+ * or null when one of them is not used that way (task 155).
+ */
+function cutAttributive(clause: string, spans: ReadonlyArray<[number, number]>): string | null {
+  let out = clause;
+  for (const [s, e] of [...spans].sort((x, y) => y[0] - x[0])) {
+    const joined = attributiveJoin(out.slice(0, s), out.slice(e));
+    if (joined === null) return null;
+    out = joined;
+  }
+  return /\p{L}{2}/u.test(out) ? out : null;
+}
+
+/** "«Обновление шкафа» за 1,5 тысячи долларов, которое вы видите…": the comma opens a relative clause on the noun, not a new clause. */
+const RELATIVE = /^\s*(?:котор\p{L}*|which|who|que|qui|mà|الذي|التي|که)(?![\p{L}])/u;
+function qualifiesAmountNoun(sentence: string, at: number, hits: ReadonlyArray<{ start: number; end: number }>): boolean {
+  return RELATIVE.test(sentence.slice(at)) && hits.some((h) => h.end <= at && /^[\s,，]*$/.test(sentence.slice(h.end, at))
+    && attributiveJoin(sentence.slice(0, h.start), sentence.slice(h.end)) !== null);
+}
+
 /** Remove the [start, end) price spans from a clause that keeps its duration. */
 function cutPriceSpans(clause: string, spans: ReadonlyArray<[number, number]>): string {
   let out = clause;
@@ -430,7 +455,8 @@ function dropPriceSentences(text: string): string {
       ? rewriteNotedAmounts(sentence, rel, hasDuration) : null;
     if (rewritten) return rewritten;
     const end = /[.!?。！？।۔؟]\s*$/.exec(sentence)?.[0].trim() ?? '';
-    const clauses = pieces(sentence, CLAUSE_GAP, (at) => inParens(sentence, at) || continuesAmount(sentence, at, rel))
+    const clauses = pieces(sentence, CLAUSE_GAP, (at) => inParens(sentence, at) || continuesAmount(sentence, at, rel)
+      || qualifiesAmountNoun(sentence, at, rel))
       .map(([ca, cb]) => {
         const clause = sentence.slice(ca, cb);
         if (!inside(a + ca, a + cb)) return clause;
@@ -439,6 +465,9 @@ function dropPriceSentences(text: string): string {
         // A clause that also states a duration keeps it: only the price span goes (task 145).
         // One without a duration goes — except the label it carried ("**Project:** $15K, 2-3 weeks", task 151).
         if (!hasDuration(clause)) {
+          // the clause that holds the sentence's subject keeps it when the amount only qualified a noun (task 155)
+          const attributive = cutAttributive(clause, spans);
+          if (attributive) return attributive;
           const label = cutPriceSpans(clause, spans).replace(/[\s,，;；،、]+$/, '');
           return isLabelOnly(label) ? label : '';
         }
@@ -530,11 +559,27 @@ function stripTableRow(line: string): string | null {
   return line.split('|').map((cell) => (hasPriceCopy(cell) && !hasDuration(cell) ? ' ' : hasPriceCopy(cell) ? ` ${stripPriceProse(cell.trim())} ` : cell)).join('|');
 }
 
+/**
+ * A heading whose amount sits INSIDE its wording ("Why Our Floor is $50K and Not $35K", 「为什么我们的底价是 5 万加元而不是
+ * 3.5 万加元」, "우리 층이 $35,000이 아닌 $50,000인 이유") is about the price itself: cutting the amounts leaves
+ * "Why Our Floor is and Not" in every locale, so the heading goes whole (task 155). A leading or trailing
+ * amount ("Budget Kitchen Renovation: $16,000–$27,000") or one in parentheses is still just cut.
+ */
+function amountInsideWording(text: string): boolean {
+  const words = /[\p{L}]/u;
+  return priceHits(text).some((h) => {
+    if (inParens(text, h.start)) return false;
+    const before = text.slice(0, h.start).replace(/^[\s\d.、)）*_]+/, '');
+    return words.test(before) && words.test(text.slice(h.end));
+  });
+}
+
 function stripLine(line: string): string | null {
   if (!hasPriceCopy(line)) return line;
   if (/^\s*\|/.test(line)) return stripTableRow(line);         // table row with an amount
   const h = HEADING.exec(line);
   if (h) {
+    if (!h[2].includes('|') && amountInsideWording(h[2])) return null;
     const t = stripPriceTitle(h[2]);
     return t ? h[1] + t : null;
   }
@@ -593,6 +638,17 @@ function dropOrphans(rows: Array<{ orig: string; kept: string | null }>): string
     }
     if (lost && !content) kept[i] = null;
   }
+  // 3. a list whose lead-in was cut for its price ("Below $50K in 2026 Vancouver, you're either:") and that now
+  //    follows no heading or lead-in of its own (the heading went too) has nothing left to hang on (task 155)
+  for (let p = 0; p < rows.length; p++) {
+    const lead = rows[p].orig;
+    if (kept[p] !== null || !lead.trim() || LIST_ITEM.test(lead) || HEADING.test(lead) || /^\s*\|/.test(lead) || !hasPriceCopy(lead)) continue;
+    let i = p + 1; while (i < rows.length && !rows[i].orig.trim()) i++;
+    if (i >= rows.length || !LIST_ITEM.test(rows[i].orig)) continue;
+    let q = p - 1; while (q >= 0 && (!rows[q].orig.trim() || kept[q] === null)) q--;
+    if (q >= 0 && (HEADING.test(kept[q] ?? '') || isLeadIn(kept[q] ?? ''))) continue;
+    for (let j = i; j < rows.length && LIST_ITEM.test(rows[j].orig); j++) kept[j] = null;
+  }
   return kept.filter((l): l is string => l !== null);
 }
 
@@ -618,7 +674,33 @@ export function stripPriceMarkdown(md: string): string {
   if (!md || !hasPriceCopy(md)) return md;
   const inSubsidyList = subsidyListRows(md.split('\n'));
   const rows = md.split('\n').map((orig, i) => ({ orig, kept: inSubsidyList[i] ? orig : stripLine(orig) }));
-  return dropEmptyTables(dropOrphans(rows)).join('\n').replace(/\n{3,}/g, '\n\n').trim();
+  return dropEmptiedHeadings(dropEmptyTables(dropOrphans(rows)), md.split('\n')).join('\n').replace(/\n{3,}/g, '\n\n').trim();
+}
+
+/** True when the section under heading `i` holds a non-blank line before the next heading of its level or higher. */
+function sectionHasContent(lines: string[], i: number): boolean {
+  const level = (HEADING.exec(lines[i])?.[1].match(/#/g) ?? []).length;
+  for (let j = i + 1; j < lines.length; j++) {
+    const hj = HEADING.exec(lines[j]);
+    if (hj && (hj[1].match(/#/g) ?? []).length <= level) return false;
+    if (lines[j].trim()) return true;
+  }
+  return false;
+}
+
+/**
+ * A heading left with nothing under it once its priced table / list went ("### 3. Waterproofing" over a cost table
+ * whose rows were all amounts — the table header is dropped only after the orphan pass) goes too. Only headings
+ * that HAD content in the source are touched (task 155).
+ */
+function dropEmptiedHeadings(lines: string[], source: string[]): string[] {
+  const next = lines.filter((line, i) => {
+    if (!HEADING.test(line) || sectionHasContent(lines, i)) return true;
+    const at = source.indexOf(line);
+    return at < 0 || !sectionHasContent(source, at);
+  });
+  // a parent whose only content was emptied sub-sections is empty now too
+  return next.length === lines.length ? next : dropEmptiedHeadings(next, source);
 }
 
 const BLOCK_EL = /<(p|li|td|th|dd|dt|h[1-6]|figcaption)(\s[^>]*)?>([\s\S]*?)<\/\1>/gi;
