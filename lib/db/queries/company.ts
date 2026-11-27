@@ -1,7 +1,7 @@
 import { db } from '../index';
 import { safeQuery } from '../cache-fallback';
 import { cachedQuery } from '../cache';
-import { COMPANY_STATS, getYearsExperience } from '@/lib/company-config';
+import { COMPANY_STATS } from '@/lib/company-config';
 import { companyInfo } from '../schema';
 import { getAssetUrl } from '../../storage';
 import type { Company } from '../../types';
@@ -14,15 +14,12 @@ export const COMPANY_FALLBACK: Company = (() => {
   return {
     name: 'Reno Stars', tagline: '', phone: '', email: '', address: '',
     logo: '', quoteUrl: '/contact/',
-    yearsExperience: getYearsExperience(),
-    // `foundingYear` here feeds ONLY the AnswerBlock "…founded in {year}" copy,
-    // so it must be the LEGAL incorporation year of Reno Stars Construction Inc.
-    // (2020), NOT the team's renovation-start year (COMPANY_STATS.foundingYear,
-    // 2007) which drives the separate "20+ years experience" stat via
-    // getYearsExperience(). Using 2020 keeps the homepage consistent with
-    // llms.txt + LocalBusinessSchema.foundingDate ("founded 2020; team brings
-    // 20+ years of prior industry experience"). Previously showed "founded in
-    // 2007", contradicting both — fixed 2026-07 site-consistency pass.
+    // No years-of-experience claim since 2026-11-26 (founded 2021, Ryan). The
+    // key stays, empty, so the 14 frozen Test A pages can carry their old '20'
+    // in the same position (lib/seo/test-a-freeze.ts).
+    yearsExperience: '',
+    // The founding year of Reno Stars (2021) — feeds the AnswerBlock "…founded
+    // in {year}" copy and every "since / founded" stat.
     foundingYear: companyFoundingYear, teamSize, projectsCompleted, liabilityCoverage,
     heroVideoUrl: '', heroImageUrl: '',
     geo: { latitude: 0, longitude: 0 },
@@ -31,7 +28,7 @@ export const COMPANY_FALLBACK: Company = (() => {
 
 /**
  * Fetch company info from DB and map to the `Company` type.
- * Stats (yearsExperience, teamSize, warranty, liabilityCoverage) come from
+ * Stats (foundingYear, teamSize, projectsCompleted, liabilityCoverage) come from
  * `lib/company-config.ts`, not the database.
  */
 export const fetchCompany = async (): Promise<Company> => {

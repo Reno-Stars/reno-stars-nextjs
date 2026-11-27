@@ -55,7 +55,10 @@ describe('opening hours SSOT', () => {
 
 describe('company stats', () => {
   it('keeps the owner-confirmed facts', () => {
-    expect(COMPANY_STATS.companyFoundingYear).toBe(2020);
+    // Ryan, 2026-11-26 (task 158): founded 2021, 900+ projects.
+    expect(COMPANY_STATS.companyFoundingYear).toBe(2021);
+    expect(COMPANY_STATS.projectsCompleted).toBe('900+');
+    expect(COMPANY_STATS).not.toHaveProperty('foundingYear');
     expect(COMPANY_STATS.warrantyYears).toBe(3);
     expect(WECHAT_ID).toBe('RenoStars');
   });

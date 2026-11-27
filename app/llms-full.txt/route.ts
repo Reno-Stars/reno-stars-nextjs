@@ -5,7 +5,7 @@ import {
   getServiceAreasFromDb,
   getBlogPostsFromDb,
 } from '@/lib/db/queries';
-import { COMPANY_STATS, getYearsExperience } from '@/lib/company-config';
+import { COMPANY_STATS } from '@/lib/company-config';
 import { buildCompanyFactLines } from '@/lib/seo/llms-shared';
 import { getGoogleReviews } from '@/lib/google-reviews';
 import { COST_GUIDES } from '@/lib/seo/cost-guides';
@@ -53,12 +53,11 @@ export async function GET(): Promise<Response> {
     });
   }
 
-  const years = getYearsExperience();
   const en = base + '/en';
 
   const header = [
     `# ${SITE_NAME} Construction Inc. — Full Reference`,
-    `> Comprehensive machine-readable reference for ${SITE_NAME}, a Metro Vancouver renovation contractor. Founded ${COMPANY_STATS.companyFoundingYear} (legal entity); team brings ${years}+ years of prior renovation industry experience. This is the full companion to /llms.txt.`,
+    `> Comprehensive machine-readable reference for ${SITE_NAME}, a Metro Vancouver renovation contractor. Founded ${COMPANY_STATS.companyFoundingYear}; ${COMPANY_STATS.projectsCompleted} projects completed. This is the full companion to /llms.txt.`,
     '',
     '## Company',
     ...buildCompanyFactLines(company, areas.length, googleRating, base),

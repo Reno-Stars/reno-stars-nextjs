@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import { getBaseUrl } from '@/lib/utils';
-import { getYearsExperience } from '@/lib/company-config';
+import { COMPANY_STATS } from '@/lib/company-config';
 
 /**
  * Root (`/`) page — SEO-compliant landing that redirects to `/en/`.
@@ -15,13 +15,13 @@ import { getYearsExperience } from '@/lib/company-config';
  * a `<meta http-equiv="refresh">` so browsers still land on `/en/`. Bots
  * see rich metadata for the SERP; humans get auto-redirected.
  */
-// generateMetadata (not a module-level const) so getYearsExperience() is
-// evaluated at render/regeneration time, not frozen at process boot.
+// generateMetadata (not a module-level const) so the COMPANY_STATS figures
+// are read at render/regeneration time, not frozen at process boot.
 export function generateMetadata(): Metadata {
   return {
-  title: `Vancouver Home Renovations — ${getYearsExperience()}+ Yrs, $5M Insured | Reno Stars`,
+  title: `Vancouver Home Renovations — Since ${COMPANY_STATS.companyFoundingYear}, $5M Insured | Reno Stars`,
   description:
-    `Kitchen, bathroom & whole-house renovations across Metro Vancouver. ${getYearsExperience()}+ years of experience, $5M CGL insurance, WCB-covered crews & 3-year warranty. See 100+ completed projects or get your free quote today.`,
+    `Kitchen, bathroom & whole-house renovations across Metro Vancouver. ${COMPANY_STATS.projectsCompleted} projects completed since ${COMPANY_STATS.companyFoundingYear}, $5M CGL insurance, WCB-covered crews & 3-year warranty. See our completed projects or get your free quote today.`,
   alternates: {
     canonical: `${getBaseUrl()}/en/`,
     languages: {
@@ -32,9 +32,9 @@ export function generateMetadata(): Metadata {
   },
   // Don't pollute social cards for the redirect URL — use /en/'s instead
   openGraph: {
-    title: `Vancouver Home Renovations — ${getYearsExperience()}+ Yrs, $5M Insured | Reno Stars`,
+    title: `Vancouver Home Renovations — Since ${COMPANY_STATS.companyFoundingYear}, $5M Insured | Reno Stars`,
     description:
-      `Kitchen, bathroom & whole-house renovations across Metro Vancouver. ${getYearsExperience()}+ years of experience, $5M CGL insurance, 3-year warranty.`,
+      `Kitchen, bathroom & whole-house renovations across Metro Vancouver. ${COMPANY_STATS.projectsCompleted} projects completed since ${COMPANY_STATS.companyFoundingYear}, $5M CGL insurance, 3-year warranty.`,
     url: `${getBaseUrl()}/en/`,
     type: 'website',
   },

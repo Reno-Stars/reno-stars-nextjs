@@ -61,7 +61,7 @@ export default function BenefitsPage({ company }: BenefitsPageProps) {
   const t = useTranslations();
 
   const trustBadges = useMemo(() => [
-    { type: 'stat' as const, value: `${company.yearsExperience}+`, label: t('stats.yearsExperience') },
+    { type: 'stat' as const, value: String(company.foundingYear), label: t('stats.founded') },
     { type: 'stat' as const, value: company.projectsCompleted, label: t('stats.projectsCompleted') },
     { type: 'stat' as const, value: company.liabilityCoverage, label: t('stats.liabilityCoverage') },
     { type: 'stat' as const, value: '', label: t('stats.wcbCoverage') },
@@ -69,7 +69,7 @@ export default function BenefitsPage({ company }: BenefitsPageProps) {
   ], [company, t]);
 
   const stats = useMemo(() => [
-    { value: `${company.yearsExperience}+`, label: t('stats.yearsExperience') },
+    { value: String(company.foundingYear), label: t('stats.founded') },
     { value: company.projectsCompleted, label: t('stats.projectsCompleted') },
     { value: '100%', label: t('stats.satisfactionRate') },
   ], [company, t]);

@@ -198,7 +198,7 @@ export default async function Page({ params }: PageProps) {
   ];
 
   const stats = [
-    { value: `${company.yearsExperience}+`, label: t("stats.yearsExperience") },
+    { value: String(company.foundingYear), label: t("stats.founded") },
     { value: company.projectsCompleted, label: t("stats.projectsCompleted") },
     { value: company.liabilityCoverage, label: t("stats.liabilityCoverage") },
     { value: '', label: t("stats.wcbCoverage"), image: WORKSAFE_BC_LOGO },
@@ -209,12 +209,11 @@ export default async function Page({ params }: PageProps) {
     hero: {
       transformYourSpace: t("hero.transformYourSpace"),
       professionalExcellenceDesc: t("hero.professionalExcellenceDesc", {
-        experience: company.yearsExperience,
         coverage: company.liabilityCoverage,
       }),
       getFreeQuote: t("cta.getFreeQuote"),
       callNow: t("cta.callNow"),
-      yearsExperience: t("stats.yearsExperience"),
+      foundedIn: t("stats.foundedIn"),
       liabilityCoverage: t("stats.liabilityCoverage"),
       wcbCoverage: t("stats.wcbCoverage"),
       rating: t("stats.rating"),

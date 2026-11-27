@@ -1,5 +1,5 @@
 import { SITE_NAME } from '@/lib/utils';
-import { COMPANY_STATS, LOCALIZED_BRAND_NAMES, getYearsExperience } from '@/lib/company-config';
+import { COMPANY_STATS, LOCALIZED_BRAND_NAMES } from '@/lib/company-config';
 import { locales, SCHEMA_AVAILABLE_LANGUAGES } from '@/i18n/config';
 import type { Company } from '@/lib/types';
 
@@ -36,11 +36,10 @@ export function buildCompanyFactLines(
   googleRating: { rating: number; userRatingCount: number },
   baseUrl: string,
 ): string[] {
-  const years = getYearsExperience();
   return [
     `- Name: ${legalName()}`,
     `- Local Brand Names: ${Object.entries(LOCALIZED_BRAND_NAMES).map(([lc, n]) => `${n} (${lc})`).join(', ')} — also known as "${SITE_NAME}" in every language`,
-    `- Founded: ${COMPANY_STATS.companyFoundingYear} (legal entity); team brings ${years}+ years of prior industry experience`,
+    `- Founded: ${COMPANY_STATS.companyFoundingYear}`,
     `- Location: ${company.address || CONTACT_FALLBACKS.address}`,
     `- Phone: ${company.phone || CONTACT_FALLBACKS.phone}`,
     `- Email: ${company.email || CONTACT_FALLBACKS.email}`,
@@ -55,7 +54,6 @@ export function buildCompanyFactLines(
     `- Insurance: Up to ${COMPANY_STATS.liabilityCoverage} CGL (Commercial General Liability)`,
     `- Coverage: WCB (WorkSafeBC) on every job`,
     `- Warranty: Up to ${COMPANY_STATS.warrantyYears} years workmanship warranty`,
-    `- Experience: ${years}+ years in residential and commercial renovation`,
     `- Projects Completed: ${COMPANY_STATS.projectsCompleted}`,
     `- Google Rating: ${buildRatingLine(googleRating)}`,
     `- Service Cities: ${areasCount} in Metro Vancouver`,

@@ -22,6 +22,8 @@
     "areasServed": "Zones desservies",
     "rating": "Notation",
     "srStats": "Statistiques de l'entreprise",
-    "srTrustBadges": "Badges de confiance et certifications"
+    "srTrustBadges": "Badges de confiance et certifications",
+    "founded": "Année de fondation",
+    "foundedIn": "Fondée en 2021"
   }
 }

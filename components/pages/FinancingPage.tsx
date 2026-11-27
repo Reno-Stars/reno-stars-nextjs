@@ -483,7 +483,7 @@ export default function FinancingPage({ locale: _locale }: FinancingPageProps) {
             {tCta('realCostsTagline')}
           </h2>
           <p className="text-base text-center mb-8 max-w-2xl mx-auto" style={{ color: TEXT_MID }}>
-            Before you finalize financing, know the real price tier — from 100+ completed Metro Vancouver projects.
+            Before you finalize financing, know the real price tier — from 900+ completed Metro Vancouver projects.
           </p>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
             {[

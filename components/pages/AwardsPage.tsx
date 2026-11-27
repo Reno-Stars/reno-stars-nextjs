@@ -35,7 +35,6 @@ interface AwardsPageProps {
   /** Live archive. Empty until Reno Stars actually wins something. */
   awards: readonly Award[];
   /** From `getCompanyFromDb()` — same source the About page and footer read. */
-  yearsExperience: string;
   projectsCompleted: string;
   liabilityCoverage: string;
   /** Live Google Business Profile rating, from the reviews cache. */
@@ -49,7 +48,6 @@ const CRITERIA_ICONS = { issuer: Building2, year: CalendarDays, link: Link2 } as
 export default function AwardsPage({
   locale,
   awards,
-  yearsExperience,
   projectsCompleted,
   liabilityCoverage,
   googleRating,
@@ -91,7 +89,7 @@ export default function AwardsPage({
     {
       key: 'years',
       icon: CalendarDays,
-      value: `${yearsExperience}+ ${tStats('years')}`,
+      value: tStats('foundedIn'),
       note: t('verified.yearsNote'),
     },
     {

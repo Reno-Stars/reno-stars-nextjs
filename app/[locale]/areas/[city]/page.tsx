@@ -10,7 +10,7 @@ import { getLocalizedService } from '@/lib/data/services';
 import { images as siteImages } from '@/lib/data';
 import { getCompanyFromDb, getServicesFromDb, getServiceAreasFromDb, getServiceAreaBySlugFromDb, getFaqsByAreaFromDb, getProjectsByAreaFromDb, getReviewsByCityFromDb } from '@/lib/db/queries';
 import { getGoogleReviews, projectReviewsToLocale } from '@/lib/google-reviews';
-import { getYearsExperience } from '@/lib/company-config';
+import { COMPANY_STATS } from '@/lib/company-config';
 import ClientMessages from '@/components/ClientMessages';
 
 interface PageProps {
@@ -36,9 +36,9 @@ interface PageProps {
  * dormant fallback for any city not yet populated in the DB — do not edit it for
  * routine SEO tuning; edit the DB row instead.
  */
-// Function (not module const) so ${getYearsExperience()} inside the entries
-// evaluates at request time — a module-level record freezes the years figure
-// at process boot. Cheap: ~15 string entries per metadata call.
+// Function (not module const) so the COMPANY_STATS figures inside the entries
+// are read at request time — a module-level record would freeze them at
+// process boot. Cheap: ~15 string entries per metadata call.
 function getEnAreaOverrides(): Record<string, { title: string; description: string }> {
   return {
   // 2026-05-01 GSC retitle: 1,393 imp pos 50 with 0% CTR. Hub framing
@@ -59,7 +59,7 @@ function getEnAreaOverrides(): Record<string, { title: string; description: stri
   // — DB-checked across 6 bathroom + 3 kitchen Burnaby completions) instead
   // of generic copy.
   // 2026-05-27 SEO trim: desc was 159 (truncates ~155); drops "Capitol Hill"
-  // + trailing "5★ rated" (lives in title), keeps the 700+ project count +
+  // + trailing "5★ rated" (lives in title), keeps the 900+ project count +
   // verified budgets + Metrotown/Heights neighborhoods.
   // 2026-06-04 SEO retune: "basement renovations burnaby" pos 8 / 237 imp.
   // Added "Basement" to title to capture the basement query cluster.
@@ -67,7 +67,7 @@ function getEnAreaOverrides(): Record<string, { title: string; description: stri
   burnaby: {
     title: 'Burnaby Renovation Contractor — Basement & Kitchen | Reno Stars',
     description:
-      'Burnaby renovation contractor: kitchen $30K–$40K, bathroom $20K–$32K, basement $40K–$90K. 700+ projects, $5M insured. Metrotown, Brentwood, Heights.',
+      'Burnaby renovation contractor: kitchen $30K–$40K, bathroom $20K–$32K, basement $40K–$90K. 900+ projects, $5M insured. Metrotown, Brentwood, Heights.',
   },
   // 2026-05-01 GSC retitle: 1,658 imp pos 32 with 0% CTR. Hub framing.
   // 2026-05-15: also picking up "general contractor maple ridge" (29 imp
@@ -89,7 +89,7 @@ function getEnAreaOverrides(): Record<string, { title: string; description: stri
   'port-coquitlam': {
     title: 'Port Coquitlam Renovation Contractor (2026) | Reno Stars',
     description:
-      `Port Coquitlam home renovation contractor. Kitchens, bathrooms & basements — Citadel Heights, Lincoln Park. ${getYearsExperience()}+ yrs, $5M insured.`,
+      `Port Coquitlam home renovation contractor. Kitchens, bathrooms & basements — Citadel Heights, Lincoln Park. ${COMPANY_STATS.projectsCompleted} projects, $5M insured.`,
   },
   // 2026-04-30 CTR pass: 10 cities previously falling back to translation namespace.
   // Lead with city-name + service in title (Google bolds matching keywords),
@@ -100,7 +100,7 @@ function getEnAreaOverrides(): Record<string, { title: string; description: stri
   vancouver: {
     title: 'Home Renovations Vancouver (2026) | Real Costs | Reno Stars',
     description:
-      `Vancouver home renovations from $50K to $200K+. Kitchens, bathrooms & whole-house. ${getYearsExperience()}+ yrs, $5M CGL, 3-yr warranty. Free quote.`,
+      `Vancouver home renovations from $50K to $200K+. Kitchens, bathrooms & whole-house. ${COMPANY_STATS.projectsCompleted} projects, $5M CGL, 3-yr warranty. Free quote.`,
   },
   // 2026-05-10 GSC retune: page sat at pos 23.4 / 106 imp for 7d.
   // Top non-brand query is "bathroom renovation richmond" (23 imp pos 43.7).
@@ -194,7 +194,7 @@ function getEnAreaOverrides(): Record<string, { title: string; description: stri
   'port-moody': {
     title: 'Port Moody Renovations (2026) | Heritage Mountain | Reno Stars',
     description:
-      'Port Moody home renovations — Heritage Mountain, Ioco, Newport. Kitchens, bathrooms & whole-house. 20+ yrs, $5M insured, 3-yr warranty. Free quote in 24h.',
+      'Port Moody home renovations — Heritage Mountain, Ioco, Newport. Kitchens, bathrooms & whole-house. 900+ projects, $5M insured, 3-yr warranty. Free quote in 24h.',
   },
   // 2026-05-15 GSC retune: page sat at pos 19.0 / 394 imp for 7d.
   // Top non-brand query is "home renovations white rock" (86 imp pos 17.3) —
@@ -218,14 +218,14 @@ function getEnAreaOverrides(): Record<string, { title: string; description: stri
  */
 const enAreaIntros: Record<string, string> = {
   coquitlam:
-    'Reno Stars is a full-service renovation contractor in Coquitlam, BC — serving homes from Burke Mountain and Westwood Plateau down through Maillardville, Austin Heights, Eagle Ridge and Ranch Park. With 20+ years and 700+ completed projects, we handle kitchens, bathrooms, basements and whole-house renovations end-to-end with $5M CGL coverage and up to a 3-year warranty. Use the service tiles below for Coquitlam-specific kitchen, bathroom and whole-house pricing.',
+    'Reno Stars is a full-service renovation contractor in Coquitlam, BC — serving homes from Burke Mountain and Westwood Plateau down through Maillardville, Austin Heights, Eagle Ridge and Ranch Park. Since 2021, with 900+ completed projects, we handle kitchens, bathrooms, basements and whole-house renovations end-to-end with $5M CGL coverage and up to a 3-year warranty. Use the service tiles below for Coquitlam-specific kitchen, bathroom and whole-house pricing.',
   // 2026-06-02 GSC retune: "basement renovations burnaby" pos 16.3 / 55 imp
   // and "basement remodeling burnaby" pos 19.4 / 31 imp — 86 imp combined
   // at striking distance. Lead with basement renovation (was buried 3rd in
   // the prior "kitchens, bathrooms, basements" framing) so the on-page
   // intro reinforces the searched keyword.
   burnaby:
-    'Reno Stars is a renovation contractor in Burnaby, BC, with deep specialization in basement renovations across The Heights, Capitol Hill, Metrotown, Brentwood and South Burnaby. Burnaby basement work spans legal-suite conversions (suite legalization for laneway-house income or family inlaw suites), waterproofing for the older Capitol Hill split-level housing stock built on slope grades, and full-cosmetic basement finishing for newer Metrotown townhouse builds. Kitchens, bathrooms and whole-house renovations on the same crew — 700+ completed Lower Mainland projects, $5M CGL coverage, up to 3-year warranty. Strata-compliant for condos and townhouses, permit-ready for SFH. Use the service tiles below for Burnaby-specific basement, kitchen, bathroom and whole-house pricing.',
+    'Reno Stars is a renovation contractor in Burnaby, BC, with deep specialization in basement renovations across The Heights, Capitol Hill, Metrotown, Brentwood and South Burnaby. Burnaby basement work spans legal-suite conversions (suite legalization for laneway-house income or family inlaw suites), waterproofing for the older Capitol Hill split-level housing stock built on slope grades, and full-cosmetic basement finishing for newer Metrotown townhouse builds. Kitchens, bathrooms and whole-house renovations on the same crew — 900+ completed Lower Mainland projects, $5M CGL coverage, up to 3-year warranty. Strata-compliant for condos and townhouses, permit-ready for SFH. Use the service tiles below for Burnaby-specific basement, kitchen, bathroom and whole-house pricing.',
   'maple-ridge':
     'Reno Stars is a renovation contractor in Maple Ridge — serving Albion, Cottonwood, Hammond, Haney and West Maple Ridge. We work with both newer suburban builds and older split-level and rancher homes across the community, handling kitchens, bathrooms, basements and whole-house remodels with permits managed end-to-end and up to a 3-year warranty. Use the service tiles below for Maple-Ridge-specific kitchen, bathroom and whole-house pricing.',
   'port-coquitlam':
@@ -267,7 +267,7 @@ export function getAreaIntroOverride(slug: string, locale: Locale): string | und
  * them in lock-step.
  */
 const enAreaH1Overrides: Record<string, string> = {
-  burnaby: 'Burnaby Renovation Contractor — 700+ Projects Across Metro Vancouver',
+  burnaby: 'Burnaby Renovation Contractor — 900+ Projects Across Metro Vancouver',
   coquitlam: 'Coquitlam Renovation Contractor — Burke Mountain & Westwood',
   'maple-ridge': 'Maple Ridge Renovation Contractor — Albion, Cottonwood & Hammond',
   'port-coquitlam': 'Port Coquitlam Renovation Contractor — Citadel Heights & Riverwood',

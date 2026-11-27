@@ -1,4 +1,5 @@
 import { Metadata } from 'next';
+import { freezeCompanyForTestA, isTestAServiceCity } from '@/lib/seo/test-a-freeze';
 import { getTranslations, setRequestLocale } from 'next-intl/server';
 import { notFound } from 'next/navigation';
 import { ogLocaleMap, hasNativeSupport, type Locale, INDEXABLE_SERVICE_CITY_LOCALES, isIndexableServiceCityLocale } from '@/i18n/config';
@@ -56,7 +57,7 @@ function buildComboMeta(args: {
   // most search volume, hand-tune the title/meta to put the exact keyword in
   // the title and boost CTR. EN only — Chinese keywords are different.
   const overrideKey = `${serviceSlug}/${city}`;
-  const { en: enOverrides, zh: zhOverrides } = serviceCityOverrides(years);
+  const { en: enOverrides, zh: zhOverrides } = serviceCityOverrides();
   if (locale === 'en' && enOverrides[overrideKey]) {
     title = enOverrides[overrideKey].title;
     description = enOverrides[overrideKey].description;
@@ -87,10 +88,12 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const localizedArea = getLocalizedArea(area, locale as Locale);
   const baseUrl = getBaseUrl();
 
-  const [t, company] = await Promise.all([
+  const [t, liveCompany] = await Promise.all([
     getTranslations({ locale, namespace: 'metadata.serviceLocation' }),
     getCompanyFromDb(),
   ]);
+  // Test A pages keep the pre-2026-11-26 stats (lib/seo/test-a-freeze.ts).
+  const company = isTestAServiceCity(locale, serviceSlug, city) ? freezeCompanyForTestA(liveCompany) : liveCompany;
   const { title, description } = buildComboMeta({
     locale,
     serviceSlug,
@@ -142,11 +145,12 @@ export default async function Page({ params }: PageProps) {
   const { locale, 'service-slug': serviceSlug, city } = await params;
   setRequestLocale(locale);
 
-  const [company, services, areas] = await Promise.all([
+  const [liveCompany, services, areas] = await Promise.all([
     getCompanyFromDb(),
     getServicesFromDb(),
     getServiceAreasFromDb(),
   ]);
+  const company = isTestAServiceCity(locale, serviceSlug, city) ? freezeCompanyForTestA(liveCompany) : liveCompany;
   const service = services.find((s) => s.slug === serviceSlug);
   const area = areas.find((a) => a.slug === city);
 

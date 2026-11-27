@@ -1,7 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import "./globals.css";
 import { SITE_NAME, getBaseUrl } from '@/lib/utils';
-import { getYearsExperience } from '@/lib/company-config';
+import { COMPANY_STATS } from '@/lib/company-config';
 
 export const viewport: Viewport = {
   width: 'device-width',
@@ -23,8 +23,8 @@ export const viewport: Viewport = {
   colorScheme: 'light',
 };
 
-// generateMetadata (not a const) so getYearsExperience() re-evaluates at
-// render time instead of freezing at process boot.
+// generateMetadata (not a const) so the config-derived figures below are read
+// at render time instead of freezing at process boot.
 export function generateMetadata(): Metadata {
   return {
   metadataBase: new URL(getBaseUrl()),
@@ -50,7 +50,7 @@ export function generateMetadata(): Metadata {
   // getGoogleReviews() in app/[locale]/page.tsx, which is the only place that
   // asserts it.
   title: `Vancouver Renovation Contractor | ${SITE_NAME}`,
-  description: `Kitchen, bathroom, basement and whole-home renovations across Metro Vancouver. ${getYearsExperience()}+ yrs, $5M CGL insured, 3-yr warranty. Free quote in 24 hours.`,
+  description: `Kitchen, bathroom, basement and whole-home renovations across Metro Vancouver. ${COMPANY_STATS.projectsCompleted} projects, $5M CGL insured, 3-yr warranty. Free quote in 24 hours.`,
   authors: [{ name: 'Reno Stars' }],
   // formatDetection: telephone:true makes iOS Safari auto-link any phone
   // number in body text into a tap-to-call link. The contractor business

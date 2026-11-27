@@ -3,6 +3,7 @@ import { IntlErrorCode } from 'next-intl';
 import { locales, defaultLocale, type Locale } from './config';
 import { namespaces } from './namespaces';
 import { guideSections } from './guideSections';
+import { frozenEnMessages, isTestARequest } from '@/lib/seo/test-a-freeze';
 
 // Module-level cache: each Lambda instance pays the dynamic-import cost
 // once per locale, then serves subsequent requests from the in-memory
@@ -35,6 +36,13 @@ async function loadMessagesUncached(locale: Locale): Promise<Record<string, unkn
   return merged;
 }
 
+// The en catalog as the 14 Test A pages saw it (lib/seo/test-a-freeze.ts).
+let frozenEnCache: Promise<Record<string, unknown>> | undefined;
+function loadFrozenEnMessages(): Promise<Record<string, unknown>> {
+  frozenEnCache ??= loadMessages(defaultLocale).then((m) => frozenEnMessages(m));
+  return frozenEnCache;
+}
+
 function loadMessages(locale: Locale): Promise<Record<string, unknown>> {
   let p = messageCache.get(locale);
   if (!p) {
@@ -51,7 +59,10 @@ export default getRequestConfig(async ({ requestLocale }) => {
     locale = defaultLocale;
   }
 
-  const messages = await loadMessages(locale as Locale);
+  const messages =
+    locale === defaultLocale && (await isTestARequest())
+      ? await loadFrozenEnMessages()
+      : await loadMessages(locale as Locale);
   // EN is the source of truth for keys. Non-EN locales can lag on newly-added
   // keys, and a single missing key must NOT throw — that hard-crashed the
   // all-locale prerender build (`MISSING_MESSAGE: costGuidesSection (fa)`).

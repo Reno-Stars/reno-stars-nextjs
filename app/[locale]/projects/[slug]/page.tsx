@@ -229,8 +229,8 @@ export default async function Page({ params }: PageProps) {
           company={company}
           serviceName={categoryName}
           serviceDescription={locale === 'zh'
-            ? `大温哥华专业${categoryName}装修服务。免费估价，许可证代办，${company.liabilityCoverage}保险，${company.yearsExperience}年经验。`
-            : `Professional ${categoryName.toLowerCase()} renovation services in Metro Vancouver. Free quotes, permits handled, ${company.liabilityCoverage} insured, ${company.yearsExperience}+ years experience.`}
+            ? `大温哥华专业${categoryName}装修服务。免费估价，许可证代办，${company.liabilityCoverage}保险，${company.foundingYear}年成立。`
+            : `Professional ${categoryName.toLowerCase()} renovation services in Metro Vancouver. Free quotes, permits handled, ${company.liabilityCoverage} insured, ${company.projectsCompleted} projects completed.`}
           url={`/${locale}/projects/${slug}/`}
           areaServed={['Vancouver', 'Richmond', 'Burnaby', 'Surrey', 'Coquitlam', 'North Vancouver', 'West Vancouver', 'Delta', 'Langley', 'New Westminster', 'Port Moody', 'Maple Ridge', 'White Rock', 'Port Coquitlam']}
         />

@@ -6,6 +6,7 @@ import { verifyToken } from './lib/admin/auth';
 import { ASSET_ORIGIN, PROD_ORIGIN } from './lib/storage';
 import { retiredBudgetRedirectPath } from './lib/projects/retired-budget-pages';
 import { deadLinkRedirectPath } from './lib/seo/dead-link-redirects';
+import { TEST_A_HEADER, isTestAPath } from './lib/seo/test-a-paths';
 
 const intlMiddleware = createMiddleware(routing);
 
@@ -178,6 +179,13 @@ export default function proxy(request: NextRequest): NextResponse {
     target.search = request.nextUrl.search;
     return addSecurityHeaders(NextResponse.redirect(target, 308));
   }
+
+  // Test A pages render frozen (company stats + en strings as of 2026-11-26) —
+  // see lib/seo/test-a-freeze.ts. next-intl copies the request headers into the
+  // forwarded request, so the flag reaches the layout and i18n/request.ts. A
+  // client-sent copy of the header is dropped first.
+  request.headers.delete(TEST_A_HEADER);
+  if (isTestAPath(pathname)) request.headers.set(TEST_A_HEADER, '1');
 
   // All other routes — next-intl locale middleware + security headers
   const response = addSecurityHeaders(intlMiddleware(request));

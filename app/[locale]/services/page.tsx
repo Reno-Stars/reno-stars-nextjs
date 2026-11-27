@@ -172,7 +172,7 @@ export default async function Page({ params }: PageProps) {
         {...(hasNativeSupport(locale as Locale)
           ? {
               serviceDescription:
-                "Kitchen, bathroom, whole house, basement, and commercial renovations across Metro Vancouver. Licensed, insured, 20+ years experience.",
+                "Kitchen, bathroom, whole house, basement, and commercial renovations across Metro Vancouver. Licensed, insured, since 2021.",
             }
           : {})}
         areaServed={areas.map((a) => a.name.en)}

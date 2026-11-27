@@ -5,7 +5,6 @@ import AboutPage from '@/components/pages/AboutPage';
 import { BreadcrumbSchema, FAQSchema } from '@/components/structured-data';
 import { getBaseUrl, buildAlternates, buildOgImageUrl, SITE_NAME, buildAlternateLocales } from '@/lib/utils';
 import { getCompanyFromDb, getTrustBadgesFromDb } from '@/lib/db/queries';
-import { getYearsExperience } from '@/lib/company-config';
 import ClientMessages from '@/components/ClientMessages';
 
 interface PageProps {
@@ -17,16 +16,15 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const t = await getTranslations({ locale, namespace: 'metadata.about' });
 
   const baseUrl = getBaseUrl();
-  const years = { years: getYearsExperience() };
-  const ogImage = buildOgImageUrl(t('title'), t('description', years));
+  const ogImage = buildOgImageUrl(t('title'), t('description'));
 
   return {
     title: t('title'),
-    description: t('description', years),
+    description: t('description'),
     alternates: buildAlternates('/about/', locale),
     openGraph: {
       title: t('title'),
-      description: t('description', years),
+      description: t('description'),
       url: `${baseUrl}/${locale}/about/`,
       siteName: SITE_NAME,
       locale: ogLocaleMap[locale as Locale],
@@ -37,7 +35,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     twitter: {
       card: 'summary_large_image',
       title: t('title'),
-      description: t('description', years),
+      description: t('description'),
       images: [{ url: ogImage, alt: t('title') }],
     },
   };
@@ -60,21 +58,19 @@ export default async function Page({ params }: PageProps) {
   ];
 
   const ABOUT_FAQ_KEYS = [1, 2, 3, 4, 5] as const;
-  // faq.a* answers carry a {years} ICU placeholder ("over {years} years of
-  // combined experience"). Provide it or next-intl raises a FORMATTING_ERROR
-  // (fatal in dev per i18n/request.ts; prod would leave the literal token).
-  const faqVars = { years: getYearsExperience() };
+  // The faq.a* answers no longer carry a {years} placeholder (founded 2021, no
+  // experience-years claim — Ryan 2026-11-26).
   const faqs = ABOUT_FAQ_KEYS.map((i) => ({
-    question: t(`faq.q${i}`, faqVars),
-    answer: t(`faq.a${i}`, faqVars),
+    question: t(`faq.q${i}`),
+    answer: t(`faq.a${i}`),
   }));
 
   const baseUrl = getBaseUrl();
   const aboutPageSchema = {
     '@context': 'https://schema.org',
     '@type': 'AboutPage',
-    name: `About ${company.name} — ${company.yearsExperience}+ Years of Vancouver Renovations`,
-    description: `Learn about ${company.name}, Metro Vancouver's renovation contractor with ${company.yearsExperience}+ years experience, $5M CGL insurance, and active WCB coverage.`,
+    name: `About ${company.name} — Vancouver Renovations Since ${company.foundingYear}`,
+    description: `Learn about ${company.name}, Metro Vancouver's renovation contractor since ${company.foundingYear}, with ${company.projectsCompleted} projects completed, $5M CGL insurance, and active WCB coverage.`,
     url: `${baseUrl}/${locale}/about/`,
     inLanguage: locale,
     mainEntity: { '@id': `${baseUrl}/#organization` },

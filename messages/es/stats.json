@@ -22,6 +22,8 @@
     "areasServed": "Áreas atendidas",
     "rating": "Calificación",
     "srStats": "Estadísticas de la empresa",
-    "srTrustBadges": "Insignias y certificaciones de confianza"
+    "srTrustBadges": "Insignias y certificaciones de confianza",
+    "founded": "Año de fundación",
+    "foundedIn": "Fundada en 2021"
   }
 }

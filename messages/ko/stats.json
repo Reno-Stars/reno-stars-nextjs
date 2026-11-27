@@ -22,7 +22,9 @@
     "areasServed": "서비스 지역",
     "rating": "평가",
     "srStats": "회사 통계",
-    "srTrustBadges": "신뢰 배지 및 인증"
+    "srTrustBadges": "신뢰 배지 및 인증",
+    "founded": "설립 연도",
+    "foundedIn": "2021년 설립"
   },
   "_translation_meta": {
     "source": "translate.googleapis.com (free, no API key)",

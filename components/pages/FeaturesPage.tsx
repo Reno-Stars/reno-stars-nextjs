@@ -32,15 +32,15 @@ const DIFFERENTIATOR_KEYS = ['transparent', 'managed', 'responsive', 'scheduled'
 
 export default function FeaturesPage({ company }: FeaturesPageProps) {
   const t = useTranslations('features');
+  const tStats = useTranslations('stats');
 
   const trustBadges = useMemo(() => [
-    // Strip the numeric prefix (e.g. "20+ ") from the title so value + label don't duplicate
-    { type: 'stat' as const, value: `${company.yearsExperience}+`, label: t('foundation.items.experience.title').replace(`${company.yearsExperience}+ `, '') },
+    { type: 'stat' as const, value: String(company.foundingYear), label: tStats('founded') },
     { type: 'stat' as const, value: company.projectsCompleted, label: t('foundation.items.rating.title') },
     // Label was incorrectly set to company.liabilityCoverage ("$5M") — show coverage context instead
     { type: 'stat' as const, value: company.liabilityCoverage, label: 'CGL Insurance' },
     { type: 'rating' as const, label: '5-Star Rating' },
-  ], [company, t]);
+  ], [company, t, tStats]);
 
   return (
     <div className="min-h-screen" style={{ backgroundColor: SURFACE }}>

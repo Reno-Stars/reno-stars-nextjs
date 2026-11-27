@@ -62,7 +62,7 @@ export default function AboutPage({ locale, company, badges }: AboutPageProps) {
     (obj[locale] as string | undefined) ?? obj.en;
 
   const stats = useMemo(() => [
-    { value: company.yearsExperience + '+', labelKey: 'stats.years', icon: Clock },
+    { value: String(company.foundingYear), labelKey: 'stats.years', icon: Clock },
     { value: company.projectsCompleted, labelKey: 'stats.projects', icon: Building2 },
     { value: company.teamSize + '+', labelKey: 'stats.team', icon: Users },
     { value: company.liabilityCoverage, labelKey: 'stats.insurance', icon: Shield },

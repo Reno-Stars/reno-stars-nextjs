@@ -4,7 +4,7 @@ import {
   getServiceAreasFromDb,
   getSocialLinksFromDb,
 } from '@/lib/db/queries';
-import { COMPANY_STATS, getYearsExperience } from '@/lib/company-config';
+import { COMPANY_STATS } from '@/lib/company-config';
 import { buildCompanyFactLines, legalName as buildLegalName } from '@/lib/seo/llms-shared';
 import { getGoogleReviews } from '@/lib/google-reviews';
 import { COST_GUIDES } from '@/lib/seo/cost-guides';
@@ -45,14 +45,13 @@ export async function GET(): Promise<Response> {
     });
   }
 
-  const years = getYearsExperience();
   const en = base + '/en';
   const legalName = buildLegalName();
   const areaNames = areas.map((a) => a.name.en || a.slug);
 
   const header = [
     `# ${legalName}`,
-    `> ${legalName} was founded in ${COMPANY_STATS.companyFoundingYear}. Our team brings ${years}+ years of prior renovation industry experience, serving Metro Vancouver, BC.`,
+    `> ${legalName} was founded in ${COMPANY_STATS.companyFoundingYear} and has completed ${COMPANY_STATS.projectsCompleted} renovation projects across Metro Vancouver, BC.`,
     `> Full reference (all services, service areas, cost guides, and every blog article with summaries): ${base}/llms-full.txt`,
   ].join('\n');
 
@@ -87,7 +86,7 @@ export async function GET(): Promise<Response> {
     '## Key Pages (English)',
     `- [Homepage](${en}/)`,
     `- [Services](${en}/services/)`,
-    `- [Projects (100+)](${en}/projects/)`,
+    `- [Projects (${COMPANY_STATS.projectsCompleted})](${en}/projects/)`,
     `- [Cost Guides](${en}/guides/)`,
     `- [Contact / Free Quote](${en}/contact/)`,
     `- [Reviews](${en}/reviews/)`,

@@ -499,13 +499,14 @@ export interface Company {
   logo: string;
   /** Quote request form URL */
   quoteUrl: string;
-  /** Years of experience (computed from foundingYear in config) */
+  /** Legacy "20+ years" stat: '' since 2026-11-26 (founded 2021 — no experience-years
+   *  claim). Only the frozen Test A render carries '20' (lib/seo/test-a-freeze.ts). */
   yearsExperience: string;
   /** Year company was founded */
   foundingYear: number;
   /** Number of team members */
   teamSize: number;
-  /** Projects completed count (e.g. "700+") */
+  /** Projects completed count (e.g. "900+") */
   projectsCompleted: string;
   /** Liability insurance coverage dollar amount (e.g. "$5M") */
   liabilityCoverage: string;

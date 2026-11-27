@@ -22,6 +22,8 @@
     "areasServed": "Areas Served",
     "rating": "Rating",
     "srStats": "Company Statistics",
-    "srTrustBadges": "Trust Badges and Certifications"
+    "srTrustBadges": "Trust Badges and Certifications",
+    "founded": "Year Founded",
+    "foundedIn": "Founded in 2021"
   }
 }

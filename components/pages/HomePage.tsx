@@ -57,7 +57,7 @@ interface HomePageProps {
       professionalExcellenceDesc: string;
       getFreeQuote: string;
       callNow: string;
-      yearsExperience: string;
+      foundedIn: string;
       liabilityCoverage: string;
       wcbCoverage: string;
       rating: string;

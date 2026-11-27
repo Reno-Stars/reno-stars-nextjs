@@ -22,7 +22,9 @@
     "areasServed": "サービスエリア",
     "rating": "評価",
     "srStats": "企業統計",
-    "srTrustBadges": "信頼のバッジと認定"
+    "srTrustBadges": "信頼のバッジと認定",
+    "founded": "創業年",
+    "foundedIn": "2021年創業"
   },
   "_translation_meta": {
     "source": "translate.googleapis.com (free, no API key)",

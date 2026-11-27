@@ -106,11 +106,10 @@ export default function LocalBusinessSchema({ company, socialLinks, areas, googl
     }),
     description: description
       ?? `Professional home renovation services in Metro Vancouver. Kitchen, bathroom, whole house renovations. Licensed, insured with ${company.liabilityCoverage} CGL insurance, active WCB coverage, and up to ${COMPANY_STATS.warrantyYears} years warranty.`,
-    // schema.org foundingDate = legal incorporation year, NOT aggregate
-    // team experience. The "20+ years" stat on the marketing site reflects
-    // team-level renovation experience (foundingYear in company-config.ts);
-    // schema must use the corporate incorporation year for entity honesty.
-    foundingDate: String(COMPANY_STATS.companyFoundingYear),
+    // schema.org foundingDate = the year Reno Stars was founded (2021, Ryan
+    // 2026-11-26), from the company object so the frozen Test A render keeps
+    // its original value (lib/seo/test-a-freeze.ts).
+    foundingDate: String(company.foundingYear),
     numberOfEmployees: company.teamSize,
     slogan: company.tagline,
     // knowsAbout: topical-expertise signal for AI search engines (Perplexity,

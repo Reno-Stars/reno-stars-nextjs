@@ -9,15 +9,15 @@ import { locales, LOCALE_META, type Locale } from '@/i18n/config';
  * WCB (WorkSafeBC) coverage is handled via translations, not a config value.
  */
 export const COMPANY_STATS = {
-  /** When the team started in renovation — drives the "20+ years experience" stat. */
-  foundingYear: 2007,
-  /** When the legal entity Reno Stars Construction Inc. was incorporated.
-   *  Used for schema.org Organization.foundingDate (which means corporate
-   *  founding, not aggregate team experience). Keeps schema honest while
-   *  the marketing "years experience" still reflects team-level expertise. */
-  companyFoundingYear: 2020,
+  /** Year Reno Stars was founded — Ryan, 2026-11-26 (task 158): "founded 2021".
+   *  Drives schema.org Organization.foundingDate and every "since / founded"
+   *  line. The site makes NO years-of-experience claim beyond this (the old
+   *  team-start 2007 → "20+ years" stat was retired the same day; the 14 Test A
+   *  pages keep it frozen — lib/seo/test-a-freeze.ts). */
+  companyFoundingYear: 2021,
   teamSize: 17,
-  projectsCompleted: "700+",
+  /** Ryan, 2026-11-26: 900+ projects completed (all locales). */
+  projectsCompleted: "900+",
   /** Up to N-year workmanship warranty ("up to 3 years workmanship warranty") */
   warrantyYears: 3,
   /** Dollar amount with "Up to" qualifier — full label comes from translations */
@@ -114,9 +114,3 @@ export const OPENING_HOURS = [
     closes: '19:00',
   },
 ] as const;
-
-/** Years of experience rounded up to nearest 5 for cleaner display */
-export function getYearsExperience(): string {
-  const rawYears = new Date().getFullYear() - COMPANY_STATS.foundingYear;
-  return String(Math.ceil(rawYears / 5) * 5);
-}

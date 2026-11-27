@@ -19,7 +19,7 @@ interface HeroSectionProps {
     professionalExcellenceDesc: string;
     getFreeQuote: string;
     callNow: string;
-    yearsExperience: string;
+    foundedIn: string;
     liabilityCoverage: string;
     wcbCoverage: string;
     rating: string;
@@ -196,7 +196,7 @@ export default function HeroSection({ company, googleRating, translations: t }: 
         <div className="flex flex-wrap md:flex-nowrap gap-x-4 gap-y-2">
           <span className="whitespace-nowrap text-sm font-medium text-white/70 flex items-center gap-1.5">
             <Shield className="w-4 h-4 shrink-0" style={{ color: GOLD_ON_DARK }} />
-            {company.yearsExperience}+ {t.yearsExperience}
+            {t.foundedIn}
           </span>
           <span className="whitespace-nowrap text-sm font-medium text-white/70 flex items-center gap-1.5">
             <Shield className="w-4 h-4 shrink-0" style={{ color: GOLD_ON_DARK }} />

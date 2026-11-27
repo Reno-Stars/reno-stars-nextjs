@@ -2,7 +2,7 @@
   "index": {
     "hero": {
       "title": "Vancouver Renovation Cost Guides 2026",
-      "subtitle": "Honest pricing based on real projects completed across Greater Vancouver. No guesswork — real data from 100+ completed renovations."
+      "subtitle": "Honest pricing based on real projects completed across Greater Vancouver. No guesswork — real data from 900+ completed renovations."
     },
     "kitchen": {
       "title": "Kitchen Renovation Cost",
@@ -100,7 +100,7 @@
       "subtitle": "Hub-level questions across all renovation types — see each guide for project-specific answers",
       "q1": {
         "question": "How much does a renovation cost in Vancouver?",
-        "answer": "Renovation cost in Vancouver depends on project type and tier. Bathroom renovations start at $10K, kitchens at $15K, basements at $30K, and whole-house projects at $50K. The biggest cost drivers are material choice, layout changes (plumbing/electrical relocation), and permit complexity. See the per-project guides for detailed ranges from our 100+ completed Metro Vancouver projects."
+        "answer": "Renovation cost in Vancouver depends on project type and tier. Bathroom renovations start at $10K, kitchens at $15K, basements at $30K, and whole-house projects at $50K. The biggest cost drivers are material choice, layout changes (plumbing/electrical relocation), and permit complexity. See the per-project guides for detailed ranges from our 900+ completed Metro Vancouver projects."
       },
       "q2": {
         "question": "Which renovations have the best ROI in Vancouver?",
@@ -119,6 +119,6 @@
         "answer": "Yes — get at least 3 detailed quotes. Compare scope of work line by line, not just bottom-line price. Verify $5M CGL insurance, active WCB coverage, and warranty terms (1 year is standard, 2–3 year is quality). Watch for low-ball quotes that omit critical line items like waterproofing, demolition disposal, or permit handling."
       }
     },
-    "intro": "Real renovation cost data from 100+ completed projects across Metro Vancouver — whole-house renovations run $150–$400/sq ft, kitchens $15K–$72K, bathrooms $10K–$60K. Each guide breaks down pricing by tier, what your budget actually buys, and the most common cost drivers."
+    "intro": "Real renovation cost data from 900+ completed projects across Metro Vancouver — whole-house renovations run $150–$400/sq ft, kitchens $15K–$72K, bathrooms $10K–$60K. Each guide breaks down pricing by tier, what your budget actually buys, and the most common cost drivers."
   }
 }

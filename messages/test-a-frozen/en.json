@@ -1,0 +1,112 @@
+{
+  "values": {
+    "aboutPage": {
+      "journey": {
+        "body": "Reno Stars was built on experience. Not just in construction but in understanding the renovation industry from both sides.\n\nBefore founding Reno Stars in 2020, our team spent years working on renovation platforms, connecting homeowners with contractors. We have seen thousands of projects from start to finish, and more importantly, we have seen where things go wrong.\n\nWe understand the common frustrations homeowners face: quotes that grow with hidden items, poor communication and delayed responses, uncertain timelines, and inconsistent workmanship due to unstable crews. These are not rare issues. They are industry norms. That is exactly why Reno Stars was created.",
+        "context": "Before founding Reno Stars in 2020, our team spent years working on renovation platforms, connecting homeowners with contractors. We have seen thousands of projects from start to finish, and more importantly, we have seen where things go wrong."
+      },
+      "stats": {
+        "years": "Years Experience"
+      },
+      "faq": {
+        "a1": "Reno Stars has over {years} years of combined experience in the Vancouver renovation industry. Our team has completed hundreds of projects across Metro Vancouver, from small bathroom updates to full-scale whole house renovations."
+      }
+    },
+    "benefits": {
+      "foundation": {
+        "items": {
+          "experience": {
+            "title": "20+ Years Industry Experience"
+          }
+        }
+      }
+    },
+    "contact": {
+      "whyChooseRenoStarsP1": "With over a decade of hands-on experience in Metro Vancouver, Reno Stars has built a reputation for delivering renovation projects that exceed expectations. Our team of licensed tradespeople, project managers, and designers work together under one roof to ensure every detail — from structural changes to finishing touches — is executed with precision and care. We are fully insured with $5M CGL coverage and maintain active WCB registration for all our workers, so you can have complete peace of mind throughout your project."
+    },
+    "costGuidesSection": {
+      "subtitle": "Real project pricing by service — from 100+ completed Metro Vancouver renovations. No estimates, no filler."
+    },
+    "features": {
+      "foundation": {
+        "items": {
+          "experience": {
+            "title": "20+ Years Industry Experience"
+          }
+        }
+      }
+    },
+    "guides": {
+      "index": {
+        "hero": {
+          "subtitle": "Honest pricing based on real projects completed across Greater Vancouver. No guesswork — real data from 100+ completed renovations."
+        },
+        "faqs": {
+          "q1": {
+            "answer": "Renovation cost in Vancouver depends on project type and tier. Bathroom renovations start at $10K, kitchens at $15K, basements at $30K, and whole-house projects at $50K. The biggest cost drivers are material choice, layout changes (plumbing/electrical relocation), and permit complexity. See the per-project guides for detailed ranges from our 100+ completed Metro Vancouver projects."
+          }
+        },
+        "intro": "Real renovation cost data from 100+ completed projects across Metro Vancouver — whole-house renovations run $150–$400/sq ft, kitchens $15K–$72K, bathrooms $10K–$60K. Each guide breaks down pricing by tier, what your budget actually buys, and the most common cost drivers."
+      }
+    },
+    "hero": {
+      "professionalExcellenceDesc": "Vancouver home & commercial renovation company with {experience}+ years of experience, {coverage} CGL insurance, active WCB coverage, and up to 3 years warranty. Kitchens, bathrooms, whole-house and commercial renovations across Metro Vancouver."
+    },
+    "locationBenefits": {
+      "experience": "{years}+ years serving the Lower Mainland"
+    },
+    "metadata": {
+      "home": {
+        "description": "Kitchen, bathroom, basement and whole-home renovations across Metro Vancouver. {years}+ years, $5M CGL insured, 3-year warranty. Free quote in 24 hours."
+      },
+      "services": {
+        "description": "Kitchen, bathroom, whole house, basement & commercial renovations across Metro Vancouver. 20+ years, $5M CGL insurance, 3-year warranty."
+      },
+      "projects": {
+        "title": "100+ Vancouver Renovations | Before & After | Reno Stars",
+        "description": "100+ real renovation projects across Metro Vancouver — before/after photos, actual costs, timelines. Kitchen, bathroom, basement, whole-house."
+      },
+      "design": {
+        "description": "Browse renovation design ideas from 100+ real Metro Vancouver projects. Kitchen, bathroom, basement & whole-house inspiration with actual costs."
+      },
+      "serviceLocation": {
+        "description": "Expert {service} in {area} by Reno Stars. {years}+ years experience, $5M CGL insurance, active WCB coverage, up to 3 years warranty. Free quote today."
+      },
+      "about": {
+        "title": "About Reno Stars | 20+ Yrs, Five-Star Vancouver Renovations",
+        "description": "Meet the team behind 100+ Metro Vancouver renovations. 20+ years experience, $5M insured, WCB covered, Google five-star reviews. Free consultations."
+      },
+      "nearMe": {
+        "description": "Top-rated renovation company near you in Vancouver, Richmond, Burnaby, Surrey + 14 Metro Vancouver cities. 5-Star Google-rated, 20+ yrs, $5M insured."
+      }
+    },
+    "nearMe": {
+      "hero": {
+        "eyebrow": "Serving Metro Vancouver since 2020"
+      },
+      "trust": {
+        "experience": {
+          "stat": "20+",
+          "label": "Years in Vancouver"
+        }
+      }
+    },
+    "process": {
+      "footer": {
+        "yearsIndustry": "Years Industry Experience"
+      }
+    },
+    "projects": {
+      "ctaSubtitle6": "Let us transform your vision into reality with {years} years of experience and a proven track record of excellence.",
+      "ctaSubtitle7": "Let us transform your vision into reality with {years} years of experience."
+    },
+    "serviceBenefits": {
+      "experience": "{years}+ years experience",
+      "projectsDone": "700+ projects completed"
+    }
+  },
+  "added": [
+    "stats.founded",
+    "stats.foundedIn"
+  ]
+}

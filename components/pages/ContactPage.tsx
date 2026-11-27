@@ -61,9 +61,9 @@ export default function ContactPage({ company, hours, areaNames, cityOptions, pr
   ], [t, company, hours]);
 
   const heroBadges = useMemo(() => [
-    { label: `${company.yearsExperience}+ ${t('stats.yearsExperience')}` },
+    { label: t('stats.foundedIn') },
     { label: t('stats.fullCoverage') },
-  ], [company, t]);
+  ], [t]);
 
   const whyContactUs = useMemo(() => [
     t('serviceBenefits.freeConsultation'),
@@ -73,7 +73,7 @@ export default function ContactPage({ company, hours, areaNames, cityOptions, pr
 
   const stats = useMemo(() => [
     { value: company.projectsCompleted, label: t('stats.projectsDone') },
-    { value: `${company.yearsExperience}+`, label: t('stats.yearsExperience') },
+    { value: String(company.foundingYear), label: t('stats.founded') },
     { value: '100%', label: t('stats.satisfaction') },
     { value: '24/7', label: t('stats.support') },
   ], [t, company]);

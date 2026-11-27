@@ -3,16 +3,16 @@
     "home": {
       "title": "Vancouver Renovation Contractor | Reno Stars",
       "titleRated": "{rating}-Star Vancouver Renovation Contractor | Reno Stars",
-      "description": "Kitchen, bathroom, basement and whole-home renovations across Metro Vancouver. {years}+ years, $5M CGL insured, 3-year warranty. Free quote in 24 hours.",
+      "description": "Kitchen, bathroom, basement and whole-home renovations across Metro Vancouver. Since 2021, $5M CGL insured, 3-year warranty. Free quote in 24 hours.",
       "descriptionRated": "Rated {rating}/5 from {reviewCount} Google reviews. Kitchen, bathroom, basement and whole-home renovations across Metro Vancouver. Free quote in 24 hours."
     },
     "services": {
       "title": "Vancouver Renovation Services — $5M Insured | Reno Stars",
-      "description": "Kitchen, bathroom, whole house, basement & commercial renovations across Metro Vancouver. 20+ years, $5M CGL insurance, 3-year warranty."
+      "description": "Kitchen, bathroom, whole house, basement & commercial renovations across Metro Vancouver. Since 2021, $5M CGL insurance, 3-year warranty."
     },
     "projects": {
-      "title": "100+ Vancouver Renovations | Before & After | Reno Stars",
-      "description": "100+ real renovation projects across Metro Vancouver — before/after photos, actual costs, timelines. Kitchen, bathroom, basement, whole-house."
+      "title": "900+ Vancouver Renovations | Before & After | Reno Stars",
+      "description": "900+ real renovation projects across Metro Vancouver — before/after photos, actual costs, timelines. Kitchen, bathroom, basement, whole-house."
     },
     "projectsBudget": {
       "title": "{tier} Renovation Projects Vancouver | Reno Stars",
@@ -32,7 +32,7 @@
     },
     "design": {
       "title": "Vancouver Renovation Design Gallery | Reno Stars",
-      "description": "Browse renovation design ideas from 100+ real Metro Vancouver projects. Kitchen, bathroom, basement & whole-house inspiration with actual costs."
+      "description": "Browse renovation design ideas from 900+ real Metro Vancouver projects. Kitchen, bathroom, basement & whole-house inspiration with actual costs."
     },
     "projectCategory": {
       "title": "{category} Projects | Reno Stars Vancouver",
@@ -44,7 +44,7 @@
     "serviceLocation": {
       "title": "{service} in {area} | Reno Stars",
       "titleWithTagline": "{service} in {area} – {tagline} | Reno Stars",
-      "description": "Expert {service} in {area} by Reno Stars. {years}+ years experience, $5M CGL insurance, active WCB coverage, up to 3 years warranty. Free quote today."
+      "description": "Expert {service} in {area} by Reno Stars. 900+ projects completed, $5M CGL insurance, active WCB coverage, up to 3 years warranty. Free quote today."
     },
     "areas": {
       "title": "Renovation Near You | 17 Metro Vancouver Areas | Reno Stars",
@@ -107,8 +107,8 @@
       }
     },
     "about": {
-      "title": "About Reno Stars | 20+ Yrs, Five-Star Vancouver Renovations",
-      "description": "Meet the team behind 100+ Metro Vancouver renovations. 20+ years experience, $5M insured, WCB covered, Google five-star reviews. Free consultations."
+      "title": "About Reno Stars | Since 2021, Five-Star Vancouver Renovations",
+      "description": "Meet the team behind 900+ Metro Vancouver renovations. Since 2021, $5M insured, WCB covered, Google five-star reviews. Free consultations."
     },
     "reviews": {
       "title": "Reno Stars Reviews — Vancouver Renovation Company Reviews",
@@ -128,7 +128,7 @@
     },
     "nearMe": {
       "title": "Home Renovation Near Me | Vancouver Metro | Reno Stars",
-      "description": "Top-rated renovation company near you in Vancouver, Richmond, Burnaby, Surrey + 14 Metro Vancouver cities. 5-Star Google-rated, 20+ yrs, $5M insured."
+      "description": "Top-rated renovation company near you in Vancouver, Richmond, Burnaby, Surrey + 14 Metro Vancouver cities. 5-Star Google-rated, since 2021, $5M insured."
     },
     "localBusinessDescription": "Professional home renovation services in Metro Vancouver. Kitchen, bathroom, whole house renovations. Licensed, insured with up to $5M CGL insurance, active WCB coverage, and up to 3 years warranty.",
     "careers": {

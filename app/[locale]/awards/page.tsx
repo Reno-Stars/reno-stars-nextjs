@@ -82,7 +82,6 @@ export default async function Page({ params }: PageProps) {
       <AwardsPage
         locale={locale as Locale}
         awards={AWARDS}
-        yearsExperience={company.yearsExperience}
         projectsCompleted={company.projectsCompleted}
         liabilityCoverage={company.liabilityCoverage}
         googleRating={googleReviews.rating}

@@ -85,7 +85,7 @@ export default function ProcessPage({ company, locale, googleRating }: ProcessPa
   const t = useTranslations();
 
   const trustBadges = useMemo(() => [
-    { type: 'stat' as const, value: `${company.yearsExperience}+`, label: t('stats.yearsExperience') },
+    { type: 'stat' as const, value: String(company.foundingYear), label: t('stats.founded') },
     { type: 'stat' as const, value: String(company.projectsCompleted), label: t('stats.projectsCompleted') },
     { type: 'rating' as const, label: googleRating ? `${googleRating} ${t('process.hero.googleReviews')}` : t('process.hero.googleReviews') },
   ], [company, t, googleRating]);
@@ -99,7 +99,7 @@ export default function ProcessPage({ company, locale, googleRating }: ProcessPa
   ], []);
 
   const footerStats = useMemo(() => [
-    { type: 'stat' as const, value: `${company.yearsExperience}+`, label: t('process.footer.yearsIndustry') },
+    { type: 'stat' as const, value: String(company.foundingYear), label: t('process.footer.yearsIndustry') },
     { type: 'rating' as const, label: googleRating ? `${googleRating} ${t('process.footer.googleRating')}` : t('process.footer.googleRating') },
     { type: 'stat' as const, value: t('stats.fullCoverage'), label: t('process.footer.warrantyService') },
   ], [company, t, googleRating]);

@@ -23,6 +23,7 @@ import { getGoogleReviews } from '@/lib/google-reviews';
 import { ASSET_ORIGIN } from '@/lib/storage';
 import { NAVY } from '@/lib/theme';
 import { minimalLocalized } from '@/lib/utils';
+import { freezeCompanyForTestA, isTestARequest } from '@/lib/seo/test-a-freeze';
 
 
 // SSR for the entire site (2026-06-08). `force-dynamic` cascades to every route
@@ -54,7 +55,7 @@ export default async function LocaleLayout({
 
   setRequestLocale(locale);
 
-  const [messages, t, company, socialLinks, services, areas, googleReviews] = await Promise.all([
+  const [messages, t, liveCompany, socialLinks, services, areas, googleReviews, testA] = await Promise.all([
     getMessages(),
     getTranslations({ locale, namespace: 'metadata' }),
     getCompanyForNav(),
@@ -62,7 +63,10 @@ export default async function LocaleLayout({
     getServicesForNav(),
     getServiceAreasForNav(),
     getGoogleReviews(),
+    isTestARequest(),
   ]);
+  // Test A pages keep the pre-2026-11-26 stats (lib/seo/test-a-freeze.ts).
+  const company = testA ? freezeCompanyForTestA(liveCompany) : liveCompany;
   const localBusinessDescription = t('localBusinessDescription');
 
   // Strip the rich, all-locale Service/ServiceArea objects down to the minimal
