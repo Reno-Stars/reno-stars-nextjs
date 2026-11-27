@@ -22,7 +22,11 @@ const fetchServices = async (): Promise<Service[]> => {
   const rows = await db
     .select()
     .from(servicesTable)
-    .orderBy(asc(servicesTable.displayOrder));
+    // created_at breaks display_order ties (basement and commercial are both 6).
+    // Without it the order followed the rows' physical position, so any UPDATE
+    // to a service row — e.g. a content migration — could swap them in the nav
+    // on every page, Test A included (task 158).
+    .orderBy(asc(servicesTable.displayOrder), asc(servicesTable.createdAt));
 
   // Batch-fetch all tags and benefits for all services
   const serviceIds = rows.map((r: typeof servicesTable.$inferSelect) => r.id);
@@ -141,7 +145,7 @@ export const getCategorySlugs = cache(async (): Promise<string[]> => {
 
 /** Fetch all services (admin — includes all fields + tags). */
 export async function getAllServicesAdmin() {
-  const rows = await db.select().from(servicesTable).orderBy(asc(servicesTable.displayOrder));
+  const rows = await db.select().from(servicesTable).orderBy(asc(servicesTable.displayOrder), asc(servicesTable.createdAt));
   const serviceIds = rows.map((r: typeof servicesTable.$inferSelect) => r.id);
   const allTags = serviceIds.length > 0
     ? await db.select().from(serviceTagsTable).where(inArray(serviceTagsTable.serviceId, serviceIds))
