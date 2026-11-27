@@ -6,7 +6,9 @@
  * hop (task 158 #3, 2026-11-26).
  *
  * GENERATED from a no-follow status check of every internal link target on a
- * full crawl of origin/main 3690449a (158_out/linkcheck_base.tsv). Keys and
+ * full crawl of origin/main 3690449a (158_out/linkcheck_base.tsv); task 164:
+ * double-slash keys resolve in one hop, and two 301s production has (checked
+ * no-follow against https://www.reno-stars.com) were added. Keys and
  * values are locale-free paths with a trailing slash; the page's locale prefix
  * is kept. The redirects themselves stay in proxy.ts / next.config.ts for old
  * external links. Test A pages are frozen and skip this rewrite.
@@ -55,6 +57,7 @@ export const INTERNAL_LINK_REDIRECTS: Readonly<Record<string, string>> = {
   "/blog/how-to-choose-renovation-company-vancouver/": "/blog/how-to-choose-renovation-contractor-vancouver/",
   "/blog/modern-kitchen-renovation-langley-casestudy/": "/blog/modern-kitchen-renovation-langley-case-study/",
   "/blog/nesement-renovation-cost-vancouver-2026/": "/guides/basement-renovation-cost-vancouver/",
+  "/blog/port-moody-home-renovation-guide-2026/": "/blog/whole-house-renovation-port-moody-2026/",
   "/blog/renovaci%C3%B3n-de-cocinas-presupuestarias-en-coquitlam/": "/blog/budget-friendly-kitchen-renovation-in-coquitlam/",
   "/blog/renovaci%C3%B3n-de-condominios-de-bajo-presupuesto-en-west-vancouver-case-study/": "/blog/low-budget-condo-renovation-in-west-vancouver-case-study/",
   "/blog/renovaci%C3%B3n-de-dos-ba%C3%B1os-con-puertas-arqueadas-richmond/": "/blog/two-bathroom-renovation-with-arched-doors-richmond/",
@@ -74,8 +77,8 @@ export const INTERNAL_LINK_REDIRECTS: Readonly<Record<string, string>> = {
   "/guias/coste-de-renovacion-de-banos-vancouver/": "/guides/bathroom-renovation-cost-vancouver/",
   "/guias/coste-de-renovacion-de-banos-vancouver//": "/guides/bathroom-renovation-cost-vancouver/",
   "/guias/coste-de-renovacion-de-cocinas-vancouver/": "/guides/kitchen-renovation-cost-vancouver/",
-  "/guias/coste-renovacion-de-bano-vancouver//": "/guias/coste-renovacion-de-bano-vancouver/",
-  "/guias/coste-renovacion-del-bano-vancouver//": "/guias/coste-renovacion-del-bano-vancouver/",
+  "/guias/coste-renovacion-de-bano-vancouver//": "/guides/bathroom-renovation-cost-vancouver/",
+  "/guias/coste-renovacion-del-bano-vancouver//": "/guides/bathroom-renovation-cost-vancouver/",
   "/guias/costos-de-reacabado-de-gabinetes-vancouver/": "/guides/cabinet-refinishing-cost-vancouver/",
   "/guides/%D0%B2%D0%B5%D1%81%D1%8C-%D1%80%D0%B5%D0%BC%D0%BE%D0%BD%D1%82-%D1%81%D1%82%D0%BE%D0%B8%D0%BC%D0%BE%D1%81%D1%82%D1%8C-%D0%B2%D0%B0%D0%BD%D0%BA%D1%83%D0%B2%D0%B5%D1%80/": "/guides/whole-house-renovation-cost-vancouver/",
   "/guides/%E0%A4%95%E0%A5%88%E0%A4%AC%E0%A4%BF%E0%A4%A8%E0%A5%87%E0%A4%9F-%E0%A4%B0%E0%A5%80%E0%A4%AB%E0%A4%BF%E0%A4%A8%E0%A4%BF%E0%A4%B6%E0%A4%BF%E0%A4%82%E0%A4%97-%E0%A4%B2%E0%A4%BE%E0%A4%97%E0%A4%A4-Vancouver/": "/guides/cabinet-refinishing-cost-vancouver/",
@@ -110,6 +113,7 @@ export const INTERNAL_LINK_REDIRECTS: Readonly<Record<string, string>> = {
   "/projects/critical-load-panel/": "/services/critical-load-panel/",
   "/projects/daughters-bath-renovation-with-gray-tiles/": "/projects/daughter-bath-renovation-richmond-gray-tile/",
   "/projects/daughters-bath-renovation-with-grey-tiles/": "/projects/daughter-bath-renovation-richmond-gray-tile/",
+  "/projects/delta-kitchen-renovation-apron-sink-quartz/": "/projects/delta-kitchen-bathroom-renovation-white-shaker-cabinets/",
   "/projects/dual-bathroom-renovation-with-unique-droom-room/": "/projects/richmond-dual-bathroom-renovation-powder-room/",
   "/projects/dual-bathroom-renovation-with-unique-powder-room/": "/projects/richmond-dual-bathroom-renovation-powder-room/",
   "/projects/heat-pump-hvac/": "/services/heat-pump-hvac/",
