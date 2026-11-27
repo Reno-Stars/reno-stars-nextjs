@@ -330,3 +330,35 @@ caught by this on 2026-09-03 and are now revoked. Verify with a real query as
 - Applying DDL as the `postgres` superuser leaves the table owned by postgres
   with no grants, and the app then gets `permission denied`. Always finish with
   `ALTER TABLE <t> OWNER TO renostars;`.
+
+## Go-live runbook — task 158 content migrations (2026-11-26)
+
+Two data migrations in `scripts/migrations/` carry the 2026-11 site-copy facts
+(founded May 2021, 900+ projects, no years-of-experience claim, licence number
+removed) and the zh-Hant Simplified→Traditional fixes. Neither has been applied to
+production; applying them is **Ryan's decision — never run them against the
+production database without his explicit approval.**
+
+1. **Order matters.** Run `2026-11-26-zh-hant-traditional-158.sql` **first**, then
+   `2026-11-26-company-facts-158.sql`. Several company-facts statements are guarded
+   on the exact Traditional text the zh-Hant migration writes; in the reverse order
+   those statements update 0 rows **silently** (no error) and the ZhHant values keep
+   the old facts.
+   ```bash
+   pnpm db:query -f scripts/migrations/2026-11-26-zh-hant-traditional-158.sql --dry-run
+   pnpm db:query -f scripts/migrations/2026-11-26-zh-hant-traditional-158.sql
+   pnpm db:query -f scripts/migrations/2026-11-26-company-facts-158.sql --dry-run
+   pnpm db:query -f scripts/migrations/2026-11-26-company-facts-158.sql
+   ```
+2. **Both are idempotent.** Every UPDATE writes one column (or one `localizations`
+   key) and is guarded on the old value / missing key, so a re-run changes 0 rows.
+   The statements were generated from the 2026-08-15 data copy: on newer production
+   data, rows edited since then simply do not match their guard and are left alone
+   (re-generate against current data if full coverage is needed).
+3. **Rows deliberately left alone** (Test-A-rendered service/area/FAQ/project rows,
+   project rows tied on a list sort key, 4 Simplified warranty clauses waiting for
+   Ryan) are listed in the task result's skip list — do not "finish" them by hand
+   before test A is read out.
+4. **Revalidate afterwards.** Direct DB edits do not trigger on-demand
+   revalidation: `POST /api/revalidate` for the affected blog, project, service and
+   area paths (all locales), then purge the Cloudflare edge cache.
