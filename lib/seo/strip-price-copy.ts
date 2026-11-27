@@ -674,7 +674,63 @@ export function stripPriceMarkdown(md: string): string {
   if (!md || !hasPriceCopy(md)) return md;
   const inSubsidyList = subsidyListRows(md.split('\n'));
   const rows = md.split('\n').map((orig, i) => ({ orig, kept: inSubsidyList[i] ? orig : stripLine(orig) }));
-  return dropEmptiedHeadings(dropEmptyTables(dropOrphans(rows)), md.split('\n')).join('\n').replace(/\n{3,}/g, '\n\n').trim();
+  const source = md.split('\n');
+  const lines = dropEmptiedHeadings(dropEmptyTables(dropOrphans(rows)), source);
+  return renumberHeadings(dropEmptiedQuestions(lines, source), source).join('\n').replace(/\n{3,}/g, '\n\n').trim();
+}
+
+const NUMBERED_HEADING = /^(\s*#{1,6}\s+)(\d{1,2})\.(?!\d)(\s?)/;
+
+/**
+ * Numbered section headings ("### 5. Timeline") whose source ran 1, 2, 3 … n without a gap are renumbered when a
+ * whole priced section was removed, so the basement hub reads 1, 2, 3 instead of 1, 2, 5, 7 (task 159). Any other
+ * numbering — a gap or repeat in the source, mixed levels — is left exactly as written.
+ */
+function renumberHeadings(lines: string[], source: string[]): string[] {
+  const levels = new Map<string, number[]>();
+  for (const l of source) {
+    const m = NUMBERED_HEADING.exec(l);
+    if (m) levels.set(m[1].trim(), [...(levels.get(m[1].trim()) ?? []), Number(m[2])]);
+  }
+  const sequential = new Set([...levels].filter(([, ns]) => ns.every((n, i) => n === i + 1)).map(([k]) => k));
+  if (!sequential.size) return lines;
+  const next = new Map<string, number>();
+  return lines.map((l) => {
+    const m = NUMBERED_HEADING.exec(l);
+    if (!m || !sequential.has(m[1].trim())) return l;
+    const n = (next.get(m[1].trim()) ?? 0) + 1;
+    next.set(m[1].trim(), n);
+    return n === Number(m[2]) ? l : l.replace(NUMBERED_HEADING, `$1${n}.$3`);
+  });
+}
+
+/** A markdown FAQ question line: "**Q?**" / "__Q?__", or a heading ending in a question mark (any script). */
+const QUESTION_LINE = /^\s*(?:(?:\*\*|__)[^\n]*?[?？؟]\s*(?:\*\*|__)|#{1,6}\s+[^\n]*?[?？؟]\s*)$/;
+
+/** True when the answer under question line `i` (up to the next question, heading or end) holds a non-blank line. */
+function answerHasContent(lines: string[], i: number): boolean {
+  for (let j = i + 1; j < lines.length; j++) {
+    if (QUESTION_LINE.test(lines[j]) || HEADING.test(lines[j])) return false;
+    if (lines[j].trim()) return true;
+  }
+  return false;
+}
+
+/**
+ * A FAQ question whose whole answer was removed for price goes too (task 159: the Surrey area pages ended on
+ * "**Which renovations offer the best ROI in Surrey?**" with nothing under it; the cabinet hub kept "**How much
+ * does cabinet refinishing cost in Vancouver?**" over an empty answer). Only a question that HAD an answer in the
+ * source is dropped, so a source that already listed bare questions is left exactly as it was.
+ */
+function dropEmptiedQuestions(lines: string[], source: string[]): string[] {
+  let from = 0;
+  return lines.filter((line, i) => {
+    if (!QUESTION_LINE.test(line)) return true;
+    const at = source.indexOf(line, from);
+    if (at >= 0) from = at + 1;
+    if (answerHasContent(lines, i)) return true;
+    return at < 0 || !answerHasContent(source, at);
+  });
 }
 
 /** True when the section under heading `i` holds a non-blank line before the next heading of its level or higher. */
