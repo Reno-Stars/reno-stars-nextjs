@@ -20,7 +20,7 @@ import { Link } from '@/navigation';
 import {
   NAVY, GOLD, GOLD_PALE, GOLD_ICON_FILTER, SURFACE, SURFACE_ALT, TEXT, TEXT_MID, CARD, neu,
 } from '@/lib/theme';
-import { renderProseHtml } from '@/lib/markdown-html';
+import { renderProseHtml, rewriteRedirectedLinks } from '@/lib/markdown-html';
 import {
   SERVICE_CITY_BLOG_LINKS,
   COST_GUIDE_BY_SERVICE_SLUG,
@@ -213,7 +213,7 @@ export default function ServiceDetailPage({ locale, serviceSlug, company, servic
             <div
               className="prose prose-lg max-w-none prose-headings:text-[#1B365D] prose-h2:text-2xl prose-h2:mt-8 prose-h2:mb-4 prose-h3:text-xl prose-h3:mt-6 prose-h3:mb-3 prose-p:leading-relaxed prose-li:my-1 prose-strong:text-[#1B365D]"
               style={{ color: TEXT_MID }}
-              dangerouslySetInnerHTML={{ __html: renderProseHtml(localizedService.long_description) }}
+              dangerouslySetInnerHTML={{ __html: rewriteRedirectedLinks(renderProseHtml(localizedService.long_description)) }}
             />
           </div>
         </section>

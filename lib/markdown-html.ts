@@ -81,3 +81,21 @@ export function normalizeInternalLinks(html: string, locale?: string, opts: { fr
     return tag.replace(/\shref="[^"]+"/i, ` href="${rebuilt}"`);
   });
 }
+
+/**
+ * Only the redirect-map part of normalizeInternalLinks: hrefs that point at a
+ * URL which answers 301/308 go straight to the final URL; nothing else in the
+ * HTML changes. For prose rendered without locale normalization (service hub
+ * long descriptions — task 158 #3).
+ */
+export function rewriteRedirectedLinks(html: string): string {
+  return html.replace(/(<a\b[^>]*\shref=")([^"]+)(")/gi, (all, pre: string, href: string, post: string) => {
+    let url: URL;
+    try { url = new URL(href, 'https://www.reno-stars.com'); } catch { return all; }
+    if (!INTERNAL_LINK_HOSTS.includes(url.hostname)) return all;
+    const path = url.pathname.endsWith('/') ? url.pathname : `${url.pathname}/`;
+    const final = finalInternalPath(path);
+    if (final === path) return all;
+    return `${pre}${href.startsWith('/') ? '' : 'https://www.reno-stars.com'}${final}${url.search}${url.hash}${post}`;
+  });
+}
