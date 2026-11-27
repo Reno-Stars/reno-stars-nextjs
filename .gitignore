@@ -72,3 +72,6 @@ temp.txt
 .env.local.backup
 .env.local.prod_backup
 .env.vercel
+
+# Generated content-migration SQL + reports (task 169) — never committed
+.migration-out/

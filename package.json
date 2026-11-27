@@ -110,6 +110,7 @@
     "eslint-plugin-react-hooks": "^7.0.1",
     "husky": "^9.1.7",
     "jsdom": "^25.0.0",
+    "opencc-js": "1.0.5",
     "tailwindcss": "^4.0.0",
     "tsx": "^4.19.0",
     "typescript": "^5.7.0",
