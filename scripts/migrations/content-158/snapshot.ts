@@ -7,6 +7,7 @@ import { readFileSync, readdirSync, mkdirSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { Client } from 'pg';
 import { pyStrip, cpLen, cpSlice } from './pyre';
+import { findUnsafeStatements, findTransactionControl } from '../../lib/migration-safety';
 
 // ---------- CLI + DB ----------
 
@@ -153,8 +154,21 @@ export function sortStmts(stmts: Stmt[]): Stmt[] {
   });
 }
 
+/**
+ * No BEGIN/COMMIT: the runner (`pnpm db:query`) owns the transaction. A COMMIT in the
+ * file would end db:query's dry-run transaction and write for real (task 170 M-A).
+ */
 export function renderFile(header: string, stmts: Stmt[]): string {
-  return `${header.trimEnd()}\n\nBEGIN;\n${stmts.map(renderStmt).join('\n')}\nCOMMIT;\n`;
+  return `${header.trimEnd()}\n\n${stmts.map(renderStmt).join('\n')}\n`;
+}
+
+/** Generation-time assertion: the file passes the same checks db:query applies (and has no transaction control). */
+export function assertSafeSql(sql: string): void {
+  const unsafe = findUnsafeStatements(sql);
+  const control = findTransactionControl(sql);
+  if (unsafe.length || control.length) {
+    throw new Error(`generated SQL refused: ${unsafe.length} unsafe statement(s), ${control.length} transaction-control statement(s) — ${[...unsafe.map((u) => u.reason), ...control].slice(0, 3).join(' | ')}`);
+  }
 }
 
 // ---------- guard check against a target DB ----------
@@ -189,6 +203,7 @@ function guardStatus(s: Stmt, row: { has: boolean; v: string | null } | undefine
 // ---------- outputs ----------
 
 export function writeOutputs(outDir: string, base: string, sql: string, report: unknown): { sqlPath: string; reportPath: string } {
+  assertSafeSql(sql);
   mkdirSync(outDir, { recursive: true });
   const sqlPath = join(outDir, `${base}.sql`);
   const reportPath = join(outDir, `${base}.report.json`);

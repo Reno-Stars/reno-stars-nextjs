@@ -32,7 +32,7 @@ async function collectJobs(client: Client): Promise<Job[]> {
   for (const t of tabs) {
     const cols = await textColumns(client, t, "column_name like '%\\_zh'");
     const sel = cols.map((c) => `, ${ident(c)}::text as ${ident(c)}`).join('');
-    const rows = (await client.query(`select id::text as id, localizations::text as loc${sel} from ${ident(t)}`)).rows;
+    const rows = (await client.query(`select id::text as id, localizations::text as loc${sel} from ${ident(t)} order by id`)).rows;
     for (const r of rows) jobs.push(...rowJobs(t, r, cols));
   }
   return jobs;
@@ -108,7 +108,8 @@ function header(db: string, n: number): string {
 -- ADD: a missing <field>ZhHant key, converted from <field>_zh (guard: key absent).
 -- FIX: an existing ZhHant value that still carries Simplified sentences (guard: EXACT old value).
 -- Warranty clauses keep their original characters; Test-A-rendered and tied-sort-key rows are skipped
--- (see the .report.json next to this file). Re-running changes 0 rows.`;
+-- (see the .report.json next to this file). Re-running changes 0 rows.
+-- No BEGIN/COMMIT: pnpm db:query owns the transaction (--dry-run rolls back).`;
 }
 
 main().catch((e: unknown) => {

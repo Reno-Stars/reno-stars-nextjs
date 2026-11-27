@@ -96,3 +96,48 @@ describe('statement rendering + skip rules', () => {
     expect(skipReason(ctx, 'services', 'other', 'unrelated text')).toBeNull();
   });
 });
+
+describe('task 170', () => {
+  it('generated files carry no BEGIN/COMMIT (db:query owns the transaction) and pass the generation-time check', async () => {
+    const { assertSafeSql } = await import('@/scripts/migrations/content-158/snapshot');
+    const { findTransactionControl } = await import('@/scripts/lib/migration-safety');
+    const stmt: Stmt = { table: 'blog_posts', id: 'a', field: 'content_en', mode: 'set', old: 'please commit; end', new: 'x', rules: ['r'] };
+    const sql = renderFile('-- header mentions BEGIN/COMMIT only in a comment', [stmt]);
+    expect(findTransactionControl(sql)).toEqual([]);
+    expect(() => assertSafeSql(sql)).not.toThrow();
+    expect(() => assertSafeSql(`BEGIN;\n${sql}COMMIT;\n`)).toThrow(/transaction-control/);
+  });
+
+  it('About line in translated form → "900+ projects" in that language, $5M kept, case kept', () => {
+    const sub: SubcountLeft[] = [];
+    expect(rewriteLocalization('contentEs', '[Acerca de Reno Stars](/en/about/): más de 20 años, $5M reseñas.', false, sub).value)
+      .toBe('[Acerca de Reno Stars](/en/about/): más de 900 proyectos, $5M reseñas.');
+    expect(rewriteLocalization('contentEs', '[Aproximadamente Reno Stars](/en/about/) — Más de 20 años, $5M asegurado', false, sub).value)
+      .toBe('[Aproximadamente Reno Stars](/en/about/) — Más de 900 proyectos, $5M asegurado');
+    expect(rewriteLocalization('contentVi', '[Giới thiệu](/en/about/) - Hơn 20 năm, $5M được bảo hiểm', false, sub).value)
+      .toBe('[Giới thiệu](/en/about/) - Hơn 900 dự án, $5M được bảo hiểm');
+    expect(rewriteColumn('content_zh', '[关于 Reno Stars](/en/about/) — 20 多年，保险 500 万加元', false, sub).value)
+      .toBe('[关于 Reno Stars](/en/about/) — 900+ 个项目，保险 500 万加元');
+  });
+
+  it('locale rules stay in their locale: a zh-Hant table cell changes, the same text in Ja does not; broken tags are left', () => {
+    const sub: SubcountLeft[] = [];
+    const v = '<標題> <tr><td>經驗</td><td>成立10年以上</td><td>20年以上</td></tr> </標題> <正文>';
+    expect(rewriteLocalization('contentZhHant', v, false, sub).value).toBe('<標題> <tr><td>經驗</td><td>成立10年以上</td><td>2021 年 5 月成立</td></tr> </標題> <正文>');
+    expect(rewriteLocalization('contentJa', '<td>20年以上</td>', false, sub).changes).toEqual([]);
+  });
+
+  it('residual scan: company claims count, documented exclusions and skipped rows are reported separately', async () => {
+    const { scanResiduals } = await import('@/scripts/migrations/content-158/residuals');
+    const r = scanResiduals([
+      { table: 'blog_posts', id: 'x1', field: 'content_en', value: 'Reno Stars brings 20+ years to every job.', state: 'new' },
+      { table: 'blog_posts', id: '91161717-aaaa', field: 'content_en', value: 'Natural stone: 20+ years if sealed.', state: 'untouched' },
+      { table: 'blog_posts', id: 'x2', field: 'content_en', value: 'Faucets from $80 to $700+ and $64,700+ homes.', state: 'untouched' },
+      { table: 'services', id: 'x3', field: 'description_en', value: 'over 100 renovation projects', state: 'skipped' },
+    ]);
+    expect(r.residualsOutsideSkipList).toBe(1);
+    expect(r.residuals[0]).toMatchObject({ id: 'x1', detector: 'years20:en' });
+    expect(r.excludedByPattern).toEqual({ 'lifespan:tile': 1 });
+    expect(r.residualsInSkipList).toBe(1);
+  });
+});

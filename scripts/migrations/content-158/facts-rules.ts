@@ -55,6 +55,77 @@ export const RULES: readonly Rule[] = [
   rule('years:vi:td', '<td>(?:[Hh]ơn )?20 năm</td>', '<td>Từ tháng 5 năm 2021</td>'),
 ];
 
+/**
+ * Locale-scoped rules (task 170 M-B): applied only to the column / localizations key of
+ * that language, so a phrase that is a company claim in one language cannot fire in another.
+ * The About line "[About Reno Stars](/xx/about/) — 20+ years, $5M insured…" in translated
+ * form → "900+ projects," in that language, $5M kept; zh-Hant comparison-table cell.
+ */
+const ABOUT_LINK = '(\\]\\(/[a-z-]+/about/\\)(?: [—–-]|:) )';
+const about = (id: string, phrase: string, rep: string, sep = ','): Rule =>
+  ({ id, rx: re(`${ABOUT_LINK}${phrase}${sep}`), rep: `$1${rep}${sep}` });
+/** A locale rule whose replacement keeps the case of the first letter it replaces ("Más"/"más"). */
+const local = (id: string, p: string, rep: string): Rule => ({ id, rx: re(p), rep });
+export const LOCAL_RULES: Record<string, readonly Rule[]> = {
+  Es: [
+    about('about:es', '[Mm]ás de 20 años', 'más de 900 proyectos'),
+    local('years:es:experience-cap', 'Más de 20 años de experiencia', 'Más de 900 proyectos completados'),
+    local('count:es:project-data', '([Mm]ás de) 100 (datos de proyectos)', '$1 900 $2'),
+  ],
+  Fr: [
+    about('about:fr', '(?:20\\+|[Pp]lus de 20) ans', '900+ projets'),
+    local('years:fr:experience-cap', "Plus de 20 ans d'expérience", 'Plus de 900 projets réalisés'),
+    local('years:fr:td', '<td>20\\+ ans</td>', '<td>Depuis mai 2021</td>'),
+    local('count:fr:project-data', '([Pp]lus de) 100 (données de projet)', '$1 900 $2'),
+  ],
+  Ru: [
+    local('years:ru:experience-plus', '20\\+ лет опыта', 'Более 900 реализованных проектов'),
+    local('years:ru:td', '<td>20\\+ лет</td>', '<td>С мая 2021 года</td>'),
+  ],
+  Fa: [
+    local('years:fa:experience-plus', '(?:۲۰|20)\\+ سال تجربه', 'بیش از ۹۰۰ پروژه تکمیل‌شده'),
+    local('years:fa:td', '<td>(?:۲۰|20)\\+ سال</td>', '<td>از مه ۲۰۲۱</td>'),
+  ],
+  Vi: [
+    about('about:vi', '[Hh]ơn 20 năm', 'hơn 900 dự án'),
+    local('count:vi:projects', '([Hh]ơn) 100 ((?:dữ liệu )?dự án)', '$1 900 $2'),
+  ],
+  Ko: [about('about:ko', '20년 이상', '900개 이상의 프로젝트')],
+  Tl: [about('about:tl', '20\\+ taon', '900+ proyekto')],
+  Hi: [about('about:hi', '20\\+ (?:वर्ष|साल)', '900+ परियोजनाएँ')],
+  Pa: [
+    about('about:pa', '20\\+ ਸਾਲ', '900+ ਪ੍ਰੋਜੈਕਟ'),
+    local('years:pa:experience-anubhav', '20\\+ ਸਾਲਾਂ ਦਾ (?:ਨਵੀਨੀਕਰਨ )?ਅਨੁਭਵ', '900+ ਪੂਰੇ ਕੀਤੇ ਪ੍ਰੋਜੈਕਟ'),
+  ],
+  Zh: [about('about:zh', '20 ?多年', '900+ 个项目', '，')],
+  ZhHant: [
+    about('about:zhHant', '20 ?多年', '900+ 個項目', '，'),
+    local('years:zhHant:td', '<td>20 ?年以上</td>', '<td>2021 年 5 月成立</td>'),
+  ],
+};
+
+/** Keep the case of the replaced text's first letter (an About line may read "— Más …" or ": más …"). */
+function matchCase(replaced: string, out: string): string {
+  const a = replaced.charAt(0);
+  const b = out.charAt(0);
+  if (a === a.toUpperCase() && a !== a.toLowerCase()) return b.toUpperCase() + out.slice(1);
+  return out;
+}
+
+function applyLocalRules(suffix: string, v: string, changes: FactsChange[]): string {
+  let s = v;
+  for (const r of LOCAL_RULES[suffix] ?? []) {
+    s = sub(r.rx, s, (m) => {
+      const prefix = r.rep.startsWith('$1') && r.id.startsWith('about:') ? m[1] ?? '' : '';
+      const body = r.rep.replace(/\$(\d)/g, (_, d: string) => m[Number(d)] ?? '');
+      const out = prefix ? prefix + matchCase(m[0].slice(prefix.length), body.slice(prefix.length)) : body;
+      changes.push({ rule: r.id, old: m[0], new: out });
+      return out;
+    });
+  }
+  return s;
+}
+
 const COUNT = re(`(?:700|100)\\s?\\+|(?:700|100)\\s?多|۷۰۰|۱۰۰\\+|(?:more than|over|plus de|más de|более|أكثر من|بیش از|hơn)\\s(?:700|100|۷۰۰|۱۰۰)${B}|(?:700|100)\\s?(?:以上|개 이상|件以上|से अधिक)`);
 const COUNT_CTX = re('project|renovation|proyecto|projet|rénovation|remodela|проект|ремонт|реконстр|مشروع|تجديد|پروژه|بازسازی|परियोजन|नवीकरण|ਪ੍ਰੋਜੈਕਟ|ਰੈਨੋਵੇਸ਼ਨ|proyekto|dự án|cải tạo|项目|項目|工程|翻新|改造|装修|裝修|プロジェクト|改修|リノベ|프로젝트|개조|Projects|Renovations|kitchen renovations|strata renovations|apartment bathrooms|公寓浴室', 'i');
 const SUBCOUNT = re('bathroom|浴室|욕실|phòng tắm|baño|salle de bain|ванн|حمام|बाथरूम|ਬਾਥਰੂਮ|banyo|kitchen renovations|厨房|廚房|strata|地层|地層|strate|지층|tầng lớp|分契|condo|公寓浴室', 'i');
@@ -179,6 +250,7 @@ export function rewriteColumn(col: string, v: string, companySince: boolean, sub
   let { value } = r;
   const changes = [...r.changes];
   const add = (x: { value: string; changes: FactsChange[] }) => { value = x.value; changes.push(...x.changes); };
+  if (col.endsWith('_zh')) value = applyLocalRules('Zh', value, changes);
   if (col.endsWith('_en')) add(sinceEn(value));
   else if (col.endsWith('_zh') && companySince) add(sinceLoc('Zh', value));
   if (!col.endsWith('_en')) add(sinceEn(value));
@@ -191,6 +263,7 @@ export function rewriteLocalization(key: string, v: string, companySince: boolea
   let { value } = r;
   const changes = [...r.changes];
   const suffix = suffixOf(key);
+  value = applyLocalRules(suffix, value, changes);
   if (companySince && suffix) {
     const x = sinceLoc(suffix, value);
     value = x.value; changes.push(...x.changes);
