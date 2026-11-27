@@ -68,3 +68,21 @@ export function findUnsafeStatements(sql: string): UnsafeStatement[] {
 
   return found;
 }
+
+/**
+ * Transaction-control statements (BEGIN, COMMIT, ROLLBACK, END, START TRANSACTION,
+ * ABORT, SAVEPOINT, RELEASE, PREPARE TRANSACTION). `pnpm db:query --dry-run` wraps
+ * the file in its own BEGIN … ROLLBACK; a COMMIT inside the file would commit that
+ * outer transaction for real (task 170 M-A). Literals, comments and dollar-quoted
+ * bodies (DO $$ BEGIN … END $$) are ignored, so values containing "commit" or "end"
+ * never trip it.
+ */
+const TXN_CONTROL = /^(?:BEGIN|COMMIT|ROLLBACK|END|ABORT|SAVEPOINT|RELEASE|START\s+TRANSACTION|PREPARE\s+TRANSACTION)\b/;
+
+export function findTransactionControl(sql: string): string[] {
+  const withoutDollarQuotes = sql.replace(/\$([A-Za-z_][A-Za-z0-9_]*)?\$[\s\S]*?\$\1\$/g, "''");
+  return stripSqlNoise(withoutDollarQuotes)
+    .split(';')
+    .map((raw) => raw.trim().replace(/\s+/g, ' '))
+    .filter((statement) => TXN_CONTROL.test(statement.toUpperCase()));
+}

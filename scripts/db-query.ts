@@ -9,11 +9,13 @@
  *
  * Usage:
  *   pnpm db:query -f scripts/migrations/2026-08-16-blog-excerpt-zh.sql
- *   pnpm db:query -f <file> --dry-run     # rolls back, reports what would change
+ *   pnpm db:query -f <file> --dry-run     # rolls back, reports what would change;
+ *                                         # refused if the file has its own BEGIN/COMMIT
  */
 import { readFileSync } from 'node:fs';
 import { Client } from 'pg';
-import { findUnsafeStatements } from './lib/migration-safety';
+import { findUnsafeStatements, findTransactionControl } from './lib/migration-safety';
+import { runSqlFile, DryRunRefused } from './lib/run-sql-file';
 
 function arg(flag: string): string | undefined {
   const i = process.argv.indexOf(flag);
@@ -45,27 +47,24 @@ async function main(): Promise<void> {
     process.exit(1);
   }
 
+  // A file with its own BEGIN/COMMIT would commit the dry run for real: refuse before connecting.
+  const control = dryRun ? findTransactionControl(sql) : [];
+  if (control.length > 0) {
+    console.error(`REFUSED ${file} — --dry-run on a file with transaction control (${control.slice(0, 3).join(' | ')}).`);
+    console.error('  Its COMMIT would commit the dry run for real. Remove BEGIN/COMMIT from the file: db:query wraps it in a transaction.');
+    process.exit(1);
+  }
+
   const client = new Client({ connectionString });
   await client.connect();
-  let changed = 0;
-
   try {
-    await client.query('BEGIN');
-    const results = await client.query(sql);
-    for (const r of Array.isArray(results) ? results : [results]) {
-      if (typeof r?.rowCount === 'number') changed += r.rowCount;
-    }
-    if (dryRun) {
-      await client.query('ROLLBACK');
-      console.log(`DRY RUN ${file} — would change ${changed} row(s); rolled back`);
-    } else {
-      await client.query('COMMIT');
-      console.log(`APPLIED ${file} — ${changed} row(s) changed`);
-    }
+    const { changed } = await runSqlFile(client, sql, { dryRun });
+    console.log(dryRun
+      ? `DRY RUN ${file} — would change ${changed} row(s); rolled back`
+      : `APPLIED ${file} — ${changed} row(s) changed`);
   } catch (error) {
-    await client.query('ROLLBACK');
-    console.error(`FAILED ${file} — rolled back, no rows changed`);
-    console.error(error instanceof Error ? error.message : error);
+    if (error instanceof DryRunRefused) console.error(`REFUSED ${file} — ${error.message}`);
+    else console.error(`FAILED ${file} — rolled back, no rows changed\n${error instanceof Error ? error.message : error}`);
     process.exitCode = 1;
   } finally {
     await client.end();

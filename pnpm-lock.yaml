@@ -37,7 +37,7 @@ importers:
         version: 0.5.19(tailwindcss@4.1.18)
       drizzle-orm:
         specifier: ^0.36.4
-        version: 0.36.4(@neondatabase/serverless@0.10.4)(@types/pg@8.16.0)(@types/react@19.2.10)(pg@8.18.0)(react@19.2.4)
+        version: 0.36.4(@electric-sql/pglite@0.5.16)(@neondatabase/serverless@0.10.4)(@types/pg@8.16.0)(@types/react@19.2.10)(pg@8.18.0)(react@19.2.4)
       fflate:
         specifier: ^0.8.2
         version: 0.8.2
@@ -90,6 +90,9 @@ importers:
         specifier: ^4.3.6
         version: 4.3.6
     devDependencies:
+      '@electric-sql/pglite':
+        specifier: 0.5.16
+        version: 0.5.16
       '@eslint/eslintrc':
         specifier: ^3.0.0
         version: 3.3.3
@@ -507,6 +510,9 @@ packages:
 
   '@drizzle-team/brocli@0.10.2':
     resolution: {integrity: sha512-z33Il7l5dKjUgGULTqBsQBQwckHh5AbIuxhdsIxDDiZAzBOrZO6q9ogcWC65kU382AfynTfgNumVcNIjuIua6w==}
+
+  '@electric-sql/pglite@0.5.16':
+    resolution: {integrity: sha512-Nj8KcIsJL748W408U2N8q4+9IlONdpRIU8MJypIAAINMJ5nqKyqpX7Mgg/5XKkXiAib3AoZGR6hnJFlrlLBrcg==}
 
   '@emnapi/core@1.8.1':
     resolution: {integrity: sha512-AvT9QFpxK0Zd8J0jopedNm+w/2fIzvtPKPjqyw9jwvBaReTTqPBk9Hixaz7KbjimP+QNz605/XnjFcDAL2pqBg==}
@@ -5480,6 +5486,8 @@ snapshots:
 
   '@drizzle-team/brocli@0.10.2': {}
 
+  '@electric-sql/pglite@0.5.16': {}
+
   '@emnapi/core@1.8.1':
     dependencies:
       '@emnapi/wasi-threads': 1.1.0
@@ -7573,8 +7581,9 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  drizzle-orm@0.36.4(@neondatabase/serverless@0.10.4)(@types/pg@8.16.0)(@types/react@19.2.10)(pg@8.18.0)(react@19.2.4):
+  drizzle-orm@0.36.4(@electric-sql/pglite@0.5.16)(@neondatabase/serverless@0.10.4)(@types/pg@8.16.0)(@types/react@19.2.10)(pg@8.18.0)(react@19.2.4):
     optionalDependencies:
+      '@electric-sql/pglite': 0.5.16
       '@neondatabase/serverless': 0.10.4
       '@types/pg': 8.16.0
       '@types/react': 19.2.10
