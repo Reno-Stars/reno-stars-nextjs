@@ -333,32 +333,64 @@ caught by this on 2026-09-03 and are now revoked. Verify with a real query as
 
 ## Go-live runbook — task 158 content migrations (2026-11-26)
 
-Two data migrations in `scripts/migrations/` carry the 2026-11 site-copy facts
-(founded May 2021, 900+ projects, no years-of-experience claim, licence number
-removed) and the zh-Hant Simplified→Traditional fixes. Neither has been applied to
-production; applying them is **Ryan's decision — never run them against the
-production database without his explicit approval.**
+The 2026-11 site-copy facts (founded May 2021, 900+ projects, no years-of-experience
+claim, licence number removed) and the zh-Hant Simplified→Traditional fixes are DB
+content changes. They are **generated, not committed**:
 
-1. **Order matters.** Run `2026-11-26-zh-hant-traditional-158.sql` **first**, then
-   `2026-11-26-company-facts-158.sql`. Several company-facts statements are guarded
-   on the exact Traditional text the zh-Hant migration writes; in the reverse order
-   those statements update 0 rows **silently** (no error) and the ZhHant values keep
-   the old facts.
+| generator | rules | output (gitignored) |
+|---|---|---|
+| `scripts/migrations/gen-zh-hant-traditional-158.ts` | `content-158/zh-rules.ts` | `2026-11-26-zh-hant-traditional-158.sql` + `.report.json` |
+| `scripts/migrations/gen-company-facts-158.ts` | `content-158/facts-rules.ts` | `2026-11-26-company-facts-158.sql` + `.report.json` |
+
+Skip rules (Test-A-rendered rows, rows tied on a project list sort key) live in
+`content-158/snapshot.ts`; the 4 Simplified warranty clauses keep their characters
+(Ryan decides). Every statement writes ONE column or ONE `localizations` key and is
+guarded on the EXACT old value (ADD: on the key being absent), so a re-run changes 0
+rows. Output is sorted by table, id, field — same snapshot ⇒ same bytes.
+
+> ⚠️ The SQL that was committed in 75c21693…a7755577 was generated from the
+> **2026-08-15 local copy** and must **never** be used on production: rows edited
+> on prod since then would silently not match, and new rows would be missed.
+> Always regenerate from a fresh snapshot. **Nothing here runs on production
+> without Ryan's explicit approval.**
+
+1. **Fresh read-only prod dump** → restore it into a scratch Postgres (never the
+   prod DB itself). The generators only read (`BEGIN TRANSACTION READ ONLY`); they
+   take the connection URL from the env var NAMED by `--db-env`.
+2. **Generate zh-Hant** from the scratch copy:
    ```bash
-   pnpm db:query -f scripts/migrations/2026-11-26-zh-hant-traditional-158.sql --dry-run
-   pnpm db:query -f scripts/migrations/2026-11-26-zh-hant-traditional-158.sql
-   pnpm db:query -f scripts/migrations/2026-11-26-company-facts-158.sql --dry-run
-   pnpm db:query -f scripts/migrations/2026-11-26-company-facts-158.sql
+   pnpm exec tsx scripts/migrations/gen-zh-hant-traditional-158.ts \
+     --db-env SNAPSHOT_DATABASE_URL --testa-html <dir with the 14 saved Test A pages> \
+     --out-dir .migration-out/158
    ```
-2. **Both are idempotent.** Every UPDATE writes one column (or one `localizations`
-   key) and is guarded on the old value / missing key, so a re-run changes 0 rows.
-   The statements were generated from the 2026-08-15 data copy: on newer production
-   data, rows edited since then simply do not match their guard and are left alone
-   (re-generate against current data if full coverage is needed).
-3. **Rows deliberately left alone** (Test-A-rendered service/area/FAQ/project rows,
-   project rows tied on a list sort key, 4 Simplified warranty clauses waiting for
-   Ryan) are listed in the task result's skip list — do not "finish" them by hand
-   before test A is read out.
-4. **Revalidate afterwards.** Direct DB edits do not trigger on-demand
-   revalidation: `POST /api/revalidate` for the affected blog, project, service and
-   area paths (all locales), then purge the Cloudflare edge cache.
+   `--testa-html` is the saved base HTML of the 14 Test A pages (the skip rule probes
+   it). Then **apply that file to the scratch copy** — the company-facts guards must
+   see the Traditional text zh-Hant writes.
+3. **Generate company-facts** from the same (now zh-Hant-applied) scratch copy:
+   ```bash
+   pnpm exec tsx scripts/migrations/gen-company-facts-158.ts \
+     --db-env SNAPSHOT_DATABASE_URL --testa-html <same dir> --out-dir .migration-out/158
+   ```
+   Re-running either generator against the scratch copy after applying must report
+   **0 statements**.
+4. **Captain reviews the two report files** (rows hit per rule, rows skipped by
+   reason, warranty clauses left, sub-counts left). Optional
+   `--check-db-env TARGET_DATABASE_URL` adds a guard check (match / already-applied /
+   no-match) against another read-only DB.
+5. **Ryan approves.**
+6. **Apply zh-Hant first, then company-facts** (reverse order: the guarded ZhHant
+   updates silently match 0 rows):
+   ```bash
+   pnpm db:query -f .migration-out/158/2026-11-26-zh-hant-traditional-158.sql --dry-run
+   pnpm db:query -f .migration-out/158/2026-11-26-zh-hant-traditional-158.sql
+   pnpm db:query -f .migration-out/158/2026-11-26-company-facts-158.sql --dry-run
+   pnpm db:query -f .migration-out/158/2026-11-26-company-facts-158.sql
+   ```
+7. **Revalidate** — direct DB edits do not trigger on-demand revalidation:
+   `POST /api/revalidate` for the affected blog, project, service and area paths
+   (all locales).
+8. **Purge the Cloudflare edge cache.**
+
+**Merging `fix/site-copy-facts` to `main` MUST be a SQUASH merge.** Commits
+75c21693…a7755577 carry the 93 MB generated SQL blob; a merge commit or rebase-merge
+would put it into `main`'s history permanently.
