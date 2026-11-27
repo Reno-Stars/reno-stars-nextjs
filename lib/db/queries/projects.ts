@@ -29,7 +29,11 @@ export const getProjectsFromDb = withFallback(cache(async (): Promise<Project[]>
       .select()
       .from(projectsTable)
       .where(eq(projectsTable.isPublished, true))
-      .orderBy(desc(projectsTable.createdAt));
+      // id breaks created_at ties (2 + 5 + 2 projects share a timestamp). Without
+      // it the order followed physical row position, so any UPDATE to a project
+      // row could swap tied cards on /before-after/ (task 163). id DESC reproduces
+      // today's before-after order (hallway-bathroom before powder-room, Richmond).
+      .orderBy(desc(projectsTable.createdAt), desc(projectsTable.id));
 
     const ids = rows.map((r: DbProjectRow) => r.id);
     const { imagePairs, scopes, externalProducts } = await fetchProjectRelations(ids);
