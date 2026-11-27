@@ -23,7 +23,8 @@
     "rating": "Rating",
     "srStats": "Company Statistics",
     "srTrustBadges": "Trust Badges and Certifications",
-    "founded": "Year Founded",
-    "foundedIn": "Founded in 2021"
+    "founded": "Founded",
+    "foundedIn": "Founded in May 2021",
+    "foundedDate": "May 2021"
   }
 }

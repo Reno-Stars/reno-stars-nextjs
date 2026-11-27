@@ -73,7 +73,7 @@ export default function ContactPage({ company, hours, areaNames, cityOptions, pr
 
   const stats = useMemo(() => [
     { value: company.projectsCompleted, label: t('stats.projectsDone') },
-    { value: String(company.foundingYear), label: t('stats.founded') },
+    { value: t('stats.foundedDate'), label: t('stats.founded') },
     { value: '100%', label: t('stats.satisfaction') },
     { value: '24/7', label: t('stats.support') },
   ], [t, company]);

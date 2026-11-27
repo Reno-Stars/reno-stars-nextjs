@@ -51,7 +51,7 @@ export async function GET(): Promise<Response> {
 
   const header = [
     `# ${legalName}`,
-    `> ${legalName} was founded in ${COMPANY_STATS.companyFoundingYear} and has completed ${COMPANY_STATS.projectsCompleted} renovation projects across Metro Vancouver, BC.`,
+    `> ${legalName} was founded in ${COMPANY_STATS.companyFoundedLabel} and has completed ${COMPANY_STATS.projectsCompleted} renovation projects across Metro Vancouver, BC.`,
     `> Full reference (all services, service areas, cost guides, and every blog article with summaries): ${base}/llms-full.txt`,
   ].join('\n');
 

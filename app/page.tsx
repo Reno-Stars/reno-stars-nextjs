@@ -19,9 +19,9 @@ import { COMPANY_STATS } from '@/lib/company-config';
 // are read at render/regeneration time, not frozen at process boot.
 export function generateMetadata(): Metadata {
   return {
-  title: `Vancouver Home Renovations — Since ${COMPANY_STATS.companyFoundingYear}, $5M Insured | Reno Stars`,
+  title: `Vancouver Home Renovations — Since ${COMPANY_STATS.companyFoundedLabel}, $5M Insured | Reno Stars`,
   description:
-    `Kitchen, bathroom & whole-house renovations across Metro Vancouver. ${COMPANY_STATS.projectsCompleted} projects completed since ${COMPANY_STATS.companyFoundingYear}, $5M CGL insurance, WCB-covered crews & 3-year warranty. See our completed projects or get your free quote today.`,
+    `Kitchen, bathroom & whole-house renovations across Metro Vancouver. ${COMPANY_STATS.projectsCompleted} projects completed since ${COMPANY_STATS.companyFoundedLabel}, $5M CGL insurance, WCB-covered crews & 3-year warranty. See our completed projects or get your free quote today.`,
   alternates: {
     canonical: `${getBaseUrl()}/en/`,
     languages: {
@@ -32,9 +32,9 @@ export function generateMetadata(): Metadata {
   },
   // Don't pollute social cards for the redirect URL — use /en/'s instead
   openGraph: {
-    title: `Vancouver Home Renovations — Since ${COMPANY_STATS.companyFoundingYear}, $5M Insured | Reno Stars`,
+    title: `Vancouver Home Renovations — Since ${COMPANY_STATS.companyFoundedLabel}, $5M Insured | Reno Stars`,
     description:
-      `Kitchen, bathroom & whole-house renovations across Metro Vancouver. ${COMPANY_STATS.projectsCompleted} projects completed since ${COMPANY_STATS.companyFoundingYear}, $5M CGL insurance, 3-year warranty.`,
+      `Kitchen, bathroom & whole-house renovations across Metro Vancouver. ${COMPANY_STATS.projectsCompleted} projects completed since ${COMPANY_STATS.companyFoundedLabel}, $5M CGL insurance, 3-year warranty.`,
     url: `${getBaseUrl()}/en/`,
     type: 'website',
   },

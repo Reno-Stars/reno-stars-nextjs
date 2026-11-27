@@ -39,7 +39,7 @@ export function buildCompanyFactLines(
   return [
     `- Name: ${legalName()}`,
     `- Local Brand Names: ${Object.entries(LOCALIZED_BRAND_NAMES).map(([lc, n]) => `${n} (${lc})`).join(', ')} — also known as "${SITE_NAME}" in every language`,
-    `- Founded: ${COMPANY_STATS.companyFoundingYear}`,
+    `- Founded: ${COMPANY_STATS.companyFoundedLabel}`,
     `- Location: ${company.address || CONTACT_FALLBACKS.address}`,
     `- Phone: ${company.phone || CONTACT_FALLBACKS.phone}`,
     `- Email: ${company.email || CONTACT_FALLBACKS.email}`,

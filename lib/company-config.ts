@@ -15,6 +15,11 @@ export const COMPANY_STATS = {
    *  team-start 2007 → "20+ years" stat was retired the same day; the 14 Test A
    *  pages keep it frozen — lib/seo/test-a-freeze.ts). */
   companyFoundingYear: 2021,
+  /** Ryan set the Google Business Profile opening date to May 2021 (Captain
+   *  addendum 2026-11-26 20:29): schema.org foundingDate, ISO year-month. */
+  companyFoundingDate: '2021-05',
+  /** The English display form; other locales use messages stats.foundedDate. */
+  companyFoundedLabel: 'May 2021',
   teamSize: 17,
   /** Ryan, 2026-11-26: 900+ projects completed (all locales). */
   projectsCompleted: "900+",

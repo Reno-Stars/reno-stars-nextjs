@@ -58,16 +58,17 @@ interface AboutPageProps {
 
 export default function AboutPage({ locale, company, badges }: AboutPageProps) {
   const t = useTranslations('aboutPage');
+  const tStats = useTranslations('stats');
   const localize = (obj: import('@/lib/types').Localized<string>) =>
     (obj[locale] as string | undefined) ?? obj.en;
 
   const stats = useMemo(() => [
-    { value: String(company.foundingYear), labelKey: 'stats.years', icon: Clock },
+    { value: tStats('foundedDate'), labelKey: 'stats.years', icon: Clock },
     { value: company.projectsCompleted, labelKey: 'stats.projects', icon: Building2 },
     { value: company.teamSize + '+', labelKey: 'stats.team', icon: Users },
     { value: company.liabilityCoverage, labelKey: 'stats.insurance', icon: Shield },
     { value: '', labelKey: 'stats.wcbCoverage', icon: HardHat },
-  ], [company]);
+  ], [company, tStats]);
 
   const painPoints: string[] = t.raw('journey.painPoints') as string[];
   const systemItems: { title: string; desc: string }[] = t.raw('offer.systemItems') as { title: string; desc: string }[];

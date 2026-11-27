@@ -23,8 +23,9 @@
     "rating": "評価",
     "srStats": "企業統計",
     "srTrustBadges": "信頼のバッジと認定",
-    "founded": "創業年",
-    "foundedIn": "2021年創業"
+    "founded": "創業",
+    "foundedIn": "2021年5月創業",
+    "foundedDate": "2021年5月"
   },
   "_translation_meta": {
     "source": "translate.googleapis.com (free, no API key)",

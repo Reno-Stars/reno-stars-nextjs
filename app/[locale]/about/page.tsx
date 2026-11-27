@@ -1,4 +1,5 @@
 import { Metadata } from 'next';
+import { COMPANY_STATS } from '@/lib/company-config';
 import { getTranslations, setRequestLocale } from 'next-intl/server';
 import { ogLocaleMap, type Locale } from '@/i18n/config';
 import AboutPage from '@/components/pages/AboutPage';
@@ -69,8 +70,8 @@ export default async function Page({ params }: PageProps) {
   const aboutPageSchema = {
     '@context': 'https://schema.org',
     '@type': 'AboutPage',
-    name: `About ${company.name} — Vancouver Renovations Since ${company.foundingYear}`,
-    description: `Learn about ${company.name}, Metro Vancouver's renovation contractor since ${company.foundingYear}, with ${company.projectsCompleted} projects completed, $5M CGL insurance, and active WCB coverage.`,
+    name: `About ${company.name} — Vancouver Renovations Since ${COMPANY_STATS.companyFoundedLabel}`,
+    description: `Learn about ${company.name}, Metro Vancouver's renovation contractor since ${COMPANY_STATS.companyFoundedLabel}, with ${company.projectsCompleted} projects completed, $5M CGL insurance, and active WCB coverage.`,
     url: `${baseUrl}/${locale}/about/`,
     inLanguage: locale,
     mainEntity: { '@id': `${baseUrl}/#organization` },

@@ -57,6 +57,9 @@ describe('company stats', () => {
   it('keeps the owner-confirmed facts', () => {
     // Ryan, 2026-11-26 (task 158): founded 2021, 900+ projects.
     expect(COMPANY_STATS.companyFoundingYear).toBe(2021);
+    // Captain addendum 2026-11-26 20:29: GBP opening date May 2021.
+    expect(COMPANY_STATS.companyFoundingDate).toBe('2021-05');
+    expect(COMPANY_STATS.companyFoundedLabel).toBe('May 2021');
     expect(COMPANY_STATS.projectsCompleted).toBe('900+');
     expect(COMPANY_STATS).not.toHaveProperty('foundingYear');
     expect(COMPANY_STATS.warrantyYears).toBe(3);

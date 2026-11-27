@@ -198,7 +198,7 @@ export default async function Page({ params }: PageProps) {
   ];
 
   const stats = [
-    { value: String(company.foundingYear), label: t("stats.founded") },
+    { value: t("stats.foundedDate"), label: t("stats.founded") },
     { value: company.projectsCompleted, label: t("stats.projectsCompleted") },
     { value: company.liabilityCoverage, label: t("stats.liabilityCoverage") },
     { value: '', label: t("stats.wcbCoverage"), image: WORKSAFE_BC_LOGO },

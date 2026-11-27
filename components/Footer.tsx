@@ -298,11 +298,11 @@ export default function Footer({ company, socialLinks, services, areas, googleRa
   ], [t]);
 
   const whyUsStats = useMemo(() => [
-    // Founded 2021 (Ryan, 2026-11-26). Only the 14 frozen Test A pages still
+    // Founded May 2021 (Ryan, 2026-11-26). Only the 14 frozen Test A pages still
     // carry the legacy experience stat (lib/seo/test-a-freeze.ts).
     company.yearsExperience
       ? { key: 'years', val: `${company.yearsExperience}+`, lbl: t('stats.yearsExperience') }
-      : { key: 'years', val: String(company.foundingYear), lbl: t('stats.founded') },
+      : { key: 'years', val: t('stats.foundedDate'), lbl: t('stats.founded') },
     { key: 'projects', val: company.projectsCompleted, lbl: t('stats.projectsCompleted') },
   ], [company, t]);
 

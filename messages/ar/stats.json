@@ -23,7 +23,8 @@
     "rating": "تصنيف",
     "srStats": "إحصائيات الشركة",
     "srTrustBadges": "شارات الثقة والشهادات",
-    "founded": "سنة التأسيس",
-    "foundedIn": "تأسست عام 2021"
+    "founded": "التأسيس",
+    "foundedIn": "تأسست في مايو 2021",
+    "foundedDate": "مايو 2021"
   }
 }

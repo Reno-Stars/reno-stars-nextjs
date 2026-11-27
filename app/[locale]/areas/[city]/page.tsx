@@ -218,7 +218,7 @@ function getEnAreaOverrides(): Record<string, { title: string; description: stri
  */
 const enAreaIntros: Record<string, string> = {
   coquitlam:
-    'Reno Stars is a full-service renovation contractor in Coquitlam, BC — serving homes from Burke Mountain and Westwood Plateau down through Maillardville, Austin Heights, Eagle Ridge and Ranch Park. Since 2021, with 900+ completed projects, we handle kitchens, bathrooms, basements and whole-house renovations end-to-end with $5M CGL coverage and up to a 3-year warranty. Use the service tiles below for Coquitlam-specific kitchen, bathroom and whole-house pricing.',
+    'Reno Stars is a full-service renovation contractor in Coquitlam, BC — serving homes from Burke Mountain and Westwood Plateau down through Maillardville, Austin Heights, Eagle Ridge and Ranch Park. Since May 2021, with 900+ completed projects, we handle kitchens, bathrooms, basements and whole-house renovations end-to-end with $5M CGL coverage and up to a 3-year warranty. Use the service tiles below for Coquitlam-specific kitchen, bathroom and whole-house pricing.',
   // 2026-06-02 GSC retune: "basement renovations burnaby" pos 16.3 / 55 imp
   // and "basement remodeling burnaby" pos 19.4 / 31 imp — 86 imp combined
   // at striking distance. Lead with basement renovation (was buried 3rd in

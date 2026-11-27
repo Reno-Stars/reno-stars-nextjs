@@ -23,8 +23,9 @@
     "rating": "等級",
     "srStats": "公司統計",
     "srTrustBadges": "信任徽章和認證",
-    "founded": "成立年份",
-    "foundedIn": "2021 年成立"
+    "founded": "成立",
+    "foundedIn": "2021 年 5 月成立",
+    "foundedDate": "2021 年 5 月"
   },
   "_translation_meta": {
     "source": "translate.googleapis.com (free, no API key)",
