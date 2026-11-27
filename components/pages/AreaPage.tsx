@@ -43,6 +43,7 @@ import {
   CARD, TEXT, TEXT_MID, neu,
 } from '@/lib/theme';
 import { CITY_BLOG_CLUSTERS, CITY_NEIGHBOURHOODS } from '@/components/areas/areaPageData';
+import { zhPick } from '@/lib/zh-pick';
 
 interface AreaPageProps {
   locale: Locale;
@@ -271,12 +272,12 @@ export default function AreaPage({ locale, area, allAreas, company, services, fa
           <div className="max-w-5xl mx-auto">
             <h2 className="text-2xl md:text-3xl font-bold mb-2" style={{ color: TEXT }}>
               {locale === 'zh' || locale === 'zh-Hant'
-                ? `${localizedArea.name}装修真实费用`
+                ? zhPick(locale, `${localizedArea.name}装修真实费用`, `${localizedArea.name}裝修真實費用`)
                 : `Real Renovation Costs in ${localizedArea.name}`}
             </h2>
             <p className="text-sm mb-8" style={{ color: TEXT_MID }}>
               {locale === 'zh' || locale === 'zh-Hant'
-                ? `基于 ${cityCostSummary.count} 个已完工 ${localizedArea.name} 项目的真实预算数据`
+                ? zhPick(locale, `基于 ${cityCostSummary.count} 个已完工 ${localizedArea.name} 项目的真实预算数据`, `基於 ${cityCostSummary.count} 個已完工 ${localizedArea.name} 項目的真實預算數據`)
                 : locale === 'ja'
                   ? `${localizedArea.name}で完了した${cityCostSummary.count}件の実プロジェクトに基づく予算データ`
                   : locale === 'ko'
@@ -286,15 +287,15 @@ export default function AreaPage({ locale, area, allAreas, company, services, fa
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
               {[
                 {
-                  label: locale === 'zh' || locale === 'zh-Hant' ? '价格区间' : 'Price Range',
+                  label: locale === 'zh' || locale === 'zh-Hant' ? zhPick(locale, '价格区间', '價格區間') : 'Price Range',
                   value: `${formatPrice(cityCostSummary.allMin)} – ${formatPrice(cityCostSummary.allMax)}`,
                 },
                 {
-                  label: locale === 'zh' || locale === 'zh-Hant' ? '中位数' : 'Average',
+                  label: locale === 'zh' || locale === 'zh-Hant' ? zhPick(locale, '中位数', '中位數') : 'Average',
                   value: formatPrice(cityCostSummary.avg),
                 },
                 {
-                  label: locale === 'zh' || locale === 'zh-Hant' ? '已完成项目' : 'Projects',
+                  label: locale === 'zh' || locale === 'zh-Hant' ? zhPick(locale, '已完成项目', '已完成項目') : 'Projects',
                   value: String(cityCostSummary.count),
                 },
                 latestProjectDate
@@ -316,9 +317,9 @@ export default function AreaPage({ locale, area, allAreas, company, services, fa
             {cityCostSummary.breakdown.length > 0 && (
               <div className="rounded-2xl overflow-hidden" style={{ backgroundColor: CARD, boxShadow: neu() }}>
                 <div className="grid grid-cols-3 gap-3 p-4 font-bold text-sm" style={{ backgroundColor: NAVY, color: '#fff' }}>
-                  <span>{locale === 'zh' || locale === 'zh-Hant' ? '类别' : 'Service'}</span>
-                  <span className="text-center">{locale === 'zh' || locale === 'zh-Hant' ? '项目数' : 'Projects'}</span>
-                  <span className="text-right">{locale === 'zh' || locale === 'zh-Hant' ? '价格区间' : 'Range'}</span>
+                  <span>{locale === 'zh' || locale === 'zh-Hant' ? zhPick(locale, '类别', '類別') : 'Service'}</span>
+                  <span className="text-center">{locale === 'zh' || locale === 'zh-Hant' ? zhPick(locale, '项目数', '項目數') : 'Projects'}</span>
+                  <span className="text-right">{locale === 'zh' || locale === 'zh-Hant' ? zhPick(locale, '价格区间', '價格區間') : 'Range'}</span>
                 </div>
                 {cityCostSummary.breakdown.map((row) => {
                   const svcLabel = services.find((s) => s.slug === row.service)?.title || row.service;

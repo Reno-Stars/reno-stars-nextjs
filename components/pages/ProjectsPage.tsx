@@ -18,6 +18,7 @@ import {
   NAVY, GOLD, GOLD_ON_DARK, GOLD_PALE, SURFACE, SURFACE_ALT, CARD,
   TEXT, TEXT_MID, TEXT_MUTED, neu,
 } from '@/lib/theme';
+import { zhPick } from '@/lib/zh-pick';
 
 /** Collected image for display in modal gallery */
 interface GalleryImage {
@@ -801,22 +802,22 @@ export default function ProjectsPage({ locale, company, projects: rawProjects, s
         <div className="max-w-5xl mx-auto">
           <h2 className="text-lg font-bold mb-4 text-center" style={{ color: TEXT }}>
             {locale === 'zh' || locale === 'zh-Hant'
-              ? '研究单项费用？'
+              ? zhPick(locale, '研究单项费用？', '研究單項費用？')
               : 'Researching specific costs?'}
           </h2>
           <div className="grid gap-3 sm:grid-cols-3">
             {[
               {
                 href: '/blog/vanity-renovation-cost-vancouver/',
-                label: locale === 'zh' || locale === 'zh-Hant' ? '梳妆台费用' : locale === 'en' ? 'Vanity cost guide' : 'Vanity cost',
+                label: locale === 'zh' || locale === 'zh-Hant' ? zhPick(locale, '梳妆台费用', '梳妝台費用') : locale === 'en' ? 'Vanity cost guide' : 'Vanity cost',
               },
               {
                 href: '/blog/bathtub-renovation-cost-vancouver/',
-                label: locale === 'zh' || locale === 'zh-Hant' ? '浴缸费用' : locale === 'en' ? 'Bathtub cost guide' : 'Bathtub cost',
+                label: locale === 'zh' || locale === 'zh-Hant' ? zhPick(locale, '浴缸费用', '浴缸費用') : locale === 'en' ? 'Bathtub cost guide' : 'Bathtub cost',
               },
               {
                 href: '/blog/toilet-renovation-cost-vancouver/',
-                label: locale === 'zh' || locale === 'zh-Hant' ? '马桶费用' : locale === 'en' ? 'Toilet cost guide' : 'Toilet cost',
+                label: locale === 'zh' || locale === 'zh-Hant' ? zhPick(locale, '马桶费用', '馬桶費用') : locale === 'en' ? 'Toilet cost guide' : 'Toilet cost',
               },
             ].map((p) => (
               // `Link` (@/navigation) adds the locale itself — the hrefs above

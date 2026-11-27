@@ -36,6 +36,7 @@ import {
   type CostSummary,
 } from '@/lib/seo/combo-content';
 import { comboHeroSubtitle } from '@/lib/data/seo-overrides';
+import { zhPick } from '@/lib/zh-pick';
 
 interface FaqItem {
   id: string;
@@ -226,7 +227,7 @@ export default function ServiceLocationPage({
   );
   const introHtml = useMemo(() => {
     const lead = zhLoc
-      ? `聚星装修为${localizedArea.name}及大温地区的业主提供${localizedService.title}服务。`
+      ? zhPick(locale, `聚星装修为${localizedArea.name}及大温地区的业主提供${localizedService.title}服务。`, `聚星裝修為${localizedArea.name}及大溫地區的業主提供${localizedService.title}服務。`)
       : `Reno Stars provides ${localizedService.title.toLowerCase()} for homeowners across ${localizedArea.name} and Metro Vancouver.`;
     return normalizeInternalLinks(renderProseHtml(introParagraph ? `${lead}\n\n${introParagraph}` : lead), locale);
   }, [introParagraph, zhLoc, localizedArea.name, localizedService.title, locale]);
@@ -278,36 +279,36 @@ export default function ServiceLocationPage({
   const featuredHeading = (() => {
     switch (relation) {
       case 'exact': return t('areas.featuredProjectHeading', { area: cityT, service: svcT });
-      case 'same-service': return zhLoc ? `近期${svcT}项目` : `Recent ${svcT} Project`;
-      case 'same-city': return zhLoc ? `我们在${cityT}的近期项目` : `Our Recent Work in ${cityT}`;
-      default: return zhLoc ? '近期装修项目' : 'Recent Renovation Project';
+      case 'same-service': return zhLoc ? zhPick(locale, `近期${svcT}项目`, `近期${svcT}項目`) : `Recent ${svcT} Project`;
+      case 'same-city': return zhLoc ? zhPick(locale, `我们在${cityT}的近期项目`, `我們在${cityT}的近期項目`) : `Our Recent Work in ${cityT}`;
+      default: return zhLoc ? zhPick(locale, '近期装修项目', '近期裝修項目') : 'Recent Renovation Project';
     }
   })();
   const relatedHeading = (() => {
     switch (relation) {
       case 'exact': return t('areas.areaProjects', { area: cityT });
-      case 'same-service': return zhLoc ? `大温地区相关${svcT}项目` : `Related ${svcT} Projects Across Metro Vancouver`;
-      case 'same-city': return zhLoc ? `我们在${cityT}的近期装修项目` : `Our Recent Renovation Work in ${cityT}`;
-      default: return zhLoc ? '大温地区近期项目' : 'Recent Projects Across Metro Vancouver';
+      case 'same-service': return zhLoc ? zhPick(locale, `大温地区相关${svcT}项目`, `大溫地區相關${svcT}項目`) : `Related ${svcT} Projects Across Metro Vancouver`;
+      case 'same-city': return zhLoc ? zhPick(locale, `我们在${cityT}的近期装修项目`, `我們在${cityT}的近期裝修項目`) : `Our Recent Renovation Work in ${cityT}`;
+      default: return zhLoc ? zhPick(locale, '大温地区近期项目', '大溫地區近期項目') : 'Recent Projects Across Metro Vancouver';
     }
   })();
   // Honest service-area availability line for combos with no completed LOCAL
   // project of this type (service-area business — not a false claim of past work).
   const availabilityCta = zhLoc
-    ? `我们服务${cityT}地区，欢迎为您承接${svcT}工程——查看以上相关案例并获取免费报价。`
+    ? zhPick(locale, `我们服务${cityT}地区，欢迎为您承接${svcT}工程——查看以上相关案例并获取免费报价。`, `我們服務${cityT}地區，歡迎為您承接${svcT}工程——查看以上相關案例並獲取免費報價。`)
     : `We serve ${cityT} and would love to take on your ${svcT.toLowerCase()} — explore our related work above and get a free quote.`;
 
   // Cost stat heading/subtitle — city-specific when we have ≥2 local projects,
   // else a clearly-labelled general Metro-Vancouver range.
   const costHeading = costIsCitySpecific
-    ? (zhLoc ? `${cityT}${svcT}真实费用` : `Real ${svcT} Costs in ${cityT}`)
-    : (zhLoc ? `${svcT}费用区间 · 大温地区` : `${svcT} Cost Range — Metro Vancouver`);
+    ? (zhLoc ? zhPick(locale, `${cityT}${svcT}真实费用`, `${cityT}${svcT}真實費用`) : `Real ${svcT} Costs in ${cityT}`)
+    : (zhLoc ? zhPick(locale, `${svcT}费用区间 · 大温地区`, `${svcT}費用區間 · 大溫地區`) : `${svcT} Cost Range — Metro Vancouver`);
   const costSubtitle = !costSummary ? '' : costIsCitySpecific
     ? (zhLoc
-        ? `基于 ${costSummary.count} 个已完工 ${cityT} ${svcT}项目`
+        ? zhPick(locale, `基于 ${costSummary.count} 个已完工 ${cityT} ${svcT}项目`, `基於 ${costSummary.count} 個已完工 ${cityT} ${svcT}項目`)
         : `Based on ${costSummary.count} completed ${svcT.toLowerCase()} projects in ${cityT}`)
     : (zhLoc
-        ? `来自大温地区 ${costSummary.count} 个已完工${svcT}项目的综合区间（非${cityT}专属数据）`
+        ? zhPick(locale, `来自大温地区 ${costSummary.count} 个已完工${svcT}项目的综合区间（非${cityT}专属数据）`, `來自大溫地區 ${costSummary.count} 個已完工${svcT}項目的綜合區間（非${cityT}專屬數據）`)
         : `General range from ${costSummary.count} completed ${svcT.toLowerCase()} projects across Metro Vancouver — not ${cityT}-specific`);
 
   const benefits = [
@@ -374,7 +375,7 @@ export default function ServiceLocationPage({
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
               {[
                 {
-                  label: zhLoc ? '价格区间' : 'Price Range',
+                  label: zhLoc ? zhPick(locale, '价格区间', '價格區間') : 'Price Range',
                   value: `${formatPrice(costSummary.allMin)} – ${formatPrice(costSummary.allMax)}`,
                 },
                 {
@@ -386,8 +387,8 @@ export default function ServiceLocationPage({
                 },
                 {
                   label: costIsCitySpecific
-                    ? (zhLoc ? '已完成项目' : 'Projects')
-                    : (zhLoc ? '大温项目' : 'Metro Projects'),
+                    ? (zhLoc ? zhPick(locale, '已完成项目', '已完成項目') : 'Projects')
+                    : (zhLoc ? zhPick(locale, '大温项目', '大溫項目') : 'Metro Projects'),
                   value: String(costSummary.count),
                 },
                 {

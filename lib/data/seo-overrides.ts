@@ -10,6 +10,7 @@
  * EN and ZH keyword sets differ (Chinese search terms are not EN translations).
  */
 import { COMPANY_STATS } from '@/lib/company-config';
+import { zhPick } from '@/lib/zh-pick';
 
 export interface SeoOverride {
   title: string;
@@ -38,8 +39,8 @@ export function comboHeroSubtitle(
   const zh = locale === 'zh' || locale === 'zh-Hant';
   if (zh) {
     return hasLocalWork
-      ? `${city}${service}的真实项目费用、工期与已完工案例，聚星装修为您透明呈现。`
-      : `${city}${service}——透明的报价与施工流程，并展示我们在大温地区的相关案例。`;
+      ? zhPick(locale, `${city}${service}的真实项目费用、工期与已完工案例，聚星装修为您透明呈现。`, `${city}${service}的真實項目費用、工期與已完工案例，聚星裝修為您透明呈現。`)
+      : zhPick(locale, `${city}${service}——透明的报价与施工流程，并展示我们在大温地区的相关案例。`, `${city}${service}——透明的報價與施工流程，並展示我們在大溫地區的相關案例。`);
   }
   return hasLocalWork
     ? `Real ${city} ${service.toLowerCase()} costs, timelines and completed local projects — transparently.`
