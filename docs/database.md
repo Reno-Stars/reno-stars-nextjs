@@ -357,40 +357,64 @@ rows. Output is sorted by table, id, field — same snapshot ⇒ same bytes.
 1. **Fresh read-only prod dump** → restore it into a scratch Postgres (never the
    prod DB itself). The generators only read (`BEGIN TRANSACTION READ ONLY`); they
    take the connection URL from the env var NAMED by `--db-env`.
+   **At the same moment as the dump, and before anything is migrated**, fetch the 14
+   Test A pages from public prod (`https://www.reno-stars.com/…`, plain GET, one at a
+   time) into a fresh directory: that is the `--testa-html` corpus. Never reuse pages
+   saved for an older copy (e.g. the 08-15 corpus) — the Test-A skip decisions must be
+   made against what prod renders for THIS data.
 2. **Generate zh-Hant** from the scratch copy:
    ```bash
    pnpm exec tsx scripts/migrations/gen-zh-hant-traditional-158.ts \
-     --db-env SNAPSHOT_DATABASE_URL --testa-html <dir with the 14 saved Test A pages> \
-     --out-dir .migration-out/158
+     --db-env SNAPSHOT_DATABASE_URL --testa-html <fresh Test A corpus dir> \
+     --out-dir .migration-out/158 --check-db-env SNAPSHOT_DATABASE_URL
    ```
-   `--testa-html` is the saved base HTML of the 14 Test A pages (the skip rule probes
-   it). Then **apply that file to the scratch copy** — the company-facts guards must
-   see the Traditional text zh-Hant writes.
+   Then **apply that file to the scratch copy** — the company-facts guards must see
+   the Traditional text zh-Hant writes.
 3. **Generate company-facts** from the same (now zh-Hant-applied) scratch copy:
    ```bash
    pnpm exec tsx scripts/migrations/gen-company-facts-158.ts \
-     --db-env SNAPSHOT_DATABASE_URL --testa-html <same dir> --out-dir .migration-out/158
+     --db-env SNAPSHOT_DATABASE_URL --testa-html <same dir> --out-dir .migration-out/158 \
+     --check-db-env SNAPSHOT_DATABASE_URL
    ```
-   Re-running either generator against the scratch copy after applying must report
-   **0 statements**.
-4. **Captain reviews the two report files** (rows hit per rule, rows skipped by
-   reason, warranty clauses left, sub-counts left). Optional
-   `--check-db-env TARGET_DATABASE_URL` adds a guard check (match / already-applied /
-   no-match) against another read-only DB.
+   Apply it to the scratch copy too; re-running either generator against the scratch
+   copy afterwards must report **0 statements**.
+4. **Captain reviews the two report files.** `--check-db-env` is **mandatory**: run the
+   guard check against the production database through a **read-only** connection
+   (zh-Hant file: every guard `match`; company-facts file: checked against the
+   scratch copy after zh-Hant, every guard `match`) and explain any `no-match`
+   before approval. Read in the company-facts report:
+   - `residualCompanyClaims.residualsOutsideSkipList` — must be **0**; every exclusion
+     is listed by pattern id (`excludedByPattern`, `excludedHits`), skip-list
+     residuals separately;
+   - `manualIncludeAfterDump` — values held back by a known probe false positive
+     (service_benefits 163a796b benefitJa/Ko); confirm against the fresh corpus and
+     include by hand only if confirmed;
+   - `laterFixes` — defects this migration deliberately does not touch;
+   - rows hit per rule, rows skipped by reason, warranty clauses left, sub-counts left.
 5. **Ryan approves.**
-6. **Apply zh-Hant first, then company-facts** (reverse order: the guarded ZhHant
-   updates silently match 0 rows):
+6. **Rollback point first:** dump the affected tables before migrating, e.g.
+   `pg_dump --data-only -t blog_posts -t faqs -t services -t service_benefits -t projects -t testimonials …`
+   (the generators produce no reverse SQL). Then **apply zh-Hant first, then
+   company-facts** (reverse order: the guarded ZhHant updates silently match 0 rows):
    ```bash
    pnpm db:query -f .migration-out/158/2026-11-26-zh-hant-traditional-158.sql --dry-run
    pnpm db:query -f .migration-out/158/2026-11-26-zh-hant-traditional-158.sql
    pnpm db:query -f .migration-out/158/2026-11-26-company-facts-158.sql --dry-run
    pnpm db:query -f .migration-out/158/2026-11-26-company-facts-158.sql
    ```
+   The generated files carry no `BEGIN`/`COMMIT` — `db:query` owns the transaction,
+   and its `--dry-run` refuses any file that has its own transaction control (a
+   `COMMIT` in the file used to commit the "dry run" for real). After each dry run,
+   **verify the rows are unchanged** before the real run: re-run the generator's
+   `--check-db-env` guard check — it must still report every guard `match`, none
+   `already-applied`.
 7. **Revalidate** — direct DB edits do not trigger on-demand revalidation:
    `POST /api/revalidate` for the affected blog, project, service and area paths
-   (all locales).
+   (all locales). Spot-check the 14 Test A pages and a few changed blog posts.
 8. **Purge the Cloudflare edge cache.**
 
 **Merging `fix/site-copy-facts` to `main` MUST be a SQUASH merge.** Commits
 75c21693…a7755577 carry the 93 MB generated SQL blob; a merge commit or rebase-merge
-would put it into `main`'s history permanently.
+would put it into `main`'s history permanently. It merges after the price branch:
+`lib/sitemap/static-page-lastmod.json` will conflict — **regenerate it with
+`pnpm sitemap:lastmod` after the merge** instead of hand-picking hunks.
