@@ -18,10 +18,12 @@ describe('order tie-breaks', () => {
     expect(s).not.toMatch(/\.orderBy\(asc\(servicesTable\.displayOrder\)\);/);
   });
 
-  it('getProjectsFromDb (before-after cards, project pools): created_at DESC, then id DESC', () => {
+  it('getProjectsFromDb (before-after cards, hub cards, project pools): created_at DESC, display_order_in_site, slug DESC, id DESC', () => {
     const s = src('lib/db/queries/projects.ts');
     const fn = s.slice(s.indexOf('export const getProjectsFromDb'), s.indexOf('export const getProjectsListFromDb'));
-    expect(fn).toContain('.orderBy(desc(projectsTable.createdAt), desc(projectsTable.id))');
+    expect(fn).toContain(
+      '.orderBy(desc(projectsTable.createdAt), asc(projectsTable.displayOrderInSite), desc(projectsTable.slug), desc(projectsTable.id))',
+    );
   });
 
   it('blog lists: published_at DESC, then created_at DESC, then id DESC (task 165)', () => {

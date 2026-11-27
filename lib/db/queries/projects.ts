@@ -29,11 +29,15 @@ export const getProjectsFromDb = withFallback(cache(async (): Promise<Project[]>
       .select()
       .from(projectsTable)
       .where(eq(projectsTable.isPublished, true))
-      // id breaks created_at ties (2 + 5 + 2 projects share a timestamp). Without
-      // it the order followed physical row position, so any UPDATE to a project
-      // row could swap tied cards on /before-after/ (task 163). id DESC reproduces
-      // today's before-after order (hallway-bathroom before powder-room, Richmond).
-      .orderBy(desc(projectsTable.createdAt), desc(projectsTable.id));
+      // Total order for created_at ties (2 + 5 + 2 projects share a timestamp).
+      // Without it the order followed physical row position, so any UPDATE to a
+      // project row could swap tied cards — and a `.slice(0, n)` downstream (the
+      // service hubs' 3 "Our Projects" cards) could pick a DIFFERENT project, not
+      // just reorder (task 166: /*/services/whole-house/ lost a card under id DESC).
+      // display_order_in_site keeps hallway before powder-room (before-after,
+      // task 163); slug DESC makes the 2026-08-08 00:16:45 group pick
+      // vancouver-house first, the card the hubs showed before (task 166).
+      .orderBy(desc(projectsTable.createdAt), asc(projectsTable.displayOrderInSite), desc(projectsTable.slug), desc(projectsTable.id));
 
     const ids = rows.map((r: DbProjectRow) => r.id);
     const { imagePairs, scopes, externalProducts } = await fetchProjectRelations(ids);
