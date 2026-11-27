@@ -23,4 +23,11 @@ describe('order tie-breaks', () => {
     const fn = s.slice(s.indexOf('export const getProjectsFromDb'), s.indexOf('export const getProjectsListFromDb'));
     expect(fn).toContain('.orderBy(desc(projectsTable.createdAt), desc(projectsTable.id))');
   });
+
+  it('blog lists: published_at DESC, then created_at DESC, then id DESC (task 165)', () => {
+    const s = src('lib/db/queries/blog.ts');
+    const n = s.split('.orderBy(desc(blogPostsTable.publishedAt), desc(blogPostsTable.createdAt), desc(blogPostsTable.id))').length - 1;
+    expect(n).toBe(2);
+    expect(s).not.toMatch(/\.orderBy\(desc\(blogPostsTable\.publishedAt\)\)/);
+  });
 });

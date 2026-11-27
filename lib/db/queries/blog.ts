@@ -58,7 +58,11 @@ export const getBlogPostsFromDb = cachedQuery(async (): Promise<BlogPost[]> => {
       })
       .from(blogPostsTable)
       .where(eq(blogPostsTable.isPublished, true))
-      .orderBy(desc(blogPostsTable.publishedAt));
+// Total order for blog lists (task 165): same-day posts share published_at, and
+      // without a tie-break they came back in physical row order, so any content
+      // UPDATE could reshuffle them. published_at itself is never changed (it is
+      // displayed and is schema datePublished).
+      .orderBy(desc(blogPostsTable.publishedAt), desc(blogPostsTable.createdAt), desc(blogPostsTable.id));
 
     return rows.map((row: typeof rows[number]) => ({
       slug: row.slug,
@@ -104,7 +108,7 @@ export const getBlogPostsPaginatedFromDb = cache(
         })
         .from(blogPostsTable)
         .where(eq(blogPostsTable.isPublished, true))
-        .orderBy(desc(blogPostsTable.publishedAt))
+        .orderBy(desc(blogPostsTable.publishedAt), desc(blogPostsTable.createdAt), desc(blogPostsTable.id))
         .limit(perPage)
         .offset(offset);
 
