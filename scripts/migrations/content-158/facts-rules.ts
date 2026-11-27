@@ -75,16 +75,16 @@ export const LOCAL_RULES: Record<string, readonly Rule[]> = {
   Fr: [
     about('about:fr', '(?:20\\+|[Pp]lus de 20) ans', '900+ projets'),
     local('years:fr:experience-cap', "Plus de 20 ans d'expérience", 'Plus de 900 projets réalisés'),
-    local('years:fr:td', '<td>20\\+ ans</td>', '<td>Depuis mai 2021</td>'),
+    local('years:fr:td-plus', '<td>20\\+ ans</td>', '<td>Depuis mai 2021</td>'),
     local('count:fr:project-data', '([Pp]lus de) 100 (données de projet)', '$1 900 $2'),
   ],
   Ru: [
     local('years:ru:experience-plus', '20\\+ лет опыта', 'Более 900 реализованных проектов'),
-    local('years:ru:td', '<td>20\\+ лет</td>', '<td>С мая 2021 года</td>'),
+    local('years:ru:td-plus', '<td>20\\+ лет</td>', '<td>С мая 2021 года</td>'),
   ],
   Fa: [
     local('years:fa:experience-plus', '(?:۲۰|20)\\+ سال تجربه', 'بیش از ۹۰۰ پروژه تکمیل‌شده'),
-    local('years:fa:td', '<td>(?:۲۰|20)\\+ سال</td>', '<td>از مه ۲۰۲۱</td>'),
+    local('years:fa:td-plus', '<td>(?:۲۰|20)\\+ سال</td>', '<td>از مه ۲۰۲۱</td>'),
   ],
   Vi: [
     about('about:vi', '[Hh]ơn 20 năm', 'hơn 900 dự án'),
