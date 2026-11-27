@@ -37,6 +37,8 @@ import {
 } from '@/lib/seo/combo-content';
 import { comboHeroSubtitle } from '@/lib/data/seo-overrides';
 import { zhPick } from '@/lib/zh-pick';
+import { isTestAServiceCity } from '@/lib/seo/test-a-paths';
+import { finalInternalPath } from '@/lib/seo/internal-link-redirects';
 
 interface FaqItem {
   id: string;
@@ -178,6 +180,8 @@ export default function ServiceLocationPage({
 }: ServiceLocationPageProps) {
   const t = useTranslations();
   const zhLoc = locale === 'zh' || locale === 'zh-Hant';
+  // Test A pages render exactly as before (lib/seo/test-a-freeze.ts).
+  const testAFrozen = isTestAServiceCity(locale, serviceSlug, citySlug);
 
   const localizedService = useMemo(() => getLocalizedService(service, locale), [service, locale]);
   const localizedArea = useMemo(() => getLocalizedArea(area, locale), [area, locale]);
@@ -214,9 +218,9 @@ export default function ServiceLocationPage({
   // wrong-locale equity drain).
   const citySliceHtml = useMemo(
     () => (citySlice
-      ? renderProseChips(normalizeInternalLinks(renderProseHtml(citySlice), locale))
+      ? renderProseChips(normalizeInternalLinks(renderProseHtml(citySlice), locale, { frozen: testAFrozen }))
       : ''),
-    [citySlice, locale],
+    [citySlice, locale, testAFrozen],
   );
 
   // Short, real service×city intro (first paragraph of the service
@@ -229,8 +233,8 @@ export default function ServiceLocationPage({
     const lead = zhLoc
       ? zhPick(locale, `聚星装修为${localizedArea.name}及大温地区的业主提供${localizedService.title}服务。`, `聚星裝修為${localizedArea.name}及大溫地區的業主提供${localizedService.title}服務。`)
       : `Reno Stars provides ${localizedService.title.toLowerCase()} for homeowners across ${localizedArea.name} and Metro Vancouver.`;
-    return normalizeInternalLinks(renderProseHtml(introParagraph ? `${lead}\n\n${introParagraph}` : lead), locale);
-  }, [introParagraph, zhLoc, localizedArea.name, localizedService.title, locale]);
+    return normalizeInternalLinks(renderProseHtml(introParagraph ? `${lead}\n\n${introParagraph}` : lead), locale, { frozen: testAFrozen });
+  }, [introParagraph, zhLoc, localizedArea.name, localizedService.title, locale, testAFrozen]);
 
   // Other areas offering the same service (exclude current), pre-localized
   const otherAreas = useMemo(
@@ -501,6 +505,9 @@ export default function ServiceLocationPage({
         heading={relatedHeading}
         projects={relatedProjects}
         categorySlug={serviceSlug}
+        // A service with no project category: /projects/<slug>/ only redirects
+        // to the service page — link there directly (not on frozen Test A pages).
+        viewAllHref={!testAFrozen && service.isProjectType === false ? `/services/${serviceSlug}` : undefined}
       />
 
       {/* Honest availability line for combos with no completed LOCAL project of
@@ -560,7 +567,7 @@ export default function ServiceLocationPage({
               passes PageRank to the city cluster and deepens topical coverage. */}
           {cityBlogSlug && (
             <Link
-              href={`/blog/${cityBlogSlug}`}
+              href={testAFrozen ? `/blog/${cityBlogSlug}` : finalInternalPath(`/blog/${cityBlogSlug}/`)}
               className="inline-flex items-center gap-2 text-sm font-semibold hover:underline"
               style={{ color: GOLD }}
             >

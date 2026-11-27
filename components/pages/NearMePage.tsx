@@ -385,12 +385,12 @@ export default function NearMePage({ locale, areas, h1Override, googleRating, re
           </p>
           <div className="flex flex-wrap justify-center gap-3">
             {([
-              { href: '/blog/how-to-choose-renovation-contractor-vancouver', label: 'How to Choose a Contractor' },
-              { href: '/guides/whole-house-renovation-cost-vancouver', label: 'Renovation Costs 2026' },
-              { href: '/blog/renovation-timeline-how-long-does-each-project-take', label: 'Renovation Timeline' },
-              { href: '/blog/renovation-permits-bc-guide', label: 'BC Permits Guide' },
-              { href: '/blog/renovation-financing-vancouver-heloc', label: 'Financing Your Reno' },
-              { href: '/blog/strata-renovation-rules-vancouver', label: 'Strata Rules BC' },
+              { href: `/${locale}/blog/how-to-choose-renovation-contractor-vancouver/`, label: 'How to Choose a Contractor' },
+              { href: `/${locale}/guides/whole-house-renovation-cost-vancouver/`, label: 'Renovation Costs 2026' },
+              { href: `/${locale}/blog/renovation-timeline-how-long-does-each-project-take/`, label: 'Renovation Timeline' },
+              { href: `/${locale}/blog/renovation-permits-bc-guide/`, label: 'BC Permits Guide' },
+              { href: `/${locale}/blog/renovation-financing-vancouver-heloc/`, label: 'Financing Your Reno' },
+              { href: `/${locale}/blog/strata-renovation-rules-vancouver/`, label: 'Strata Rules BC' },
             ] as const).map(({ href, label }) => (
               <Link
                 key={href}

@@ -14,6 +14,8 @@ interface RelatedProjectsSectionProps {
   projects: LocalizedProject[];
   bg?: string;
   categorySlug?: string;
+  /** Overrides the "view all" target (services without a project category). */
+  viewAllHref?: string;
 }
 
 export default function RelatedProjectsSection({
@@ -21,6 +23,7 @@ export default function RelatedProjectsSection({
   projects,
   bg = SURFACE_ALT,
   categorySlug,
+  viewAllHref,
 }: RelatedProjectsSectionProps) {
   const t = useTranslations();
   const [selectedProject, setSelectedProject] = useState<LocalizedProject | null>(null);
@@ -44,7 +47,7 @@ export default function RelatedProjectsSection({
             </p>
           </div>
           <Link
-            href={categorySlug ? `/projects/${categorySlug}` : '/projects'}
+            href={viewAllHref ?? (categorySlug ? `/projects/${categorySlug}` : '/projects')}
             className="hidden md:flex items-center gap-1 text-sm font-semibold"
             style={{ color: GOLD }}
           >

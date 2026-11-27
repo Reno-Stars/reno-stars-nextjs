@@ -528,12 +528,12 @@ export default function BathroomCostGuidePage({ locale, projects, phone, share }
                 desc: locale === 'zh' ? '老人 + 轮椅无障碍方案' : 'Aging-in-place + wheelchair access',
               },
               {
-                href: '/blog/bathroom-renovation-cost-vancouver-by-size/',
+                href: '/guides/bathroom-renovation-cost-vancouver/',
                 title: locale === 'zh' ? '按尺寸（3/4/5件套）' : 'By Size (3/4/5-piece)',
                 desc: locale === 'zh' ? '$20K–$80K+ 按洁具件数' : '$20K–$80K+ by piece count',
               },
               {
-                href: '/blog/bathroom-renovation-cost-vancouver-by-style/',
+                href: '/guides/bathroom-renovation-cost-vancouver/',
                 title: locale === 'zh' ? '按风格（现代/水疗/传统）' : 'By Style (Modern/Spa/Heritage)',
                 desc: locale === 'zh' ? '$25K–$120K+ 按设计风格' : '$25K–$120K+ by design style',
               },
@@ -549,7 +549,7 @@ export default function BathroomCostGuidePage({ locale, projects, phone, share }
             ].map((p) => (
               <Link
                 key={p.href}
-                href={p.href as '/blog/bathroom-renovation-cost-vancouver-by-size/'}
+                href={p.href as '/guides/bathroom-renovation-cost-vancouver/'}
                 className="rounded-xl p-5 flex flex-col gap-2 transition-transform hover:scale-[1.02]"
                 style={{ backgroundColor: CARD, boxShadow: neu() }}
               >
@@ -575,7 +575,7 @@ export default function BathroomCostGuidePage({ locale, projects, phone, share }
               { href: '/guides/kitchen-renovation-cost-vancouver', label: tGuides('kitchen'), range: '$15K–$80K' },
               { href: '/guides/whole-house-renovation-cost-vancouver', label: tGuides('wholeHouse'), range: '$50K–$300K+' },
               { href: '/guides/basement-renovation-cost-vancouver', label: tGuides('basement'), range: '$20K–$80K' },
-              { href: '/blog/average-bathroom-renovation-cost-vancouver', label: tGuides('bathroom'), range: '$18K–$45K+' },
+              { href: '/guides/bathroom-renovation-cost-vancouver', label: tGuides('bathroom'), range: '$18K–$45K+' },
               { href: '/guides/cabinet-refinishing-cost-vancouver', label: tGuides('cabinetRefinishing'), range: '$4K–$30K+' },
             ].map((guide) => (
               <Link key={guide.href} href={guide.href} className="rounded-xl p-5 flex flex-col gap-2 transition-transform hover:scale-[1.02]" style={{ backgroundColor: CARD, boxShadow: neu() }}>
@@ -662,7 +662,7 @@ export default function BathroomCostGuidePage({ locale, projects, phone, share }
             {' · '}
             <Link href="/blog/bathroom-renovation-new-westminster-2026" className="underline hover:no-underline" style={{ color: '#c9a84c' }}>New Westminster</Link>
             {' · '}
-            <Link href="/blog/average-bathroom-renovation-cost-vancouver" className="underline hover:no-underline" style={{ color: '#c9a84c' }}>Vancouver</Link>
+            <Link href="/guides/bathroom-renovation-cost-vancouver" className="underline hover:no-underline" style={{ color: '#c9a84c' }}>Vancouver</Link>
           </p>
         </div>
       </section>

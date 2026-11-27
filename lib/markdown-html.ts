@@ -1,3 +1,4 @@
+import { finalInternalPath } from '@/lib/seo/internal-link-redirects';
 import sanitizeHtml, { type IOptions } from 'sanitize-html';
 import { marked } from 'marked';
 import { locales } from '@/i18n/config';
@@ -40,7 +41,7 @@ const INTERNAL_LINK_HOSTS = ['www.reno-stars.com', 'reno-stars.com'];
  * (attributes are then double-quoted). External hosts, files with
  * extensions, /api/, mailto:/tel:/#anchor links are left untouched.
  */
-export function normalizeInternalLinks(html: string, locale?: string): string {
+export function normalizeInternalLinks(html: string, locale?: string, opts: { frozen?: boolean } = {}): string {
   return html.replace(/<a\b[^>]*>/gi, (tag) => {
     const m = tag.match(/\shref="([^"]+)"/i);
     if (!m) return tag;
@@ -71,6 +72,9 @@ export function normalizeInternalLinks(html: string, locale?: string): string {
       }
     }
     if (!path.endsWith('/')) path += '/';
+    // A link to a URL that redirects goes straight to the final URL (task 158 #3)
+    // — except on the frozen Test A pages (lib/seo/test-a-freeze.ts).
+    if (!opts.frozen) path = finalInternalPath(path);
     const rebuilt = (href.startsWith('/') ? '' : 'https://www.reno-stars.com')
       + path + url.search + url.hash;
     if (rebuilt === href) return tag;

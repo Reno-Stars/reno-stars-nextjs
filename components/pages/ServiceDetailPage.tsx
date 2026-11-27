@@ -27,6 +27,7 @@ import {
   NEAR_ME_BY_SERVICE_SLUG,
   COST_GUIDE_LINK_COPY,
 } from '@/components/services/serviceDetailLinks';
+import { finalInternalPath } from '@/lib/seo/internal-link-redirects';
 
 interface FAQ {
   question: string;
@@ -615,7 +616,7 @@ export default function ServiceDetailPage({ locale, serviceSlug, company, servic
                 {SERVICE_CITY_BLOG_LINKS[serviceSlug]!.map((link, i) => (
                   <span key={link.slug}>
                     {i > 0 && ' · '}
-                    <Link href={`/blog/${link.slug}`} className="underline hover:no-underline" style={{ color: GOLD }}>
+                    <Link href={finalInternalPath(`/blog/${link.slug}/`)} className="underline hover:no-underline" style={{ color: GOLD }}>
                       {link.city}
                     </Link>
                   </span>

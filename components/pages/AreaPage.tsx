@@ -44,6 +44,7 @@ import {
 } from '@/lib/theme';
 import { CITY_BLOG_CLUSTERS, CITY_NEIGHBOURHOODS } from '@/components/areas/areaPageData';
 import { zhPick } from '@/lib/zh-pick';
+import { finalInternalPath } from '@/lib/seo/internal-link-redirects';
 
 interface AreaPageProps {
   locale: Locale;
@@ -735,7 +736,7 @@ export default function AreaPage({ locale, area, allAreas, company, services, fa
               {CITY_BLOG_CLUSTERS[citySlug].map((link) => (
                 <Link
                   key={link.slug}
-                  href={`/blog/${link.slug}`}
+                  href={finalInternalPath(`/blog/${link.slug}/`)}
                   className="px-4 py-2 rounded-xl text-sm font-medium transition-all duration-200 hover:shadow-md"
                   style={{ backgroundColor: CARD, boxShadow: neu(2), color: NAVY }}
                 >
