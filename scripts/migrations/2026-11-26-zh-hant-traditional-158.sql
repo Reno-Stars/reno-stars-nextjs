@@ -8,7 +8,7 @@
 -- Simplified sentences in them.
 --
 -- GENERATED from a read-only copy of the content DB (local pricecheck-pg,
--- renostars) on 2026-11-26. 336 statements:
+-- renostars) on 2026-11-26. 364 statements:
 --   - ADD a missing ZhHant key, converted from <field>_zh (faqs ×146 Q+A, blog
 --     posts, projects, project/site image pairs, service-area highlights ×14 …);
 --   - FIX an existing ZhHant value that still carries Simplified sentences,
@@ -32,10 +32,562 @@
 -- After applying: revalidate the affected zh-Hant pages (POST /api/revalidate).
 
 BEGIN;
+UPDATE blog_posts SET localizations = jsonb_set(localizations, ARRAY['contentZhHant'], to_jsonb('<h2>介紹</h2><p>In the vibrant city of [Burnaby](/en/areas/burnaby/), BC, a family home underwent a remarkable transformation. This [whole house renovation](/en/guides/whole-house-renovation-cost-vancouver/) project, led by Reno Stars, aimed to enhance both the aesthetics and functionality of the residence. With a budget of $62,000 - $64,000 and a timeline of 7-9 weeks, the project included extensive upgrades such as flooring, lighting optimization, and complete [bathroom renovations](/en/services/bathroom/) | [Pre-Sale Renovation Advice](/en/services/realtor/).</p><img src="https://pub-b88db8c50fd64a9a87f60a4486a4a488.r2.dev/uploads/admin/social-ready-hero-mmv4zlkh.jpg" alt="Burnaby Whole House Renovation Hero Image"><h2>項目概況</h2><p>本拿比房屋裝修的工作範圍非常廣泛。它涉及升級地板、優化照明以及徹底翻新兩間浴室。安裝了新樓梯、玻璃門和 LED 鏡子等客製化功能，以增強房屋的整體吸引力。</p><h3>具有客製化功能的兩間浴室裝修</h3><p>浴室改造是這個專案的關鍵組成部分。其中包括安裝定製玻璃門、LED 鏡子和時尚的瓷磚底座，顯著提高了浴室的功能性和美觀性。</p><h2>挑戰</h2><p>此次改造期間面臨的主要挑戰之一是協調多筆交易，以確保在緊迫的時間內無縫執行。管理各個承包商並確保專案每個階段按時完成的複雜性需要細緻的規劃和溝通。</p><h2>我們的解決方案</h2><p>為了應對這些挑戰，Reno Stars實施了詳細的專案進度表，並在所有承包商之間保持持續的溝通。這種方法確保了改造的各個方面順利且有效率地執行，使專案能夠在預算範圍內保持在正軌上。</p><h2>之前和之後</h2><div><img src="https://pub-b88db8c50fd64a9a87f60a4486a4a488.r2.dev/uploads/admin/social-ready-before-1-mmv4zlks.jpg" alt="Two Bathroom Renovation with Custom Features - Before Renovation 1"><img src="https://pub-b88db8c50fd64a9a87f60a4486a4a488.r2.dev/uploads/admin/social-ready-after-1-mmv4zlkt.jpg" alt="Burnaby Home Renovation Case Study - After Renovation 1"></div><div><img src="https://pub-b88db8c50fd64a9a87f60a4486a4a488.r2.dev/uploads/admin/social-ready-before-2-mmv4zlkt.jpg" alt="Two Bathroom Renovation with Custom Features - Before Renovation 2"><img src="https://pub-b88db8c50fd64a9a87f60a4486a4a488.r2.dev/uploads/admin/social-ready-after-2-mmv4zlkt.jpg" alt="Burnaby Home Renovation Case Study - After Renovation 2"></div><div><img src="https://pub-b88db8c50fd64a9a87f60a4486a4a488.r2.dev/uploads/admin/social-ready-before-3-mmv4zlkt.jpg" alt="Two Bathroom Renovation with Custom Features - Before Renovation 3"><img src="https://pub-b88db8c50fd64a9a87f60a4486a4a488.r2.dev/uploads/admin/social-ready-after-3-mmv4zlku.jpg" alt="Burnaby Home Renovation Case Study - After Renovation 3"></div><div><img src="https://pub-b88db8c50fd64a9a87f60a4486a4a488.r2.dev/uploads/admin/social-ready-before-4-mmv4zm1q.jpg" alt="Two Bathroom Renovation with Custom Features - Before Renovation 4"><img src="https://pub-b88db8c50fd64a9a87f60a4486a4a488.r2.dev/uploads/admin/social-ready-after-4-mmv4zm1q.jpg" alt="Burnaby Home Renovation Case Study - After Renovation 4"></div><h2>結果和要點</h2><p>改造計畫取得了巨大成功，本拿比住宅變成了一個現代且實用的空間。客戶對工作品質和對細節的關注表示非常滿意。該專案強調了有效的專案管理和溝通對於實現改造目標的重要性。</p>
+
+
+
+Whole-house renovations are also an ideal time to incorporate [accessible bathroom features](/services/accessible-bathroom/) such as grab bars, step-in showers, and wider doorways — future-proofing the home for years to come.
+
+
+Many Metro Vancouver homeowners are also upgrading to a [heat pump HVAC system](/services/heat-pump-hvac/) during major renovations — providing both heating and cooling in one energy-efficient unit, and qualifying for BC Hydro rebates.
+
+
+When renovation projects add new appliances, EV charging stations, or smart home systems, a [critical load panel upgrade](/services/critical-load-panel/) is often needed to safely handle the increased electrical load.
+
+
+If your Metro Vancouver home was built before 1995, it may have poly-B pipes. Our [poly-B pipe replacement service](/services/poly-b-replacement/) addresses this common issue before it leads to costly water damage — something worth considering during any major renovation.
+
+
+If you live in a strata property (condo or townhouse), review BC''s [strata renovation rules](/blog/strata-renovation-rules-vancouver/) before starting work — many projects require strata council approval and must follow specific noise, hour, and contractor requirements.
+## Frequently Asked Questions
+
+### How much did this Burnaby home renovation cost?
+This Burnaby whole house renovation was completed with a budget of $62,000–$64,000 over a 7–9 week timeline. The scope included extensive flooring replacement, lighting optimization, and comprehensive aesthetic upgrades throughout the family home. At this budget level, Burnaby homeowners can achieve a full-home transformation that addresses the primary visual and functional pain points without structural changes.
+
+### What renovation scope is achievable for $60,000–$65,000 in Burnaby?
+At the $60,000–$65,000 range in Burnaby, a whole house renovation can realistically include: full flooring replacement throughout (LVP or engineered hardwood), complete interior repaint, updated lighting fixtures, kitchen cabinet refresh or new countertops and backsplash, and bathroom updates (new vanity, tile, fixtures). Structural changes, full kitchen rebuild, or full bathroom gut-renovations typically push budgets above this range.
+
+### How long does a whole house renovation take in Burnaby?
+This Burnaby project was completed in 7–9 weeks of active construction, which is typical for a comprehensive cosmetic-to-light renovation. Full gut renovations with structural changes and multiple permits run 14–20 weeks. The City of Burnaby''s permit process for residential renovations is generally 2–4 weeks, faster than the City of Vancouver. Strata approval for Burnaby townhouses or condos adds 3–5 weeks before construction can begin.
+
+### Is a whole house renovation in Burnaby worth the investment?
+Burnaby''s strong real estate market — with detached home prices typically ranging $1.3M–$2M+ — supports renovation investment well. A $62,000 whole house renovation on a Burnaby property can add $80,000–$120,000 in perceived market value when the work addresses buyer-visible elements like flooring, lighting, and kitchen/bathroom aesthetics. Burnaby''s proximity to SkyTrain, BCIT, and SFU creates consistent buyer demand that rewards move-in-ready presentation.
+
+### What trades are involved in a Burnaby whole house renovation?
+A comprehensive Burnaby home renovation typically coordinates: flooring installer, painter, electrician (for lighting upgrades and any panel work), plumber (for fixture changes), and a general contractor managing the overall project. Using a single renovation company to coordinate all trades ensures consistent scheduling, single-point accountability, and no gaps between trade scopes. Reno Stars manages all trade coordination under one fixed-price contract for Burnaby projects.
+
+Also see: [Burnaby townhouse whole-house renovation](/zh-Hant/blog/burnaby-townhouse-renovation-case-study/) | [Vancouver Renovation Cost Guide 2026](/zh-Hant/blog/renovation-cost-vancouver-2026-complete-guide/) | [BC Renovation Permits Guide](/zh-Hant/blog/renovation-permits-bc-guide/) | [How to Choose a Contractor](/zh-Hant/blog/how-to-choose-renovation-contractor-vancouver/) | [Renovation Timeline Guide](/zh-Hant/blog/renovation-timeline-how-long-does-each-project-take/) | [Basement Renovation Vancouver](/en/services/basement/) | [Kitchen Renovation Burnaby](/en/services/kitchen/burnaby/) | [Whole-House Renovation Vancouver](/en/services/whole-house/)
+
+### What custom features were included in this Burnaby home renovation?
+Beyond the two bathroom renovations and flooring upgrade, this Burnaby home renovation included several architectural custom elements: a new staircase, glass doors installed in key locations throughout the home, and LED mirrors in the bathrooms. These feature elements distinguish a comprehensive whole-house renovation from a surface-level refresh. A new staircase is both a functional and design statement — often the first thing visitors see. Glass doors improve natural light flow between spaces. LED mirrors in bathrooms deliver even, shadow-free lighting and make the bathrooms feel significantly more contemporary. Together with the flooring and bathroom renovations, these features brought the entire home into a coherent, modern design language within the $60,000–$65,000 project budget.
+
+
+See our [verified five-star reviews](/en/reviews/) from Metro Vancouver homeowners.
+
+[About Reno Stars](/en/about/) — Vancouver-based renovation company serving Metro Vancouver since 2019.
+
+[View our renovation project portfolio →](/en/projects/)
+
+Like what you see? [Request a free consultation →](/zh-Hant/contact/)
+
+Also see: [Burnaby renovation cost guide 2026](/zh-Hant/blog/burnaby-renovation-cost-guide-2026/) | [Burnaby Kitchen Renovation](/zh-Hant/blog/kitchen-renovation-burnaby-2026/) | [Burnaby Bathroom Renovation](/zh-Hant/blog/burnaby-bathroom-renovation-guide-2026/) | [Burnaby Home Renovation Guide](/zh-Hant/blog/burnaby-home-renovation-guide-2026/) | [How to Finance Your Vancouver Renovation (HELOC Guide)](/zh-Hant/blog/renovation-financing-vancouver-heloc/) | [Renovation Financing Options](/en/financing/) | [Burnaby Basement Renovation](/zh-Hant/blog/basement-renovations-burnaby-2026/)
+
+| [Basement Renovation Cost Guide](/en/guides/basement-renovation-cost-vancouver/)
+
+## See Also — Renovation Cost Guides
+
+- [Kitchen Renovation Cost Vancouver](/en/guides/kitchen-renovation-cost-vancouver/) — average $15K–$80K in Metro Vancouver
+- [Bathroom Renovation Cost Vancouver](/en/guides/bathroom-renovation-cost-vancouver/) — average $10K–$60K+
+- [Basement Renovation Cost Vancouver](/en/guides/basement-renovation-cost-vancouver/) — average $20K–$80K
+- [Cabinet Refinishing Cost Vancouver](/en/guides/cabinet-refinishing-cost-vancouver/) | [Cabinet Refinishing Vancouver](/en/services/cabinet/vancouver/) — from $4K for refinishing'::text)) WHERE id = 'edf49a46-f7a2-47ac-9e6f-9c54e1a4d1e2' AND localizations->>'contentZhHant' = '<h2>介紹</h2><p>In the vibrant city of [Burnaby](/en/areas/burnaby/), BC, a family home underwent a remarkable transformation. This [whole house renovation](/en/guides/whole-house-renovation-cost-vancouver/) project, led by Reno Stars, aimed to enhance both the aesthetics and functionality of the residence. With a budget of $62,000 - $64,000 and a timeline of 7-9 weeks, the project included extensive upgrades such as flooring, lighting optimization, and complete [bathroom renovations](/en/services/bathroom/) | [Pre-Sale Renovation Advice](/en/services/realtor/).</p><img src="https://pub-b88db8c50fd64a9a87f60a4486a4a488.r2.dev/uploads/admin/social-ready-hero-mmv4zlkh.jpg" alt="Burnaby Whole House Renovation Hero Image"><h2>項目概況</h2><p>本拿比房屋裝修的工作範圍非常廣泛。它涉及升級地板、優化照明以及徹底翻新兩間浴室。安裝了新樓梯、玻璃門和 LED 鏡子等客製化功能，以增強房屋的整體吸引力。</p><h3>具有客製化功能的兩間浴室裝修</h3><p>浴室改造是這個專案的關鍵組成部分。其中包括安装定制玻璃门、LED 镜子和时尚的瓷砖底座，显着提高了浴室的功能性和美观性。</p><h2>挑戰</h2><p>此次改造期間面臨的主要挑戰之一是協調多筆交易，以確保在緊迫的時間內無縫執行。管理各個承包商並確保專案每個階段按時完成的複雜性需要細緻的規劃和溝通。</p><h2>我們的解決方案</h2><p>為了應對這些挑戰，Reno Stars實施了詳細的專案進度表，並在所有承包商之間保持持續的溝通。這種方法確保了改造的各個方面順利且有效率地執行，使專案能夠在預算範圍內保持在正軌上。</p><h2>之前和之後</h2><div><img src="https://pub-b88db8c50fd64a9a87f60a4486a4a488.r2.dev/uploads/admin/social-ready-before-1-mmv4zlks.jpg" alt="Two Bathroom Renovation with Custom Features - Before Renovation 1"><img src="https://pub-b88db8c50fd64a9a87f60a4486a4a488.r2.dev/uploads/admin/social-ready-after-1-mmv4zlkt.jpg" alt="Burnaby Home Renovation Case Study - After Renovation 1"></div><div><img src="https://pub-b88db8c50fd64a9a87f60a4486a4a488.r2.dev/uploads/admin/social-ready-before-2-mmv4zlkt.jpg" alt="Two Bathroom Renovation with Custom Features - Before Renovation 2"><img src="https://pub-b88db8c50fd64a9a87f60a4486a4a488.r2.dev/uploads/admin/social-ready-after-2-mmv4zlkt.jpg" alt="Burnaby Home Renovation Case Study - After Renovation 2"></div><div><img src="https://pub-b88db8c50fd64a9a87f60a4486a4a488.r2.dev/uploads/admin/social-ready-before-3-mmv4zlkt.jpg" alt="Two Bathroom Renovation with Custom Features - Before Renovation 3"><img src="https://pub-b88db8c50fd64a9a87f60a4486a4a488.r2.dev/uploads/admin/social-ready-after-3-mmv4zlku.jpg" alt="Burnaby Home Renovation Case Study - After Renovation 3"></div><div><img src="https://pub-b88db8c50fd64a9a87f60a4486a4a488.r2.dev/uploads/admin/social-ready-before-4-mmv4zm1q.jpg" alt="Two Bathroom Renovation with Custom Features - Before Renovation 4"><img src="https://pub-b88db8c50fd64a9a87f60a4486a4a488.r2.dev/uploads/admin/social-ready-after-4-mmv4zm1q.jpg" alt="Burnaby Home Renovation Case Study - After Renovation 4"></div><h2>結果和要點</h2><p>改造計畫取得了巨大成功，本拿比住宅變成了一個現代且實用的空間。客戶對工作品質和對細節的關注表示非常滿意。該專案強調了有效的專案管理和溝通對於實現改造目標的重要性。</p>
+
+
+
+Whole-house renovations are also an ideal time to incorporate [accessible bathroom features](/services/accessible-bathroom/) such as grab bars, step-in showers, and wider doorways — future-proofing the home for years to come.
+
+
+Many Metro Vancouver homeowners are also upgrading to a [heat pump HVAC system](/services/heat-pump-hvac/) during major renovations — providing both heating and cooling in one energy-efficient unit, and qualifying for BC Hydro rebates.
+
+
+When renovation projects add new appliances, EV charging stations, or smart home systems, a [critical load panel upgrade](/services/critical-load-panel/) is often needed to safely handle the increased electrical load.
+
+
+If your Metro Vancouver home was built before 1995, it may have poly-B pipes. Our [poly-B pipe replacement service](/services/poly-b-replacement/) addresses this common issue before it leads to costly water damage — something worth considering during any major renovation.
+
+
+If you live in a strata property (condo or townhouse), review BC''s [strata renovation rules](/blog/strata-renovation-rules-vancouver/) before starting work — many projects require strata council approval and must follow specific noise, hour, and contractor requirements.
+## Frequently Asked Questions
+
+### How much did this Burnaby home renovation cost?
+This Burnaby whole house renovation was completed with a budget of $62,000–$64,000 over a 7–9 week timeline. The scope included extensive flooring replacement, lighting optimization, and comprehensive aesthetic upgrades throughout the family home. At this budget level, Burnaby homeowners can achieve a full-home transformation that addresses the primary visual and functional pain points without structural changes.
+
+### What renovation scope is achievable for $60,000–$65,000 in Burnaby?
+At the $60,000–$65,000 range in Burnaby, a whole house renovation can realistically include: full flooring replacement throughout (LVP or engineered hardwood), complete interior repaint, updated lighting fixtures, kitchen cabinet refresh or new countertops and backsplash, and bathroom updates (new vanity, tile, fixtures). Structural changes, full kitchen rebuild, or full bathroom gut-renovations typically push budgets above this range.
+
+### How long does a whole house renovation take in Burnaby?
+This Burnaby project was completed in 7–9 weeks of active construction, which is typical for a comprehensive cosmetic-to-light renovation. Full gut renovations with structural changes and multiple permits run 14–20 weeks. The City of Burnaby''s permit process for residential renovations is generally 2–4 weeks, faster than the City of Vancouver. Strata approval for Burnaby townhouses or condos adds 3–5 weeks before construction can begin.
+
+### Is a whole house renovation in Burnaby worth the investment?
+Burnaby''s strong real estate market — with detached home prices typically ranging $1.3M–$2M+ — supports renovation investment well. A $62,000 whole house renovation on a Burnaby property can add $80,000–$120,000 in perceived market value when the work addresses buyer-visible elements like flooring, lighting, and kitchen/bathroom aesthetics. Burnaby''s proximity to SkyTrain, BCIT, and SFU creates consistent buyer demand that rewards move-in-ready presentation.
+
+### What trades are involved in a Burnaby whole house renovation?
+A comprehensive Burnaby home renovation typically coordinates: flooring installer, painter, electrician (for lighting upgrades and any panel work), plumber (for fixture changes), and a general contractor managing the overall project. Using a single renovation company to coordinate all trades ensures consistent scheduling, single-point accountability, and no gaps between trade scopes. Reno Stars manages all trade coordination under one fixed-price contract for Burnaby projects.
+
+Also see: [Burnaby townhouse whole-house renovation](/zh-Hant/blog/burnaby-townhouse-renovation-case-study/) | [Vancouver Renovation Cost Guide 2026](/zh-Hant/blog/renovation-cost-vancouver-2026-complete-guide/) | [BC Renovation Permits Guide](/zh-Hant/blog/renovation-permits-bc-guide/) | [How to Choose a Contractor](/zh-Hant/blog/how-to-choose-renovation-contractor-vancouver/) | [Renovation Timeline Guide](/zh-Hant/blog/renovation-timeline-how-long-does-each-project-take/) | [Basement Renovation Vancouver](/en/services/basement/) | [Kitchen Renovation Burnaby](/en/services/kitchen/burnaby/) | [Whole-House Renovation Vancouver](/en/services/whole-house/)
+
+### What custom features were included in this Burnaby home renovation?
+Beyond the two bathroom renovations and flooring upgrade, this Burnaby home renovation included several architectural custom elements: a new staircase, glass doors installed in key locations throughout the home, and LED mirrors in the bathrooms. These feature elements distinguish a comprehensive whole-house renovation from a surface-level refresh. A new staircase is both a functional and design statement — often the first thing visitors see. Glass doors improve natural light flow between spaces. LED mirrors in bathrooms deliver even, shadow-free lighting and make the bathrooms feel significantly more contemporary. Together with the flooring and bathroom renovations, these features brought the entire home into a coherent, modern design language within the $60,000–$65,000 project budget.
+
+
+See our [verified five-star reviews](/en/reviews/) from Metro Vancouver homeowners.
+
+[About Reno Stars](/en/about/) — Vancouver-based renovation company serving Metro Vancouver since 2019.
+
+[View our renovation project portfolio →](/en/projects/)
+
+Like what you see? [Request a free consultation →](/zh-Hant/contact/)
+
+Also see: [Burnaby renovation cost guide 2026](/zh-Hant/blog/burnaby-renovation-cost-guide-2026/) | [Burnaby Kitchen Renovation](/zh-Hant/blog/kitchen-renovation-burnaby-2026/) | [Burnaby Bathroom Renovation](/zh-Hant/blog/burnaby-bathroom-renovation-guide-2026/) | [Burnaby Home Renovation Guide](/zh-Hant/blog/burnaby-home-renovation-guide-2026/) | [How to Finance Your Vancouver Renovation (HELOC Guide)](/zh-Hant/blog/renovation-financing-vancouver-heloc/) | [Renovation Financing Options](/en/financing/) | [Burnaby Basement Renovation](/zh-Hant/blog/basement-renovations-burnaby-2026/)
+
+| [Basement Renovation Cost Guide](/en/guides/basement-renovation-cost-vancouver/)
+
+## See Also — Renovation Cost Guides
+
+- [Kitchen Renovation Cost Vancouver](/en/guides/kitchen-renovation-cost-vancouver/) — average $15K–$80K in Metro Vancouver
+- [Bathroom Renovation Cost Vancouver](/en/guides/bathroom-renovation-cost-vancouver/) — average $10K–$60K+
+- [Basement Renovation Cost Vancouver](/en/guides/basement-renovation-cost-vancouver/) — average $20K–$80K
+- [Cabinet Refinishing Cost Vancouver](/en/guides/cabinet-refinishing-cost-vancouver/) | [Cabinet Refinishing Vancouver](/en/services/cabinet/vancouver/) — from $4K for refinishing';
+UPDATE blog_posts SET localizations = jsonb_set(localizations, ARRAY['contentZhHant'], to_jsonb('<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "文章",
+  "headline": "翻新與搬遷：[溫哥華](/en/areas/vancouver/) 2026 年市場哪個更明智？",
+  "description": "在大溫哥華地區搬家需要花費$80,000–$200,000 的交易成本。對於許多房主來說，有針對性的裝修比買房創造更多的價值。運行真實的數字。",
+  "圖像": "https://www.reno-stars.com/images/blog/renovate-vs-move-vancouver.jpg",
+  "作者": {"@type": "組織", "名稱": "Reno Stars"},
+  "publisher": {"@type": "組織", "name": "Reno Stars", "logo": {"@type": "ImageObject", "url": "https://www.reno-stars.com/logo.png"}},
+  "發佈日期": "2026-04-17",
+  "修改日期": "2026-04-17",
+  "mainEntityOfPage": {"@type": "網頁", "@id": "https://www.reno-stars.com/zh-Hant/blog/renovate-vs-move-vancouver-2026"}
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "How much does it cost to move in Metro Vancouver in 2026?",
+      "acceptedAnswer": {"@type": "Answer", "text": "Moving in Metro Vancouver typically costs $80,000–$200,000 in total transaction costs, including realtor commissions (3.5–5% of sale price), Property Transfer Tax on the new purchase (1–5% depending on price tier), mortgage penalty if you''re breaking a fixed term ($5,000–$25,000), legal fees ($1,500–$3,000), and physical moving costs ($3,000–$10,000). On a $1.5M home purchase, PTT alone is $28,000."}
+    },
+    {
+      "@type": "Question",
+      "name": "What is the Property Transfer Tax in BC in 2026?",
+      "acceptedAnswer": {"@type": "Answer", "text": "BC''s Property Transfer Tax (PTT) in 2026 is: 1% on the first $200,000, 2% on $200,001–$2,000,000, 3% on $2,000,001–$3,000,000, and 5% on the portion above $3,000,000. On a $1.5M home, that''s $27,000. First-time buyers may qualify for an exemption on homes under $835,000."}
+    },
+    {
+      "@type": "Question",
+      "name": "Does renovating increase home value in Vancouver?",
+      "acceptedAnswer": {"@type": "Answer", "text": "Kitchen and bathroom renovations typically return 60–80% of their cost in added resale value in Metro Vancouver. A $40,000 kitchen renovation may add $25,000–$35,000 at sale, but more importantly, it also delivers years of daily use value. Basement suite additions have particularly high ROI in Vancouver given rental demand — a $80,000 [basement suite renovation](/en/guides/basement-renovation-cost-vancouver/) can add $150,000+ in appraised value."}
+    },
+    {
+      "@type": "Question",
+      "name": "When does moving make more sense than renovating?",
+      "acceptedAnswer": {"@type": "Answer", "text": "Moving makes more sense when: (1) your neighbourhood no longer suits your lifestyle and that''s the real issue, (2) you need significantly more square footage that renovation can''t create (e.g. you need 3 more bedrooms in a 2-bedroom condo), (3) structural or site constraints make the renovation impossible or cost-prohibitive, or (4) the home has fundamental issues — flood plain, bad soils, heritage designation restrictions — that limit what renovation can fix."}
+    },
+    {
+      "@type": "Question",
+      "name": "Can I renovate and rent out part of my home to offset costs?",
+      "acceptedAnswer": {"@type": "Answer", "text": "Yes — adding a [secondary suite](/en/guides/basement-suite-cost-vancouver/) or basement suite is one of the most financially sound renovations in Metro Vancouver. A legal basement suite can generate $1,800–$2,800/month in rental income, which means a $70,000–$90,000 renovation can pay for itself in 4–5 years. Vancouver, [Burnaby](/en/areas/burnaby/), and most Metro municipalities allow secondary suites subject to a building permit and BC Building Code compliance."}
+    }
+  ]
+}
+</script>
+
+<h2>每個溫哥華房主最終都會問的問題</h2>
+
+<p>你的家感覺很緊張。當廚房過時，浴室狹窄，或者你的佈局已經不適合你了。問題出現了：你應該翻新你所擁有的東西，還是賣掉並搬到更大或更新的地方？</p>
+
+<p>在溫哥華的 2026 年市場中，誠實的答案需要大多數房主（以及許多房地產經紀人）沒有完全考慮到的連續數字。當你把所有搬家的實際成本加起來時，有針對性的翻新往往會在經濟和實踐上獲勝。</p>
+
+<h2>在大溫哥華地區搬家的實際成本</h2>
+
+<p>大多數人將搬家成本視為房地產經紀人費用。如果計算每個交易層，實際成本會高出 3-4 倍。</p>
+
+<h3>房地產經紀人佣金</h3>
+<p>銷售大溫哥華地區的房屋通常需要花費 3.5-5% 的總佣金（由掛牌機構和買家代理分攤）。對於 $1.4M 的房屋（大致相當於本拿比或溫哥華東部的基準獨立價格），這就是 <strong>$49,000–$70,000</strong> 僅在佣金中。</p>
+
+<h3>財產轉讓稅 (PTT)</h3>
+<p>當您購買下一套房屋時，您可以透過以下地址支付 PTT：</p>
+<ul>
+  <li>第一個 $200,000 1%</li>
+  <li>$200,001–$2,000,000 2%</li>
+  <li>$2,000,001–$3,000,000 3%</li>
+  <li>金額超過 $3,000,000 5%</li>
+</ul>
+<p>對於 $1.5M 的購房，PTT 是 <strong>$28,000</strong>。如果您以 $2M+ 購買，則為 $38,000+。首次購買者可能有資格獲得豁免，但如果您已經擁有，則需要支付全額 PTT。</p>
+
+<h3>抵押罰金</h3>
+<p>如果您持有固定利率抵押貸款並提前終止，則罰款為 3 個月利息或利差 (IRD) 中的較高者。 2025-2026 年，利率為 4.5-5.5%，對 $700,000  抵押貸款餘額的處罰可能會持續 <strong>$8,000–$25,000</strong>.</p>
+
+<h3>法律費用和支出</h3>
+<p>銷售+購買需要兩位房地產律師。預算 <strong>$3,000–$5,000</strong> 合併法律費用、產權保險和支出。</p>
+
+<h3>實際搬家費用</h3>
+<p>當地大溫哥華地區搬遷運行 <strong>$3,000–$10,000</strong> 對於典型的家庭住宅，取決於體積和距離。</p>
+
+<h3>更大空間的“溢價”</h3>
+<p>如果您需要搬入更大的房屋，您可以按照當前的價格購買一個價格通常比您出售的價格高出 20-40% 的細分市場。即使您在所有交易成本上實現收支平衡，這個增量也是您必須部署的真正資本。</p>
+
+<h3>總搬遷成本摘要</h3>
+
+<table>
+  <thead>
+    <tr><th>成本構成</th><th>典型範圍</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>房地產經紀人佣金（銷售）</td><td>$49,000 – $70,000</td></tr>
+    <tr><td>財產轉讓稅（購買）</td><td>$18,000 – $60,000</td></tr>
+    <tr><td>抵押貸款罰款</td><td>$5,000 – $25,000</td></tr>
+    <tr><td>律師費（雙方）</td><td>$3,000 – $5,000</td></tr>
+    <tr><td>身體動作</td><td>$3,000 – $10,000</td></tr>
+    <tr><td><strong>總交易摩擦</strong></td><td><strong>$78,000 – $170,000</strong></td></tr>
+  </tbody>
+</table>
+
+<p>這些費用在您簽字的那一刻就消失了。他們不創造股權、資產、回報。這是大溫哥華地區「買斷」的最低門票價格。</p>
+
+<h2>裝修的實際成本</h2>
+
+<p>現在讓我們看看在相同的美元範圍內翻新可以帶來什麼。</p>
+
+<h3>廚房裝修</h3>
+<p>一個中檔 <a href="/en/guides/kitchen-renovation-cost-vancouver/">溫哥華的廚房裝修</a> 依範圍運行 $25,000–$80,000 。這通常包括新的櫥櫃、檯面、電器、後擋板、照明和地板。結果：您每天使用的空間完全煥然一新，再加上 60-75% 的轉售回報。</p>
+
+<h3>[衛浴裝潢](/en/services/bathroom/)</h3>
+<p>一個 <a href="/en/guides/bathroom-renovation-cost-vancouver/">浴室全面翻新</a> 主浴室運行$15,000–$40,000 。在以前沒有的地方添加第二間浴室：$25,000–$50,000 （包括粗糙的管道）。大溫哥華地區較舊的房屋可能還需要我們的[Poly-B 管道更換](/en/services/poly-b-replacement/) 服務來消除不安全的塑膠管道。轉售投資報酬率最高的翻修項目之一。</p>
+
+<h3>[地下室裝潢](/en/services/basement/)</h3>
+<p>一個 <a href="/en/basement-renovation-near-me/">完成的地下室</a> - 特別是合法的二級套房 - 在大溫哥華地區運行$70,000–$130,000 。一套法律套房可增加 $1,800–$2,800/月的租金收入潛力。以每月 $2,000 計算，即每年 $24,000 — 翻新工程可在 3 至 5 年內收回成本，同時增加評估價值。</p>
+
+<h3>裝修成本與搬家成本：並列</h3>
+
+<table>
+  <thead>
+    <tr><th>設想</th><th>成本</th><th>你得到什麼</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>搬家（僅交易費用）</td><td>$80,000 – $170,000</td><td>零股權、零資產－只有摩擦</td></tr>
+    <tr><td>設備齊全的廚房 + 2 間浴室</td><td>$55,000 – $120,000</td><td>徹底改造的日常使用空間+轉售溢價</td></tr>
+    <tr><td>地下室套房改建</td><td>$70,000 – $130,000</td><td>$1,800–$2,800/mo 租金收入+股權加成</td></tr>
+    <tr><td>廚房+衛浴+地下室</td><td>$120,000 – $250,000</td><td>全屋改造－相當於買房的宜居性升級</td></tr>
+  </tbody>
+</table>
+
+<h2>當翻新是更明智的舉動時</h2>
+
+<ul>
+  <li><strong>你愛你的鄰居</strong> — 地點是裝潢無法解決的一件事</li>
+  <li><strong>家裡的骨頭都好</strong> — 地段好，結構完整，光線好</li>
+  <li><strong>您還需要 1-2 個功能空間</strong> — 不是 3 間以上不存在的臥室</li>
+  <li><strong>您的抵押貸款已以優惠利率鎖定</strong> ——破解它需要花費數萬美元</li>
+  <li><strong>你有股權但沒有現金</strong> — HELOC 針對現有股權基金，在不出售的情況下進行 Reno</li>
+  <li><strong>您可能會在 5 年內出售</strong> — 在出售前進行翻新通常可以收回售價成本的 60-80%</li>
+</ul>
+
+<h2>什麼時候搬家才是更明智的搬家</h2>
+
+<ul>
+  <li><strong>鄰裡關係才是真正的問題</strong> — 翻修並不能解決通勤問題、學區問題或社區適應問題</li>
+  <li><strong>您需要更多空間</strong> — 如果您需要 3 間以上的臥室，而您卻沒有，那麼在大多數溫哥華房屋中，裝修無法創造出這些臥室</li>
+  <li><strong>結構或場地限制令人望而卻步</strong> — 有些地點根本無法容納額外的設施</li>
+  <li><strong>家裡有根本問題</strong> — 遺產指定、洪氾區、限制您建造的土壤問題</li>
+  <li><strong>不管怎樣，您都會在 1-2 年內搬家</strong> — 快速連續進行兩筆交易的成本很少能證明進行重大翻修是合理的</li>
+</ul>
+
+<h2>決策架構：要問的 5 個問題</h2>
+
+<ol>
+  <li><strong>是鄰居的問題還是房子的問題？</strong> 如果是鄰居，就搬家。如果是房子，就裝修一下。</li>
+  <li><strong>裝修成本與總搬家交易成本是多少？</strong> 如果 reno ≤ 交易成本，reno 幾乎總是獲勝。</li>
+  <li><strong>裝潢能帶來 80% 以上的搬家效果嗎？</strong> 如果是的話，留下來。</li>
+  <li><strong>您有辦法在不出售的情況下籌集裝修資金嗎？</strong> <a href="/zh-Hant/blog/renovation-financing-vancouver-heloc/">HELOC 和裝修貸款</a> 讓您無需觸發完整交易即可獲得股權。 </li>
+  <li><strong>您的新房持有成本與雷諾融資成本是多少？</strong> 較大房屋的較高抵押貸款付款很容易超過裝修貸款付款。</li>
+</ol>
+
+<h2>Reno Stars 客戶在做什麼</h2>
+
+<p>根據我們在大溫哥華地區翻新數百棟房屋的經驗，我們看到了一個清晰的模式：掌握真實數據的房主通常會進行翻新。那些沒有算帳就搬家的人常常希望自己已經重新裝修過。</p>
+
+<p>我們幫助本拿比、溫哥華、[列治文](/en/areas/richmond/)和[素里](/en/areas/surrey/)的客戶改造了他們幾乎放棄的房屋——將過時的 1970 年代牧場主變成現代家庭住宅，花費$120,000–$180,000 ，而購買類似的“升級”房屋僅在交易摩擦中就需要花費$120,000–$180,000 ，而購買類似的“升級”房屋僅在交易摩擦中就需要花費$300,000+。</p>
+
+<p>如果你正在權衡決定， <a href="/en/services/">我們的團隊</a> 很樂意引導您了解您特定房屋的實際裝修費用 - 沒有義務。請致電 778-960-7999 或使用下面的聯絡表單與我們聯絡。</p>
+
+
+
+When renovation projects add new appliances, EV charging stations, or smart home systems, a [critical load panel upgrade](/services/critical-load-panel/) is often needed to safely handle the increased electrical load.
+
+
+For homeowners planning long-term or accommodating family members with mobility needs, [accessible bathroom renovations](/services/accessible-bathroom/) — including grab bars, curbless showers, and slip-resistant flooring — are a smart addition to any major renovation project.
+
+
+If you live in a strata property (condo or townhouse), review BC''s [strata renovation rules](/blog/strata-renovation-rules-vancouver/) before starting work — many projects require strata council approval and must follow specific noise, hour, and contractor requirements.
+## Frequently Asked Questions
+
+### Is it cheaper to renovate or move in Vancouver in 2026?
+
+In Metro Vancouver''s 2026 market, renovating is usually cheaper than moving when you''re happy with your location and lot. Moving costs include: real estate commissions (3.5–5%), PTT ($10,000–$30,000+ on most Metro Vancouver homes), legal fees ($2,000–$3,500), moving costs ($3,000–$10,000), and the stress premium of finding a comparable home. A full [whole-house renovation](/en/services/whole-house/) at $100,000–$200,000 often costs less than the total transaction cost of buying comparable square footage. The break-even point shifts when your current home has structural or layout issues that can''t be fixed economically.
+
+### When does it make financial sense to move instead of renovating in Vancouver?
+
+Moving beats renovating when: (1) Your current lot/zoning is the problem (too small, wrong zone for suite, no parking); (2) The renovation cost exceeds 20–25% of the home''s post-renovation value; (3) The neighbourhood has fundamentally changed and won''t recover value; (4) You need significantly more square footage and adding to the current footprint isn''t feasible; (5) Structural or foundation issues would cost more to fix than the home''s equity justifies. Reno Stars provides free cost-benefit assessments — we''ll tell you honestly when renovating isn''t the right answer.
+
+### What renovations add the most value in Metro Vancouver?
+
+Based on real Vancouver market data, highest-ROI renovations in Metro Vancouver: (1) **Kitchen renovation** — $15,000–$40,000 investment, 60–80% ROI at resale; (2) **Primary bathroom renovation** — $12,000–$30,000, 55–75% ROI; (3) **Basement suite (legal secondary suite)** — $60,000–$120,000, often 100%+ ROI through rental income + value uplift; (4) **Curb appeal + landscaping** — $5,000–$20,000, 80–100% ROI perception value; (5) **Energy efficiency upgrades** — heat pump, windows, insulation — rebate-eligible and reduces utility costs. Whole-house cosmetic renovation ROI depends heavily on entry price vs. neighbourhood comparables.
+
+### How do I calculate if renovating my Vancouver home is worth it?
+
+Use this framework: (1) Get a current market valuation (free with most realtors); (2) Estimate post-renovation value — ask the realtor what comparable renovated homes sell for in your area; (3) Get renovation quotes (Reno Stars provides free itemized quotes); (4) Calculate: post-reno value minus current value = potential gain. If potential gain ≥ 70% of renovation cost, renovation is financially justified. (5) Add quality-of-life value if you plan to stay 5+ years — financial ROI is less important when you''re renovating to enjoy the home, not flip it.
+
+### How long do we need to live in a renovated Vancouver home to recoup costs?
+
+Industry rule of thumb: plan to stay at least 3–5 years after a major renovation to recoup costs through equity appreciation and quality-of-life value. In Metro Vancouver''s market (2024–2026 appreciation of 0–5%/year), a $100,000 renovation on a $1.2M home adds roughly $60,000–$80,000 in value immediately. The remaining $20,000–$40,000 is recouped through appreciation over 3–5 years. Legal basement suite conversions can recoup costs faster through rental income — at $2,000–$2,500/month rent, a $90,000 suite investment is recouped in 3 years.
+
+
+Also see: [pre-sale renovation tips](/zh-Hant/blog/pre-sale-renovation-vancouver-what-to-fix-before-listing/) | [Kitchen Renovation Vancouver](/en/services/kitchen/) | [Cabinet Refinishing](/en/services/cabinet/) | [Whole-House Renovation Vancouver](/en/services/whole-house/) | [Renovation Financing Options](/en/financing/) | [Heat Pump & HVAC Upgrade Vancouver](/en/services/heat-pump-hvac/) | [How to Choose a Contractor](/zh-Hant/blog/how-to-choose-renovation-contractor-vancouver/) | [Pre-Sale Renovation Advice](/en/services/realtor/) | [Renovation Timeline Guide](/zh-Hant/blog/renovation-timeline-how-long-does-each-project-take/) | [BC Renovation Permits Guide](/zh-Hant/blog/renovation-permits-bc-guide/) | [Vancouver Renovation Cost Guide 2026](/zh-Hant/blog/renovation-cost-vancouver-2026-complete-guide/)
+
+### What are the true costs of moving vs renovating in Vancouver in 2026?
+
+Vancouver real estate transaction costs when moving: Real estate commission (typically 3.25% of first $100K + 1.25% of balance, seller-paid): $25,000–$40,000 on a $1.5M home. Property Transfer Tax (buyer-paid): 2% of purchase price up to $2M = $28,000–$40,000. Legal fees, inspection, moving: $5,000–$8,000. Total transaction friction for a $1.5M purchase: $55,000–$90,000. By comparison, $80,000–$200,000 spent on renovating your current home eliminates transaction costs, keeps you in your preferred neighbourhood, and avoids the risk of bidding wars — making renovation the financially superior choice for most Vancouver homeowners who already own.
+
+See our [verified five-star reviews](/en/reviews/) from Metro Vancouver homeowners.
+
+[About Reno Stars](/en/about/) — Vancouver-based renovation company serving Metro Vancouver since 2019.
+
+[View our renovation project portfolio →](/en/projects/)
+
+Ready to get started? [Book your free consultation →](/zh-Hant/contact/)
+
+## See Also — Renovation Cost Guides
+
+- [Whole House Renovation Cost Vancouver](/en/guides/whole-house-renovation-cost-vancouver/) — average $50K–$300K+
+- [Cabinet Refinishing Cost Vancouver](/en/guides/cabinet-refinishing-cost-vancouver/) — from $4K for refinishing'::text)) WHERE id = '1837b084-cb01-4c31-a511-a54204f43ad5' AND localizations->>'contentZhHant' = '<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "文章",
+  "headline": "翻新與搬遷：[溫哥華](/en/areas/vancouver/) 2026 年市場哪個更明智？",
+  "description": "在大溫哥華地區搬家需要花費$80,000–$200,000 的交易成本。對於許多房主來說，有針對性的裝修比買房創造更多的價值。運行真實的數字。",
+  "圖像": "https://www.reno-stars.com/images/blog/renovate-vs-move-vancouver.jpg",
+  "作者": {"@type": "組織", "名稱": "Reno Stars"},
+  "publisher": {"@type": "組織", "name": "Reno Stars", "logo": {"@type": "ImageObject", "url": "https://www.reno-stars.com/logo.png"}},
+  "發佈日期": "2026-04-17",
+  "修改日期": "2026-04-17",
+  "mainEntityOfPage": {"@type": "網頁", "@id": "https://www.reno-stars.com/zh-Hant/blog/renovate-vs-move-vancouver-2026"}
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "How much does it cost to move in Metro Vancouver in 2026?",
+      "acceptedAnswer": {"@type": "Answer", "text": "Moving in Metro Vancouver typically costs $80,000–$200,000 in total transaction costs, including realtor commissions (3.5–5% of sale price), Property Transfer Tax on the new purchase (1–5% depending on price tier), mortgage penalty if you''re breaking a fixed term ($5,000–$25,000), legal fees ($1,500–$3,000), and physical moving costs ($3,000–$10,000). On a $1.5M home purchase, PTT alone is $28,000."}
+    },
+    {
+      "@type": "Question",
+      "name": "What is the Property Transfer Tax in BC in 2026?",
+      "acceptedAnswer": {"@type": "Answer", "text": "BC''s Property Transfer Tax (PTT) in 2026 is: 1% on the first $200,000, 2% on $200,001–$2,000,000, 3% on $2,000,001–$3,000,000, and 5% on the portion above $3,000,000. On a $1.5M home, that''s $27,000. First-time buyers may qualify for an exemption on homes under $835,000."}
+    },
+    {
+      "@type": "Question",
+      "name": "Does renovating increase home value in Vancouver?",
+      "acceptedAnswer": {"@type": "Answer", "text": "Kitchen and bathroom renovations typically return 60–80% of their cost in added resale value in Metro Vancouver. A $40,000 kitchen renovation may add $25,000–$35,000 at sale, but more importantly, it also delivers years of daily use value. Basement suite additions have particularly high ROI in Vancouver given rental demand — a $80,000 [basement suite renovation](/en/guides/basement-renovation-cost-vancouver/) can add $150,000+ in appraised value."}
+    },
+    {
+      "@type": "Question",
+      "name": "When does moving make more sense than renovating?",
+      "acceptedAnswer": {"@type": "Answer", "text": "Moving makes more sense when: (1) your neighbourhood no longer suits your lifestyle and that''s the real issue, (2) you need significantly more square footage that renovation can''t create (e.g. you need 3 more bedrooms in a 2-bedroom condo), (3) structural or site constraints make the renovation impossible or cost-prohibitive, or (4) the home has fundamental issues — flood plain, bad soils, heritage designation restrictions — that limit what renovation can fix."}
+    },
+    {
+      "@type": "Question",
+      "name": "Can I renovate and rent out part of my home to offset costs?",
+      "acceptedAnswer": {"@type": "Answer", "text": "Yes — adding a [secondary suite](/en/guides/basement-suite-cost-vancouver/) or basement suite is one of the most financially sound renovations in Metro Vancouver. A legal basement suite can generate $1,800–$2,800/month in rental income, which means a $70,000–$90,000 renovation can pay for itself in 4–5 years. Vancouver, [Burnaby](/en/areas/burnaby/), and most Metro municipalities allow secondary suites subject to a building permit and BC Building Code compliance."}
+    }
+  ]
+}
+</script>
+
+<h2>每個溫哥華房主最終都會問的問題</h2>
+
+<p>你的家感覺很緊張。當廚房過時，浴室狹窄，或者你的佈局已經不適合你了。問題出現了：你應該翻新你所擁有的東西，還是賣掉並搬到更大或更新的地方？</p>
+
+<p>在温哥华的 2026 年市场中，诚实的答案需要大多数房主（以及许多房地产经纪人）没有完全考虑到的连续数字。當你把所有搬家的實際成本加起來時，有針對性的翻新往往會在經濟和實踐上獲勝。</p>
+
+<h2>在大溫哥華地區搬家的實際成本</h2>
+
+<p>大多數人將搬家成本視為房地產經紀人費用。如果計算每個交易層，實際成本會高出 3-4 倍。</p>
+
+<h3>房地產經紀人佣金</h3>
+<p>銷售大溫哥華地區的房屋通常需要花費 3.5-5% 的總佣金（由掛牌機構和買家代理分攤）。對於 $1.4M 的房屋（大致相當於本拿比或溫哥華東部的基準獨立價格），這就是 <strong>$49,000–$70,000</strong> 僅在佣金中。</p>
+
+<h3>財產轉讓稅 (PTT)</h3>
+<p>當您購買下一套房屋時，您可以透過以下地址支付 PTT：</p>
+<ul>
+  <li>第一個 $200,000 1%</li>
+  <li>$200,001–$2,000,000 2%</li>
+  <li>$2,000,001–$3,000,000 3%</li>
+  <li>金額超過 $3,000,000 5%</li>
+</ul>
+<p>對於 $1.5M 的購房，PTT 是 <strong>$28,000</strong>。如果您以 $2M+ 購買，則為 $38,000+。首次購買者可能有資格獲得豁免，但如果您已經擁有，則需要支付全額 PTT。</p>
+
+<h3>抵押罰金</h3>
+<p>如果您持有固定利率抵押貸款並提前終止，則罰款為 3 個月利息或利差 (IRD) 中的較高者。 2025-2026 年，利率為 4.5-5.5%，對 $700,000  抵押貸款餘額的處罰可能會持續 <strong>$8,000–$25,000</strong>.</p>
+
+<h3>法律費用和支出</h3>
+<p>銷售+購買需要兩位房地產律師。預算 <strong>$3,000–$5,000</strong> 合併法律費用、產權保險和支出。</p>
+
+<h3>實際搬家費用</h3>
+<p>當地大溫哥華地區搬遷運行 <strong>$3,000–$10,000</strong> 對於典型的家庭住宅，取決於體積和距離。</p>
+
+<h3>更大空間的“溢價”</h3>
+<p>如果您需要搬入更大的房屋，您可以按照當前的價格購買一個價格通常比您出售的價格高出 20-40% 的細分市場。即使您在所有交易成本上實現收支平衡，這個增量也是您必須部署的真正資本。</p>
+
+<h3>總搬遷成本摘要</h3>
+
+<table>
+  <thead>
+    <tr><th>成本構成</th><th>典型範圍</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>房地產經紀人佣金（銷售）</td><td>$49,000 – $70,000</td></tr>
+    <tr><td>財產轉讓稅（購買）</td><td>$18,000 – $60,000</td></tr>
+    <tr><td>抵押貸款罰款</td><td>$5,000 – $25,000</td></tr>
+    <tr><td>律師費（雙方）</td><td>$3,000 – $5,000</td></tr>
+    <tr><td>身體動作</td><td>$3,000 – $10,000</td></tr>
+    <tr><td><strong>總交易摩擦</strong></td><td><strong>$78,000 – $170,000</strong></td></tr>
+  </tbody>
+</table>
+
+<p>這些費用在您簽字的那一刻就消失了。他們不創造股權、資產、回報。這是大溫哥華地區「買斷」的最低門票價格。</p>
+
+<h2>裝修的實際成本</h2>
+
+<p>現在讓我們看看在相同的美元範圍內翻新可以帶來什麼。</p>
+
+<h3>廚房裝修</h3>
+<p>一個中檔 <a href="/en/guides/kitchen-renovation-cost-vancouver/">溫哥華的廚房裝修</a> 依範圍運行 $25,000–$80,000 。這通常包括新的櫥櫃、檯面、電器、後擋板、照明和地板。結果：您每天使用的空間完全煥然一新，再加上 60-75% 的轉售回報。</p>
+
+<h3>[衛浴裝潢](/en/services/bathroom/)</h3>
+<p>一個 <a href="/en/guides/bathroom-renovation-cost-vancouver/">浴室全面翻新</a> 主浴室運行$15,000–$40,000 。在以前沒有的地方添加第二間浴室：$25,000–$50,000 （包括粗糙的管道）。大溫哥華地區較舊的房屋可能還需要我們的[Poly-B 管道更換](/en/services/poly-b-replacement/) 服務來消除不安全的塑膠管道。轉售投資報酬率最高的翻修項目之一。</p>
+
+<h3>[地下室裝潢](/en/services/basement/)</h3>
+<p>一個 <a href="/en/basement-renovation-near-me/">完成的地下室</a> - 特別是合法的二級套房 - 在大溫哥華地區運行$70,000–$130,000 。一套法律套房可增加 $1,800–$2,800/月的租金收入潛力。以每月 $2,000 計算，即每年 $24,000 — 翻新工程可在 3 至 5 年內收回成本，同時增加評估價值。</p>
+
+<h3>裝修成本與搬家成本：並列</h3>
+
+<table>
+  <thead>
+    <tr><th>設想</th><th>成本</th><th>你得到什麼</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>搬家（僅交易費用）</td><td>$80,000 – $170,000</td><td>零股權、零資產－只有摩擦</td></tr>
+    <tr><td>設備齊全的廚房 + 2 間浴室</td><td>$55,000 – $120,000</td><td>徹底改造的日常使用空間+轉售溢價</td></tr>
+    <tr><td>地下室套房改建</td><td>$70,000 – $130,000</td><td>$1,800–$2,800/mo 租金收入+股權加成</td></tr>
+    <tr><td>廚房+衛浴+地下室</td><td>$120,000 – $250,000</td><td>全屋改造－相當於買房的宜居性升級</td></tr>
+  </tbody>
+</table>
+
+<h2>當翻新是更明智的舉動時</h2>
+
+<ul>
+  <li><strong>你愛你的鄰居</strong> — 地點是裝潢無法解決的一件事</li>
+  <li><strong>家裡的骨頭都好</strong> — 地段好，結構完整，光線好</li>
+  <li><strong>您還需要 1-2 個功能空間</strong> — 不是 3 間以上不存在的臥室</li>
+  <li><strong>您的抵押貸款已以優惠利率鎖定</strong> ——破解它需要花費數萬美元</li>
+  <li><strong>你有股權但沒有現金</strong> — HELOC 針對現有股權基金，在不出售的情況下進行 Reno</li>
+  <li><strong>您可能會在 5 年內出售</strong> — 在出售前進行翻新通常可以收回售價成本的 60-80%</li>
+</ul>
+
+<h2>什麼時候搬家才是更明智的搬家</h2>
+
+<ul>
+  <li><strong>鄰裡關係才是真正的問題</strong> — 翻修並不能解決通勤問題、學區問題或社區適應問題</li>
+  <li><strong>您需要更多空間</strong> — 如果您需要 3 間以上的臥室，而您卻沒有，那麼在大多數溫哥華房屋中，裝修無法創造出這些臥室</li>
+  <li><strong>結構或場地限制令人望而卻步</strong> — 有些地點根本無法容納額外的設施</li>
+  <li><strong>家裡有根本問題</strong> — 遺產指定、洪氾區、限制您建造的土壤問題</li>
+  <li><strong>不管怎樣，您都會在 1-2 年內搬家</strong> — 快速連續進行兩筆交易的成本很少能證明進行重大翻修是合理的</li>
+</ul>
+
+<h2>決策架構：要問的 5 個問題</h2>
+
+<ol>
+  <li><strong>是鄰居的問題還是房子的問題？</strong> 如果是鄰居，就搬家。如果是房子，就裝修一下。</li>
+  <li><strong>裝修成本與總搬家交易成本是多少？</strong> 如果 reno ≤ 交易成本，reno 幾乎總是獲勝。</li>
+  <li><strong>裝潢能帶來 80% 以上的搬家效果嗎？</strong> 如果是的話，留下來。</li>
+  <li><strong>您有辦法在不出售的情況下籌集裝修資金嗎？</strong> <a href="/zh-Hant/blog/renovation-financing-vancouver-heloc/">HELOC 和裝修貸款</a> 讓您無需觸發完整交易即可獲得股權。 </li>
+  <li><strong>您的新房持有成本與雷諾融資成本是多少？</strong> 較大房屋的較高抵押貸款付款很容易超過裝修貸款付款。</li>
+</ol>
+
+<h2>Reno Stars 客戶在做什麼</h2>
+
+<p>根據我們在大溫哥華地區翻新數百棟房屋的經驗，我們看到了一個清晰的模式：掌握真實數據的房主通常會進行翻新。那些沒有算帳就搬家的人常常希望自己已經重新裝修過。</p>
+
+<p>我們幫助本拿比、溫哥華、[列治文](/en/areas/richmond/)和[素里](/en/areas/surrey/)的客戶改造了他們幾乎放棄的房屋——將過時的 1970 年代牧場主變成現代家庭住宅，花費$120,000–$180,000 ，而購買類似的“升級”房屋僅在交易摩擦中就需要花費$120,000–$180,000 ，而購買類似的“升級”房屋僅在交易摩擦中就需要花費$300,000+。</p>
+
+<p>如果你正在權衡決定， <a href="/en/services/">我們的團隊</a> 很樂意引導您了解您特定房屋的實際裝修費用 - 沒有義務。請致電 778-960-7999 或使用下面的聯絡表單與我們聯絡。</p>
+
+
+
+When renovation projects add new appliances, EV charging stations, or smart home systems, a [critical load panel upgrade](/services/critical-load-panel/) is often needed to safely handle the increased electrical load.
+
+
+For homeowners planning long-term or accommodating family members with mobility needs, [accessible bathroom renovations](/services/accessible-bathroom/) — including grab bars, curbless showers, and slip-resistant flooring — are a smart addition to any major renovation project.
+
+
+If you live in a strata property (condo or townhouse), review BC''s [strata renovation rules](/blog/strata-renovation-rules-vancouver/) before starting work — many projects require strata council approval and must follow specific noise, hour, and contractor requirements.
+## Frequently Asked Questions
+
+### Is it cheaper to renovate or move in Vancouver in 2026?
+
+In Metro Vancouver''s 2026 market, renovating is usually cheaper than moving when you''re happy with your location and lot. Moving costs include: real estate commissions (3.5–5%), PTT ($10,000–$30,000+ on most Metro Vancouver homes), legal fees ($2,000–$3,500), moving costs ($3,000–$10,000), and the stress premium of finding a comparable home. A full [whole-house renovation](/en/services/whole-house/) at $100,000–$200,000 often costs less than the total transaction cost of buying comparable square footage. The break-even point shifts when your current home has structural or layout issues that can''t be fixed economically.
+
+### When does it make financial sense to move instead of renovating in Vancouver?
+
+Moving beats renovating when: (1) Your current lot/zoning is the problem (too small, wrong zone for suite, no parking); (2) The renovation cost exceeds 20–25% of the home''s post-renovation value; (3) The neighbourhood has fundamentally changed and won''t recover value; (4) You need significantly more square footage and adding to the current footprint isn''t feasible; (5) Structural or foundation issues would cost more to fix than the home''s equity justifies. Reno Stars provides free cost-benefit assessments — we''ll tell you honestly when renovating isn''t the right answer.
+
+### What renovations add the most value in Metro Vancouver?
+
+Based on real Vancouver market data, highest-ROI renovations in Metro Vancouver: (1) **Kitchen renovation** — $15,000–$40,000 investment, 60–80% ROI at resale; (2) **Primary bathroom renovation** — $12,000–$30,000, 55–75% ROI; (3) **Basement suite (legal secondary suite)** — $60,000–$120,000, often 100%+ ROI through rental income + value uplift; (4) **Curb appeal + landscaping** — $5,000–$20,000, 80–100% ROI perception value; (5) **Energy efficiency upgrades** — heat pump, windows, insulation — rebate-eligible and reduces utility costs. Whole-house cosmetic renovation ROI depends heavily on entry price vs. neighbourhood comparables.
+
+### How do I calculate if renovating my Vancouver home is worth it?
+
+Use this framework: (1) Get a current market valuation (free with most realtors); (2) Estimate post-renovation value — ask the realtor what comparable renovated homes sell for in your area; (3) Get renovation quotes (Reno Stars provides free itemized quotes); (4) Calculate: post-reno value minus current value = potential gain. If potential gain ≥ 70% of renovation cost, renovation is financially justified. (5) Add quality-of-life value if you plan to stay 5+ years — financial ROI is less important when you''re renovating to enjoy the home, not flip it.
+
+### How long do we need to live in a renovated Vancouver home to recoup costs?
+
+Industry rule of thumb: plan to stay at least 3–5 years after a major renovation to recoup costs through equity appreciation and quality-of-life value. In Metro Vancouver''s market (2024–2026 appreciation of 0–5%/year), a $100,000 renovation on a $1.2M home adds roughly $60,000–$80,000 in value immediately. The remaining $20,000–$40,000 is recouped through appreciation over 3–5 years. Legal basement suite conversions can recoup costs faster through rental income — at $2,000–$2,500/month rent, a $90,000 suite investment is recouped in 3 years.
+
+
+Also see: [pre-sale renovation tips](/zh-Hant/blog/pre-sale-renovation-vancouver-what-to-fix-before-listing/) | [Kitchen Renovation Vancouver](/en/services/kitchen/) | [Cabinet Refinishing](/en/services/cabinet/) | [Whole-House Renovation Vancouver](/en/services/whole-house/) | [Renovation Financing Options](/en/financing/) | [Heat Pump & HVAC Upgrade Vancouver](/en/services/heat-pump-hvac/) | [How to Choose a Contractor](/zh-Hant/blog/how-to-choose-renovation-contractor-vancouver/) | [Pre-Sale Renovation Advice](/en/services/realtor/) | [Renovation Timeline Guide](/zh-Hant/blog/renovation-timeline-how-long-does-each-project-take/) | [BC Renovation Permits Guide](/zh-Hant/blog/renovation-permits-bc-guide/) | [Vancouver Renovation Cost Guide 2026](/zh-Hant/blog/renovation-cost-vancouver-2026-complete-guide/)
+
+### What are the true costs of moving vs renovating in Vancouver in 2026?
+
+Vancouver real estate transaction costs when moving: Real estate commission (typically 3.25% of first $100K + 1.25% of balance, seller-paid): $25,000–$40,000 on a $1.5M home. Property Transfer Tax (buyer-paid): 2% of purchase price up to $2M = $28,000–$40,000. Legal fees, inspection, moving: $5,000–$8,000. Total transaction friction for a $1.5M purchase: $55,000–$90,000. By comparison, $80,000–$200,000 spent on renovating your current home eliminates transaction costs, keeps you in your preferred neighbourhood, and avoids the risk of bidding wars — making renovation the financially superior choice for most Vancouver homeowners who already own.
+
+See our [verified five-star reviews](/en/reviews/) from Metro Vancouver homeowners.
+
+[About Reno Stars](/en/about/) — Vancouver-based renovation company serving Metro Vancouver since 2019.
+
+[View our renovation project portfolio →](/en/projects/)
+
+Ready to get started? [Book your free consultation →](/zh-Hant/contact/)
+
+## See Also — Renovation Cost Guides
+
+- [Whole House Renovation Cost Vancouver](/en/guides/whole-house-renovation-cost-vancouver/) — average $50K–$300K+
+- [Cabinet Refinishing Cost Vancouver](/en/guides/cabinet-refinishing-cost-vancouver/) — from $4K for refinishing';
 UPDATE blog_posts SET localizations = coalesce(localizations, '{}'::jsonb) || jsonb_build_object('contentZhHant', '<p>測試</p>'::text) WHERE id = '42d3bcb6-a997-4259-b44d-cbcbbc214b57' AND NOT (coalesce(localizations, '{}'::jsonb) ? 'contentZhHant');
 UPDATE blog_posts SET localizations = coalesce(localizations, '{}'::jsonb) || jsonb_build_object('excerptZhHant', '測試摘要'::text) WHERE id = '42d3bcb6-a997-4259-b44d-cbcbbc214b57' AND NOT (coalesce(localizations, '{}'::jsonb) ? 'excerptZhHant');
+UPDATE blog_posts SET localizations = coalesce(localizations, '{}'::jsonb) || jsonb_build_object('focusKeywordZhHant', '測試'::text) WHERE id = '42d3bcb6-a997-4259-b44d-cbcbbc214b57' AND NOT (coalesce(localizations, '{}'::jsonb) ? 'focusKeywordZhHant');
 UPDATE blog_posts SET localizations = coalesce(localizations, '{}'::jsonb) || jsonb_build_object('metaDescriptionZhHant', '測試描述'::text) WHERE id = '42d3bcb6-a997-4259-b44d-cbcbbc214b57' AND NOT (coalesce(localizations, '{}'::jsonb) ? 'metaDescriptionZhHant');
 UPDATE blog_posts SET localizations = coalesce(localizations, '{}'::jsonb) || jsonb_build_object('metaTitleZhHant', '測試元'::text) WHERE id = '42d3bcb6-a997-4259-b44d-cbcbbc214b57' AND NOT (coalesce(localizations, '{}'::jsonb) ? 'metaTitleZhHant');
+UPDATE blog_posts SET localizations = coalesce(localizations, '{}'::jsonb) || jsonb_build_object('titleZhHant', '測試'::text) WHERE id = '42d3bcb6-a997-4259-b44d-cbcbbc214b57' AND NOT (coalesce(localizations, '{}'::jsonb) ? 'titleZhHant');
 UPDATE blog_posts SET localizations = coalesce(localizations, '{}'::jsonb) || jsonb_build_object('contentZhHant', '<p>廚房裝修是溫哥華業主最具價值的投資之一——不僅提升日常生活品質，更能顯著增加房產價值。但每位業主最關心的問題始終是：<strong>溫哥華的廚房裝修到底要花多少錢？</strong></p>
 <p>簡單來說，大溫哥華地區典型全屋廚房裝修費用在 <strong>$15,000 至 $72,000 加元以上</strong>，具體取決於工程範圍、材料選擇和房屋年齡。本指南詳細解析影響裝修費用的各項因素、各價格區間的預期效果，以及2026年溫哥華廚房裝修的明智預算規劃。</p>
 <hr />
@@ -329,6 +881,8 @@ UPDATE blog_posts SET localizations = coalesce(localizations, '{}'::jsonb) || js
 UPDATE blog_posts SET localizations = coalesce(localizations, '{}'::jsonb) || jsonb_build_object('titleZhHant', '溫哥華廚房裝修費用指南（2026年）'::text) WHERE id = 'fbfe62bc-8887-44a0-a6a0-eef892a1e986' AND NOT (coalesce(localizations, '{}'::jsonb) ? 'titleZhHant');
 UPDATE blog_posts SET localizations = coalesce(localizations, '{}'::jsonb) || jsonb_build_object('contentZhHant', '<p>測試內容</p>'::text) WHERE id = '011a6d63-0121-4f6b-a536-43c247e18f06' AND NOT (coalesce(localizations, '{}'::jsonb) ? 'contentZhHant');
 UPDATE blog_posts SET localizations = coalesce(localizations, '{}'::jsonb) || jsonb_build_object('excerptZhHant', '溫哥華裝修對比'::text) WHERE id = '011a6d63-0121-4f6b-a536-43c247e18f06' AND NOT (coalesce(localizations, '{}'::jsonb) ? 'excerptZhHant');
+UPDATE blog_posts SET localizations = coalesce(localizations, '{}'::jsonb) || jsonb_build_object('focusKeywordZhHant', '溫哥華裝修'::text) WHERE id = '011a6d63-0121-4f6b-a536-43c247e18f06' AND NOT (coalesce(localizations, '{}'::jsonb) ? 'focusKeywordZhHant');
+UPDATE blog_posts SET localizations = coalesce(localizations, '{}'::jsonb) || jsonb_build_object('metaDescriptionZhHant', '溫哥華裝修'::text) WHERE id = '011a6d63-0121-4f6b-a536-43c247e18f06' AND NOT (coalesce(localizations, '{}'::jsonb) ? 'metaDescriptionZhHant');
 UPDATE blog_posts SET localizations = coalesce(localizations, '{}'::jsonb) || jsonb_build_object('metaTitleZhHant', '溫哥華裝修對比'::text) WHERE id = '011a6d63-0121-4f6b-a536-43c247e18f06' AND NOT (coalesce(localizations, '{}'::jsonb) ? 'metaTitleZhHant');
 UPDATE blog_posts SET localizations = coalesce(localizations, '{}'::jsonb) || jsonb_build_object('titleZhHant', '溫哥華裝修：先裝修廚房還是衛生間？'::text) WHERE id = '011a6d63-0121-4f6b-a536-43c247e18f06' AND NOT (coalesce(localizations, '{}'::jsonb) ? 'titleZhHant');
 UPDATE blog_posts SET localizations = jsonb_set(localizations, ARRAY['metaDescriptionZhHant'], to_jsonb('跳過$30K雷諾。 7 溫哥華廚房翻新創意：櫥櫃修補、硬件、後擋板、油漆、照明。實際成本$150–$8K。免費報價。'::text)) WHERE id = '0551ee30-6d01-46d2-854f-c13ffdeb6985' AND localizations->>'metaDescriptionZhHant' = '跳過$30K雷諾。 7 温哥华厨房翻新创意：橱柜修补、硬件、后挡板、油漆、照明。實際成本$150–$8K。免費報價。';
@@ -429,9 +983,15 @@ UPDATE blog_posts SET localizations = coalesce(localizations, '{}'::jsonb) || js
 <p>計劃進行廚房、衛生間、全屋或商業裝修？<a href="/zh/contact/">立即聯繫聚星裝修，獲取免費、無義務報價</a>。</p>
 '::text) WHERE id = '71c9b551-2fd2-4bba-968e-3a7c9b0200f6' AND NOT (coalesce(localizations, '{}'::jsonb) ? 'contentZhHant');
 UPDATE blog_posts SET localizations = coalesce(localizations, '{}'::jsonb) || jsonb_build_object('excerptZhHant', '溫哥華裝修對比'::text) WHERE id = '71c9b551-2fd2-4bba-968e-3a7c9b0200f6' AND NOT (coalesce(localizations, '{}'::jsonb) ? 'excerptZhHant');
+UPDATE blog_posts SET localizations = coalesce(localizations, '{}'::jsonb) || jsonb_build_object('focusKeywordZhHant', '溫哥華裝修'::text) WHERE id = '71c9b551-2fd2-4bba-968e-3a7c9b0200f6' AND NOT (coalesce(localizations, '{}'::jsonb) ? 'focusKeywordZhHant');
+UPDATE blog_posts SET localizations = coalesce(localizations, '{}'::jsonb) || jsonb_build_object('metaDescriptionZhHant', '溫哥華裝修'::text) WHERE id = '71c9b551-2fd2-4bba-968e-3a7c9b0200f6' AND NOT (coalesce(localizations, '{}'::jsonb) ? 'metaDescriptionZhHant');
 UPDATE blog_posts SET localizations = coalesce(localizations, '{}'::jsonb) || jsonb_build_object('metaTitleZhHant', '溫哥華裝修對比'::text) WHERE id = '71c9b551-2fd2-4bba-968e-3a7c9b0200f6' AND NOT (coalesce(localizations, '{}'::jsonb) ? 'metaTitleZhHant');
 UPDATE blog_posts SET localizations = coalesce(localizations, '{}'::jsonb) || jsonb_build_object('titleZhHant', '溫哥華裝修：先裝修廚房還是衛生間？'::text) WHERE id = '71c9b551-2fd2-4bba-968e-3a7c9b0200f6' AND NOT (coalesce(localizations, '{}'::jsonb) ? 'titleZhHant');
 UPDATE blog_posts SET localizations = coalesce(localizations, '{}'::jsonb) || jsonb_build_object('contentZhHant', '<p>溫哥華裝修先廚房還是先衛生間？</p>'::text) WHERE id = 'c88b22eb-13c7-45f6-9597-4a6852742c54' AND NOT (coalesce(localizations, '{}'::jsonb) ? 'contentZhHant');
+UPDATE blog_posts SET localizations = coalesce(localizations, '{}'::jsonb) || jsonb_build_object('excerptZhHant', '溫哥華裝修'::text) WHERE id = 'c88b22eb-13c7-45f6-9597-4a6852742c54' AND NOT (coalesce(localizations, '{}'::jsonb) ? 'excerptZhHant');
+UPDATE blog_posts SET localizations = coalesce(localizations, '{}'::jsonb) || jsonb_build_object('focusKeywordZhHant', '溫哥華裝修'::text) WHERE id = 'c88b22eb-13c7-45f6-9597-4a6852742c54' AND NOT (coalesce(localizations, '{}'::jsonb) ? 'focusKeywordZhHant');
+UPDATE blog_posts SET localizations = coalesce(localizations, '{}'::jsonb) || jsonb_build_object('metaDescriptionZhHant', '溫哥華裝修'::text) WHERE id = 'c88b22eb-13c7-45f6-9597-4a6852742c54' AND NOT (coalesce(localizations, '{}'::jsonb) ? 'metaDescriptionZhHant');
+UPDATE blog_posts SET localizations = coalesce(localizations, '{}'::jsonb) || jsonb_build_object('metaTitleZhHant', '溫哥華裝修'::text) WHERE id = 'c88b22eb-13c7-45f6-9597-4a6852742c54' AND NOT (coalesce(localizations, '{}'::jsonb) ? 'metaTitleZhHant');
 UPDATE blog_posts SET localizations = coalesce(localizations, '{}'::jsonb) || jsonb_build_object('titleZhHant', '溫哥華裝修：先裝修廚房還是衛生間？2026年完整對比指南'::text) WHERE id = 'c88b22eb-13c7-45f6-9597-4a6852742c54' AND NOT (coalesce(localizations, '{}'::jsonb) ? 'titleZhHant');
 UPDATE blog_posts SET localizations = jsonb_set(localizations, ARRAY['contentZhHant'], to_jsonb('<h2>不列顛哥倫比亞省[列治文](/en/areas/richmond/)的浴室裝修費用是多少？</h2>
 <p>基於列治文各地完成的真實項目——從史蒂夫斯頓聯排別墅到海島公寓——以下是 2026 年的預期。</p>
@@ -719,14 +1279,460 @@ UPDATE blog_posts SET localizations = coalesce(localizations, '{}'::jsonb) || js
 
 <p>計劃進行廚房、衛生間、全屋或商業裝修？<a href="/zh/contact/">立即聯繫聚星裝修，獲取免費、無義務報價</a>。</p>
 '::text) WHERE id = 'ea66766b-c230-4cb4-9fd8-8fb86e7bdb2f' AND NOT (coalesce(localizations, '{}'::jsonb) ? 'contentZhHant');
+UPDATE blog_posts SET localizations = coalesce(localizations, '{}'::jsonb) || jsonb_build_object('excerptZhHant', '測試'::text) WHERE id = 'ea66766b-c230-4cb4-9fd8-8fb86e7bdb2f' AND NOT (coalesce(localizations, '{}'::jsonb) ? 'excerptZhHant');
+UPDATE blog_posts SET localizations = coalesce(localizations, '{}'::jsonb) || jsonb_build_object('focusKeywordZhHant', '測試'::text) WHERE id = 'ea66766b-c230-4cb4-9fd8-8fb86e7bdb2f' AND NOT (coalesce(localizations, '{}'::jsonb) ? 'focusKeywordZhHant');
+UPDATE blog_posts SET localizations = coalesce(localizations, '{}'::jsonb) || jsonb_build_object('metaDescriptionZhHant', '測試'::text) WHERE id = 'ea66766b-c230-4cb4-9fd8-8fb86e7bdb2f' AND NOT (coalesce(localizations, '{}'::jsonb) ? 'metaDescriptionZhHant');
+UPDATE blog_posts SET localizations = coalesce(localizations, '{}'::jsonb) || jsonb_build_object('metaTitleZhHant', '測試'::text) WHERE id = 'ea66766b-c230-4cb4-9fd8-8fb86e7bdb2f' AND NOT (coalesce(localizations, '{}'::jsonb) ? 'metaTitleZhHant');
 UPDATE blog_posts SET localizations = coalesce(localizations, '{}'::jsonb) || jsonb_build_object('titleZhHant', '溫哥華裝修：先裝修廚房還是衛生間？2026年完整對比指南'::text) WHERE id = 'ea66766b-c230-4cb4-9fd8-8fb86e7bdb2f' AND NOT (coalesce(localizations, '{}'::jsonb) ? 'titleZhHant');
 UPDATE blog_posts SET localizations = coalesce(localizations, '{}'::jsonb) || jsonb_build_object('seoKeywordsZhHant', '本拿比廚房翻新, 本拿比廚房翻新費用, Metrotown廚房翻新, 本拿比Strata翻新'::text) WHERE id = '6b783dc9-479a-48dd-98c7-645e8ebaff94' AND NOT (coalesce(localizations, '{}'::jsonb) ? 'seoKeywordsZhHant');
 UPDATE blog_posts SET localizations = jsonb_set(localizations, ARRAY['metaDescriptionZhHant'], to_jsonb('BC Bill 44 允許您在大多數單戶住宅地塊上建造最多 4 個單元。真正的溫哥華多元化和巷道改造成本、許可證和時間表。免費報價。'::text)) WHERE id = '2fdd7332-5021-44b8-a0a2-270d4e2c503c' AND localizations->>'metaDescriptionZhHant' = 'BC Bill 44 允许您在大多数单户住宅地块上建造最多 4 个单元。真正的温哥华多元化和巷道改造成本、许可证和时间表。免費報價。';
 UPDATE blog_posts SET localizations = jsonb_set(localizations, ARRAY['metaDescriptionZhHant'], to_jsonb('列治文全屋裝修：簡約溫馨設計，設施齊全的廚房、主浴室+起居區煥然一新。免費報價。'::text)) WHERE id = 'af5499a8-7519-42f5-9693-e65d0945a0ce' AND localizations->>'metaDescriptionZhHant' = '列治文全屋装修：简约温馨设计，设施齐全的厨房、主浴室+起居区焕然一新。免費報價。';
 UPDATE blog_posts SET localizations = jsonb_set(localizations, ARRAY['metaDescriptionZhHant'], to_jsonb('BC 2026 年薩里預售翻新：牛頓、弗利特伍德和南薩里的廚房和浴室更新。上市前最佳投資報酬率項目。免費報價。'::text)) WHERE id = '02f69e00-ad87-4665-a4b0-8316d78db673' AND localizations->>'metaDescriptionZhHant' = 'BC 2026 年萨里预售翻新：牛顿、弗利特伍德和南萨里的厨房和浴室更新。上市前最佳投資報酬率項目。免費報價。';
+UPDATE blog_posts SET localizations = jsonb_set(localizations, ARRAY['contentZhHant'], to_jsonb('<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "文章",
+  "headline": "[溫哥華](/en/areas/vancouver/) 廚房的石英石檯面與花崗岩檯面（2026 年指南）",
+  "description": "溫哥華廚房的石英與花崗岩 — 每平方英尺成本、耐用性、防潮性、維護和轉售價值。請參閱當地雷諾的真實項目數據。",
+  "圖像": "https://www.reno-stars.com/images/blog/quartz-vs-granite-countertops.jpg",
+  "作者": {"@type": "組織", "名稱": "Reno Stars"},
+  "publisher": {"@type": "組織", "name": "Reno Stars", "logo": {"@type": "ImageObject", "url": "https://www.reno-stars.com/logo.png"}},
+  "發佈日期": "2026-04-17",
+  "修改日期": "2026-04-17",
+  "mainEntityOfPage": {"@type": "網頁", "@id": "https://www.reno-stars.com/zh-Hant/blog/quartz-vs-granite-countertops-vancouver-2026"}
+}
+</script>
+
+<h2>石英與花崗岩檯面：快速比較</h2>
+
+<p>選擇之間 <strong>石英石檯面與花崗岩檯面的比較</strong> 是溫哥華房主在[廚房裝修](/en/services/kitchen/)期間面臨的最常見的決定之一。這兩種材料看起來都令人驚嘆，隨著時間的推移也能保持良好的狀態，並且可以顯著提高您房屋的轉售價值 - 但它們的表現會有所不同，具體取決於您的生活方式、預算和溫哥華氣候的獨特需求。</p>
+
+<p>本指南透過真實的定價數據、性能比較以及我們在溫哥華、[本拿比](/en/areas/burnaby/)、[列治文](/en/areas/richmond/)、[高貴林](/en/areas/coquitlam/)和[素里](/en/areas/surrey/)已完成的廚房翻新項目的見解來消除營銷噪音。</p>
+
+<table>
+  <thead>
+    <tr><th>因素</th><th>石英</th><th>花崗岩</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>成本（安裝）</td><td>$60–$120/平方英尺</td><td>$50–$100/平方英尺</td></tr>
+    <tr><td>耐用性</td><td>非常高（工程設計）</td><td>高（天然石）</td></tr>
+    <tr><td>耐濕性</td><td>無孔、優良</td><td>多孔，需要密封</td></tr>
+    <tr><td>維護</td><td>擦拭乾淨，無密封</td><td>需要每年密封</td></tr>
+    <tr><td>外貌</td><td>一致的模式</td><td>獨特的自然紋理</td></tr>
+    <tr><td>耐熱性</td><td>中（使用三腳架）</td><td>出色的</td></tr>
+    <tr><td>轉售價值</td><td>很強</td><td>強的</td></tr>
+  </tbody>
+</table>
+
+<h2>溫哥華每平方英尺成本 (2026)</h2>
+
+<p>由於供應鏈穩定和大溫哥華地區住房市場需求增加，材料成本在 2026 年發生了變化。以下是您實際可以期望為安裝的檯面支付的費用：</p>
+
+<h3>石英檯面</h3>
+<ul>
+  <li><strong>入門級石英：</strong> $60–$75/平方英尺安裝 — 純色板、較薄的型材（2 公分）、建築級品牌</li>
+  <li><strong>中檔石英：</strong> $75–$95/平方英尺安裝 — 受歡迎的 Calacatta 和 Carrara 外觀，3 公分厚，Caesarstone 或 Silestone</li>
+  <li><strong>優質石英：</strong> $95–$120/平方英尺安裝 — 超厚板、瀑布島、異國情調的紋理圖案、Dekton 或 Cambria</li>
+</ul>
+
+<p>典型的 40 平方英尺溫哥華廚房檯面，配有石英檯面 <strong>$2,400–$4,800 已安裝</strong>。添加一個瀑布島（額外 20-30 平方英尺的材料和更複雜的製造），僅檯面的總成本就可以達到 $6,000–$8,000 。</p>
+
+<h3>花崗岩檯面</h3>
+<ul>
+  <li><strong>入門級花崗岩：</strong> $50–$65/平方英尺安裝 — 常見顏色，如 Black Pearl 或 Uba Tuba，標準邊緣輪廓</li>
+  <li><strong>中檔花崗岩：</strong> $65–$80/平方英尺安裝 — 更獨特的紋理圖案，聖塞西莉亞或阿拉斯加白</li>
+  <li><strong>優質花崗岩：</strong> $80–$100/平方英尺安裝 — 異國情調的板材，與書籍相符的圖案，來自巴西或印度的稀有進口品</li>
+</ul>
+
+<p>對於同一個 40 平方英尺的廚房，通常使用花崗岩 <strong>$2,000–$4,000 已安裝</strong> - 儘管優質花崗岩和優質石英可以達到相似的價格點，但入門級的價格稍微便宜一些。</p>
+
+<p><strong>導致成本上升的因素：</strong> 複雜的切口（台下式水槽、爐灶面）、瀑布邊緣、全高後擋板以及拆除現有檯面可為任何工作增加$200–$800 。</p>
+
+<h2>耐用性：哪個比較耐用？</h2>
+
+<h3>石英</h3>
+<p>石英是一種人造石，由大約 90-94% 的研磨天然石英晶體與聚合物樹脂黏合而成。此製造過程產生 <strong>高度一致、耐衝擊的表面</strong> 比天然石材更能抵抗碎裂和裂痕。您不會發現隨著時間的推移會成為壓力點的微弱脈紋或自然裂縫。</p>
+
+<p>石英的主要耐用性警告： <strong>耐熱性比花崗岩差</strong>。如果直接暴露在 150°C (300°F) 以上的熱量下，樹脂黏合劑可能會變色或破裂。請務必使用三腳架－切勿將熱鍋直接放在石英上。</p>
+
+<h3>花崗岩</h3>
+<p>花崗岩是地球上最堅硬的天然石材之一，莫氏硬度為 6-7。它能很好地處理熱量——您可以將熱鑄鐵煎鍋直接放在上面而不會損壞。然而， <strong>花崗岩的邊緣和角落可能會碎裂</strong> 如果猛烈撞擊，天然裂縫（寶石中已經存在的髮絲狀裂縫）有時會在壓力下擴展。</p>
+
+<p>花崗岩的品質非常重要。具有緊密晶粒結構的高等級板坯的性能優於可能預先存在微裂紋的廉價進口板坯。購買前務必親自檢查板材。</p>
+
+<h2>溫哥華氣候的防潮性</h2>
+
+<p>溫哥華出了名的潮濕氣候，使得防潮性成為一個真正令人擔憂的問題——不僅對於浴室，而且對於廚房也是如此。濕度、烹飪產生的蒸氣以及每天潮濕的檯面的簡單現實意味著您的材料選擇很重要。</p>
+
+<h3>石英：潮濕環境的贏家</h3>
+<p>石英是 <strong>其製造本質上是無孔的</strong>。液體、細菌和黴菌無法滲透表面。無需密封，如果在合理的時間內擦掉，溢出的咖啡、紅酒或酸性柑橘汁也不會弄髒。對於經常烹飪的溫哥華房主來說，石英的無孔表面是一個顯著的實際優勢。</p>
+
+<h3>花崗岩：透過適當的密封即可管理</h3>
+<p>天然花崗岩是 <strong>微孔</strong> — 它具有微小的孔隙，如果未密封或密封劑磨損，可以吸收液體。在溫哥華的廚房環境（烹飪蒸氣、濕農產品、咖啡、油）中，未密封或密封不足的花崗岩檯面隨著時間的推移可能會沾污或藏匿細菌。</p>
+
+<p>解決方案是定期密封：大多數花崗岩檯面需要每 12-18 個月重新密封一次。這是一個 30 分鐘的 DIY 任務，使用現成的花崗岩密封劑。如果您堅持不懈，花崗岩在廚房中的表現會非常好。如果您是那種無需維護的人，石英是更安全的選擇。</p>
+
+<h2>維護要求</h2>
+
+<h3>石英</h3>
+<ul>
+  <li>日常清潔：溫肥皂水和軟布 - 就這樣</li>
+  <li>從來沒有密封</li>
+  <li>避免刺激性化學物質（漂白劑、烤箱清潔劑），這些化學物質會隨著時間的推移而使表面變暗</li>
+  <li>避免長時間暴露在紫外線下—有些石英顏色在靠近窗戶的陽光直射下會褪色</li>
+</ul>
+
+<h3>花崗岩</h3>
+<ul>
+  <li>日常清潔：溫和的洗碗精和溫水－避免使用醋等酸性清潔劑</li>
+  <li>每年用滲透性花崗岩密封劑密封（$20–$40 在任何五金店）</li>
+  <li>立即吸乾溢出物－尤其是紅酒、咖啡和油</li>
+  <li>如果出現缺口，重新拋光邊緣（專業維修，通常$150–$300）</li>
+</ul>
+
+<h2>外觀風格</h2>
+
+<h3>石英：一致性和多樣性</h3>
+<p>因為石英是製造出來的，所以你得到 <strong>板與板之間的顏色和圖案一致</strong> — 當您需要為大型廚房中島或 L 形檯面使用多塊板並希望它們完美匹配時，這是理想的選擇。顏色範圍非常廣泛：純白色、溫暖的奶油色、引人注目的黑色、混凝土灰色以及越來越令人信服的卡拉卡塔大理石外觀。</p>
+
+<p>代價是石英在某些人看來可能看起來「太完美」。整個板上的圖案是一致的，而不是自然流動的，經驗豐富的石材愛好者有時會發現這沒有天然花崗岩有趣。</p>
+
+<h3>花崗岩：獨特的自然美</h3>
+<p>沒有兩塊完全相同的花崗岩板。自然紋理、水晶圖案和顏色變化意味著您的檯面真正獨一無二。許多溫哥華房主特別選擇花崗岩是因為它的有機特性——光線穿過天然礦物晶體和紋理的方式創造了人造石頭無法完全複製的溫暖和深度。</p>
+
+<p>挑戰：要匹配多個板更加困難。如果您的廚房需要兩塊或三塊石板，則需要在石場仔細選擇石板才能獲得一致的圖案。</p>
+
+<h2>溫哥華市場的轉售價值</h2>
+
+<p>來自大溫哥華地區的房地產數據一致表明 <strong>石英和花崗岩都增加了有意義的轉售價值</strong> 與層壓板或瓷磚檯面相比。在構成溫哥華轉售市場大部分的$800K–$1.5M公寓和聯排別墅部分，買家期望優質的石材檯面。</p>
+
+<p><strong>石英目前在轉售方面略有優勢：</strong> 溫哥華開放日買家一致認為石英石“可立即入住”，無需擔心維護問題。 [房地產經紀人](/en/services/realtor/)經常提到石英廚房的照片效果更好（顏色一致，沒有看起來像照片中染色的自然變化）。</p>
+
+<p><strong>花崗岩在奢侈品領域擁有自己的地位：</strong> 對於$1.5M以上的房屋，具有引人注目的自然紋理的獨特花崗岩實際上可以帶來溢價，因為它標誌著獨特的高端選擇，而不是建築級選擇。</p>
+
+<p>根據我們在本拿比、列治文和高貴林的專案經驗，翻新出售的房主大致會看到 <strong>1.5–2 倍檯面投資回報</strong> 在目前的市場上，無論選擇哪種材料——只要安裝品質高。</p>
+
+<h2>真實專案資料：溫哥華房主的實際選擇</h2>
+
+<p>看看我們在大溫哥華地區完成的廚房裝修，石英在中檔項目中占主導地位（$20,000–$35,000 總廚房預算）。花崗岩往往出現在註重預算的裝修中，房主會在出售中找到優質的板材，或出現在客戶特別想要天然石材特徵的高端項目中。</p>
+
+<p>我們的 <a href="/en/guides/bathroom-renovation-cost-vancouver/">衛浴裝修費用指南</a> 遵循類似的模式－工程表面代表價值，天然石材代表聲望。關鍵見解：您的檯面材料應該補充整體裝修願景，而不是單獨選擇。</p>
+
+<p>例如，我們的高貴林公寓廚房裝修採用了定製石英檯面，特別是因為客戶正在準備出售房屋，一致、乾淨的外觀非常漂亮，吸引了最廣泛的買家。我們的本拿比訂製廚房配有木紋櫥櫃，使用帶有微妙紋理的石英來補充櫥櫃，而不與之競爭。</p>
+
+<h2>您應該選擇哪一個？</h2>
+
+<h3>若符合以下條件，請選擇石英：</h3>
+<ul>
+  <li>您想要零維護檯面（無密封，無需特殊清潔劑）</li>
+  <li>您經常做飯並且希望能夠無壓力地防溢出</li>
+  <li>您正在裝修以出售並希望最大程度地吸引買家</li>
+  <li>您需要多塊板才能完美搭配整個大廚房</li>
+  <li>您喜歡現代、乾淨的美感和一致的圖案</li>
+  <li>您有小孩（抗菌、易於消毒）</li>
+</ul>
+
+<h3>若符合以下條件，請選擇花崗岩：</h3>
+<ul>
+  <li>您想要一個真正獨特的檯面——沒有兩塊完全相同的檯面</li>
+  <li>喜歡煮飯，需要耐熱（可以直接放熱鍋）</li>
+  <li>您對年度密封維護感到滿意</li>
+  <li>您喜歡天然石材的溫暖和特性</li>
+  <li>您的廚房設計始終需要有機、天然的材料</li>
+  <li>您會以具有競爭力的價格找到優質的板材</li>
+</ul>
+
+<h3>底線</h3>
+<p>對於大多數溫哥華房主來說， <strong>石英是更安全、更實用的選擇</strong>。它的價格具有競爭力，無需維護，在溫哥華潮濕的氣候中表現出色，並且具有強大的買家吸引力。如果您想要天然石材的有機美感和耐熱性 - 並且您將致力於每年密封 - 花崗岩是同樣出色的選擇，經受住了時間的考驗。</p>
+
+<p>最好的決定始終是在廚房全面翻新的情況下做出的。我們的團隊幫助客戶思考材料選擇，作為整個設計過程的一部分——檯面、櫥櫃、地板和固定裝置應該作為一個有凝聚力的系統一起工作。</p>
+
+請參閱來自大溫哥華地區房主的[經過驗證的五星級評論](/en/reviews/)。
+
+[關於 Reno Stars](/en/about/) — 總部位於溫哥華的裝修公司，自 2019 年起為大溫哥華地區提供服務。
+
+[查看我們的改造專案組合→](/en/projects/)
+
+<p>準備好探索您的檯面選擇了嗎？我們的 <a href="/en/services/">廚房裝修服務</a> 團隊很樂意引導您了解當前材料的可用性、價格以及最適合您空間的材料。 <a href="/zh-Hant/contact/">獲得免費裝修估價</a> 我們會將樣品帶到您的家中，以便您可以看到不同材料在實際照明條件下的外觀。</p>
+
+<p>不確定您廚房專案的總預算？探索我們的完整系列 <a href="/zh-Hant/blog/">廚房和浴室裝修指南</a> 取得針對溫哥華的定價和規劃建議。</p>
+
+
+
+Metro Vancouver homeowners increasingly include a [heat pump HVAC upgrade](/services/heat-pump-hvac/) in their renovation plans — these systems provide efficient heating and cooling year-round, and qualify for BC Hydro and CleanBC rebate programs.
+
+
+When renovation projects add new appliances, EV charging stations, or smart home systems, a [critical load panel upgrade](/services/critical-load-panel/) is often needed to safely handle the increased electrical load.
+
+
+For homeowners planning long-term or accommodating family members with mobility needs, [accessible bathroom renovations](/services/accessible-bathroom/) — including grab bars, curbless showers, and slip-resistant flooring — are a smart addition to any major renovation project.
+
+
+If your Metro Vancouver home was built before 1995, it may have poly-B pipes. Our [poly-B pipe replacement service](/services/poly-b-replacement/) addresses this common issue before it leads to costly water damage — something worth considering during any major renovation.
+
+
+If you live in a strata property (condo or townhouse), review BC''s [strata renovation rules](/blog/strata-renovation-rules-vancouver/) before starting work — many projects require strata council approval and must follow specific noise, hour, and contractor requirements.
+## Frequently Asked Questions
+
+### Is quartz or granite better for Vancouver kitchens?
+
+Both are excellent choices, but for Metro Vancouver''s high-humidity coastal climate, quartz has practical advantages. Quartz is non-porous (no sealing required), highly stain-resistant, and uniform in pattern — popular in Vancouver''s contemporary and West Coast modern kitchens. Granite is natural stone with unique veining, requires annual sealing, and is slightly more heat-resistant at the surface. In Vancouver''s 2026 market, quartz outsells granite approximately 3:1 for kitchen countertops. For bathrooms, both perform similarly; quartz is typically easier to maintain.
+
+### How much do quartz countertops cost in Vancouver in 2026?
+
+Quartz countertop installation in Metro Vancouver costs $85–$200+ per sq ft installed, depending on slab thickness (2cm vs. 3cm), brand (entry-level vs. Silestone/Caesarstone), and edge profile complexity. A typical 25 sq ft kitchen countertop (standard galley or L-shape) costs $2,125–$5,000 installed. Island countertops add $800–$2,500. Premium brands and custom colours run higher. Undermount sink cutout adds $200–$400. Reno Stars sources from multiple local suppliers and includes standard installation and removal of existing counters in our quotes.
+
+### How much do granite countertops cost in Vancouver in 2026?
+
+Granite countertop installation in Metro Vancouver runs $75–$175 per sq ft installed for standard imported granite; premium slabs (Brazilian, Italian, or rare colours) run $150–$280+/sq ft. A 25 sq ft kitchen costs $1,875–$4,375 for standard granite. Natural variation means pricing depends heavily on the specific slab — you choose at the slab yard. Sealing is required annually ($50–$150 DIY or included in some contractor warranties). Reno Stars visits slab yards with clients on larger projects to select the exact slab.
+
+### How long does quartz or granite countertop installation take?
+
+Countertop replacement is a 2-step process: (1) template visit after cabinets are in (1 hour, 1 day appointment); (2) fabrication and installation, typically 7–14 days after template. Installation day: old counters out in the morning, new counters in by afternoon (3–6 hours for a standard kitchen). You''ll be without a kitchen sink for 1–2 days while caulk cures. Backsplash tile installation follows countertop install by 24–48 hours. In Reno Stars kitchen projects, countertop templating is scheduled as soon as upper cabinets are hung — no wasted time.
+
+### Can quartz or granite crack or chip in Vancouver homes?
+
+Quartz is more chip-resistant than granite at edges (engineered composite vs. natural stone). Neither is indestructible — both can crack from thermal shock (e.g., setting a pot directly from the stove), sharp impact at edges, or improper support during transport. Granite is more porous and can absorb stains (red wine, oil) if not sealed. In practice, both materials last 20–30+ years with normal care. Reno Stars installs with full support brackets on overhangs and uses silicone joins at sink cutouts to minimize stress points. Our 3-year workmanship warranty covers installation defects.
+
+### How do I maintain quartz vs granite countertops in a Vancouver kitchen?
+
+Maintenance comparison for Vancouver kitchens: Quartz countertops are non-porous and require no sealing — clean with soap and water or a mild non-abrasive cleaner. Avoid prolonged exposure to direct UV (can fade) and don''t place hot pots directly on the surface. Granite countertops are porous and require sealing every 1–3 years (test by applying water: if it beads, no sealing needed; if it absorbs, seal it). A professional granite sealing application costs $150–$300. Both materials handle Vancouver''s climate well — the wet weather doesn''t affect sealed stone surfaces indoors. For the maintenance-averse homeowner, quartz is the simpler long-term choice.
+
+Browse our [renovation design gallery](/en/design/) for real project photos.
+
+Also see: [Vancouver Kitchen Renovation](/zh-Hant/blog/kitchen-renovation-vancouver-bc-2026/) | [Kitchen Cabinet Colours Vancouver](/zh-Hant/blog/kitchen-cabinet-colour-timeless-vancouver/) | [Bathroom Renovation Vancouver](/en/services/bathroom/) | [Whole-House Renovation Vancouver](/en/services/whole-house/) | [Basement Renovation Vancouver](/en/services/basement/)
+ | [How to Choose a Contractor](/zh-Hant/blog/how-to-choose-renovation-contractor-vancouver/) | [BC Renovation Permits Guide](/zh-Hant/blog/renovation-permits-bc-guide/) | [Renovation Timeline Guide](/zh-Hant/blog/renovation-timeline-how-long-does-each-project-take/) | [Vancouver Renovation Cost Guide 2026](/zh-Hant/blog/renovation-cost-vancouver-2026-complete-guide/) | [How to Finance Your Vancouver Renovation (HELOC Guide)](/zh-Hant/blog/renovation-financing-vancouver-heloc/) | [Renovation Financing Options](/en/financing/)
+
+## See Also — Renovation Cost Guides
+
+- [Kitchen Renovation Cost Vancouver](/en/guides/kitchen-renovation-cost-vancouver/) — average $15K–$80K in Metro Vancouver
+- [Basement Renovation Cost Vancouver](/en/guides/basement-renovation-cost-vancouver/) — average $20K–$80K
+- [Whole House Renovation Cost Vancouver](/en/guides/whole-house-renovation-cost-vancouver/) — average $50K–$300K+
+- [Cabinet Refinishing Cost Vancouver](/en/guides/cabinet-refinishing-cost-vancouver/) | [Cabinet Refinishing Vancouver](/en/services/cabinet/vancouver/) — from $4K for refinishing'::text)) WHERE id = 'f622fd93-13b9-409e-865d-fa96b671a0ae' AND localizations->>'contentZhHant' = '<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "文章",
+  "headline": "[溫哥華](/en/areas/vancouver/) 廚房的石英石檯面與花崗岩檯面（2026 年指南）",
+  "description": "溫哥華廚房的石英與花崗岩 — 每平方英尺成本、耐用性、防潮性、維護和轉售價值。請參閱當地雷諾的真實項目數據。",
+  "圖像": "https://www.reno-stars.com/images/blog/quartz-vs-granite-countertops.jpg",
+  "作者": {"@type": "組織", "名稱": "Reno Stars"},
+  "publisher": {"@type": "組織", "name": "Reno Stars", "logo": {"@type": "ImageObject", "url": "https://www.reno-stars.com/logo.png"}},
+  "發佈日期": "2026-04-17",
+  "修改日期": "2026-04-17",
+  "mainEntityOfPage": {"@type": "網頁", "@id": "https://www.reno-stars.com/zh-Hant/blog/quartz-vs-granite-countertops-vancouver-2026"}
+}
+</script>
+
+<h2>石英與花崗岩檯面：快速比較</h2>
+
+<p>選擇之間 <strong>石英石檯面與花崗岩檯面的比較</strong> 是溫哥華房主在[廚房裝修](/en/services/kitchen/)期間面臨的最常見的決定之一。這兩種材料看起來都令人驚嘆，隨著時間的推移也能保持良好的狀態，並且可以顯著提高您房屋的轉售價值 - 但它們的表現會有所不同，具體取決於您的生活方式、預算和溫哥華氣候的獨特需求。</p>
+
+<p>本指南透過真實的定價數據、性能比較以及我們在溫哥華、[本拿比](/en/areas/burnaby/)、[列治文](/en/areas/richmond/)、[高貴林](/en/areas/coquitlam/)和[素里](/en/areas/surrey/)已完成的廚房翻新項目的見解來消除營銷噪音。</p>
+
+<table>
+  <thead>
+    <tr><th>因素</th><th>石英</th><th>花崗岩</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>成本（安裝）</td><td>$60–$120/平方英尺</td><td>$50–$100/平方英尺</td></tr>
+    <tr><td>耐用性</td><td>非常高（工程設計）</td><td>高（天然石）</td></tr>
+    <tr><td>耐濕性</td><td>無孔、優良</td><td>多孔，需要密封</td></tr>
+    <tr><td>維護</td><td>擦拭乾淨，無密封</td><td>需要每年密封</td></tr>
+    <tr><td>外貌</td><td>一致的模式</td><td>獨特的自然紋理</td></tr>
+    <tr><td>耐熱性</td><td>中（使用三腳架）</td><td>出色的</td></tr>
+    <tr><td>轉售價值</td><td>很強</td><td>強的</td></tr>
+  </tbody>
+</table>
+
+<h2>溫哥華每平方英尺成本 (2026)</h2>
+
+<p>由於供應鏈穩定和大溫哥華地區住房市場需求增加，材料成本在 2026 年發生了變化。以下是您實際可以期望為安裝的檯面支付的費用：</p>
+
+<h3>石英檯面</h3>
+<ul>
+  <li><strong>入門級石英：</strong> $60–$75/平方英尺安裝 — 純色板、較薄的型材（2 公分）、建築級品牌</li>
+  <li><strong>中檔石英：</strong> $75–$95/平方英尺安裝 — 受歡迎的 Calacatta 和 Carrara 外觀，3 公分厚，Caesarstone 或 Silestone</li>
+  <li><strong>優質石英：</strong> $95–$120/平方英尺安裝 — 超厚板、瀑布島、異國情調的紋理圖案、Dekton 或 Cambria</li>
+</ul>
+
+<p>典型的 40 平方英尺溫哥華廚房檯面，配有石英檯面 <strong>$2,400–$4,800 已安裝</strong>。添加一個瀑布島（額外 20-30 平方英尺的材料和更複雜的製造），僅檯面的總成本就可以達到 $6,000–$8,000 。</p>
+
+<h3>花崗岩檯面</h3>
+<ul>
+  <li><strong>入門級花崗岩：</strong> $50–$65/平方英尺安裝 — 常見顏色，如 Black Pearl 或 Uba Tuba，標準邊緣輪廓</li>
+  <li><strong>中檔花崗岩：</strong> $65–$80/平方英尺安裝 — 更獨特的紋理圖案，聖塞西莉亞或阿拉斯加白</li>
+  <li><strong>優質花崗岩：</strong> $80–$100/平方英尺安裝 — 異國情調的板材，與書籍相符的圖案，來自巴西或印度的稀有進口品</li>
+</ul>
+
+<p>對於同一個 40 平方英尺的廚房，通常使用花崗岩 <strong>$2,000–$4,000 已安裝</strong> - 儘管優質花崗岩和優質石英可以達到相似的價格點，但入門級的價格稍微便宜一些。</p>
+
+<p><strong>導致成本上升的因素：</strong> 複雜的切口（台下式水槽、爐灶面）、瀑布邊緣、全高後擋板以及拆除現有檯面可為任何工作增加$200–$800 。</p>
+
+<h2>耐用性：哪個比較耐用？</h2>
+
+<h3>石英</h3>
+<p>石英是一種人造石，由大約 90-94% 的研磨天然石英晶體與聚合物樹脂黏合而成。此製造過程產生 <strong>高度一致、耐衝擊的表面</strong> 比天然石材更能抵抗碎裂和裂痕。您不會發現隨著時間的推移會成為壓力點的微弱脈紋或自然裂縫。</p>
+
+<p>石英的主要耐用性警告： <strong>耐熱性比花崗岩差</strong>。如果直接暴露在 150°C (300°F) 以上的熱量下，樹脂黏合劑可能會變色或破裂。請務必使用三腳架－切勿將熱鍋直接放在石英上。</p>
+
+<h3>花崗岩</h3>
+<p>花崗岩是地球上最堅硬的天然石材之一，莫氏硬度為 6-7。它能很好地處理熱量——您可以將熱鑄鐵煎鍋直接放在上面而不會損壞。然而， <strong>花崗岩的邊緣和角落可能會碎裂</strong> 如果猛烈撞擊，天然裂縫（寶石中已經存在的髮絲狀裂縫）有時會在壓力下擴展。</p>
+
+<p>花崗岩的品質非常重要。具有緊密晶粒結構的高等級板坯的性能優於可能預先存在微裂紋的廉價進口板坯。購買前務必親自檢查板材。</p>
+
+<h2>溫哥華氣候的防潮性</h2>
+
+<p>溫哥華出了名的潮濕氣候，使得防潮性成為一個真正令人擔憂的問題——不僅對於浴室，而且對於廚房也是如此。濕度、烹飪產生的蒸氣以及每天潮濕的檯面的簡單現實意味著您的材料選擇很重要。</p>
+
+<h3>石英：潮濕環境的贏家</h3>
+<p>石英是 <strong>其製造本質上是無孔的</strong>。液體、細菌和黴菌無法滲透表面。無需密封，如果在合理的時間內擦掉，溢出的咖啡、紅酒或酸性柑橘汁也不會弄髒。對於經常烹飪的溫哥華房主來說，石英的無孔表面是一個顯著的實際優勢。</p>
+
+<h3>花崗岩：透過適當的密封即可管理</h3>
+<p>天然花崗岩是 <strong>微孔</strong> — 它具有微小的孔隙，如果未密封或密封劑磨損，可以吸收液體。在溫哥華的廚房環境（烹飪蒸氣、濕農產品、咖啡、油）中，未密封或密封不足的花崗岩檯面隨著時間的推移可能會沾污或藏匿細菌。</p>
+
+<p>解決方案是定期密封：大多數花崗岩檯面需要每 12-18 個月重新密封一次。這是一個 30 分鐘的 DIY 任務，使用現成的花崗岩密封劑。如果您堅持不懈，花崗岩在廚房中的表現會非常好。如果您是那種無需維護的人，石英是更安全的選擇。</p>
+
+<h2>維護要求</h2>
+
+<h3>石英</h3>
+<ul>
+  <li>日常清潔：溫肥皂水和軟布 - 就這樣</li>
+  <li>從來沒有密封</li>
+  <li>避免刺激性化學物質（漂白劑、烤箱清潔劑），這些化學物質會隨著時間的推移而使表面變暗</li>
+  <li>避免長時間暴露在紫外線下—有些石英顏色在靠近窗戶的陽光直射下會褪色</li>
+</ul>
+
+<h3>花崗岩</h3>
+<ul>
+  <li>日常清潔：溫和的洗碗精和溫水－避免使用醋等酸性清潔劑</li>
+  <li>每年用滲透性花崗岩密封劑密封（$20–$40 在任何五金店）</li>
+  <li>立即吸乾溢出物－尤其是紅酒、咖啡和油</li>
+  <li>如果出現缺口，重新拋光邊緣（專業維修，通常$150–$300）</li>
+</ul>
+
+<h2>外觀風格</h2>
+
+<h3>石英：一致性和多樣性</h3>
+<p>因為石英是製造出來的，所以你得到 <strong>板與板之間的顏色和圖案一致</strong> — 當您需要為大型廚房中島或 L 形檯面使用多塊板並希望它們完美匹配時，這是理想的選擇。顏色範圍非常廣泛：純白色、溫暖的奶油色、引人注目的黑色、混凝土灰色以及越來越令人信服的卡拉卡塔大理石外觀。</p>
+
+<p>代價是石英在某些人看來可能看起來「太完美」。整個板上的圖案是一致的，而不是自然流動的，經驗豐富的石材愛好者有時會發現這沒有天然花崗岩有趣。</p>
+
+<h3>花崗岩：獨特的自然美</h3>
+<p>沒有兩塊完全相同的花崗岩板。自然紋理、水晶圖案和顏色變化意味著您的檯面真正獨一無二。許多溫哥華房主特別選擇花崗岩是因為它的有機特性——光線穿過天然礦物晶體和紋理的方式創造了人造石頭無法完全複製的溫暖和深度。</p>
+
+<p>挑戰：要匹配多個板更加困難。如果您的廚房需要兩塊或三塊石板，則需要在石場仔細選擇石板才能獲得一致的圖案。</p>
+
+<h2>溫哥華市場的轉售價值</h2>
+
+<p>來自大溫哥華地區的房地產數據一致表明 <strong>石英和花崗岩都增加了有意義的轉售價值</strong> 與層壓板或瓷磚檯面相比。在構成溫哥華轉售市場大部分的$800K–$1.5M公寓和聯排別墅部分，買家期望優質的石材檯面。</p>
+
+<p><strong>石英目前在轉售方面略有優勢：</strong> 溫哥華開放日買家一致認為石英石“可立即入住”，無需擔心維護問題。 [房地產經紀人](/en/services/realtor/)經常提到石英廚房的照片效果更好（顏色一致，沒有看起來像照片中染色的自然變化）。</p>
+
+<p><strong>花崗岩在奢侈品領域擁有自己的地位：</strong> 對於$1.5M以上的房屋，具有引人注目的自然紋理的獨特花崗岩實際上可以帶來溢價，因為它標誌著獨特的高端選擇，而不是建築級選擇。</p>
+
+<p>根據我們在本拿比、列治文和高貴林的專案經驗，翻新出售的房主大致會看到 <strong>1.5–2 倍檯面投資回報</strong> 在目前的市場上，無論選擇哪種材料——只要安裝品質高。</p>
+
+<h2>真實專案資料：溫哥華房主的實際選擇</h2>
+
+<p>看看我们在大温哥华地区完成的厨房装修，石英在中档项目中占主导地位（$20,000–$35,000 总厨房预算）。花崗岩往往出現在註重預算的裝修中，房主會在出售中找到優質的板材，或出現在客戶特別想要天然石材特徵的高端項目中。</p>
+
+<p>我們的 <a href="/en/guides/bathroom-renovation-cost-vancouver/">衛浴裝修費用指南</a> 遵循類似的模式－工程表面代表價值，天然石材代表聲望。關鍵見解：您的檯面材料應該補充整體裝修願景，而不是單獨選擇。</p>
+
+<p>例如，我們的高貴林公寓廚房裝修採用了定製石英檯面，特別是因為客戶正在準備出售房屋，一致、乾淨的外觀非常漂亮，吸引了最廣泛的買家。我們的本拿比訂製廚房配有木紋櫥櫃，使用帶有微妙紋理的石英來補充櫥櫃，而不與之競爭。</p>
+
+<h2>您應該選擇哪一個？</h2>
+
+<h3>若符合以下條件，請選擇石英：</h3>
+<ul>
+  <li>您想要零維護檯面（無密封，無需特殊清潔劑）</li>
+  <li>您經常做飯並且希望能夠無壓力地防溢出</li>
+  <li>您正在裝修以出售並希望最大程度地吸引買家</li>
+  <li>您需要多塊板才能完美搭配整個大廚房</li>
+  <li>您喜歡現代、乾淨的美感和一致的圖案</li>
+  <li>您有小孩（抗菌、易於消毒）</li>
+</ul>
+
+<h3>若符合以下條件，請選擇花崗岩：</h3>
+<ul>
+  <li>您想要一個真正獨特的檯面——沒有兩塊完全相同的檯面</li>
+  <li>喜歡煮飯，需要耐熱（可以直接放熱鍋）</li>
+  <li>您對年度密封維護感到滿意</li>
+  <li>您喜歡天然石材的溫暖和特性</li>
+  <li>您的廚房設計始終需要有機、天然的材料</li>
+  <li>您會以具有競爭力的價格找到優質的板材</li>
+</ul>
+
+<h3>底線</h3>
+<p>對於大多數溫哥華房主來說， <strong>石英是更安全、更實用的選擇</strong>。它的價格具有競爭力，無需維護，在溫哥華潮濕的氣候中表現出色，並且具有強大的買家吸引力。如果您想要天然石材的有機美感和耐熱性 - 並且您將致力於每年密封 - 花崗岩是同樣出色的選擇，經受住了時間的考驗。</p>
+
+<p>最好的決定始終是在廚房全面翻新的情況下做出的。我們的團隊幫助客戶思考材料選擇，作為整個設計過程的一部分——檯面、櫥櫃、地板和固定裝置應該作為一個有凝聚力的系統一起工作。</p>
+
+請參閱來自大溫哥華地區房主的[經過驗證的五星級評論](/en/reviews/)。
+
+[關於 Reno Stars](/en/about/) — 總部位於溫哥華的裝修公司，自 2019 年起為大溫哥華地區提供服務。
+
+[查看我們的改造專案組合→](/en/projects/)
+
+<p>準備好探索您的檯面選擇了嗎？我們的 <a href="/en/services/">廚房裝修服務</a> 團隊很樂意引導您了解當前材料的可用性、價格以及最適合您空間的材料。 <a href="/zh-Hant/contact/">獲得免費裝修估價</a> 我們會將樣品帶到您的家中，以便您可以看到不同材料在實際照明條件下的外觀。</p>
+
+<p>不確定您廚房專案的總預算？探索我們的完整系列 <a href="/zh-Hant/blog/">廚房和浴室裝修指南</a> 取得針對溫哥華的定價和規劃建議。</p>
+
+
+
+Metro Vancouver homeowners increasingly include a [heat pump HVAC upgrade](/services/heat-pump-hvac/) in their renovation plans — these systems provide efficient heating and cooling year-round, and qualify for BC Hydro and CleanBC rebate programs.
+
+
+When renovation projects add new appliances, EV charging stations, or smart home systems, a [critical load panel upgrade](/services/critical-load-panel/) is often needed to safely handle the increased electrical load.
+
+
+For homeowners planning long-term or accommodating family members with mobility needs, [accessible bathroom renovations](/services/accessible-bathroom/) — including grab bars, curbless showers, and slip-resistant flooring — are a smart addition to any major renovation project.
+
+
+If your Metro Vancouver home was built before 1995, it may have poly-B pipes. Our [poly-B pipe replacement service](/services/poly-b-replacement/) addresses this common issue before it leads to costly water damage — something worth considering during any major renovation.
+
+
+If you live in a strata property (condo or townhouse), review BC''s [strata renovation rules](/blog/strata-renovation-rules-vancouver/) before starting work — many projects require strata council approval and must follow specific noise, hour, and contractor requirements.
+## Frequently Asked Questions
+
+### Is quartz or granite better for Vancouver kitchens?
+
+Both are excellent choices, but for Metro Vancouver''s high-humidity coastal climate, quartz has practical advantages. Quartz is non-porous (no sealing required), highly stain-resistant, and uniform in pattern — popular in Vancouver''s contemporary and West Coast modern kitchens. Granite is natural stone with unique veining, requires annual sealing, and is slightly more heat-resistant at the surface. In Vancouver''s 2026 market, quartz outsells granite approximately 3:1 for kitchen countertops. For bathrooms, both perform similarly; quartz is typically easier to maintain.
+
+### How much do quartz countertops cost in Vancouver in 2026?
+
+Quartz countertop installation in Metro Vancouver costs $85–$200+ per sq ft installed, depending on slab thickness (2cm vs. 3cm), brand (entry-level vs. Silestone/Caesarstone), and edge profile complexity. A typical 25 sq ft kitchen countertop (standard galley or L-shape) costs $2,125–$5,000 installed. Island countertops add $800–$2,500. Premium brands and custom colours run higher. Undermount sink cutout adds $200–$400. Reno Stars sources from multiple local suppliers and includes standard installation and removal of existing counters in our quotes.
+
+### How much do granite countertops cost in Vancouver in 2026?
+
+Granite countertop installation in Metro Vancouver runs $75–$175 per sq ft installed for standard imported granite; premium slabs (Brazilian, Italian, or rare colours) run $150–$280+/sq ft. A 25 sq ft kitchen costs $1,875–$4,375 for standard granite. Natural variation means pricing depends heavily on the specific slab — you choose at the slab yard. Sealing is required annually ($50–$150 DIY or included in some contractor warranties). Reno Stars visits slab yards with clients on larger projects to select the exact slab.
+
+### How long does quartz or granite countertop installation take?
+
+Countertop replacement is a 2-step process: (1) template visit after cabinets are in (1 hour, 1 day appointment); (2) fabrication and installation, typically 7–14 days after template. Installation day: old counters out in the morning, new counters in by afternoon (3–6 hours for a standard kitchen). You''ll be without a kitchen sink for 1–2 days while caulk cures. Backsplash tile installation follows countertop install by 24–48 hours. In Reno Stars kitchen projects, countertop templating is scheduled as soon as upper cabinets are hung — no wasted time.
+
+### Can quartz or granite crack or chip in Vancouver homes?
+
+Quartz is more chip-resistant than granite at edges (engineered composite vs. natural stone). Neither is indestructible — both can crack from thermal shock (e.g., setting a pot directly from the stove), sharp impact at edges, or improper support during transport. Granite is more porous and can absorb stains (red wine, oil) if not sealed. In practice, both materials last 20–30+ years with normal care. Reno Stars installs with full support brackets on overhangs and uses silicone joins at sink cutouts to minimize stress points. Our 3-year workmanship warranty covers installation defects.
+
+### How do I maintain quartz vs granite countertops in a Vancouver kitchen?
+
+Maintenance comparison for Vancouver kitchens: Quartz countertops are non-porous and require no sealing — clean with soap and water or a mild non-abrasive cleaner. Avoid prolonged exposure to direct UV (can fade) and don''t place hot pots directly on the surface. Granite countertops are porous and require sealing every 1–3 years (test by applying water: if it beads, no sealing needed; if it absorbs, seal it). A professional granite sealing application costs $150–$300. Both materials handle Vancouver''s climate well — the wet weather doesn''t affect sealed stone surfaces indoors. For the maintenance-averse homeowner, quartz is the simpler long-term choice.
+
+Browse our [renovation design gallery](/en/design/) for real project photos.
+
+Also see: [Vancouver Kitchen Renovation](/zh-Hant/blog/kitchen-renovation-vancouver-bc-2026/) | [Kitchen Cabinet Colours Vancouver](/zh-Hant/blog/kitchen-cabinet-colour-timeless-vancouver/) | [Bathroom Renovation Vancouver](/en/services/bathroom/) | [Whole-House Renovation Vancouver](/en/services/whole-house/) | [Basement Renovation Vancouver](/en/services/basement/)
+ | [How to Choose a Contractor](/zh-Hant/blog/how-to-choose-renovation-contractor-vancouver/) | [BC Renovation Permits Guide](/zh-Hant/blog/renovation-permits-bc-guide/) | [Renovation Timeline Guide](/zh-Hant/blog/renovation-timeline-how-long-does-each-project-take/) | [Vancouver Renovation Cost Guide 2026](/zh-Hant/blog/renovation-cost-vancouver-2026-complete-guide/) | [How to Finance Your Vancouver Renovation (HELOC Guide)](/zh-Hant/blog/renovation-financing-vancouver-heloc/) | [Renovation Financing Options](/en/financing/)
+
+## See Also — Renovation Cost Guides
+
+- [Kitchen Renovation Cost Vancouver](/en/guides/kitchen-renovation-cost-vancouver/) — average $15K–$80K in Metro Vancouver
+- [Basement Renovation Cost Vancouver](/en/guides/basement-renovation-cost-vancouver/) — average $20K–$80K
+- [Whole House Renovation Cost Vancouver](/en/guides/whole-house-renovation-cost-vancouver/) — average $50K–$300K+
+- [Cabinet Refinishing Cost Vancouver](/en/guides/cabinet-refinishing-cost-vancouver/) | [Cabinet Refinishing Vancouver](/en/services/cabinet/vancouver/) — from $4K for refinishing';
 UPDATE blog_posts SET localizations = coalesce(localizations, '{}'::jsonb) || jsonb_build_object('seoKeywordsZhHant', '列治文廚房翻新, 列治文廚房翻新費用, 列治文鍋灶廚房, 列治文Strata翻新'::text) WHERE id = '34a9c573-8881-4394-a4c2-2e8ebac03ffb' AND NOT (coalesce(localizations, '{}'::jsonb) ? 'seoKeywordsZhHant');
 UPDATE blog_posts SET localizations = coalesce(localizations, '{}'::jsonb) || jsonb_build_object('contentZhHant', '<p>溫哥華每年降雨量超過1400毫米然而夏季溫暖露台需求旺盛投資戶外生活空間的業主從5月到10月都能充分使用這些空間如果您計劃在2026年為您的溫哥華房產添加甲板露台或有頂戶外區域本指南涵蓋您需要了解的費用許可要求和裝修全程流程溫哥華每年降雨量超過1400毫米然而夏季溫暖露台需求旺盛投資戶外生活空間的業主從5月到10月都能充分使用這些空間如果您計劃在2026年為您的溫哥華房產添加甲板露台或有頂戶外區域本指南涵蓋您需要了解的費用許可要求和裝修全程流程溫哥華每年降雨量超過1400毫米然而夏季溫暖露台需求旺盛投資戶外生活空間的業主從5月到10月都能充分使用這些空間如果您計劃在2026年為您的溫哥華房產添加甲板露台或有頂戶外區域本指南涵蓋您需要了解的費用許可要求和裝修全程流程溫哥華每年降雨量超過1400毫米然而夏季溫暖露台需求旺盛投資戶外生活空間的業主從5月到10月都能充分使用這些空間如果您計劃在2026年為您的溫哥華房產添加甲板露台或有頂戶外區域本指南涵蓋您需要了解的費用許可要求和裝修全程流程溫哥華每年降雨量超過1400毫米然而夏季溫暖露台需求旺盛投資戶外生活空間的業主從5月到10月都能充分使用這些空間如果您計劃在2026年為您的溫哥華房產添加甲板露台或有頂戶外區域本指南涵蓋您需要了解的費用許可要求和裝修全程流程溫哥華每年降雨量超過1400毫米然而夏季溫暖露台需求旺盛投資戶外生活空間的業主從5月到10月都能充分使用這些空間如果您計劃在2026年為您的溫哥華房產添加甲板露台或有頂戶外區域本指南涵蓋您需要了解的費用許可要求和裝修全程流程溫哥華每年降雨量超過1400毫米然而夏季溫暖露台需求旺盛投資戶外生活空間的業主從5月到10月都能充分使用這些空間如果您計劃在2026年為您的溫哥華房產添加甲板露台或有頂戶外區域本指南涵蓋您需要了解的費用許可要求和裝修全程流程溫哥華每年降雨量超過1400毫米然而夏季溫暖露台需求旺盛投資戶外生活空間的業主從5月到10月都能充分使用這些空間如果您計劃在2026年為您的溫哥華房產添加甲板露台或有頂戶外區域本指南涵蓋您需要了解的費用許可要求和裝修全程流程溫哥華每年降雨量超過1400毫米然而夏季溫暖露台需求旺盛投資戶外生活空間的業主從5月到10月都能充分使用這些空間如果您計劃在2026年為您的溫哥華房產添加甲板露台或有頂戶外區域本指南涵蓋您需要了解的費用許可要求和裝修全程流程溫哥華每年降雨量超過1400毫米然而夏季溫暖露台需求旺盛投資戶外生活空間的業主從5月到10月都能充分使用這些空間如果您計劃在2026年為您的溫哥華房產添加甲板露台或有頂戶外區域本指南涵蓋您需要了解的費用許可要求和裝修全程流程</p>'::text) WHERE id = '7278c82a-85f6-460d-a2da-e8244d22ad97' AND NOT (coalesce(localizations, '{}'::jsonb) ? 'contentZhHant');
 UPDATE blog_posts SET localizations = coalesce(localizations, '{}'::jsonb) || jsonb_build_object('excerptZhHant', '測試摘要。'::text) WHERE id = '7278c82a-85f6-460d-a2da-e8244d22ad97' AND NOT (coalesce(localizations, '{}'::jsonb) ? 'excerptZhHant');
+UPDATE blog_posts SET localizations = coalesce(localizations, '{}'::jsonb) || jsonb_build_object('focusKeywordZhHant', '測試'::text) WHERE id = '7278c82a-85f6-460d-a2da-e8244d22ad97' AND NOT (coalesce(localizations, '{}'::jsonb) ? 'focusKeywordZhHant');
 UPDATE blog_posts SET localizations = coalesce(localizations, '{}'::jsonb) || jsonb_build_object('metaDescriptionZhHant', '測試。'::text) WHERE id = '7278c82a-85f6-460d-a2da-e8244d22ad97' AND NOT (coalesce(localizations, '{}'::jsonb) ? 'metaDescriptionZhHant');
 UPDATE blog_posts SET localizations = coalesce(localizations, '{}'::jsonb) || jsonb_build_object('metaTitleZhHant', '測試 | Reno Stars'::text) WHERE id = '7278c82a-85f6-460d-a2da-e8244d22ad97' AND NOT (coalesce(localizations, '{}'::jsonb) ? 'metaTitleZhHant');
 UPDATE blog_posts SET localizations = coalesce(localizations, '{}'::jsonb) || jsonb_build_object('titleZhHant', '測試簡單帖子2026'::text) WHERE id = '7278c82a-85f6-460d-a2da-e8244d22ad97' AND NOT (coalesce(localizations, '{}'::jsonb) ? 'titleZhHant');
@@ -759,6 +1765,113 @@ UPDATE blog_posts SET localizations = coalesce(localizations, '{}'::jsonb) || js
 UPDATE blog_posts SET localizations = coalesce(localizations, '{}'::jsonb) || jsonb_build_object('metaTitleZhHant', '溫哥華戶外空間裝修2026 -' || '- 甲板、露台、後院改造完全指南 | Reno Stars'::text) WHERE id = '247e6fde-08dc-4285-b5c7-bbe236069047' AND NOT (coalesce(localizations, '{}'::jsonb) ? 'metaTitleZhHant');
 UPDATE blog_posts SET localizations = coalesce(localizations, '{}'::jsonb) || jsonb_build_object('titleZhHant', '溫哥華戶外空間裝修完整指南 -' || '- 露台、甲板、後院改造與許可申請 (2026)'::text) WHERE id = '247e6fde-08dc-4285-b5c7-bbe236069047' AND NOT (coalesce(localizations, '{}'::jsonb) ? 'titleZhHant');
 UPDATE blog_posts SET localizations = jsonb_set(localizations, ARRAY['metaDescriptionZhHant'], to_jsonb('蘭利的現代廚房裝修：白色搖床櫃、黃銅五金件、石英檯面。之前/之後的照片和實際項目成本。免費報價。'::text)) WHERE id = 'e5b6933a-6ea4-4541-95a1-32b09cc2db17' AND localizations->>'metaDescriptionZhHant' = '兰利的现代厨房装修：白色摇床柜、黄铜五金件、石英檯面。之前/之後的照片和實際項目成本。免費報價。';
+UPDATE blog_posts SET localizations = jsonb_set(localizations, ARRAY['contentZhHant'], to_jsonb('<h2>介紹</h2><p>In the bustling city of [Vancouver](/en/areas/vancouver/), BC, a [kitchen renovation](/en/services/kitchen/) | [Pre-Sale Renovation Advice](/en/services/realtor/) | [Cabinet Refinishing](/en/services/cabinet/) can transform not just a home, but the way a family interacts with their space. At Reno Stars, we recently completed a comprehensive kitchen renovation that showcases our commitment to quality and innovation.</p><h2>項目概況</h2><p>此廚房改造工程涉及對現有空間的徹底檢修。我們團隊的任務是安裝預製和定制櫥櫃、實施指拉設計、優化空間和重新粉刷櫥櫃。此外，我們還處理電氣、管道和通風工作，以及拆除、燈光優化、地板、踢腳板、乾牆維修、油漆、爆米花清除、牆壁更換，並確保項目通過城市檢查。</p><h2>挑戰</h2><p>每個翻新工程都會面臨一系列挑戰，這個廚房也不例外。主要挑戰包括優化有限的空間、將現代設計元素與現有結構結合，並確保所有工作符合嚴格的城市檢查標準。</p><h2>我們的解決方案</h2><p>為了解決空間限制，我們的設計團隊結合使用了預製櫃和客製化櫃，在不影響風格的情況下實現最大的儲存空間。指拉設計增添了時尚、現代的感覺，而櫃體重新噴漆則使整體外觀煥然一新。我們熟練的電工和水管工確保所有系統都更新且高效，我們的團隊精心處理所有結構變更，以滿足城市檢查要求。</p><h2>之前和之後</h2><p>我們的改造將廚房變成了一個現代化的實用空間。下面的一些圖片展示了令人驚嘆的結果：</p><img src="https://pub-b88db8c50fd64a9a87f60a4486a4a488.r2.dev/uploads/admin/social-ready-after-1-mmwclaj5.jpg" alt="Kitchen Renovation - After 1"><img src="https://pub-b88db8c50fd64a9a87f60a4486a4a488.r2.dev/uploads/admin/social-ready-after-2-mmwclaj6.jpg" alt="Kitchen Renovation - After 2"><img src="https://pub-b88db8c50fd64a9a87f60a4486a4a488.r2.dev/uploads/admin/social-ready-after-3-mmwclaj6.jpg" alt="Kitchen Renovation - After 3"><img src="https://pub-b88db8c50fd64a9a87f60a4486a4a488.r2.dev/uploads/admin/social-ready-after-4-mmwclaj6.jpg" alt="Kitchen Renovation - After 4"><img src="https://pub-b88db8c50fd64a9a87f60a4486a4a488.r2.dev/uploads/admin/social-ready-after-5-mmwclaj7.jpg" alt="Kitchen Renovation - After 5"><img src="https://pub-b88db8c50fd64a9a87f60a4486a4a488.r2.dev/uploads/admin/social-ready-after-6-mmwclaj7.jpg" alt="Kitchen Renovation - After 6"><h2>結果和要點</h2><p>最終的結果是一個裝修精美的廚房，超越了客戶的期望。該空間現在更加實用、美觀，並符合所有現代標準。該專案強調了詳細規劃和執行對於成功改造的重要性。我們的客戶對結果感到非常興奮，注意到現代設計和功能的無縫整合。</p>
+
+
+
+Metro Vancouver homeowners increasingly include a [heat pump HVAC upgrade](/services/heat-pump-hvac/) in their renovation plans — these systems provide efficient heating and cooling year-round, and qualify for BC Hydro and CleanBC rebate programs.
+
+
+For homeowners planning long-term or accommodating family members with mobility needs, [accessible bathroom renovations](/services/accessible-bathroom/) — including grab bars, curbless showers, and slip-resistant flooring — are a smart addition to any major renovation project.
+
+
+If you live in a strata property (condo or townhouse), review BC''s [strata renovation rules](/blog/strata-renovation-rules-vancouver/) before starting work — many projects require strata council approval and must follow specific noise, hour, and contractor requirements.
+## Frequently Asked Questions
+
+### What is typically included in a complete Vancouver kitchen renovation?
+A complete Vancouver kitchen renovation covers: demolition of existing cabinetry and surfaces, new cabinet installation (stock, semi-custom, or custom), countertop installation (quartz, granite, or butcher block), tile backsplash, new sink and faucet, updated lighting (pot lights and pendants), appliance coordination, and finishing details including hardware and paint. The scope may also include plumbing modifications, electrical upgrades for new circuits, and range hood venting installation — all requiring permits. Our [Critical Load Panel Installation](/en/services/critical-load-panel/) service upgrades your home electrical capacity for modern renovation demands.
+
+### How much does a complete [kitchen renovation cost](/en/guides/kitchen-renovation-cost-vancouver/) in Vancouver, BC?
+A complete kitchen renovation in Vancouver (full scope: new cabinets, countertops, backsplash, sink, lighting) typically costs $22,000–$55,000 at mid-range finishes. Budget renovations using stock IKEA cabinetry and laminate countertops start around $12,000–$18,000. High-end projects with custom cabinetry, stone countertops, premium appliances, and structural modifications can exceed $80,000. The primary budget variable is cabinetry — cabinets typically represent 40–50% of the total kitchen renovation budget.
+
+### How does a kitchen renovation improve the way a family uses their home?
+A well-planned Vancouver kitchen renovation transforms how families interact with their space: an island adds prep space and casual seating, creating a natural gathering point; improved storage reduces counter clutter; better task lighting makes cooking safer and more enjoyable; and a more functional layout reduces the frustration of cooking in a poorly designed space. Renovation clients consistently report that kitchen improvements have the most direct daily life impact of any home renovation category.
+
+### What is the timeline for a complete kitchen renovation in Vancouver?
+A complete Vancouver kitchen renovation takes 5–10 weeks of active construction. Custom cabinetry (the critical path) takes 6–10 weeks from order to delivery — cabinets must be ordered before any demolition begins. City of Vancouver permit processing for kitchen plumbing and electrical changes typically takes 4–8 weeks. Older Metro Vancouver homes may also need our [Poly-B Pipe Replacement](/en/services/poly-b-replacement/) service to eliminate unsafe plastic piping. Total project timeline from contract signing to a functioning kitchen: 3–5 months when custom cabinets are involved, 6–10 weeks for stock cabinet projects.
+
+### What should I expect during the construction phase of a Vancouver kitchen renovation?
+During the construction phase, your kitchen will be completely non-functional for 3–6 weeks (no sink, no cooking appliances, likely no power to parts of the kitchen). Set up a temporary kitchen — countertop appliances, portable induction cooktop, or arrange for alternative dining. Expect dust (demo generates significant drywall and tile dust), trade traffic (plumber, electrician, tile setter, cabinet installer all at different phases), and some inconvenience to adjacent living areas. A good project manager coordinates the phase sequence to minimize total downtime.
+
+Also see: [Kitchen Renovation Vancouver](/en/services/kitchen/vancouver/) | [Vancouver kitchen renovation case study #2](/zh-Hant/blog/vancouver-kitchen-renovation-case-study-2/) | [Kitchen design trends Vancouver 2026](/zh-Hant/blog/kitchen-design-trends-vancouver-2026/) | [Bathroom Renovation Vancouver](/en/services/bathroom/) | [Whole-House Renovation Vancouver](/en/services/whole-house/) | [Basement Renovation Vancouver](/en/services/basement/vancouver/) | [How to Choose a Contractor](/zh-Hant/blog/how-to-choose-renovation-contractor-vancouver/) | [Renovation Timeline Guide](/zh-Hant/blog/renovation-timeline-how-long-does-each-project-take/) | [Vancouver Renovation Cost Guide 2026](/zh-Hant/blog/renovation-cost-vancouver-2026-complete-guide/) | [BC Renovation Permits Guide](/zh-Hant/blog/renovation-permits-bc-guide/)
+
+### Why is popcorn ceiling removal included in a complete Vancouver kitchen renovation?
+Popcorn ceiling removal is a standard component of a complete Vancouver kitchen renovation because the textured finish dates the space significantly and is visually inconsistent with the smooth, contemporary aesthetic of modern cabinetry and lighting. In Vancouver homes built before 1990, popcorn ceilings may contain asbestos — requiring a professional assessment before removal. Post-1990 popcorn ceilings use non-asbestos texture and can be removed by scraping, skimming, and repainting as part of the renovation scope. New smooth ceilings paired with recessed pot lights create the contemporary kitchen look that photographs well for listings and impresses buyers at resale — making popcorn removal one of the higher-return cosmetic steps in a complete kitchen overhaul.
+
+
+See our [verified five-star reviews](/en/reviews/) from Metro Vancouver homeowners.
+
+[About Reno Stars](/en/about/) — Vancouver-based renovation company serving Metro Vancouver since 2019.
+
+[View our renovation project portfolio →](/en/projects/)
+
+Like what you see? [Request a free consultation →](/zh-Hant/contact/)
+
+Also see: [溫哥華廚房裝修成本指南](/zh-Hant/blog/vancouver-kitchen-renovation-cost-zh/) | [Vancouver Kitchen Renovation](/zh-Hant/blog/kitchen-renovation-vancouver-bc-2026/) | [Vancouver Bathroom Renovation](/zh-Hant/blog/average-bathroom-renovation-cost-vancouver/) | [Vancouver Home Renovation Guide](/zh-Hant/blog/vancouver-home-renovation-guide-2026/) | [How to Finance Your Vancouver Renovation (HELOC Guide)](/zh-Hant/blog/renovation-financing-vancouver-heloc/) | [Renovation Financing Options](/en/financing/) | [Kitchen vs Bathroom Vancouver](/zh-Hant/blog/kitchen-vs-bathroom-which-renovation-first-vancouver/)
+
+| [Cabinet Refinishing &amp; Resurfacing Cost Guide](/en/guides/cabinet-refinishing-cost-vancouver/)
+
+| [Bathroom Renovation Cost Guide for Metro Vancouver](/en/guides/bathroom-renovation-cost-vancouver/)
+
+## See Also — Renovation Cost Guides
+
+- [Basement Renovation Cost Vancouver](/en/guides/basement-renovation-cost-vancouver/) — average $20K–$80K
+- [Bathroom Renovation Cost Vancouver](/en/guides/bathroom-renovation-cost-vancouver/) — average $10K-$60K+
+- [Whole House Renovation Cost Vancouver](/en/guides/whole-house-renovation-cost-vancouver/) — average $50K–$300K+
+- [Cabinet Refinishing Cost Vancouver](/en/guides/cabinet-refinishing-cost-vancouver/) — from $4K for refinishing'::text)) WHERE id = '030bdccc-bba5-40bb-8e80-97d35f60aee2' AND localizations->>'contentZhHant' = '<h2>介紹</h2><p>In the bustling city of [Vancouver](/en/areas/vancouver/), BC, a [kitchen renovation](/en/services/kitchen/) | [Pre-Sale Renovation Advice](/en/services/realtor/) | [Cabinet Refinishing](/en/services/cabinet/) can transform not just a home, but the way a family interacts with their space. At Reno Stars, we recently completed a comprehensive kitchen renovation that showcases our commitment to quality and innovation.</p><h2>項目概況</h2><p>此廚房改造工程涉及對現有空間的徹底檢修。我們團隊的任務是安裝預製和定制櫥櫃、實施指拉設計、優化空間和重新粉刷櫥櫃。此外，我們還處理電氣、管道和通風工作，以及拆除、燈光優化、地板、踢腳板、乾牆維修、油漆、爆米花清除、牆壁更換，並確保項目通過城市檢查。</p><h2>挑戰</h2><p>每個翻新工程都會面臨一系列挑戰，這個廚房也不例外。主要挑戰包括優化有限的空間、將現代設計元素與現有結構結合，並確保所有工作符合嚴格的城市檢查標準。</p><h2>我們的解決方案</h2><p>為了解決空間限制，我們的設計團隊結合使用了預製櫃和客製化櫃，在不影響風格的情況下實現最大的儲存空間。指拉設計增添了時尚、現代的感覺，而櫃體重新噴漆則使整體外觀煥然一新。我們熟練的電工和水管工確保所有系統都更新且高效，我們的團隊精心處理所有結構變更，以滿足城市檢查要求。</p><h2>之前和之後</h2><p>我們的改造將廚房變成了一個現代化的實用空間。下面的一些圖片展示了令人驚嘆的結果：</p><img src="https://pub-b88db8c50fd64a9a87f60a4486a4a488.r2.dev/uploads/admin/social-ready-after-1-mmwclaj5.jpg" alt="Kitchen Renovation - After 1"><img src="https://pub-b88db8c50fd64a9a87f60a4486a4a488.r2.dev/uploads/admin/social-ready-after-2-mmwclaj6.jpg" alt="Kitchen Renovation - After 2"><img src="https://pub-b88db8c50fd64a9a87f60a4486a4a488.r2.dev/uploads/admin/social-ready-after-3-mmwclaj6.jpg" alt="Kitchen Renovation - After 3"><img src="https://pub-b88db8c50fd64a9a87f60a4486a4a488.r2.dev/uploads/admin/social-ready-after-4-mmwclaj6.jpg" alt="Kitchen Renovation - After 4"><img src="https://pub-b88db8c50fd64a9a87f60a4486a4a488.r2.dev/uploads/admin/social-ready-after-5-mmwclaj7.jpg" alt="Kitchen Renovation - After 5"><img src="https://pub-b88db8c50fd64a9a87f60a4486a4a488.r2.dev/uploads/admin/social-ready-after-6-mmwclaj7.jpg" alt="Kitchen Renovation - After 6"><h2>結果和要點</h2><p>最終的結果是一個裝修精美的廚房，超越了客戶的期望。該空間現在更加實用、美觀，並符合所有現代標準。該專案強調了詳細規劃和執行對於成功改造的重要性。我們的客戶對結果感到非常興奮，注意到現代設計和功能的無縫整合。</p>
+
+
+
+Metro Vancouver homeowners increasingly include a [heat pump HVAC upgrade](/services/heat-pump-hvac/) in their renovation plans — these systems provide efficient heating and cooling year-round, and qualify for BC Hydro and CleanBC rebate programs.
+
+
+For homeowners planning long-term or accommodating family members with mobility needs, [accessible bathroom renovations](/services/accessible-bathroom/) — including grab bars, curbless showers, and slip-resistant flooring — are a smart addition to any major renovation project.
+
+
+If you live in a strata property (condo or townhouse), review BC''s [strata renovation rules](/blog/strata-renovation-rules-vancouver/) before starting work — many projects require strata council approval and must follow specific noise, hour, and contractor requirements.
+## Frequently Asked Questions
+
+### What is typically included in a complete Vancouver kitchen renovation?
+A complete Vancouver kitchen renovation covers: demolition of existing cabinetry and surfaces, new cabinet installation (stock, semi-custom, or custom), countertop installation (quartz, granite, or butcher block), tile backsplash, new sink and faucet, updated lighting (pot lights and pendants), appliance coordination, and finishing details including hardware and paint. The scope may also include plumbing modifications, electrical upgrades for new circuits, and range hood venting installation — all requiring permits. Our [Critical Load Panel Installation](/en/services/critical-load-panel/) service upgrades your home electrical capacity for modern renovation demands.
+
+### How much does a complete [kitchen renovation cost](/en/guides/kitchen-renovation-cost-vancouver/) in Vancouver, BC?
+A complete kitchen renovation in Vancouver (full scope: new cabinets, countertops, backsplash, sink, lighting) typically costs $22,000–$55,000 at mid-range finishes. Budget renovations using stock IKEA cabinetry and laminate countertops start around $12,000–$18,000. High-end projects with custom cabinetry, stone countertops, premium appliances, and structural modifications can exceed $80,000. The primary budget variable is cabinetry — cabinets typically represent 40–50% of the total kitchen renovation budget.
+
+### How does a kitchen renovation improve the way a family uses their home?
+A well-planned Vancouver kitchen renovation transforms how families interact with their space: an island adds prep space and casual seating, creating a natural gathering point; improved storage reduces counter clutter; better task lighting makes cooking safer and more enjoyable; and a more functional layout reduces the frustration of cooking in a poorly designed space. Renovation clients consistently report that kitchen improvements have the most direct daily life impact of any home renovation category.
+
+### What is the timeline for a complete kitchen renovation in Vancouver?
+A complete Vancouver kitchen renovation takes 5–10 weeks of active construction. Custom cabinetry (the critical path) takes 6–10 weeks from order to delivery — cabinets must be ordered before any demolition begins. City of Vancouver permit processing for kitchen plumbing and electrical changes typically takes 4–8 weeks. Older Metro Vancouver homes may also need our [Poly-B Pipe Replacement](/en/services/poly-b-replacement/) service to eliminate unsafe plastic piping. Total project timeline from contract signing to a functioning kitchen: 3–5 months when custom cabinets are involved, 6–10 weeks for stock cabinet projects.
+
+### What should I expect during the construction phase of a Vancouver kitchen renovation?
+During the construction phase, your kitchen will be completely non-functional for 3–6 weeks (no sink, no cooking appliances, likely no power to parts of the kitchen). Set up a temporary kitchen — countertop appliances, portable induction cooktop, or arrange for alternative dining. Expect dust (demo generates significant drywall and tile dust), trade traffic (plumber, electrician, tile setter, cabinet installer all at different phases), and some inconvenience to adjacent living areas. A good project manager coordinates the phase sequence to minimize total downtime.
+
+Also see: [Kitchen Renovation Vancouver](/en/services/kitchen/vancouver/) | [Vancouver kitchen renovation case study #2](/zh-Hant/blog/vancouver-kitchen-renovation-case-study-2/) | [Kitchen design trends Vancouver 2026](/zh-Hant/blog/kitchen-design-trends-vancouver-2026/) | [Bathroom Renovation Vancouver](/en/services/bathroom/) | [Whole-House Renovation Vancouver](/en/services/whole-house/) | [Basement Renovation Vancouver](/en/services/basement/vancouver/) | [How to Choose a Contractor](/zh-Hant/blog/how-to-choose-renovation-contractor-vancouver/) | [Renovation Timeline Guide](/zh-Hant/blog/renovation-timeline-how-long-does-each-project-take/) | [Vancouver Renovation Cost Guide 2026](/zh-Hant/blog/renovation-cost-vancouver-2026-complete-guide/) | [BC Renovation Permits Guide](/zh-Hant/blog/renovation-permits-bc-guide/)
+
+### Why is popcorn ceiling removal included in a complete Vancouver kitchen renovation?
+Popcorn ceiling removal is a standard component of a complete Vancouver kitchen renovation because the textured finish dates the space significantly and is visually inconsistent with the smooth, contemporary aesthetic of modern cabinetry and lighting. In Vancouver homes built before 1990, popcorn ceilings may contain asbestos — requiring a professional assessment before removal. Post-1990 popcorn ceilings use non-asbestos texture and can be removed by scraping, skimming, and repainting as part of the renovation scope. New smooth ceilings paired with recessed pot lights create the contemporary kitchen look that photographs well for listings and impresses buyers at resale — making popcorn removal one of the higher-return cosmetic steps in a complete kitchen overhaul.
+
+
+See our [verified five-star reviews](/en/reviews/) from Metro Vancouver homeowners.
+
+[About Reno Stars](/en/about/) — Vancouver-based renovation company serving Metro Vancouver since 2019.
+
+[View our renovation project portfolio →](/en/projects/)
+
+Like what you see? [Request a free consultation →](/zh-Hant/contact/)
+
+Also see: [温哥华厨房装修成本指南](/zh-Hant/blog/vancouver-kitchen-renovation-cost-zh/) | [Vancouver Kitchen Renovation](/zh-Hant/blog/kitchen-renovation-vancouver-bc-2026/) | [Vancouver Bathroom Renovation](/zh-Hant/blog/average-bathroom-renovation-cost-vancouver/) | [Vancouver Home Renovation Guide](/zh-Hant/blog/vancouver-home-renovation-guide-2026/) | [How to Finance Your Vancouver Renovation (HELOC Guide)](/zh-Hant/blog/renovation-financing-vancouver-heloc/) | [Renovation Financing Options](/en/financing/) | [Kitchen vs Bathroom Vancouver](/zh-Hant/blog/kitchen-vs-bathroom-which-renovation-first-vancouver/)
+
+| [Cabinet Refinishing &amp; Resurfacing Cost Guide](/en/guides/cabinet-refinishing-cost-vancouver/)
+
+| [Bathroom Renovation Cost Guide for Metro Vancouver](/en/guides/bathroom-renovation-cost-vancouver/)
+
+## See Also — Renovation Cost Guides
+
+- [Basement Renovation Cost Vancouver](/en/guides/basement-renovation-cost-vancouver/) — average $20K–$80K
+- [Bathroom Renovation Cost Vancouver](/en/guides/bathroom-renovation-cost-vancouver/) — average $10K-$60K+
+- [Whole House Renovation Cost Vancouver](/en/guides/whole-house-renovation-cost-vancouver/) — average $50K–$300K+
+- [Cabinet Refinishing Cost Vancouver](/en/guides/cabinet-refinishing-cost-vancouver/) — from $4K for refinishing';
 UPDATE blog_posts SET localizations = jsonb_set(localizations, ARRAY['metaDescriptionZhHant'], to_jsonb('溫哥華開放式廚房裝修：定製櫥櫃、石英檯面、櫥櫃下照明和廚房島。免費報價。'::text)) WHERE id = '030bdccc-bba5-40bb-8e80-97d35f60aee2' AND localizations->>'metaDescriptionZhHant' = '温哥华开放式厨房装修：定制橱柜、石英檯面、橱柜下照明和厨房岛。免費報價。';
 UPDATE blog_posts SET localizations = coalesce(localizations, '{}'::jsonb) || jsonb_build_object('contentZhHant', '<p>溫哥華每年降雨量超過1,400毫米——然而夏季溫暖，露台需求旺盛，投資戶外生活空間的業主從5月到10月都能充分使用這些空間。如果您計劃在2026年為您的溫哥華房產添加甲板、露台或有頂戶外區域，本指南涵蓋您需要了解的費用、許可要求和裝修全程流程。</p><p>Reno Stars已在整個大溫哥華地區完成甲板和戶外空間裝修，包括溫哥華、北溫哥華、列治文和本拿比。本文基於我們的實際項目經驗和當前大溫哥華許可要求。</p><h2>什麼是戶外生活空間裝修？</h2><p>戶外生活空間裝修將閒置的後院或露台轉變為功能性生活空間。常見項目類型包括使用連鎖磚或混凝土的地面露台、雪松或複合材料的升高甲板、帶固定頂棚或伸縮遮陽篷的有頂結構，以及跟隨坡地地形的多層甲板。</p><p>在2026年，溫哥華最受歡迎的組合是壓力處理雪松或複合甲板，配備集成LED照明和天然氣管道，用於戶外廚房或heater — 將可用季節在夏季首尾各延長六至八週。</p><h2>2026年溫哥華戶外空間裝修費用</h2><p>溫哥華的甲板和露台費用取決於材料、高度以及結構是否需要工程基腳。以下是典型的全包成本，包括材料、人工、許可費和GST。</p><table><thead><tr><th>項目類型</th><th>每平方英尺成本（安裝）</th><th>典型200平方英尺項目</th></tr></thead><tbody><tr><td>地面雪松甲板</td><td>$45 到 $75 / 平方英尺</td><td>$9,000 到 $15,000</td></tr><tr><td>升高雪松甲板（最高5英尺）</td><td>$65 到 $110 / 平方英尺</td><td>$13,000 到 $22,000</td></tr><tr><td>複合甲板（地面層）</td><td>$65 到 $120 / 平方英尺</td><td>$13,000 到 $24,000</td></tr><tr><td>升高複合甲板</td><td>$85 到 $150 / 平方英尺</td><td>$17,000 到 $30,000</td></tr><tr><td>連鎖磚露台</td><td>$18 到 $35 / 平方英尺</td><td>$3,600 到 $7,000</td></tr><tr><td>混凝土露台</td><td>$14 到 $24 / 平方英尺</td><td>$2,800 到 $4,800</td></tr><tr><td>有頂結構/涼棚</td><td>$3,000 到 $9,000 固定</td><td>按尺寸</td></tr><tr><td>升高甲板工程費</td><td>$1,500 到 $3,000 固定</td><td>按項目</td></tr></tbody></table><p>以上費用包括溫哥華地區人工費（木工$75到$110/小時）、材料費、許可費和5% GST。現場準備另加$1,500到$4,000。</p><h2>溫哥華甲板需要許可嗎？</h2><p>大溫哥華戶外結構的許可要求取決於市政府和結構的高度或尺寸。</p><ul><li><strong>溫哥華：</strong>超過10平方米或步行表面高於竣工地面24英寸以上的甲板需要許可。5英尺以上需要工程。</li><li><strong>北溫哥華及西溫哥華：</strong>高於地面30釐米以上的甲板需要許可。5英尺以上需要工程。</li><li><strong>列治文：</strong>所有甲板都需要許可。1.2米以上需要工程。</li><li><strong>本拿比：</strong>所有甲板結構都需要許可，可能還需要開發許可。</li><li><strong>高貴林：</strong>步行表面高於地面0.6米以上的甲板需要許可。</li><li><strong>素里：</strong>高於地面30釐米以上的甲板需要許可。1.2米以上需要工程。</li></ul><h2>裝修流程：預期如何？</h2><ul><li><strong>第1周：</strong>現場評估和許可申請準備。</li><li><strong>第2至4周：</strong>許可處理 — 溫哥華和北溫哥華通常2至3周；列治文和本拿比可能3至5周。</li><li><strong>第5周：</strong>現場準備和基腳施工。</li><li><strong>第6至8周：</strong>框架、甲板和欄杆安裝。</li><li><strong>第9周：</strong>最終檢查和現場清理。</li></ul><h2>常見問題</h2><h3>溫哥華甲板需要結構工程嗎？</h3><p>是的。溫哥華24英寸以上或列治文1.2米以上的甲板需要工程圖紙。工程通常增加$1,500到$3,000。</p><h3>我可以在溫哥華延長戶外使用季節嗎？</h3><p>可以。選項包括安裝天然氣紅外線加熱器（$800到$2,500安裝）、伸縮遮陽篷或固定涼棚，或用玻璃板封閉一側或多側。這些附加設施增加$3,000到$12,000，但可將戶外使用時間從5月至10月延長至3月至11月。</p><h3>複合甲板在溫哥華氣候下值得額外成本嗎？</h3><p>複合甲板比雪松貴約40到60個百分點，但能抵抗潮溼和開裂。在溫哥華氣候下，無頂甲板通常在10到12年內通過減少維護收回額外投資。</p><h3>溫哥華甲板許可需要多長時間？</h3><p>大多數大溫哥華市政府在2至5周內處理住宅甲板許可。溫哥華和北溫哥華通常最快為2至3周。本拿比和列治文可能需要3至5周。</p><p>Planning a kitchen, bathroom, whole-home or commercial renovation? <a href="/en/contact/">Get a free, no-obligation quote from Reno Stars</a>.</p>'::text) WHERE id = 'fd509df0-d641-4154-96e2-345e7cc71add' AND NOT (coalesce(localizations, '{}'::jsonb) ? 'contentZhHant');
 UPDATE blog_posts SET localizations = coalesce(localizations, '{}'::jsonb) || jsonb_build_object('excerptZhHant', '溫哥華業主正在將後院改造成全年可用的戶外生活空間。本指南涵蓋2026年甲板、露台和有頂戶外區域的裝修費用及大溫哥華各城市的許可要求。'::text) WHERE id = 'fd509df0-d641-4154-96e2-345e7cc71add' AND NOT (coalesce(localizations, '{}'::jsonb) ? 'excerptZhHant');
@@ -3232,6 +4345,119 @@ UPDATE blog_posts SET localizations = jsonb_set(localizations, ARRAY['contentZhH
 UPDATE blog_posts SET localizations = jsonb_set(localizations, ARRAY['metaDescriptionZhHant'], to_jsonb('溫哥華社交廚房翻新：石英島，開放式佈局，專為娛樂而設計的訂製櫥櫃。全面轉型+實際成本。免費報價。'::text)) WHERE id = '4c1e8d90-d4f8-4306-a0e9-43273a90d730' AND localizations->>'metaDescriptionZhHant' = '溫哥華社交廚房翻新：石英島，開放式佈局，專為娛樂而設計的訂製櫥櫃。全面转型+实际成本。免費報價。';
 UPDATE blog_posts SET localizations = coalesce(localizations, '{}'::jsonb) || jsonb_build_object('seoKeywordsZhHant', '西溫哥華廚房翻新, 西溫哥華廚房翻新費用, 英屬區廚房翻新, 西溫豪華廚房翻新'::text) WHERE id = '3ab8b832-b8b7-41f5-83f8-a5bf244198ef' AND NOT (coalesce(localizations, '{}'::jsonb) ? 'seoKeywordsZhHant');
 UPDATE blog_posts SET localizations = coalesce(localizations, '{}'::jsonb) || jsonb_build_object('seoKeywordsZhHant', '北溫哥華廚房翻新, 北溫哥華廚房翻新費用, 林谷廚房翻新, 北溫Strata翻新'::text) WHERE id = 'dfdb1858-c2ef-4d94-ab06-fd5b2a6edc8b' AND NOT (coalesce(localizations, '{}'::jsonb) ? 'seoKeywordsZhHant');
+UPDATE blog_posts SET localizations = jsonb_set(localizations, ARRAY['contentZhHant'], to_jsonb('<h2>介紹</h2><p>In the bustling city of [Vancouver](/en/areas/vancouver/), BC, where modern living meets classic charm, a [kitchen renovation](/en/services/kitchen/) | [Cabinet Refinishing](/en/services/cabinet/) can significantly enhance both functionality and aesthetics. Our recent project, the Social Ready Kitchen Renovation, exemplifies how a well-executed renovation can transform a space into a social hub.</p><h2>項目概況</h2><p>這次全面的廚房改造涉及廣泛的服務，包括預製和定制櫥櫃、指拉式設計、空間優化、櫥櫃重新粉刷、電氣和管道工程、通風、拆除、燈光優化、地板、踢腳板、乾牆維修、油漆、爆米花天花板拆除、牆壁更換以及通過城市檢查。我們的目標是創造一個不僅實用而且適合社交聚會的廚房。</p><h2>挑戰</h2><p>該項目提出了一些挑戰。現有廚房佈局陳舊，不利於社交。空間狹小，照明不足，電器陳舊。此外，舊的爆米花天花板和破舊的地板需要徹底檢修。</p><h2>我們的解決方案</h2><p>我們Reno Stars的團隊正面應對了這些挑戰。我們首先重新設計廚房佈局，以最大化空間並改善流動。我們安裝了白色搖床式櫥櫃，打造永恆的外觀，並採用指拉式設計，打造時尚、現代的觸感。為了照亮空間，我們優化了照明並重新粉刷了櫥櫃。我們還用耐用、時尚的選項更換了地板，並拆除了爆米花天花板以獲得光滑的表面。我們的團隊確保所有電氣、管道和通風工作符合最新標準，並成功通過了城市檢查。</p><h2>之前和之後</h2><div><img src="https://pub-b88db8c50fd64a9a87f60a4486a4a488.r2.dev/uploads/admin/social-ready-before-1-mmv67vly.jpg" alt="Social ready Kitchen Renovation Renovation - Before Renovation 1"><p>之前：廚房狹小、陳舊，缺乏風格與功能。</p><img src="https://pub-b88db8c50fd64a9a87f60a4486a4a488.r2.dev/uploads/admin/social-ready-after-1-mmv67vm2.jpg" alt="Social-Ready Kitchen Renovation: Entertaining-Focused Design - After Renovation 1"><p>之後：改造令人驚嘆，現代、開放的佈局非常適合社交聚會。</p></div><h2>結果和要點</h2><p>社交廚房改造取得了巨大成功。客戶對改造感到非常興奮，並注意到改進的功能和誘人的氛圍。廚房現在是社交、烹飪和享受家庭時光的中心樞紐。該項目強調了深思熟慮的設計和熟練的執行對於實現夢想廚房的重要性。</p>
+
+
+
+Many Metro Vancouver homeowners also upgrade to a [heat pump HVAC system](/services/heat-pump-hvac/) during renovations — providing efficient year-round heating and cooling while qualifying for CleanBC rebates.
+
+
+Renovations that add high-draw appliances or modern lighting often benefit from a [critical load panel upgrade](/services/critical-load-panel/) to ensure adequate electrical capacity and safety.
+
+
+For homeowners planning long-term or accommodating family members with mobility needs, [accessible bathroom renovations](/services/accessible-bathroom/) — including grab bars, curbless showers, and slip-resistant flooring — are a smart addition to any major renovation project.
+
+
+If you live in a strata property (condo or townhouse), review BC''s [strata renovation rules](/blog/strata-renovation-rules-vancouver/) before starting work — many projects require strata council approval and must follow specific noise, hour, and contractor requirements.
+## Frequently Asked Questions
+
+### What makes a kitchen truly social ready for Vancouver entertaining?
+A social ready kitchen in Vancouver balances three functions simultaneously: efficient cooking for the person preparing food, visual connection to guests in adjacent living and dining areas, and comfortable seating arrangements for guests who gather while the host cooks. The key design elements are: an island or peninsula with bar seating that faces the living space, an open or semi-open connection to dining and living areas, statement lighting that defines the social zone, and finishes that look inviting and intentional rather than purely functional.
+
+### How does Reno Stars approach social kitchen design in Vancouver homes?
+Reno Stars'' social kitchen approach starts with a function audit — observing how the current kitchen is actually used, where guests naturally congregate, and what the primary pain points are for the host during gatherings. From this, the design team identifies the highest-impact changes: often an island addition, a cabinet layout reconfiguration to open sightlines, pendant lighting over the social zone, and an upgraded range hood that serves as both a functional and aesthetic focal point. The goal is a kitchen that makes the homeowner feel confident hosting.
+
+### What is the investment range for a social kitchen renovation in Vancouver?
+A social ready kitchen renovation in Vancouver designed for entertaining ranges from $28,000 for a focused update (new cabinetry, island, countertops, and lighting without structural changes) to $65,000+ for a full transformation including open-concept conversion, custom cabinetry, premium appliances, and statement design elements. The ROI on social kitchen renovations in Vancouver''s $1.5M–$2.5M+ detached home market is among the strongest of any renovation category, both in daily enjoyment and resale value.
+
+### Can a Vancouver apartment kitchen be made social ready?
+Yes — Vancouver condo and apartment kitchens can be made significantly more social ready even without structural changes. Key improvements: galley kitchens can add a rolling island with seating; peninsula kitchens can have counter-height seating added; cabinetry rearrangement can create visual connection to adjacent living areas; pendant lighting changes the zone''s feel dramatically. For concrete-slab condo kitchens, plumbing-location kitchen changes are expensive, so design improvements that work within existing plumbing positions are the most cost-effective path.
+
+### How does a social kitchen renovation affect Vancouver home resale value?
+Kitchen renovations deliver the strongest resale ROI of any room renovation in Metro Vancouver, and social kitchen features — island with seating, open sightlines, statement lighting — are among the most universally appealing attributes to Vancouver buyers. Listing agents consistently report that open, well-designed kitchens generate more viewing activity, shorter listing periods, and stronger offer prices. A $35,000–$55,000 social kitchen renovation in a $1.5M+ Vancouver home typically yields $45,000–$80,000 in perceived value improvement at listing.
+
+Related cost guide: [Kitchen Renovation Cost Vancouver 2026](/en/guides/kitchen-renovation-cost-vancouver/)
+
+Also see: [Social-ready kitchen renovation #1](/zh-Hant/blog/social-ready-kitchen-renovation-case-study/) | [Exotic waterfall island kitchen](/zh-Hant/blog/exotic-style-kitchen-renovation-with-waterfall-island/) | [social-ready kitchen case study #2](/zh-Hant/blog/social-ready-kitchen-renovation-case-study-2/) | [How to Choose a Contractor](/zh-Hant/blog/how-to-choose-renovation-contractor-vancouver/) | [Pre-Sale Renovation Advice](/en/services/realtor/) | [BC Renovation Permits Guide](/zh-Hant/blog/renovation-permits-bc-guide/) | [Renovation Timeline Guide](/zh-Hant/blog/renovation-timeline-how-long-does-each-project-take/) | [Vancouver Renovation Cost Guide 2026](/zh-Hant/blog/renovation-cost-vancouver-2026-complete-guide/) | [How to Finance Your Vancouver Renovation (HELOC Guide)](/zh-Hant/blog/renovation-financing-vancouver-heloc/) | [Renovation Financing Options](/en/financing/) | [Kitchen Design Trends Vancouver 2026](/zh-Hant/blog/kitchen-design-trends-vancouver-2026/) | [Kitchen Layout Planning Vancouver](/zh-Hant/blog/kitchen-layout-planning-vancouver-2026/) | [Quartz vs Granite Countertops Vancouver](/zh-Hant/blog/quartz-vs-granite-countertops-vancouver-2026/) | [Vancouver Home Renovation Guide](/zh-Hant/blog/vancouver-home-renovation-guide-2026/) | [Bathroom Renovation Vancouver](/en/services/bathroom/) | [Whole-House Renovation Vancouver](/en/services/whole-house/) | [Basement Renovation Vancouver](/en/services/basement/vancouver/)
+
+### What was the full scope of work in this Vancouver social kitchen renovation?
+This Vancouver social kitchen renovation was among the most comprehensive in scope, covering: prefab and customized cabinet installation, finger pull design, space optimization, cabinet repainting, electrical and plumbing work, venting installation, demolition, light optimization, new flooring, baseboards, drywall repair, painting, popcorn ceiling removal, wall changes, and obtaining city inspection sign-off. Older Metro Vancouver homes may also need our [Poly-B Pipe Replacement](/en/services/poly-b-replacement/) service to eliminate unsafe plastic piping. The comprehensive scope reflects the nature of a true social kitchen transformation — achieving an open, functional result requires addressing every surface and system simultaneously rather than phasing individual elements. A $35,000–$55,000 social kitchen renovation budget accommodates this full-scope approach.
+
+
+See our [verified five-star reviews](/en/reviews/) from Metro Vancouver homeowners.
+
+[About Reno Stars](/en/about/) — Vancouver-based renovation company serving Metro Vancouver since 2019.
+
+[View our renovation project portfolio →](/en/projects/)
+
+Like what you see? [Request a free consultation →](/zh-Hant/contact/)
+
+| [Cabinet Refinishing &amp; Resurfacing Cost Guide](/en/guides/cabinet-refinishing-cost-vancouver/)
+
+| [Bathroom Renovation Cost Guide for Metro Vancouver](/en/guides/bathroom-renovation-cost-vancouver/)
+
+## See Also — Renovation Cost Guides
+
+- [Bathroom Renovation Cost Vancouver](/en/guides/bathroom-renovation-cost-vancouver/) — average $10K–$60K+
+- [Basement Renovation Cost Vancouver](/en/guides/basement-renovation-cost-vancouver/) — average $20K–$80K
+- [Whole House Renovation Cost Vancouver](/en/guides/whole-house-renovation-cost-vancouver/) — average $50K–$300K+
+- [Cabinet Refinishing Cost Vancouver](/en/guides/cabinet-refinishing-cost-vancouver/) — from $4K for refinishing'::text)) WHERE id = '8b257c35-1bc6-490a-aa87-6b8c1faa63eb' AND localizations->>'contentZhHant' = '<h2>介紹</h2><p>In the bustling city of [Vancouver](/en/areas/vancouver/), BC, where modern living meets classic charm, a [kitchen renovation](/en/services/kitchen/) | [Cabinet Refinishing](/en/services/cabinet/) can significantly enhance both functionality and aesthetics. Our recent project, the Social Ready Kitchen Renovation, exemplifies how a well-executed renovation can transform a space into a social hub.</p><h2>項目概況</h2><p>這次全面的廚房改造涉及廣泛的服務，包括預製和定制櫥櫃、指拉式設計、空間優化、櫥櫃重新粉刷、電氣和管道工程、通風、拆除、燈光優化、地板、踢腳板、乾牆維修、油漆、爆米花天花板拆除、牆壁更換以及通過城市檢查。我們的目標是創造一個不僅實用而且適合社交聚會的廚房。</p><h2>挑戰</h2><p>该项目提出了一些挑战。现有厨房布局陈旧，不利于社交。空间狭小，照明不足，电器陈旧。此外，舊的爆米花天花板和破舊的地板需要徹底檢修。</p><h2>我們的解決方案</h2><p>我們Reno Stars的團隊正面應對了這些挑戰。我們首先重新設計廚房佈局，以最大化空間並改善流動。我們安裝了白色搖床式櫥櫃，打造永恆的外觀，並採用指拉式設計，打造時尚、現代的觸感。為了照亮空間，我們優化了照明並重新粉刷了櫥櫃。我們還用耐用、時尚的選項更換了地板，並拆除了爆米花天花板以獲得光滑的表面。我們的團隊確保所有電氣、管道和通風工作符合最新標準，並成功通過了城市檢查。</p><h2>之前和之後</h2><div><img src="https://pub-b88db8c50fd64a9a87f60a4486a4a488.r2.dev/uploads/admin/social-ready-before-1-mmv67vly.jpg" alt="Social ready Kitchen Renovation Renovation - Before Renovation 1"><p>之前：廚房狹小、陳舊，缺乏風格與功能。</p><img src="https://pub-b88db8c50fd64a9a87f60a4486a4a488.r2.dev/uploads/admin/social-ready-after-1-mmv67vm2.jpg" alt="Social-Ready Kitchen Renovation: Entertaining-Focused Design - After Renovation 1"><p>之後：改造令人驚嘆，現代、開放的佈局非常適合社交聚會。</p></div><h2>結果和要點</h2><p>社交廚房改造取得了巨大成功。客戶對改造感到非常興奮，並注意到改進的功能和誘人的氛圍。廚房現在是社交、烹飪和享受家庭時光的中心樞紐。該項目強調了深思熟慮的設計和熟練的執行對於實現夢想廚房的重要性。</p>
+
+
+
+Many Metro Vancouver homeowners also upgrade to a [heat pump HVAC system](/services/heat-pump-hvac/) during renovations — providing efficient year-round heating and cooling while qualifying for CleanBC rebates.
+
+
+Renovations that add high-draw appliances or modern lighting often benefit from a [critical load panel upgrade](/services/critical-load-panel/) to ensure adequate electrical capacity and safety.
+
+
+For homeowners planning long-term or accommodating family members with mobility needs, [accessible bathroom renovations](/services/accessible-bathroom/) — including grab bars, curbless showers, and slip-resistant flooring — are a smart addition to any major renovation project.
+
+
+If you live in a strata property (condo or townhouse), review BC''s [strata renovation rules](/blog/strata-renovation-rules-vancouver/) before starting work — many projects require strata council approval and must follow specific noise, hour, and contractor requirements.
+## Frequently Asked Questions
+
+### What makes a kitchen truly social ready for Vancouver entertaining?
+A social ready kitchen in Vancouver balances three functions simultaneously: efficient cooking for the person preparing food, visual connection to guests in adjacent living and dining areas, and comfortable seating arrangements for guests who gather while the host cooks. The key design elements are: an island or peninsula with bar seating that faces the living space, an open or semi-open connection to dining and living areas, statement lighting that defines the social zone, and finishes that look inviting and intentional rather than purely functional.
+
+### How does Reno Stars approach social kitchen design in Vancouver homes?
+Reno Stars'' social kitchen approach starts with a function audit — observing how the current kitchen is actually used, where guests naturally congregate, and what the primary pain points are for the host during gatherings. From this, the design team identifies the highest-impact changes: often an island addition, a cabinet layout reconfiguration to open sightlines, pendant lighting over the social zone, and an upgraded range hood that serves as both a functional and aesthetic focal point. The goal is a kitchen that makes the homeowner feel confident hosting.
+
+### What is the investment range for a social kitchen renovation in Vancouver?
+A social ready kitchen renovation in Vancouver designed for entertaining ranges from $28,000 for a focused update (new cabinetry, island, countertops, and lighting without structural changes) to $65,000+ for a full transformation including open-concept conversion, custom cabinetry, premium appliances, and statement design elements. The ROI on social kitchen renovations in Vancouver''s $1.5M–$2.5M+ detached home market is among the strongest of any renovation category, both in daily enjoyment and resale value.
+
+### Can a Vancouver apartment kitchen be made social ready?
+Yes — Vancouver condo and apartment kitchens can be made significantly more social ready even without structural changes. Key improvements: galley kitchens can add a rolling island with seating; peninsula kitchens can have counter-height seating added; cabinetry rearrangement can create visual connection to adjacent living areas; pendant lighting changes the zone''s feel dramatically. For concrete-slab condo kitchens, plumbing-location kitchen changes are expensive, so design improvements that work within existing plumbing positions are the most cost-effective path.
+
+### How does a social kitchen renovation affect Vancouver home resale value?
+Kitchen renovations deliver the strongest resale ROI of any room renovation in Metro Vancouver, and social kitchen features — island with seating, open sightlines, statement lighting — are among the most universally appealing attributes to Vancouver buyers. Listing agents consistently report that open, well-designed kitchens generate more viewing activity, shorter listing periods, and stronger offer prices. A $35,000–$55,000 social kitchen renovation in a $1.5M+ Vancouver home typically yields $45,000–$80,000 in perceived value improvement at listing.
+
+Related cost guide: [Kitchen Renovation Cost Vancouver 2026](/en/guides/kitchen-renovation-cost-vancouver/)
+
+Also see: [Social-ready kitchen renovation #1](/zh-Hant/blog/social-ready-kitchen-renovation-case-study/) | [Exotic waterfall island kitchen](/zh-Hant/blog/exotic-style-kitchen-renovation-with-waterfall-island/) | [social-ready kitchen case study #2](/zh-Hant/blog/social-ready-kitchen-renovation-case-study-2/) | [How to Choose a Contractor](/zh-Hant/blog/how-to-choose-renovation-contractor-vancouver/) | [Pre-Sale Renovation Advice](/en/services/realtor/) | [BC Renovation Permits Guide](/zh-Hant/blog/renovation-permits-bc-guide/) | [Renovation Timeline Guide](/zh-Hant/blog/renovation-timeline-how-long-does-each-project-take/) | [Vancouver Renovation Cost Guide 2026](/zh-Hant/blog/renovation-cost-vancouver-2026-complete-guide/) | [How to Finance Your Vancouver Renovation (HELOC Guide)](/zh-Hant/blog/renovation-financing-vancouver-heloc/) | [Renovation Financing Options](/en/financing/) | [Kitchen Design Trends Vancouver 2026](/zh-Hant/blog/kitchen-design-trends-vancouver-2026/) | [Kitchen Layout Planning Vancouver](/zh-Hant/blog/kitchen-layout-planning-vancouver-2026/) | [Quartz vs Granite Countertops Vancouver](/zh-Hant/blog/quartz-vs-granite-countertops-vancouver-2026/) | [Vancouver Home Renovation Guide](/zh-Hant/blog/vancouver-home-renovation-guide-2026/) | [Bathroom Renovation Vancouver](/en/services/bathroom/) | [Whole-House Renovation Vancouver](/en/services/whole-house/) | [Basement Renovation Vancouver](/en/services/basement/vancouver/)
+
+### What was the full scope of work in this Vancouver social kitchen renovation?
+This Vancouver social kitchen renovation was among the most comprehensive in scope, covering: prefab and customized cabinet installation, finger pull design, space optimization, cabinet repainting, electrical and plumbing work, venting installation, demolition, light optimization, new flooring, baseboards, drywall repair, painting, popcorn ceiling removal, wall changes, and obtaining city inspection sign-off. Older Metro Vancouver homes may also need our [Poly-B Pipe Replacement](/en/services/poly-b-replacement/) service to eliminate unsafe plastic piping. The comprehensive scope reflects the nature of a true social kitchen transformation — achieving an open, functional result requires addressing every surface and system simultaneously rather than phasing individual elements. A $35,000–$55,000 social kitchen renovation budget accommodates this full-scope approach.
+
+
+See our [verified five-star reviews](/en/reviews/) from Metro Vancouver homeowners.
+
+[About Reno Stars](/en/about/) — Vancouver-based renovation company serving Metro Vancouver since 2019.
+
+[View our renovation project portfolio →](/en/projects/)
+
+Like what you see? [Request a free consultation →](/zh-Hant/contact/)
+
+| [Cabinet Refinishing &amp; Resurfacing Cost Guide](/en/guides/cabinet-refinishing-cost-vancouver/)
+
+| [Bathroom Renovation Cost Guide for Metro Vancouver](/en/guides/bathroom-renovation-cost-vancouver/)
+
+## See Also — Renovation Cost Guides
+
+- [Bathroom Renovation Cost Vancouver](/en/guides/bathroom-renovation-cost-vancouver/) — average $10K–$60K+
+- [Basement Renovation Cost Vancouver](/en/guides/basement-renovation-cost-vancouver/) — average $20K–$80K
+- [Whole House Renovation Cost Vancouver](/en/guides/whole-house-renovation-cost-vancouver/) — average $50K–$300K+
+- [Cabinet Refinishing Cost Vancouver](/en/guides/cabinet-refinishing-cost-vancouver/) — from $4K for refinishing';
 UPDATE blog_posts SET localizations = coalesce(localizations, '{}'::jsonb) || jsonb_build_object('seoKeywordsZhHant', '本拿比灣廚房翻新, Port Moody廚房翻新費用, 本拿比灣浴室翻新, 本拿比灣裝修承包商'::text) WHERE id = 'a25fa4c6-cfeb-47fe-9b12-6a38ec101c12' AND NOT (coalesce(localizations, '{}'::jsonb) ? 'seoKeywordsZhHant');
 UPDATE blog_posts SET localizations = coalesce(localizations, '{}'::jsonb) || jsonb_build_object('seoKeywordsZhHant', '溫哥華抽油煙機安裝, 廚房抽油煙機價格, 外排式 vs 循環式抽油煙機, BC 補風規範, CFM 按爐灶選擇, 定製抽油煙機櫃溫哥華, 壁掛式 vs 中島式抽油煙機, 嵌入式抽油煙機安裝'::text) WHERE id = '91c8a60d-c113-4a89-862f-8557ccd373f8' AND NOT (coalesce(localizations, '{}'::jsonb) ? 'seoKeywordsZhHant');
 UPDATE blog_posts SET localizations = coalesce(localizations, '{}'::jsonb) || jsonb_build_object('seoKeywordsZhHant', '楓樹嶺廚房翻新, 楓樹嶺廚房翻新費用, 楓樹嶺浴室翻新, 楓樹嶺裝修承包商'::text) WHERE id = 'd429d17a-f559-400f-8fad-3585facc48a3' AND NOT (coalesce(localizations, '{}'::jsonb) ? 'seoKeywordsZhHant');
@@ -5715,6 +6941,383 @@ Also see our basement renovation guides for other Metro Vancouver cities: [Vanco
 
 - [Delta Condo Renovation Guide 2026](/zh-Hant/blog/condo-renovation-delta-bc-2026/) — condo renovation in Delta';
 UPDATE blog_posts SET localizations = jsonb_set(localizations, ARRAY['metaDescriptionZhHant'], to_jsonb('溫哥華地下室套房裝修費用：合法二級套房$45K–$90K，基本裝修$30K–$55K。真實2026年數據、BC代碼、ROI分析。免費報價。'::text)) WHERE id = 'ed9e0bcf-5731-4b86-a6a7-022a94406e27' AND localizations->>'metaDescriptionZhHant' = '温哥华地下室套房装修费用：合法二级套房$45K–$90K，基本装修$30K–$55K。真實2026年數據、BC代碼、ROI分析。免費報價。';
+UPDATE blog_posts SET localizations = jsonb_set(localizations, ARRAY['contentZhHant'], to_jsonb('<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "文章",
+  "headline": "如何閱讀裝修報價：行項目解釋",
+  "description": "裝修報價中的每個項目的實際含義 - 勞動力、材料、間接費用、保證金、津貼和許可證 - 以及顯示低品質投標的危險信號。",
+  "圖像": "https://www.reno-stars.com/images/blog/how-to-read-renovation-quote.jpg",
+  "作者": {"@type": "組織", "名稱": "Reno Stars"},
+  "publisher": {"@type": "組織", "name": "Reno Stars", "logo": {"@type": "ImageObject", "url": "https://www.reno-stars.com/logo.png"}},
+  "發佈日期": "2026-04-17",
+  "修改日期": "2026-04-17",
+  "mainEntityOfPage": {"@type": "網頁", "@id": "https://www.reno-stars.com/zh-Hant/blog/how-to-read-renovation-quote-line-items"}
+}
+</script>
+
+<h2>為什麼大多數房主在比較報價時都是錯誤的</h2>
+
+<p>當三個承包商在$28,000, $34,000, 和$41,000, 引用相同的[浴室裝修](/en/services/bathroom/)時，人們的本能反應是從最低的數字開始。這幾乎總是一個錯誤——不是因為低報價本質上是不好的，而是因為你沒有比較相同的東西。</p>
+
+<p>結構良好的裝修報價詳細講述了工作範圍、材料品質、承包商的架空結構以及他們所考慮的風險。結構不良的引文幾乎沒有告訴你任何資訊——它只是給你一個數字，一旦工作開始，這個數字可能會膨脹。</p>
+
+<p>本指南將引導您詳細了解裝修報價，以便您可以解讀每個數字的含義，識別缺少的內容，並做出明智的決定。</p>
+
+<h2>完整裝修報價的剖析</h2>
+
+<h3>1、人工成本</h3>
+<p>Labour is typically the largest single line item in any renovation quote, representing 35–50% of the total project cost for most residential work in Metro [Vancouver](/en/areas/vancouver/).</p>
+
+<p>詳細的人工項目包括哪些內容：</p>
+<ul>
+  <li><strong>特定貿易的勞動力費率：</strong> 在大溫哥華地區，電工和水管工的收費通常為$90–$140/小時。一般木匠和瓷磚鋪工時$60–$100/小時。油漆工$50–$80/小時。</li>
+  <li><strong>每筆交易的預計時間：</strong> 信譽良好的承包商按行業細分預計工時。 「水管工：24 小時」內容豐富。 「管道：$1,800」的情況稍差一些，但如果範圍明確，仍然可以接受。</li>
+  <li><strong>督導時間：</strong> 對於較大的項目，專案管理和現場監督是合法成本。預計分配總勞動力的 10-15% 用於監督超過 $75,000. 的項目</li>
+</ul>
+
+<p><strong>需要注意什麼：</strong> 將所有勞動力集中到一個數字（「勞動力：$12,000」）而沒有任何細分的報價很難評估。要求承包商透過交易將其分解 - 一個好的承包商可以在 15 分鐘內完成此操作，因為他們已經在內部完成了計算。</p>
+
+<h3>2. 材料成本</h3>
+<p>材料通常佔裝修成本的 30-45%，具體取決於規格等級。配備訂製櫥櫃、石英檯面和高檔電器的高端廚房將嚴重偏向材料。像全屋瓷磚安裝這樣的勞力密集項目將偏向勞動力。</p>
+
+<p>在完整的報價中，材料應按以下方式指定：</p>
+<ul>
+  <li><strong>產品名稱和型號</strong> （如適用） — 具體為“Caesarstone Calacatta Nuvo 石英，3 釐米，42 平方英尺”； “石英檯面”不是</li>
+  <li><strong>數量</strong> — 平方英尺、線性英尺、單位數量</li>
+  <li><strong>單位成本</strong> — 讓您驗證承包商沒有以異常的速度標記材料</li>
+</ul>
+
+<p><strong>材料上的正常承包商加價：</strong> 承包商通常將材料標價比供應商成本高出 10-20%。這是行業標準，涵蓋採購時間、儲存和缺陷材料的責任。超過25%的加價值得質疑。</p>
+
+<h3>3. 分包商成本</h3>
+<p>大多數裝修承包商並不僱用所有內部人員。電氣、管道、暖通空調，有時還有磁磚都是分包的。透明的報價將分包商成本顯示為單獨的行項目，並具有清晰的範圍描述。</p>
+
+<p>注意：有些承包商在分包商發票上加價 10-20% 作為管理費。這是合法的——協調交易、管理日程、對工作品質負責才是真正的工作。但標記應該公開，而不是隱藏。</p>
+
+<h3>4. 許可證和檢查費用</h3>
+<p>在 BC 省，任何涉及結構變更、[配電板升級](/en/services/critical-load-panel/)s 或管道改造的翻新工程都需要建築許可證。大溫哥華地區的許可證費用通常為：</p>
+<ul>
+  <li><strong>溫哥華市：</strong> 每$1,000 建築價值$12–$18 ，另加固定費用。 $50,000 裝修許可證費用約為$700–$1,000.</li>
+  <li><strong>[本拿比](/en/areas/burnaby/):</strong> 類似的範圍，通常用於住宅裝修$600–$900 </li>
+  <li><strong>[素里](/en/areas/surrey/)/[列治文](/en/areas/richmond/):</strong> $400–$700 用於標準住宅工作</li>
+</ul>
+
+<p>許可證應作為行項目出現在您的報價中。如果報價中沒有提到明確需要許可證的項目，那麼要麼假設您自己管理許可證（有風險），要麼計劃在沒有許可證的情況下工作（嚴重的危險信號 - 未經許可的工作會影響您出售房屋的能力，並且可能不在保險範圍內）。如需專家[售前裝修建議](/en/services/realtor/)，請在上市前與我們的裝修團隊交談。</p>
+
+<p>了解更多關於什麼需要許可的信息 <a href="/zh-Hant/blog/renovation-permits-bc-guide/">BC省裝修許可證指南</a>.</p>
+
+<h3>5. 拆除及處置</h3>
+<p>演示是體力勞動，處理是實際成本－大溫哥華地區的垃圾箱租金為一個標準垃圾箱的$400–$800 ，而且一些城市還收取傾倒費。這些成本在低價投標中常常被低估。</p>
+
+<p>完整的報價說明：預計演示時間、垃圾箱數量和處置方法（如果演示將在老房子中遇到含石棉材料，則尤其重要）。</p>
+
+<h3>6. 意外事件</h3>
+<p>應急措施是為演示過程中發現的不可預見的情況預留資金——腐爛的底層地板、需要完全更換的過時佈線、水損壞的框架。好的承包商包括緊急應變線 <strong>項目總成本的 10–15%</strong> 用於翻新工程（更多用於老房子）。</p>
+
+<p>沒有意外情況的報價並不一定隱藏成本，但這意味著任何意外都會作為變更單回饋給您。在簽署之前，請確保您了解承包商的變更單流程。</p>
+
+<h3>7. 管理費用和利潤率</h3>
+<p>這是裝修報價中最容易被誤解的部分。每個合法承包商都有管理費用——辦公費用、保險、車輛成本、軟體、會計、估算時間——並且需要利潤率來維持業務。在大溫哥華地區：</p>
+
+<ul>
+  <li><strong>開銷：</strong> 對於全方位服務的裝修公司，通常為直接成本的 10-20%</li>
+  <li><strong>利潤率：</strong> 住宅裝修的行業標準是管理費用的 10-15%</li>
+  <li><strong>組合標記：</strong> 直接成本（勞力 + 材料 + 替代品）高出 20–35% 是正常且健康的</li>
+</ul>
+
+<p><strong>這在實踐中意味著什麼：</strong> 直接成本為 $25,000  的項目應以 $30,000–$34,000 （20-35% 的加價）報價。如果報價在同一範圍內顯示 $25,000 ，則承包商要麼正在虧損（並且會走捷徑來收回資金），要麼錯誤地計算了成本（這意味著即將出現變更單）。</p>
+
+<h2>津貼：大多數預算意外的來源</h2>
+
+<p>「津貼」是尚未選擇的項目的佔位符金額 - 磁磚津貼、固定裝置津貼、檯面津貼。嚴重依賴津貼的報價引用的是不完整的項目。</p>
+
+<p>例如：帶有「$3,000 瓷磚補貼」的浴室報價可能看起來很合理，直到您選擇價格為$12/平方英尺的瓷磚，而不是補貼所依據的$6/平方英尺。在第一個工具被揮動之前，報價跳躍了 $1,500+。</p>
+
+<p><strong>最佳實踐：</strong> 在簽訂合約之前，請選擇所有材料並請求報價以替換指定成本的津貼。如果承包商在簽約前不這樣做，那麼他就會從超支津貼中受益。</p>
+
+<h2>如何比較多個報價</h2>
+
+<p>不要比較底線數字，而是建立一個比較矩陣：</p>
+
+<table>
+  <thead>
+    <tr><th>行項目</th><th>承包商A</th><th>承包商B</th><th>承包商C</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>勞動力（按行業）</td><td>逐項列出</td><td>總金額</td><td>逐項列出</td></tr>
+    <tr><td>材料（指定）</td><td>是的</td><td>部分的</td><td>是的</td></tr>
+    <tr><td>包含許可證</td><td>是的</td><td>不</td><td>是的</td></tr>
+    <tr><td>演示/處置</td><td>$850</td><td>未列出</td><td>$700</td></tr>
+    <tr><td>意外事件</td><td>10%</td><td>沒有任何</td><td>沒有任何</td></tr>
+    <tr><td>全部的</td><td>$34,000</td><td>$28,000</td><td>$41,000</td></tr>
+  </tbody>
+</table>
+
+<p>在此範例中，承包商 B 的報價幾乎肯定缺少將作為變更單顯示的成本（無許可證、無演示、無意外費用）。真正的比較是在承包商 A（$34K 完整）和承包商 C（$41K 完整）之間進行的，差異可能歸結於規格級別、時間表保證或保固條款。</p>
+
+<h2>裝修報價中的危險信號</h2>
+
+<ul>
+  <li><strong>無分項：</strong> 超過 $10,000  的專案的單一數位報價無法讓您進行比較或談判</li>
+  <li><strong>未提及的許可：</strong> 在 BC 省，任何結構、電氣或管道項目都需要許可證</li>
+  <li><strong>大量使用津貼：</strong> 配額報價超過 20% 意味著您實際上還沒有定價</li>
+  <li><strong>無意外情況：</strong> 每一次裝修都有驚喜；正在為變更訂單摩擦設定零意外事件的報價</li>
+  <li><strong>利潤率異常低：</strong> 如果相同範圍內的報價比競爭對手低 25% 以上，請詢問原因 - 具體來說</li>
+  <li><strong>預先載入的付款條件：</strong> BC 省的合法承包商要求支付 10-25% 的押金，付款與里程碑掛鉤。要求預付 50% 以上是一個危險信號。</li>
+</ul>
+
+<h2>BC 省裝修合約中的正常付款時間表</h2>
+
+<p>根據不列顛哥倫比亞省的消費者保護法規，裝修合約必須包括與專案里程碑相關的付款時間表，而不是任意日期。典型的住宅裝修付款時間表：</p>
+
+<ul>
+  <li><strong>10–25% 定金</strong> 合約簽訂時（包括初始材料訂單）</li>
+  <li><strong>演示/初完成時為 25–30%</strong> （當結構工程可見時）</li>
+  <li><strong>專案中期里程碑時為 25–30%</strong> （例如，安裝櫥櫃、鋪瓷磚）</li>
+  <li><strong>基本完成時為 10–15%</strong> （當空間可用時）</li>
+  <li><strong>5–10% 的阻礙</strong> 完成後 30-45 天發布（待處理清單項目解決後）</li>
+</ul>
+
+<p>切勿支付超過與里程碑相關的分期付款的費用。如果承包商在完工前向您施壓要求全額付款，這是一個明確的信號，要求您停止該專案並尋求法律建議。</p>
+
+<p>了解報價是裝修規劃中第二重要的技能－僅次於 <a href="/zh-Hant/blog/how-to-choose-renovation-contractor-vancouver/">選擇合適的承包商</a>。我們的裝修成本指南可以幫助您衡量實際成本： <a href="/en/guides/bathroom-renovation-cost-vancouver/">浴室裝修費用</a>, <a href="/en/guides/kitchen-renovation-cost-vancouver/">廚房裝修費用</a>， 和 <a href="/en/guides/whole-house-renovation-cost-vancouver/">全屋裝修費用</a>.</p>
+
+請參閱來自大溫哥華地區房主的[經過驗證的五星級評論](/en/reviews/)。
+
+[關於 Reno Stars](/en/about/) — 總部位於溫哥華的裝修公司，自 2019 年起為大溫哥華地區提供服務。
+
+[查看我們的改造專案組合→](/en/projects/)
+
+<p>想要一個你真正能理解的報價嗎？ <a href="/zh-Hant/contact/">向 Reno Stars 請求詳細估算</a> — 我們將每項費用都列出來，以便您確切地知道您所支付的費用。</p>
+
+
+
+For homeowners planning long-term or accommodating family members with mobility needs, [accessible bathroom renovations](/services/accessible-bathroom/) — including grab bars, curbless showers, and slip-resistant flooring — are a smart addition to any major renovation project.
+
+
+If you live in a strata property (condo or townhouse), review BC''s [strata renovation rules](/blog/strata-renovation-rules-vancouver/) before starting work — many projects require strata council approval and must follow specific noise, hour, and contractor requirements.
+## Frequently Asked Questions
+
+### What should be included in a renovation quote in Vancouver?
+
+A complete renovation quote in Metro Vancouver should include: (1) Detailed scope of work (room-by-room, trade-by-trade breakdown); (2) Material specifications (brand, model, finish, or allowance amount if client selects); (3) Labour cost broken out by trade or phase; (4) Permit costs and responsibility; (5) Start and completion dates; (6) Payment schedule tied to milestones; (7) Change order process and pricing; (8) Exclusions clearly listed (what is NOT included); (9) Warranty terms. If any of these are missing, ask before signing. A one-line "renovate kitchen for $25,000" with no spec is not a quote — it''s a placeholder.
+
+### What does "allowance" mean in a renovation quote?
+
+An "allowance" is a placeholder dollar amount in the quote for materials or items where you make the final selection. Common allowances in Metro Vancouver renovation quotes: tile allowance ($15–$40/sq ft), fixture allowance ($500–$2,000/bathroom), cabinet allowance ($8,000–$15,000 for a typical kitchen), countertop allowance ($75–$125/sq ft). The allowance represents what the contractor built into their price — if you choose materials above the allowance, you pay the difference. If below, you receive a credit. Ask what the allowance covers — an $8/sq ft tile allowance for a bathroom that needs 200 sq ft means $1,600 in tile budget, which limits your options.
+
+### How do I compare three renovation quotes when they quote differently?
+
+When comparing Metro Vancouver renovation quotes that look different, check: (1) Are they quoting the same scope? Ask each contractor to confirm in writing; (2) Are material allowances comparable? A lower quote with lower allowances often means upgrade costs later; (3) Is permit cost included? Some contractors exclude it ($500–$2,000); (4) Is demolition included? Often billed separately; (5) What are the payment terms? Front-heavy payment schedules (>30% upfront) are a risk flag. Build a comparison spreadsheet with a common scope, then ask each contractor to price against it. The right comparison is scope-adjusted price, not raw total.
+
+### What is a reasonable payment schedule for a Vancouver renovation?
+
+A reasonable renovation payment schedule in Metro Vancouver for a $30,000–$100,000 project: 5–10% deposit at contract signing (to hold your start date and order materials), 25–35% at construction start, 25–35% at mid-project milestone (rough-ins complete), 20–25% at substantial completion, and 5–10% holdback held for 30–45 days after completion (BC Builders Lien Act allows 10% holdback for 55 days). Never pay more than 50% before construction starts. Front-loading payments beyond 30% before work begins is a red flag — reputable contractors have supplier accounts and don''t need to pre-fund materials with your money.
+
+### What should I do if the renovation bill is higher than the quote in Vancouver?
+
+Work only increases above the quoted price through formal **change orders** — written documents signed by both parties before the additional work starts, specifying the new scope and cost. If your contractor presents a bill significantly higher than the quote without change orders you signed, you have grounds to dispute the excess. In BC, the **Consumer Protection BC** and the **Homeowner Protection Office** handle disputes between homeowners and licensed contractors. For amounts under $35,000, the **BC Civil Resolution Tribunal** handles claims online (no lawyer required). Reno Stars provides change orders for every scope change — nothing is added without your written approval.
+
+### How much contingency budget should I set aside beyond a Vancouver renovation quote?
+
+Budget 10–20% above your accepted renovation quote as contingency. For projects in older Vancouver homes (pre-1980), use 20%: knob-and-tube wiring, galvanised or lead pipes, asbestos tile, and undersized ventilation are common discoveries that trigger mandatory scope changes. Older Metro Vancouver homes may also need our [Poly-B Pipe Replacement](/en/services/poly-b-replacement/) service to eliminate unsafe plastic piping. Consider our [Heat Pump Installation Vancouver](/en/services/heat-pump-hvac/) service to upgrade heating and cooling with modern energy-efficient systems. For newer homes (post-2000) with no history of issues, 10–15% is reasonable. Contingency is not padding — it''s a separate fund you don''t spend unless needed. Contractors who quote contingency INTO the base price (''we always add 15%'') are effectively charging you for risk that may not materialise; a reputable contractor quotes actual scope and handles change orders separately.
+
+Also see: [How to Finance Your Vancouver Renovation (HELOC Guide)](/zh-Hant/blog/renovation-financing-vancouver-heloc/) | [Renovation Financing Options](/en/financing/) | [Kitchen Renovation Vancouver](/en/services/kitchen/) | [Cabinet Refinishing](/en/services/cabinet/) | [Whole-House Renovation Vancouver](/en/services/whole-house/) | [Basement Renovation Vancouver](/en/services/basement/)
+ | [DIY vs Contractor Vancouver](/zh-Hant/blog/diy-vs-contractor-renovation-vancouver-2026/) | [2026 Vancouver Renovation Cost Guide](/zh-Hant/blog/renovation-cost-vancouver-2026-complete-guide/) | [Renovation Timeline Guide](/zh-Hant/blog/renovation-timeline-how-long-does-each-project-take/)
+
+## See Also — Renovation Cost Guides
+
+- [Basement Renovation Cost Vancouver](/en/guides/basement-renovation-cost-vancouver/) — average $20K–$80K
+- [Cabinet Refinishing Cost Vancouver](/en/guides/cabinet-refinishing-cost-vancouver/) — from $4K for refinishing'::text)) WHERE id = '306cbc68-c651-474f-a7c2-cc6953af61fb' AND localizations->>'contentZhHant' = '<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "文章",
+  "headline": "如何閱讀裝修報價：行項目解釋",
+  "description": "裝修報價中的每個項目的實際含義 - 勞動力、材料、間接費用、保證金、津貼和許可證 - 以及顯示低品質投標的危險信號。",
+  "圖像": "https://www.reno-stars.com/images/blog/how-to-read-renovation-quote.jpg",
+  "作者": {"@type": "組織", "名稱": "Reno Stars"},
+  "publisher": {"@type": "組織", "name": "Reno Stars", "logo": {"@type": "ImageObject", "url": "https://www.reno-stars.com/logo.png"}},
+  "發佈日期": "2026-04-17",
+  "修改日期": "2026-04-17",
+  "mainEntityOfPage": {"@type": "網頁", "@id": "https://www.reno-stars.com/zh-Hant/blog/how-to-read-renovation-quote-line-items"}
+}
+</script>
+
+<h2>為什麼大多數房主在比較報價時都是錯誤的</h2>
+
+<p>當三個承包商在$28,000, $34,000, 和$41,000, 引用相同的[浴室裝修](/en/services/bathroom/)時，人們的本能反應是從最低的數字開始。這幾乎總是一個錯誤——不是因為低報價本質上是不好的，而是因為你沒有比較相同的東西。</p>
+
+<p>結構良好的裝修報價詳細講述了工作範圍、材料品質、承包商的架空結構以及他們所考慮的風險。結構不良的引文幾乎沒有告訴你任何資訊——它只是給你一個數字，一旦工作開始，這個數字可能會膨脹。</p>
+
+<p>本指南將引導您詳細了解裝修報價，以便您可以解讀每個數字的含義，識別缺少的內容，並做出明智的決定。</p>
+
+<h2>完整裝修報價的剖析</h2>
+
+<h3>1、人工成本</h3>
+<p>Labour is typically the largest single line item in any renovation quote, representing 35–50% of the total project cost for most residential work in Metro [Vancouver](/en/areas/vancouver/).</p>
+
+<p>詳細的人工項目包括哪些內容：</p>
+<ul>
+  <li><strong>特定貿易的勞動力費率：</strong> 在大溫哥華地區，電工和水管工的收費通常為$90–$140/小時。一般木匠和瓷磚鋪工時$60–$100/小時。油漆工$50–$80/小時。</li>
+  <li><strong>每筆交易的預計時間：</strong> 信譽良好的承包商按行業細分預計工時。 「水管工：24 小時」內容豐富。 「管道：$1,800」的情況稍差一些，但如果範圍明確，仍然可以接受。</li>
+  <li><strong>督導時間：</strong> 對於較大的項目，專案管理和現場監督是合法成本。預計分配總勞動力的 10-15% 用於監督超過 $75,000. 的項目</li>
+</ul>
+
+<p><strong>需要注意什麼：</strong> 將所有勞動力集中到一個數字（「勞動力：$12,000」）而沒有任何細分的報價很難評估。要求承包商透過交易將其分解 - 一個好的承包商可以在 15 分鐘內完成此操作，因為他們已經在內部完成了計算。</p>
+
+<h3>2. 材料成本</h3>
+<p>材料通常佔裝修成本的 30-45%，具體取決於規格等級。配備訂製櫥櫃、石英檯面和高檔電器的高端廚房將嚴重偏向材料。像全屋瓷磚安裝這樣的勞力密集項目將偏向勞動力。</p>
+
+<p>在完整的報價中，材料應按以下方式指定：</p>
+<ul>
+  <li><strong>產品名稱和型號</strong> （如適用） — 具體為“Caesarstone Calacatta Nuvo 石英，3 厘米，42 平方英尺”； “石英檯面”不是</li>
+  <li><strong>數量</strong> — 平方英尺、線性英尺、單位數量</li>
+  <li><strong>單位成本</strong> — 讓您驗證承包商沒有以異常的速度標記材料</li>
+</ul>
+
+<p><strong>材料上的正常承包商加價：</strong> 承包商通常將材料標價比供應商成本高出 10-20%。這是行業標準，涵蓋採購時間、儲存和缺陷材料的責任。超过25%的加价值得质疑。</p>
+
+<h3>3. 分包商成本</h3>
+<p>大多數裝修承包商並不僱用所有內部人員。電氣、管道、暖通空調，有時還有磁磚都是分包的。透明的報價將分包商成本顯示為單獨的行項目，並具有清晰的範圍描述。</p>
+
+<p>注意：有些承包商在分包商發票上加價 10-20% 作為管理費。這是合法的——協調交易、管理日程、對工作品質負責才是真正的工作。但標記應該公開，而不是隱藏。</p>
+
+<h3>4. 許可證和檢查費用</h3>
+<p>在 BC 省，任何涉及結構變更、[配電板升級](/en/services/critical-load-panel/)s 或管道改造的翻新工程都需要建築許可證。大溫哥華地區的許可證費用通常為：</p>
+<ul>
+  <li><strong>溫哥華市：</strong> 每$1,000 建築價值$12–$18 ，另加固定費用。 $50,000 裝修許可證費用約為$700–$1,000.</li>
+  <li><strong>[本拿比](/en/areas/burnaby/):</strong> 類似的範圍，通常用於住宅裝修$600–$900 </li>
+  <li><strong>[素里](/en/areas/surrey/)/[列治文](/en/areas/richmond/):</strong> $400–$700 用於標準住宅工作</li>
+</ul>
+
+<p>許可證應作為行項目出現在您的報價中。如果報價中沒有提到明確需要許可證的項目，那麼要么假設您自己管理許可證（有風險），要么計劃在沒有許可證的情況下工作（嚴重的危險信號 - 未經許可的工作會影響您出售房屋的能力，並且可能不在保險範圍內）。如需專家[售前裝修建議](/en/services/realtor/)，請在上市前與我們的裝修團隊交談。</p>
+
+<p>了解更多關於什麼需要許可的信息 <a href="/zh-Hant/blog/renovation-permits-bc-guide/">BC省裝修許可證指南</a>.</p>
+
+<h3>5. 拆除及處置</h3>
+<p>演示是體力勞動，處理是實際成本－大溫哥華地區的垃圾箱租金為一個標準垃圾箱的$400–$800 ，而且一些城市還收取傾倒費。這些成本在低價投標中常常被低估。</p>
+
+<p>完整的報價說明：預計演示時間、垃圾箱數量和處置方法（如果演示將在老房子中遇到含石棉材料，則尤其重要）。</p>
+
+<h3>6. 意外事件</h3>
+<p>应急措施是为演示过程中发现的不可预见的情况预留资金——腐烂的底层地板、需要完全更换的过时布线、水损坏的框架。好的承包商包括緊急應變線 <strong>項目總成本的 10–15%</strong> 用於翻新工程（更多用於老房子）。</p>
+
+<p>沒有意外情況的報價並不一定隱藏成本，但這意味著任何意外都會作為變更單回饋給您。在簽署之前，請確保您了解承包商的變更單流程。</p>
+
+<h3>7. 管理費用和利潤率</h3>
+<p>這是裝修報價中最容易被誤解的部分。每個合法承包商都有管理費用——辦公費用、保險、車輛成本、軟體、會計、估算時間——並且需要利潤率來維持業務。在大溫哥華地區：</p>
+
+<ul>
+  <li><strong>開銷：</strong> 對於全方位服務的裝修公司，通常為直接成本的 10-20%</li>
+  <li><strong>利潤率：</strong> 住宅裝修的行業標準是管理費用的 10-15%</li>
+  <li><strong>組合標記：</strong> 直接成本（勞力 + 材料 + 替代品）高出 20–35% 是正常且健康的</li>
+</ul>
+
+<p><strong>這在實踐中意味著什麼：</strong> 直接成本為 $25,000  的項目應以 $30,000–$34,000 （20-35% 的加價）報價。如果報價在同一範圍內顯示 $25,000 ，則承包商要么正在虧損（並且會走捷徑來收回資金），要么錯誤地計算了成本（這意味著即將出現變更單）。</p>
+
+<h2>津貼：大多數預算意外的來源</h2>
+
+<p>「津貼」是尚未選擇的項目的佔位符金額 - 磁磚津貼、固定裝置津貼、檯面津貼。嚴重依賴津貼的報價引用的是不完整的項目。</p>
+
+<p>例如：帶有「$3,000 瓷磚補貼」的浴室報價可能看起來很合理，直到您選擇價格為$12/平方英尺的瓷磚，而不是補貼所依據的$6/平方英尺。在第一個工具被揮動之前，報價跳躍了 $1,500+。</p>
+
+<p><strong>最佳實踐：</strong> 在簽訂合約之前，請選擇所有材料並請求報價以替換指定成本的津貼。如果承包商在簽約前不這樣做，那麼他就會從超支津貼中受益。</p>
+
+<h2>如何比較多個報價</h2>
+
+<p>不要比較底線數字，而是建立一個比較矩陣：</p>
+
+<table>
+  <thead>
+    <tr><th>行項目</th><th>承包商A</th><th>承包商B</th><th>承包商C</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>勞動力（按行業）</td><td>逐項列出</td><td>總金額</td><td>逐項列出</td></tr>
+    <tr><td>材料（指定）</td><td>是的</td><td>部分的</td><td>是的</td></tr>
+    <tr><td>包含許可證</td><td>是的</td><td>不</td><td>是的</td></tr>
+    <tr><td>演示/處置</td><td>$850</td><td>未列出</td><td>$700</td></tr>
+    <tr><td>意外事件</td><td>10%</td><td>沒有任何</td><td>沒有任何</td></tr>
+    <tr><td>全部的</td><td>$34,000</td><td>$28,000</td><td>$41,000</td></tr>
+  </tbody>
+</table>
+
+<p>在此範例中，承包商 B 的報價幾乎肯定缺少將作為變更單顯示的成本（無許可證、無演示、無意外費用）。真正的比較是在承包商 A（$34K 完整）和承包商 C（$41K 完整）之間進行的，差異可能歸結於規格級別、時間表保證或保固條款。</p>
+
+<h2>裝修報價中的危險信號</h2>
+
+<ul>
+  <li><strong>無分項：</strong> 超過 $10,000  的專案的單一數位報價無法讓您進行比較或談判</li>
+  <li><strong>未提及的許可：</strong> 在 BC 省，任何結構、電氣或管道項目都需要許可證</li>
+  <li><strong>大量使用津貼：</strong> 配額報價超過 20% 意味著您實際上還沒有定價</li>
+  <li><strong>無意外情況：</strong> 每一次裝修都有驚喜；正在為變更訂單摩擦設定零意外事件的報價</li>
+  <li><strong>利潤率異常低：</strong> 如果相同範圍內的報價比競爭對手低 25% 以上，請詢問原因 - 具體來說</li>
+  <li><strong>預先載入的付款條件：</strong> BC 省的合法承包商要求支付 10-25% 的押金，付款與里程碑掛鉤。要求預付 50% 以上是一個危險信號。</li>
+</ul>
+
+<h2>BC 省裝修合約中的正常付款時間表</h2>
+
+<p>根據不列顛哥倫比亞省的消費者保護法規，裝修合約必須包括與專案里程碑相關的付款時間表，而不是任意日期。典型的住宅裝修付款時間表：</p>
+
+<ul>
+  <li><strong>10–25% 定金</strong> 合約簽訂時（包括初始材料訂單）</li>
+  <li><strong>演示/初完成時為 25–30%</strong> （當結構工程可見時）</li>
+  <li><strong>專案中期里程碑時為 25–30%</strong> （例如，安裝櫥櫃、鋪瓷磚）</li>
+  <li><strong>基本完成時為 10–15%</strong> （當空間可用時）</li>
+  <li><strong>5–10% 的阻礙</strong> 完成後 30-45 天發布（待處理清單項目解決後）</li>
+</ul>
+
+<p>切勿支付超過與里程碑相關的分期付款的費用。如果承包商在完工前向您施壓要求全額付款，這是一個明確的信號，要求您停止該專案並尋求法律建議。</p>
+
+<p>了解報價是裝修規劃中第二重要的技能－僅次於 <a href="/zh-Hant/blog/how-to-choose-renovation-contractor-vancouver/">選擇合適的承包商</a>。我們的裝修成本指南可以幫助您衡量實際成本： <a href="/en/guides/bathroom-renovation-cost-vancouver/">浴室裝修費用</a>, <a href="/en/guides/kitchen-renovation-cost-vancouver/">廚房裝修費用</a>， 和 <a href="/en/guides/whole-house-renovation-cost-vancouver/">全屋裝修費用</a>.</p>
+
+請參閱來自大溫哥華地區房主的[經過驗證的五星級評論](/en/reviews/)。
+
+[關於 Reno Stars](/en/about/) — 總部位於溫哥華的裝修公司，自 2019 年起為大溫哥華地區提供服務。
+
+[查看我們的改造專案組合→](/en/projects/)
+
+<p>想要一個你真正能理解的報價嗎？ <a href="/zh-Hant/contact/">向 Reno Stars 請求詳細估算</a> — 我們將每項費用都列出來，以便您確切地知道您所支付的費用。</p>
+
+
+
+For homeowners planning long-term or accommodating family members with mobility needs, [accessible bathroom renovations](/services/accessible-bathroom/) — including grab bars, curbless showers, and slip-resistant flooring — are a smart addition to any major renovation project.
+
+
+If you live in a strata property (condo or townhouse), review BC''s [strata renovation rules](/blog/strata-renovation-rules-vancouver/) before starting work — many projects require strata council approval and must follow specific noise, hour, and contractor requirements.
+## Frequently Asked Questions
+
+### What should be included in a renovation quote in Vancouver?
+
+A complete renovation quote in Metro Vancouver should include: (1) Detailed scope of work (room-by-room, trade-by-trade breakdown); (2) Material specifications (brand, model, finish, or allowance amount if client selects); (3) Labour cost broken out by trade or phase; (4) Permit costs and responsibility; (5) Start and completion dates; (6) Payment schedule tied to milestones; (7) Change order process and pricing; (8) Exclusions clearly listed (what is NOT included); (9) Warranty terms. If any of these are missing, ask before signing. A one-line "renovate kitchen for $25,000" with no spec is not a quote — it''s a placeholder.
+
+### What does "allowance" mean in a renovation quote?
+
+An "allowance" is a placeholder dollar amount in the quote for materials or items where you make the final selection. Common allowances in Metro Vancouver renovation quotes: tile allowance ($15–$40/sq ft), fixture allowance ($500–$2,000/bathroom), cabinet allowance ($8,000–$15,000 for a typical kitchen), countertop allowance ($75–$125/sq ft). The allowance represents what the contractor built into their price — if you choose materials above the allowance, you pay the difference. If below, you receive a credit. Ask what the allowance covers — an $8/sq ft tile allowance for a bathroom that needs 200 sq ft means $1,600 in tile budget, which limits your options.
+
+### How do I compare three renovation quotes when they quote differently?
+
+When comparing Metro Vancouver renovation quotes that look different, check: (1) Are they quoting the same scope? Ask each contractor to confirm in writing; (2) Are material allowances comparable? A lower quote with lower allowances often means upgrade costs later; (3) Is permit cost included? Some contractors exclude it ($500–$2,000); (4) Is demolition included? Often billed separately; (5) What are the payment terms? Front-heavy payment schedules (>30% upfront) are a risk flag. Build a comparison spreadsheet with a common scope, then ask each contractor to price against it. The right comparison is scope-adjusted price, not raw total.
+
+### What is a reasonable payment schedule for a Vancouver renovation?
+
+A reasonable renovation payment schedule in Metro Vancouver for a $30,000–$100,000 project: 5–10% deposit at contract signing (to hold your start date and order materials), 25–35% at construction start, 25–35% at mid-project milestone (rough-ins complete), 20–25% at substantial completion, and 5–10% holdback held for 30–45 days after completion (BC Builders Lien Act allows 10% holdback for 55 days). Never pay more than 50% before construction starts. Front-loading payments beyond 30% before work begins is a red flag — reputable contractors have supplier accounts and don''t need to pre-fund materials with your money.
+
+### What should I do if the renovation bill is higher than the quote in Vancouver?
+
+Work only increases above the quoted price through formal **change orders** — written documents signed by both parties before the additional work starts, specifying the new scope and cost. If your contractor presents a bill significantly higher than the quote without change orders you signed, you have grounds to dispute the excess. In BC, the **Consumer Protection BC** and the **Homeowner Protection Office** handle disputes between homeowners and licensed contractors. For amounts under $35,000, the **BC Civil Resolution Tribunal** handles claims online (no lawyer required). Reno Stars provides change orders for every scope change — nothing is added without your written approval.
+
+### How much contingency budget should I set aside beyond a Vancouver renovation quote?
+
+Budget 10–20% above your accepted renovation quote as contingency. For projects in older Vancouver homes (pre-1980), use 20%: knob-and-tube wiring, galvanised or lead pipes, asbestos tile, and undersized ventilation are common discoveries that trigger mandatory scope changes. Older Metro Vancouver homes may also need our [Poly-B Pipe Replacement](/en/services/poly-b-replacement/) service to eliminate unsafe plastic piping. Consider our [Heat Pump Installation Vancouver](/en/services/heat-pump-hvac/) service to upgrade heating and cooling with modern energy-efficient systems. For newer homes (post-2000) with no history of issues, 10–15% is reasonable. Contingency is not padding — it''s a separate fund you don''t spend unless needed. Contractors who quote contingency INTO the base price (''we always add 15%'') are effectively charging you for risk that may not materialise; a reputable contractor quotes actual scope and handles change orders separately.
+
+Also see: [How to Finance Your Vancouver Renovation (HELOC Guide)](/zh-Hant/blog/renovation-financing-vancouver-heloc/) | [Renovation Financing Options](/en/financing/) | [Kitchen Renovation Vancouver](/en/services/kitchen/) | [Cabinet Refinishing](/en/services/cabinet/) | [Whole-House Renovation Vancouver](/en/services/whole-house/) | [Basement Renovation Vancouver](/en/services/basement/)
+ | [DIY vs Contractor Vancouver](/zh-Hant/blog/diy-vs-contractor-renovation-vancouver-2026/) | [2026 Vancouver Renovation Cost Guide](/zh-Hant/blog/renovation-cost-vancouver-2026-complete-guide/) | [Renovation Timeline Guide](/zh-Hant/blog/renovation-timeline-how-long-does-each-project-take/)
+
+## See Also — Renovation Cost Guides
+
+- [Basement Renovation Cost Vancouver](/en/guides/basement-renovation-cost-vancouver/) — average $20K–$80K
+- [Cabinet Refinishing Cost Vancouver](/en/guides/cabinet-refinishing-cost-vancouver/) — from $4K for refinishing';
 UPDATE blog_posts SET localizations = jsonb_set(localizations, ARRAY['contentZhHant'], to_jsonb('<p>[溫哥華](/en/areas/vancouver/)&#39;潮濕的氣候使地板成為任何家庭裝修中最棘手的決定之一。在乾燥氣候中表現良好的產品在大溫哥華&#39;多雨、高濕度的環境中可能會彎曲、變形或發黴。在完成了[本拿比](/en/areas/burnaby/)、[列治文](/en/areas/richmond/)、溫哥華和[高貴林](/en/areas/coquitlam/)的數十次地板翻新後，這裡&#39;是我們誠實的逐個房間指南。</p>
 <h2>溫哥華的地板成本：快速摘要（2026 年）</h2>
 <table>
@@ -6765,6 +8368,121 @@ View our [Burnaby Bathroom Renovation Services](/en/services/bathroom/burnaby/) 
 - [Aging-in-Place Bathroom Renovation Vancouver 2026](/zh-Hant/blog/aging-in-place-bathroom-renovation-vancouver-2026/) — accessible bathroom modifications
 
 - [Burnaby Condo Renovation Guide 2026](/zh-Hant/blog/condo-renovation-burnaby-bc-2026/) — condo renovation specialists in Burnaby';
+UPDATE blog_posts SET localizations = jsonb_set(localizations, ARRAY['contentZhHant'], to_jsonb('<h2>介紹</h2><p>在不列顛哥倫比亞省[素里](/en/areas/surrey/)的中心地帶，一個現代化的[廚房改造](/en/services/kitchen/)項目將一個過時的空間改造成一個時尚、實用的傑作。本案例研究探討了翻修的複雜細節，重點介紹了定義新廚房的客製化櫥櫃和優雅的飾面。</p><h2>項目概況</h2><p>翻新工程的重點是打造一個現代化的廚房，配有訂製木紋和白色對比色櫥櫃。此專案的預算在$35,000 和$38,000, 之間，並在4到5週內完成。工作範圍包括櫥櫃安裝、檯面更換、後擋板瓷磚、管道和照明。</p><h2>挑戰</h2><p>主要挑戰之一是將訂製櫥櫃與整體現代美學無縫融合，同時確保功能性。該設計需要既具有視覺吸引力又適合日常使用。</p><h2>我們的解決方案</h2><p>我們透過仔細選擇相輔相成的材料和飾面來應對這項挑戰。銀色固定裝置和指拉式抽屜的使用增強了時尚美感，而 2 釐米厚的工程石英後擋板和白色石英檯面則提供了耐用性和優雅性。這確保了風格和實用性的兼顧。</p><h2>之前和之後</h2><div><img src="https://pub-b88db8c50fd64a9a87f60a4486a4a488.r2.dev/uploads/admin/social-ready-before-1-mmnzas1t.jpg" alt="Modern Kitchen Renovation with Custom Cabinets - Before Renovation 1"><img src="https://pub-b88db8c50fd64a9a87f60a4486a4a488.r2.dev/uploads/admin/social-ready-after-1-mmnzas1t.jpg" alt="Modern Kitchen Renovation in Surrey - After Renovation 1"></div><div><img src="https://pub-b88db8c50fd64a9a87f60a4486a4a488.r2.dev/uploads/admin/social-ready-before-2-mmnzas1u.jpg" alt="Modern Kitchen Renovation with Custom Cabinets - Before Renovation 2"><img src="https://pub-b88db8c50fd64a9a87f60a4486a4a488.r2.dev/uploads/admin/social-ready-after-2-mmnzas1u.jpg" alt="Modern Kitchen Renovation in Surrey - After Renovation 2"></div><div><img src="https://pub-b88db8c50fd64a9a87f60a4486a4a488.r2.dev/uploads/admin/social-ready-before-3-mmnzas1u.jpg" alt="Modern Kitchen Renovation with Custom Cabinets - Before Renovation 3"><img src="https://pub-b88db8c50fd64a9a87f60a4486a4a488.r2.dev/uploads/admin/social-ready-after-3-mmnzas1u.jpg" alt="Modern Kitchen Renovation in Surrey - After Renovation 3"></div><h2>結果和要點</h2><p>最終的結果是一個令人驚嘆的現代化廚房，滿足了客戶的所有期望。訂製櫥櫃與整體設計無縫融合，兼具美感吸引力與功能性。客戶對改造表示非常滿意，稱讚對細節和工藝品質的關注。該專案強調了材料選擇和設計一致性對於實現成功改造的重要性。</p>
+
+
+
+Many Metro Vancouver homeowners also upgrade to a [heat pump HVAC system](/services/heat-pump-hvac/) during renovations — providing efficient year-round heating and cooling while qualifying for CleanBC rebates.
+
+
+Renovations that add high-draw appliances or modern lighting often benefit from a [critical load panel upgrade](/services/critical-load-panel/) to ensure adequate electrical capacity and safety.
+
+
+For homeowners planning long-term or accommodating family members with mobility needs, [accessible bathroom renovations](/services/accessible-bathroom/) — including grab bars, curbless showers, and slip-resistant flooring — are a smart addition to any major renovation project.
+
+
+If you live in a strata property (condo or townhouse), review BC''s [strata renovation rules](/blog/strata-renovation-rules-vancouver/) before starting work — many projects require strata council approval and must follow specific noise, hour, and contractor requirements.
+## Frequently Asked Questions
+
+### How much does a modern kitchen renovation with custom cabinets cost in Surrey, BC?
+A modern kitchen renovation in Surrey featuring custom cabinetry typically costs $32,000–$65,000 depending on kitchen size and cabinet specification level. Custom cabinetry alone for a medium Surrey kitchen runs $18,000–$35,000, compared to $8,000–$18,000 for semi-custom and $3,000–$8,000 for stock options. Combined with quartz countertops ($4,000–$10,000), new backsplash ($1,500–$4,000), lighting ($1,500–$3,000), and permit-required plumbing and electrical, a full custom kitchen renovation in Surrey typically ranges $32,000–$65,000. Older Metro Vancouver homes may also need our [Poly-B Pipe Replacement](/en/services/poly-b-replacement/) service to eliminate unsafe plastic piping.
+
+### What are the advantages of custom cabinetry in a Surrey kitchen renovation?
+Custom cabinetry offers three core advantages over stock or semi-custom options in Surrey: (1) exact fit — custom cabinets are built to your specific kitchen dimensions, eliminating filler strips and awkward gaps; (2) unlimited configuration — pantry systems, appliance garages, drawer configurations, and cabinet heights are all specified to your needs; and (3) material and finish choice — any wood species, paint colour, finish type, or hardware is available. For Surrey kitchens with unusual dimensions or high design aspirations, custom is the right choice.
+
+### How long does a custom kitchen renovation take in Surrey, BC?
+A complete custom kitchen renovation in Surrey takes 10–16 weeks from contract signing. Cabinet design and approval: 1–2 weeks. Cabinet manufacturing: 6–10 weeks. City of Surrey permit processing: 3–5 weeks (can run parallel to cabinet manufacturing). Demo and rough-in: 1 week. Cabinet installation: 3–4 days. Countertop template and fabrication: 2–3 weeks after cabinet install. Backsplash, fixtures, appliances, and finishing: 1–2 weeks. Total: 14–18 weeks from contract signing to a fully functional new kitchen.
+
+### What kitchen design features are most popular in Surrey in 2026?
+The most in-demand Surrey kitchen features in 2026 are: two-tone cabinetry (dark lower cabinets, white or light uppers), large quartz islands with waterfall edges, integrated appliances with panel-ready fronts, pot filler above the range, matte black or brushed gold hardware and fixtures, and statement range hoods (custom millwork or plaster-style surrounds). Surrey buyers respond strongly to these features in listing presentations, and renovation clients who incorporate them report high satisfaction with both daily use and resale positioning.
+
+### Does a custom kitchen renovation in Surrey increase resale value significantly?
+In Surrey''s $1.2M–$1.8M detached home market, a quality kitchen renovation — particularly one with custom cabinetry and premium countertops — is one of the most reliable value additions available. Buyers in Surrey''s increasingly competitive market have elevated expectations; a custom kitchen that presents as a finished, coherent design rather than a standard renovation generates stronger buyer interest. ROI on a well-executed Surrey kitchen renovation at mid-to-high finish level: typically 65–85% of renovation cost recovered at resale, plus years of improved daily enjoyment.
+
+### What custom materials and finishes were selected for this Surrey kitchen renovation?
+This Surrey kitchen featured custom wood grain lower cabinets contrasted with white upper cabinets — a two-tone approach that adds visual depth while keeping the overall look bright and contemporary. Silver fixtures and finger-pull drawer handles reinforced the sleek, handle-free aesthetic on the lower cabinets. The countertops were 3cm white quartz, and the backsplash used 2cm thick engineered quartz panels — a thicker profile than standard tile that creates a more substantial, cohesive design statement. Total project budget: $35,000–$38,000, completed in 4–5 weeks of active construction. The integration of wood grain with white cabinetry and the matching quartz backsplash and countertop surfaces created the design coherence that defined the final result.
+
+
+
+Also see: [Surrey kitchen renovation case study](/zh-Hant/blog/surrey-kitchen-renovation-case-study/) | [Surrey Kitchen Renovation](/zh-Hant/blog/kitchen-renovation-surrey-bc-2026/) | [Surrey Home Renovation Guide](/zh-Hant/blog/surrey-home-renovation-guide-2026/) | [How to Finance Your Vancouver Renovation (HELOC Guide)](/zh-Hant/blog/renovation-financing-vancouver-heloc/) | [Renovation Financing Options](/en/financing/) | [Kitchen Design Trends Vancouver 2026](/zh-Hant/blog/kitchen-design-trends-vancouver-2026/) | [Pre-Sale Renovation Surrey](/zh-Hant/blog/pre-sale-renovation-surrey-bc-2026/) | [Best Kitchen Cabinets Vancouver](/zh-Hant/blog/best-kitchen-cabinets-vancouver-stock-vs-custom-2026/) | [Bathroom Renovation Vancouver](/en/services/bathroom/) | [Whole-House Renovation Vancouver](/en/services/whole-house/) | [Basement Renovation Surrey](/en/services/basement/surrey/) | [How to Choose a Contractor](/zh-Hant/blog/how-to-choose-renovation-contractor-vancouver/) | [Pre-Sale Renovation Advice](/en/services/realtor/) | [Renovation Timeline Guide](/zh-Hant/blog/renovation-timeline-how-long-does-each-project-take/) | [Vancouver Renovation Cost Guide 2026](/zh-Hant/blog/renovation-cost-vancouver-2026-complete-guide/) | [BC Renovation Permits Guide](/zh-Hant/blog/renovation-permits-bc-guide/)
+
+Related cost guide: [Kitchen Renovation Cost Vancouver 2026](/en/guides/kitchen-renovation-cost-vancouver/)
+
+See our [verified five-star reviews](/en/reviews/) from Metro Vancouver homeowners.
+
+[About Reno Stars](/en/about/) — Vancouver-based renovation company serving Metro Vancouver since 2019.
+
+[View our renovation project portfolio →](/en/projects/)
+
+Ready to get started? [Book your free consultation →](/zh-Hant/contact/)
+
+| [Cabinet Refinishing &amp; Resurfacing Cost Guide](/en/guides/cabinet-refinishing-cost-vancouver/)
+
+| [Bathroom Renovation Cost Guide for Metro Vancouver](/en/guides/bathroom-renovation-cost-vancouver/)
+
+## See Also — Renovation Cost Guides
+
+- [Bathroom Renovation Cost Vancouver](/en/guides/bathroom-renovation-cost-vancouver/) — average $10K–$60K+
+- [Basement Renovation Cost Vancouver](/en/guides/basement-renovation-cost-vancouver/) — average $20K–$80K
+- [Whole House Renovation Cost Vancouver](/en/guides/whole-house-renovation-cost-vancouver/) — average $50K–$300K+
+- [Cabinet Refinishing Cost Vancouver](/en/guides/cabinet-refinishing-cost-vancouver/) | [Cabinet Refinishing Vancouver](/en/services/cabinet/vancouver/) — from $4K for refinishing'::text)) WHERE id = '3f5f20f9-158e-4f1c-9fb5-0832ff41bf60' AND localizations->>'contentZhHant' = '<h2>介紹</h2><p>在不列顛哥倫比亞省[素里](/en/areas/surrey/)的中心地帶，一個現代化的[廚房改造](/en/services/kitchen/)項目將一個過時的空間改造成一個時尚、實用的傑作。本案例研究探討了翻修的複雜細節，重點介紹了定義新廚房的客製化櫥櫃和優雅的飾面。</p><h2>項目概況</h2><p>翻新工程的重點是打造一個現代化的廚房，配有訂製木紋和白色對比色櫥櫃。此專案的預算在$35,000 和$38,000, 之間，並在4到5週內完成。工作範圍包括櫥櫃安裝、檯面更換、後擋板瓷磚、管道和照明。</p><h2>挑戰</h2><p>主要挑戰之一是將訂製櫥櫃與整體現代美學無縫融合，同時確保功能性。該設計需要既具有視覺吸引力又適合日常使用。</p><h2>我們的解決方案</h2><p>我們透過仔細選擇相輔相成的材料和飾面來應對這項挑戰。銀色固定裝置和指拉式抽屜的使用增強了時尚美感，而 2 厘米厚的工程石英後擋板和白色石英檯面則提供了耐用性和優雅性。這確保了風格和實用性的兼顧。</p><h2>之前和之後</h2><div><img src="https://pub-b88db8c50fd64a9a87f60a4486a4a488.r2.dev/uploads/admin/social-ready-before-1-mmnzas1t.jpg" alt="Modern Kitchen Renovation with Custom Cabinets - Before Renovation 1"><img src="https://pub-b88db8c50fd64a9a87f60a4486a4a488.r2.dev/uploads/admin/social-ready-after-1-mmnzas1t.jpg" alt="Modern Kitchen Renovation in Surrey - After Renovation 1"></div><div><img src="https://pub-b88db8c50fd64a9a87f60a4486a4a488.r2.dev/uploads/admin/social-ready-before-2-mmnzas1u.jpg" alt="Modern Kitchen Renovation with Custom Cabinets - Before Renovation 2"><img src="https://pub-b88db8c50fd64a9a87f60a4486a4a488.r2.dev/uploads/admin/social-ready-after-2-mmnzas1u.jpg" alt="Modern Kitchen Renovation in Surrey - After Renovation 2"></div><div><img src="https://pub-b88db8c50fd64a9a87f60a4486a4a488.r2.dev/uploads/admin/social-ready-before-3-mmnzas1u.jpg" alt="Modern Kitchen Renovation with Custom Cabinets - Before Renovation 3"><img src="https://pub-b88db8c50fd64a9a87f60a4486a4a488.r2.dev/uploads/admin/social-ready-after-3-mmnzas1u.jpg" alt="Modern Kitchen Renovation in Surrey - After Renovation 3"></div><h2>結果和要點</h2><p>最終的結果是一個令人驚嘆的現代化廚房，滿足了客戶的所有期望。訂製櫥櫃與整體設計無縫融合，兼具美感吸引力與功能性。客戶對改造表示非常滿意，稱讚對細節和工藝品質的關注。該專案強調了材料選擇和設計一致性對於實現成功改造的重要性。</p>
+
+
+
+Many Metro Vancouver homeowners also upgrade to a [heat pump HVAC system](/services/heat-pump-hvac/) during renovations — providing efficient year-round heating and cooling while qualifying for CleanBC rebates.
+
+
+Renovations that add high-draw appliances or modern lighting often benefit from a [critical load panel upgrade](/services/critical-load-panel/) to ensure adequate electrical capacity and safety.
+
+
+For homeowners planning long-term or accommodating family members with mobility needs, [accessible bathroom renovations](/services/accessible-bathroom/) — including grab bars, curbless showers, and slip-resistant flooring — are a smart addition to any major renovation project.
+
+
+If you live in a strata property (condo or townhouse), review BC''s [strata renovation rules](/blog/strata-renovation-rules-vancouver/) before starting work — many projects require strata council approval and must follow specific noise, hour, and contractor requirements.
+## Frequently Asked Questions
+
+### How much does a modern kitchen renovation with custom cabinets cost in Surrey, BC?
+A modern kitchen renovation in Surrey featuring custom cabinetry typically costs $32,000–$65,000 depending on kitchen size and cabinet specification level. Custom cabinetry alone for a medium Surrey kitchen runs $18,000–$35,000, compared to $8,000–$18,000 for semi-custom and $3,000–$8,000 for stock options. Combined with quartz countertops ($4,000–$10,000), new backsplash ($1,500–$4,000), lighting ($1,500–$3,000), and permit-required plumbing and electrical, a full custom kitchen renovation in Surrey typically ranges $32,000–$65,000. Older Metro Vancouver homes may also need our [Poly-B Pipe Replacement](/en/services/poly-b-replacement/) service to eliminate unsafe plastic piping.
+
+### What are the advantages of custom cabinetry in a Surrey kitchen renovation?
+Custom cabinetry offers three core advantages over stock or semi-custom options in Surrey: (1) exact fit — custom cabinets are built to your specific kitchen dimensions, eliminating filler strips and awkward gaps; (2) unlimited configuration — pantry systems, appliance garages, drawer configurations, and cabinet heights are all specified to your needs; and (3) material and finish choice — any wood species, paint colour, finish type, or hardware is available. For Surrey kitchens with unusual dimensions or high design aspirations, custom is the right choice.
+
+### How long does a custom kitchen renovation take in Surrey, BC?
+A complete custom kitchen renovation in Surrey takes 10–16 weeks from contract signing. Cabinet design and approval: 1–2 weeks. Cabinet manufacturing: 6–10 weeks. City of Surrey permit processing: 3–5 weeks (can run parallel to cabinet manufacturing). Demo and rough-in: 1 week. Cabinet installation: 3–4 days. Countertop template and fabrication: 2–3 weeks after cabinet install. Backsplash, fixtures, appliances, and finishing: 1–2 weeks. Total: 14–18 weeks from contract signing to a fully functional new kitchen.
+
+### What kitchen design features are most popular in Surrey in 2026?
+The most in-demand Surrey kitchen features in 2026 are: two-tone cabinetry (dark lower cabinets, white or light uppers), large quartz islands with waterfall edges, integrated appliances with panel-ready fronts, pot filler above the range, matte black or brushed gold hardware and fixtures, and statement range hoods (custom millwork or plaster-style surrounds). Surrey buyers respond strongly to these features in listing presentations, and renovation clients who incorporate them report high satisfaction with both daily use and resale positioning.
+
+### Does a custom kitchen renovation in Surrey increase resale value significantly?
+In Surrey''s $1.2M–$1.8M detached home market, a quality kitchen renovation — particularly one with custom cabinetry and premium countertops — is one of the most reliable value additions available. Buyers in Surrey''s increasingly competitive market have elevated expectations; a custom kitchen that presents as a finished, coherent design rather than a standard renovation generates stronger buyer interest. ROI on a well-executed Surrey kitchen renovation at mid-to-high finish level: typically 65–85% of renovation cost recovered at resale, plus years of improved daily enjoyment.
+
+### What custom materials and finishes were selected for this Surrey kitchen renovation?
+This Surrey kitchen featured custom wood grain lower cabinets contrasted with white upper cabinets — a two-tone approach that adds visual depth while keeping the overall look bright and contemporary. Silver fixtures and finger-pull drawer handles reinforced the sleek, handle-free aesthetic on the lower cabinets. The countertops were 3cm white quartz, and the backsplash used 2cm thick engineered quartz panels — a thicker profile than standard tile that creates a more substantial, cohesive design statement. Total project budget: $35,000–$38,000, completed in 4–5 weeks of active construction. The integration of wood grain with white cabinetry and the matching quartz backsplash and countertop surfaces created the design coherence that defined the final result.
+
+
+
+Also see: [Surrey kitchen renovation case study](/zh-Hant/blog/surrey-kitchen-renovation-case-study/) | [Surrey Kitchen Renovation](/zh-Hant/blog/kitchen-renovation-surrey-bc-2026/) | [Surrey Home Renovation Guide](/zh-Hant/blog/surrey-home-renovation-guide-2026/) | [How to Finance Your Vancouver Renovation (HELOC Guide)](/zh-Hant/blog/renovation-financing-vancouver-heloc/) | [Renovation Financing Options](/en/financing/) | [Kitchen Design Trends Vancouver 2026](/zh-Hant/blog/kitchen-design-trends-vancouver-2026/) | [Pre-Sale Renovation Surrey](/zh-Hant/blog/pre-sale-renovation-surrey-bc-2026/) | [Best Kitchen Cabinets Vancouver](/zh-Hant/blog/best-kitchen-cabinets-vancouver-stock-vs-custom-2026/) | [Bathroom Renovation Vancouver](/en/services/bathroom/) | [Whole-House Renovation Vancouver](/en/services/whole-house/) | [Basement Renovation Surrey](/en/services/basement/surrey/) | [How to Choose a Contractor](/zh-Hant/blog/how-to-choose-renovation-contractor-vancouver/) | [Pre-Sale Renovation Advice](/en/services/realtor/) | [Renovation Timeline Guide](/zh-Hant/blog/renovation-timeline-how-long-does-each-project-take/) | [Vancouver Renovation Cost Guide 2026](/zh-Hant/blog/renovation-cost-vancouver-2026-complete-guide/) | [BC Renovation Permits Guide](/zh-Hant/blog/renovation-permits-bc-guide/)
+
+Related cost guide: [Kitchen Renovation Cost Vancouver 2026](/en/guides/kitchen-renovation-cost-vancouver/)
+
+See our [verified five-star reviews](/en/reviews/) from Metro Vancouver homeowners.
+
+[About Reno Stars](/en/about/) — Vancouver-based renovation company serving Metro Vancouver since 2019.
+
+[View our renovation project portfolio →](/en/projects/)
+
+Ready to get started? [Book your free consultation →](/zh-Hant/contact/)
+
+| [Cabinet Refinishing &amp; Resurfacing Cost Guide](/en/guides/cabinet-refinishing-cost-vancouver/)
+
+| [Bathroom Renovation Cost Guide for Metro Vancouver](/en/guides/bathroom-renovation-cost-vancouver/)
+
+## See Also — Renovation Cost Guides
+
+- [Bathroom Renovation Cost Vancouver](/en/guides/bathroom-renovation-cost-vancouver/) — average $10K–$60K+
+- [Basement Renovation Cost Vancouver](/en/guides/basement-renovation-cost-vancouver/) — average $20K–$80K
+- [Whole House Renovation Cost Vancouver](/en/guides/whole-house-renovation-cost-vancouver/) — average $50K–$300K+
+- [Cabinet Refinishing Cost Vancouver](/en/guides/cabinet-refinishing-cost-vancouver/) | [Cabinet Refinishing Vancouver](/en/services/cabinet/vancouver/) — from $4K for refinishing';
 UPDATE blog_posts SET localizations = jsonb_set(localizations, ARRAY['contentZhHant'], to_jsonb('<h2>溫哥華浴室裝潢要多少錢？</h2>
 <p>無論您是要更新公寓客用洗手間還是徹底拆除房屋浴室，成本都是房主提出的第一個問題。根據 2025 年至 2026 年 Reno Stars 在大溫哥華地區完成的實際項目，以下是預算內容。</p>
 <p><strong>溫哥華平均浴室裝潢費用：$18,000 – $45,000+</strong>，取決於範圍、大小和完成水平。</p>
@@ -7097,6 +8815,1410 @@ For seniors or those with mobility needs, our [Accessible Bathroom Renovation](/
 UPDATE blog_posts SET localizations = jsonb_set(localizations, ARRAY['metaDescriptionZhHant'], to_jsonb('溫哥華的真實浴室裝修成本：$18K–$45K+ 來自 50 多個已完成的項目。浴缸、淋浴、梳妝台的定價以及節省成本的技巧。免費報價。'::text)) WHERE id = '1eecff45-d8a3-4232-9a62-6c6ec4596da9' AND localizations->>'metaDescriptionZhHant' = '温哥华的真实浴室装修成本：$18K–$45K+ 来自 50 多个已完成的项目。浴缸、淋浴、梳妆台的定价以及节省成本的技巧。免費報價。';
 UPDATE blog_posts SET localizations = jsonb_set(localizations, ARRAY['excerptZhHant'], to_jsonb('在溫哥華翻新廁所到底要花多少錢？類似的兩件式交換運行$400–$900 已安裝；一件式加長運行 $650–$1,500；智能坐浴盆馬桶（帶有所需的 GFCI 插座和供應管線）運行 $1,300–$4,500；帶入牆式水箱托架的壁掛式馬桶運行$3,000–$8,500+。這是我們最近的大溫哥華地區浴室專案的真實細分。'::text)) WHERE id = '7db17ed0-b35b-4616-826a-e478276a2992' AND localizations->>'excerptZhHant' = '在溫哥華翻新廁所到底要花多少錢？类似的两件式交换运行$400–$900 已安装；一件式加长运行 $650–$1,500；智能坐浴盆马桶（带有所需的 GFCI 插座和供应管线）运行 $1,300–$4,500；带入墙式水箱托架的壁挂式马桶运行$3,000–$8,500+。這是我們最近的大溫哥華地區浴室專案的真實細分。';
 UPDATE blog_posts SET localizations = jsonb_set(localizations, ARRAY['metaDescriptionZhHant'], to_jsonb('2026年溫哥華廁所裝修費用：標準$400–$1,500, 裙式$900–$2,000, 壁掛式$3,000–$8,500+。安裝說明和許可指南。免費報價。'::text)) WHERE id = '7db17ed0-b35b-4616-826a-e478276a2992' AND localizations->>'metaDescriptionZhHant' = '2026年温哥华厕所装修费用：标准$400–$1,500, 裙式$900–$2,000, 壁挂式$3,000–$8,500+。安裝說明和許可指南。免費報價。';
+UPDATE blog_posts SET localizations = jsonb_set(localizations, ARRAY['contentZhHant'], to_jsonb('<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "文章",
+  "headline": "BC 2026 年裝修許可證：地下室、廚房及如何申請",
+  "description": "BC 2026 年裝修許可證：地下室裝修、廚房和浴室許可證，哪些項目需要許可證，費用按城市劃分。大溫哥華地區指南。",
+  "url": "https://www.reno-stars.com/zh-Hant/blog/renovation-permits-bc-guide/",
+  「出版商」：{
+    "@type": "組織",
+    "名稱": "Reno Stars",
+    “網址”：”https://www.reno-stars.com”
+  }
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Do I need a permit to renovate my bathroom in Vancouver?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes \u2014 most bathroom renovations in Metro Vancouver require a building permit if they involve moving or adding plumbing, electrical changes, or structural work. A like-for-like swap of fixtures (toilet, vanity, faucet) in the same location generally does not require a permit. Adding a new bathroom, moving a toilet or shower drain, or changing from a tub to a walk-in shower with a new drain location typically requires both a building and plumbing permit. Reno Stars handles permit applications as part of our standard renovation contracts."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How long does it take to get a renovation permit in BC?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Permit processing times vary by municipality. In the City of Vancouver, straightforward residential permits take 6\u201310 weeks; complex structural or heritage projects can take 16+ weeks. In Burnaby and Richmond, processing typically runs 4\u20138 weeks. Surrey and Coquitlam are closer to 3\u20136 weeks for standard residential work. All Metro Vancouver municipalities now offer online permit applications (ePlan), which speeds up the intake step but not the review queue. Reno Stars submits permit packages on your behalf and monitors status weekly."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What happens if you renovate without a permit in BC?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Renovating without a required permit in BC carries serious consequences: the municipality can issue a Stop Work Order and require full demolition of unpermitted work, even if the work is complete and structurally sound. When you sell your home, unpermitted work must be disclosed and often needs retroactive approval (a \"permit after-the-fact\") at 3\u20134\u00d7 the original permit cost. Home insurance claims can be denied if damage is traced to unpermitted work. Buyers'' home inspectors routinely flag unpermitted additions and electrical panel upgrades."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Which renovations don''t need a permit in BC?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Work that typically does not require a permit in most BC municipalities: painting, flooring (non-structural), cabinet replacement in the same footprint, countertop replacement, like-for-like appliance swaps, minor drywall patching, and landscaping below 0.6m (2 ft). When in doubt, call your municipality''s building department \u2014 they will tell you over the phone whether your specific project requires a permit. Reno Stars always confirms permit requirements before quoting."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How much does a renovation permit cost in Vancouver?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Residential building permit fees in the City of Vancouver are calculated as a percentage of construction value \u2014 typically 1%\u20131.5% for projects under $500,000. A $50,000 kitchen renovation permit costs roughly $500\u2013$750. Plumbing and electrical permits are separate: plumbing permits run $150\u2013$400 for most residential work; electrical permits are $100\u2013$300. In addition to fees, most municipalities require a permit deposit that is refunded after final inspection. Fees vary slightly by municipality \u2014 Richmond, Burnaby, and Surrey each have their own fee schedules but are in a similar range.    <h"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How does the permit process differ between Metro Vancouver municipalities?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Permit processing time varies significantly across Metro Vancouver: City of Vancouver: 4\u20138 weeks (highest volume, slowest). City of Burnaby: 3\u20135 weeks. City of Surrey: 3\u20136 weeks. City of Richmond: 3\u20135 weeks. City of Coquitlam: 3\u20136 weeks. District of North Vancouver: 3\u20135 weeks. City of West Vancouver: 3\u20136 weeks. Smaller municipalities (Port Moody, Port Coquitlam, New Westminster, White Rock, Delta): 2\u20134 weeks. Processing times reflect application volume relative to staff capacity \u2014 Vancouver processes thousands of permits/month vs White Rock processing dozens. Permit fees also vary: Vancouver c"
+      }
+    }
+  ]
+}
+</script>
+
+<h2>您在 BC 省進行裝修需要許可證嗎？</h2>
+<p>在不列顛哥倫比亞省，《不列顛哥倫比亞省建築規範》規定了需要許可證的事項。溫哥華、本拿比、素里和列治文等城市各自管理自己的許可辦公室，但它們都遵循相同的省級框架。</p>
+<p><strong>需要許可證：</strong></p>
+<ul>
+<li>結構工程（拆除或移動承重牆）</li>
+<li>電氣工作（新電路、[面板升級](/en/services/critical-load-panel/)、在潮濕區域添加插座）</li>
+<li>管道（移動排水管、供應管線、添加固定裝置）</li>
+<li>HVAC 變更（新增管道、新設備）</li>
+<li>新增或修改輔助套件</li>
+<li>建造離地面超過 24 英吋的甲板</li>
+<li>建造附屬住宅單元（後巷屋）</li>
+<li>在新位置新增浴室</li>
+<li>改造未完工的地下室</li>
+</ul>
+<p><strong>以下情況不需要許可證：</strong></p>
+<ul>
+<li>油漆、地板、磁磚（僅限化妝品）</li>
+<li>更換同一位置的固定裝置（同一排水位置、同一接線）</li>
+<li>用相同尺寸的單元更換門窗（無結構變化）</li>
+<li>更換廚櫃（無需重新安置管道或電氣）</li>
+<li>小修和保養</li>
+</ul>
+<blockquote>
+<p><strong>重要的：</strong> 當以下情況時需要許可證 <em>範圍</em> 變化，不只是 <em>表面</em>。用相同的排水管更換同一位置的浴缸=不允許。將浴缸移動 12 英吋 = 需要許可。</p>
+</blockquote>
+<h2>各市府的裝修許可費用</h2>
+<table>
+<thead>
+<tr>
+<th>市政府</th>
+<th>建築許可證基本費</th>
+<th>筆記</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>溫哥華市</td>
+<td>$330 最小值 + $8–$15 每 $1,000 值</td>
+<td>可用線上入口網站</td>
+</tr>
+<tr>
+<td>貝納比</td>
+<td>$385 最低+費用表</td>
+<td>5-10 個工作天內即可辦理居住許可證</td>
+</tr>
+<tr>
+<td>素里</td>
+<td>$290 最低+費用表</td>
+<td>接受網上申請</td>
+</tr>
+<tr>
+<td>列治文</td>
+<td>$300 最低+費用表</td>
+<td>包括機械/電氣</td>
+</tr>
+<tr>
+<td>北溫哥華市</td>
+<td>$350 最小值</td>
+<td>包括 1 次檢查</td>
+</tr>
+<tr>
+<td>北溫哥華區</td>
+<td>$360 最小值</td>
+<td>3-4週處理標準</td>
+</tr>
+<tr>
+<td>高貴林</td>
+<td>$310 最低+費用表</td>
+<td>線上入口網站</td>
+</tr>
+<tr>
+<td>新威斯敏斯特</td>
+<td>$295 最低+費用表</td>
+<td>通常需要 1-2 週</td>
+</tr>
+</tbody></table>
+<p>對於典型的$25,000 [浴室裝修](/en/services/bathroom/)，預計需要支付$350–$600 的許可證費用。對於 $60,000 [廚房裝修](/en/services/kitchen/)，預算為 $600–$900  許可證費用。</p>
+<h2>在大溫哥華地區取得裝修許可證需要多長時間？</h2>
+<p>處理時間因城市和專案類型而異：</p>
+<table>
+<thead>
+<tr>
+<th>市政府</th>
+<th>典型處理時間</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>溫哥華市（快車）</td>
+<td>簡單許可證需要 1-3 個工作天</td>
+</tr>
+<tr>
+<td>溫哥華市（標準）</td>
+<td>複雜許可證需要 3-6 週</td>
+</tr>
+<tr>
+<td>貝納比</td>
+<td>5–10 個工作天</td>
+</tr>
+<tr>
+<td>素里</td>
+<td>2–4 週</td>
+</tr>
+<tr>
+<td>列治文</td>
+<td>1-3週</td>
+</tr>
+<tr>
+<td>北溫哥華</td>
+<td>2–4 週</td>
+</tr>
+<tr>
+<td>高貴林</td>
+<td>1-3週</td>
+</tr>
+</tbody></table>
+<p><strong>專業提示：</strong> 建築許可證處理時間與專案開始時間不同。您可以在許可證審核期間訂購材料、完成設計並進行非結構準備。優秀的裝修承包商會提前領取許可證，並安排工作人員在許可證到達的那週開始施工。</p>
+<p>在Reno Stars，我們將許可證管理納入所有適用的項目中 - 我們提取許可證、安排所需的檢查並處理文書工作，這樣您就無需&#39;。</p>
+<h2>許可流程：一步一步</h2>
+<h3>第 1 步：確定需要什麼&#39;</h3>
+<p>您的裝修承包商應告知您需要哪些許可證。如果您&#39;自己管理該項目，請致電當地的建築部門並描述工作範圍。他們&#39;會告訴您需要什麼&#39;。</p>
+<h3>第 2 步：準備圖紙</h3>
+<p>對於大多數住宅裝修，您&#39;需要：</p>
+<ul>
+<li>場地平面圖（顯示您的地段以及工作地點）</li>
+<li>平面圖（現有的和擬議的）</li>
+<li>立面圖（廚房、浴室、結構變化）</li>
+<li>任何結構工程的詳細信息</li>
+</ul>
+<p>簡單的許可證（單一固定裝置，無佈局變更）通常不需要&#39;超出書面描述的圖紙。</p>
+<h3>第三步：提交申請</h3>
+<p>大多數城市現在都接受線上申請。您&#39;將上傳圖面、支付費用並收到許可證號。有些城市會在同一天為簡單項目發放許可證；其他需要計劃審查（通常 2-4 週）。</p>
+<h3>第 4 步：張貼許可證</h3>
+<p>一旦頒發，許可證必須在施工期間在現場可見。您的承包商會處理這件事。</p>
+<h3>第 5 步：安排檢查</h3>
+<p>許可證包括特定階段所需的檢查：</p>
+<ul>
+<li><strong>粗加工檢查：</strong> 在框架、粗糙的管道和粗糙的電氣之後 - 在牆壁關閉之前</li>
+<li><strong>絕緣檢查：</strong> （如適用）</li>
+<li><strong>最終檢查：</strong> 全部工作完成後</li>
+</ul>
+<p>您的承包商安排這些檢查並確保工作準備就緒。</p>
+<h3>第 6 步：最終簽核</h3>
+<p>一旦所有檢查通過，許可證就會關閉。這是您完成編碼工作的文檔 - 對於保險和未來的銷售很重要。</p>
+<h2>如果未經許可進行裝修會怎樣？</h2>
+<p>跳過許可證似乎是一種節省時間和金錢的方法，但後果可能很嚴重：</p>
+<ol>
+<li><strong>強行拆除：</strong> 如果無法檢查&#39;，市政府可以命令您打開牆壁、暴露管道，甚至撕掉已完成的作品。</li>
+<li><strong>保險作廢：</strong> 如果未經許可的工作導致火災、洪水或結構故障，您的家庭保險可能會拒絕索賠。</li>
+<li><strong>銷售併發症：</strong> BC 省要求揭露未經許可的房屋銷售工作。買家可能會要求降價或完全走開。</li>
+<li><strong>抵押貸款問題：</strong> 貸款人可以要求提供證明，證明在再融資時所有工作均已獲得許可並經過檢查。</li>
+<li><strong>罰款：</strong> 市政府可以根據範圍發出停工令和$200–$10,000 的罰款。</li>
+</ol>
+<h2>公寓和分層房產許可證</h2>
+<p>如果您擁有公寓或分契式房產，許可證只是審批流程的一部分。你還需要 <strong>物業委員會批准</strong> 在開始任何影響以下方面的裝修之前：</p>
+<ul>
+<li>管路（排水管、供水管）</li>
+<li>電力</li>
+<li>從地板到天花板的瓷磚</li>
+<li>暖通空調</li>
+<li>單元內的結構元素</li>
+</ul>
+<p>分層審批是獨立於市政建築許可證的過程。兩者通常都需要 <a href="/en/services/bathroom/">浴室</a> 和 <a href="/en/services/kitchen/">廚房裝修</a> 在大溫哥華地區的公寓裡。</p>
+<p>Reno Stars 已完成數百層分契翻新 <a href="/en/areas/vancouver/">溫哥華</a>, <a href="/en/areas/burnaby/">貝納比</a>, <a href="/en/areas/richmond/">列治文</a>， 和 <a href="/en/areas/coquitlam/">高貴林</a>。作為我們標準專案流程的一部分，我們管理分層提交和許可證申請。請參閱我們針對大溫哥華地區房主的 [BC Strata 裝修規則](/zh-Hant/blog/strata-renovation-rules-vancouver/) 指南。</p>
+<h2>Secondary Suite and [Basement Renovation](/en/guides/basement-renovation-cost-vancouver/) Permits</h2>
+<p>在 BC 增加輔助套房（[地下室套房](/en/guides/basement-suite-cost-vancouver/)）需要：</p>
+<ul>
+<li>一個 <strong>建築許可證</strong> 來自您所在城市的</li>
+<li>遵守 <strong>不列顛哥倫比亞省建築規範</strong> 用於套房隔離（1小時防火牆/天花板，最小天花板高度6&#39;5&quot;）</li>
+<li><strong>電力許可證</strong> （歐空局 - 電氣安全局）</li>
+<li><strong>管道許可證</strong> （如果添加浴室或廚房）</li>
+<li>符合當地 <strong>分區章程</strong> （並非所有區域都允許套房）</li>
+</ul>
+<p>在溫哥華市，大多數 RS 區都允許使用二級套房。檢查您的區域 <a href="https://www.vancouver.ca">溫哥華網</a> 或致電您當地的規劃部門。</p>
+<p>有關地下室裝修的完整信息，請參閱我們的 <a href="/zh-Hant/blog/basement-renovation-vancouver-complete-guide/">溫哥華地下室裝潢完整指南</a>.</p>
+<h2>有關 BC 省翻修許可證的常見問題</h2>
+<p><strong>我的承包商可以為我提取許可證嗎？</strong>
+是的——他們應該這樣做。在不列顛哥倫比亞省，記錄承包商負責領取許可證。如果承包商要求您收回自己的許可證，那麼&#39;是一個重大危險信號 - 這可能意味著他們&#39;沒有許可證或試圖逃避責任。</p>
+<p><strong>更換廚櫃需要許可證嗎？</strong>
+否 — 如果您&#39;在不移動管道或電氣的情況下更換機櫃，則不需要許可證。</p>
+<p><strong>更換熱水箱需要許可證嗎？</strong>
+是的——通常需要管道許可證。你的水管工會處理這個。</p>
+<p><strong>如果前業主進行了未經許可的工作怎麼辦？</strong>
+在進行其他工作之前，您&#39;有責任使其合法化。許多買家在裝修過程中發現了未經許可的工作——正確的方法是與承包商和市政當局合作，使其符合規範。</p>
+<p><strong>建築許可證的有效期限是多久？</strong>
+BC 省的建築許可證通常有效期為 2 年。如果屆時工作尚未完成&#39;，您通常可以申請延期。</p>
+<h2>含許可證的裝修服務</h2>
+<p>Reno Stars 處理所有適用許可證的項目的完整許可流程－從確定所需的&#39;到最終檢查簽字。我們&#39;是一家有執照且有保險的裝修承包商，服務於 <a href="/en/areas/vancouver/">大溫哥華地區</a>, <a href="/en/areas/north-vancouver/">北溫哥華</a>, <a href="/en/areas/surrey/">素里</a>、及週邊地區。</p>
+<p>經常需要許可的服務包括 <a href="/en/services/kitchen/">廚房裝修</a>, <a href="/en/services/bathroom/">浴室裝修</a>, <a href="/en/services/basement/">地下室裝修</a>， 和 <a href="/en/services/whole-house/">全屋翻新</a>.</p>
+<p><a href="/zh-Hant/contact/">聯絡我們</a> 免費諮詢。我們&#39;將評估您的項目，就許可證要求提供建議，並提供詳細的報價。致電或發短信：778-960-7999。</p>
+<p>參見： <a href="/zh-Hant/blog/how-to-choose-renovation-contractor-vancouver/">如何選擇溫哥華的裝潢承包商</a> | <a href="/en/guides/bathroom-renovation-cost-vancouver/">溫哥華的平均浴室裝修費用</a></p>
+
+
+## Bathroom Renovation Permit Vancouver
+
+Most bathroom renovations in Metro Vancouver require at least one permit — and often two or three. Here''s a practical breakdown:
+
+**Like-for-like fixture swaps (no permit needed):**
+- Toilet replacement in the same rough-in location
+- Vanity and faucet replacement (no plumbing relocation)
+- Light fixture swap (same wiring, no new circuits)
+- Mirror, towel bars, accessories
+
+**Bathroom work that REQUIRES a permit:**
+- Converting a bathtub to a walk-in shower (new drain location = plumbing permit)
+- Adding a bathroom in a new location (building + plumbing permit)
+- Moving a toilet (plumbing permit)
+- Adding exhaust fan wiring (electrical permit)
+- Heated floor installation (electrical permit)
+
+**Bathroom permit costs in Metro Vancouver (2026):**
+
+| City | Plumbing Permit | Electrical Permit | Combined Estimate |
+|-' || '-' || '-|-' || '-' || '-|-' || '-' || '-|-' || '-' || '-|
+| City of Vancouver | $175–$350 | $150–$300 | $325–$650 |
+| Burnaby | $150–$300 | $120–$250 | $270–$550 |
+| Surrey | $140–$280 | $110–$230 | $250–$510 |
+| Richmond | $150–$290 | $120–$240 | $270–$530 |
+| North Vancouver | $160–$320 | $130–$260 | $290–$580 |
+| Coquitlam | $145–$285 | $115–$235 | $260–$520 |
+
+For a typical $15,000–$25,000 bathroom renovation in Metro Vancouver, total permit fees run $300–$700. Processing takes 1–6 weeks depending on municipality and whether structural or electrical changes are involved.
+
+Permit fees are only a small slice of the total budget — see our guide to [bathroom renovation cost in Vancouver](/en/guides/bathroom-renovation-cost-vancouver/) for full 2026 pricing by size and style. Renovating on the North Shore? Our [bathroom renovation in West Vancouver](/en/areas/west-vancouver/) page covers District of West Vancouver permit timelines and real local project costs.
+
+## Basement Renovation Permit Vancouver
+
+Basement renovations almost always require permits — the scope determines which types:
+
+**Basement finishing (open unfinished space to livable area):**
+- Building permit required (framing, insulation, drywall)
+- Electrical permit required (new circuits, pot lights)
+- Plumbing permit if adding a bathroom or wet bar
+- Typical permit cost: $500–$1,200 for a 600–1,200 sq ft basement at $50–$150K construction value
+
+**General basement renovation permit checklist:**
+
+| Scope | Permit Required | Who Pulls It |
+|-' || '-' || '-|-' || '-' || '-|-' || '-' || '-|
+| Framing new walls | Building | Contractor |
+| Insulation + vapour barrier | Building | Contractor |
+| New electrical circuits | Electrical (ESA) | Electrician |
+| Adding a bathroom | Plumbing + Building | Contractor/Plumber |
+| HVAC extensions | Mechanical | Contractor |
+| Egress window enlargement | Building | Contractor |
+| Secondary suite creation | Building + Electrical + Plumbing | All trades |
+
+**Processing times for basement renovation permits in Metro Vancouver (2026):**
+- City of Vancouver: 6–14 weeks (online intake; complex projects take longer)
+- Burnaby: 4–8 weeks
+- Surrey: 3–6 weeks
+- Richmond: 3–5 weeks
+- Coquitlam + Tri-Cities: 3–6 weeks
+
+Reno Stars handles the complete permit application package — drawings, structural engineer sign-off where required, and inspection scheduling — as part of our standard [basement renovation](/en/services/basement/) contract.
+
+Ready to start your Metro Vancouver renovation? [Request a free quote](/zh-Hant/contact/) — our team will advise on permit requirements and handle the complete permit application process.
+
+
+
+
+## We Serve These Metro Vancouver Communities
+
+Reno Stars provides renovation permits across Metro Vancouver: [Delta](/en/areas/delta/) | [Langley](/en/areas/langley/) | [Maple Ridge](/en/areas/maple-ridge/) | [New Westminster](/en/areas/new-westminster/) | [Port Coquitlam](/en/areas/port-coquitlam/) | [Port Moody](/en/areas/port-moody/) | [West Vancouver](/en/areas/west-vancouver/) | [White Rock](/en/areas/white-rock/)
+
+## Frequently Asked Questions
+
+### Do I need a permit to renovate my bathroom in Vancouver?
+
+Yes — most bathroom renovations in Metro Vancouver require a building permit if they involve moving or adding plumbing, electrical changes, or structural work. A like-for-like swap of fixtures (toilet, vanity, faucet) in the same location generally does not require a permit. Adding a new bathroom, moving a toilet or shower drain, or changing from a tub to a walk-in shower with a new drain location typically requires both a building and plumbing permit. Our [Accessible Bathroom Renovation](/en/services/accessible-bathroom/) service specialises in safety upgrades and accessibility modifications. Reno Stars handles permit applications as part of our standard renovation contracts.
+
+### How long does it take to get a renovation permit in BC?
+
+Permit processing times vary by municipality. In the City of Vancouver, straightforward residential permits take 6–10 weeks; complex structural or heritage projects can take 16+ weeks. In Burnaby and Richmond, processing typically runs 4–8 weeks. Surrey and Coquitlam are closer to 3–6 weeks for standard residential work. All Metro Vancouver municipalities now offer online permit applications (ePlan), which speeds up the intake step but not the review queue. Reno Stars submits permit packages on your behalf and monitors status weekly.
+
+### What happens if you renovate without a permit in BC?
+
+Renovating without a required permit in BC carries serious consequences: the municipality can issue a Stop Work Order and require full demolition of unpermitted work, even if the work is complete and structurally sound. When you sell your home, unpermitted work must be disclosed and often needs retroactive approval (a "permit after-the-fact") at 3–4× the original permit cost. For expert [Pre-Sale Renovation Advice](/en/services/realtor/) before listing, speak with our renovation team. Home insurance claims can be denied if damage is traced to unpermitted work. Buyers'' home inspectors routinely flag unpermitted additions and electrical panel upgrades.
+
+### Which renovations don''t need a permit in BC?
+
+Work that typically does not require a permit in most BC municipalities: painting, flooring (non-structural), cabinet replacement in the same footprint, countertop replacement, like-for-like appliance swaps, minor drywall patching, and landscaping below 0.6m (2 ft). When in doubt, call your municipality''s building department — they will tell you over the phone whether your specific project requires a permit. Reno Stars always confirms permit requirements before quoting.
+
+### How much does a renovation permit cost in Vancouver?
+
+Residential building permit fees in the City of Vancouver are calculated as a percentage of construction value — typically 1%–1.5% for projects under $500,000. A $50,000 kitchen renovation permit costs roughly $500–$750. Plumbing and electrical permits are separate: plumbing permits run $150–$400 for most residential work; electrical permits are $100–$300. Older Metro Vancouver homes may also need our [Poly-B Pipe Replacement](/en/services/poly-b-replacement/) service to eliminate unsafe plastic piping. In addition to fees, most municipalities require a permit deposit that is refunded after final inspection. Fees vary slightly by municipality — Richmond, Burnaby, and Surrey each have their own fee schedules but are in a similar range.
+
+
+
+<hr />
+請參閱來自大溫哥華地區房主的[經過驗證的五星級評論](/en/reviews/)。
+
+[關於 Reno Stars](/en/about/) — 總部位於溫哥華的裝修公司，自 2019 年起為大溫哥華地區提供服務。
+
+[查看我們的改造專案組合→](/en/projects/)
+
+<p><strong>Reno Stars 處理大溫哥華地區每次翻修的所有許可證申請。</strong> 您是否需要許可證 <a href="/en/services/kitchen/">廚房裝修</a>, <a href="/en/services/bathroom/">浴室改造</a>， 或者 <a href="/en/services/whole-house/">全屋改造</a>，我們的團隊會歸檔文件、安排檢查並讓您的專案步入正軌。 <a href="/zh-Hant/contact/"><strong>索取免費報價</strong></a> ——沒有義務。</p>
+<hr />
+
+### How does the permit process differ between Metro Vancouver municipalities?
+
+Permit processing time varies significantly across Metro Vancouver: City of Vancouver: 4–8 weeks (highest volume, slowest). City of Burnaby: 3–5 weeks. City of Surrey: 3–6 weeks. City of Richmond: 3–5 weeks. City of Coquitlam: 3–6 weeks. District of North Vancouver: 3–5 weeks. City of West Vancouver: 3–6 weeks. Smaller municipalities (Port Moody, Port Coquitlam, New Westminster, White Rock, Delta): 2–4 weeks. Processing times reflect application volume relative to staff capacity — Vancouver processes thousands of permits/month vs White Rock processing dozens. Permit fees also vary: Vancouver charges per declared construction value, while many other cities charge flat fees by permit type.
+
+Also see: [renovation timeline](/zh-Hant/blog/renovation-timeline-how-long-does-each-project-take/) | [renovation insurance guide BC](/zh-Hant/blog/renovation-insurance-guide-bc/) | [duplex renovation permits Vancouver](/zh-Hant/blog/duplex-renovation-vancouver-costs-permits-2026/) | [multiplex & laneway renovation guide](/zh-Hant/blog/vancouver-multiplex-laneway-renovation-guide-2026/) | [pre-1980 home renovation guide](/zh-Hant/blog/pre-1980-home-renovation-vancouver-what-to-expect/) | [BC basement renovation financing](/zh-Hant/blog/basement-renovation-financing-bc-guide/) | [How to Finance Your Vancouver Renovation (HELOC Guide)](/zh-Hant/blog/renovation-financing-vancouver-heloc/) | [Renovation Financing Options](/en/financing/) | [Vancouver Renovation Cost Guide 2026](/zh-Hant/blog/renovation-cost-vancouver-2026-complete-guide/) | [BC Renovation Permits Guide](/zh-Hant/blog/renovation-permits-bc-guide/)
+
+## Related Renovation Cost Guides
+
+Our [Heat Pump Installation Vancouver](/en/services/heat-pump-hvac/) service modernises your home heating with energy-efficient heat pump systems.
+
+- [Kitchen Renovation Cost Vancouver](/en/guides/kitchen-renovation-cost-vancouver/) — average $15K–$80K in Metro Vancouver
+- [Whole House Renovation Cost Vancouver](/en/guides/whole-house-renovation-cost-vancouver/) — average $50K–$300K+
+- [Cabinet Refinishing Cost Vancouver](/en/guides/cabinet-refinishing-cost-vancouver/) | [Cabinet Refinishing Vancouver](/en/services/cabinet/vancouver/) — from $4K for refinishing
+- [Commercial Renovation Cost Vancouver](/en/guides/commercial-renovation-cost-vancouver/) — office & retail fit-out costs
+
+## City-Specific Renovation Permit Guides
+
+- [Burnaby Renovation Permits](/zh-Hant/blog/burnaby-home-renovation-guide-2026/) — Burnaby building permit requirements
+- [Surrey Renovation Permits Guide 2026](/zh-Hant/blog/surrey-renovation-permits-guide-2026/) — Surrey permits and bylaws
+- [Coquitlam Home Renovation Guide 2026](/zh-Hant/blog/coquitlam-home-renovation-guide-2026/) — Coquitlam permit process
+- [Delta Home Renovation Guide 2026](/zh-Hant/blog/delta-home-renovation-guide-2026/) — Delta building department
+- [Duplex Renovation Vancouver: Costs & Permits](/zh-Hant/blog/duplex-renovation-vancouver-costs-permits-2026/) — multi-family permit guide
+- [ADU & Laneway House Renovation Vancouver](/zh-Hant/blog/adu-renovation-vancouver-2026/) — secondary suite permits
+
+
+- [Split-Level Home Renovation Burnaby/Coquitlam 2026](/zh-Hant/blog/split-level-home-renovation-burnaby-coquitlam-2026/) — structural and permit considerations for split-level homes
+
+- [Heritage Home Renovation Vancouver 2026](/zh-Hant/blog/heritage-home-renovation-vancouver-2026/) — navigating heritage alteration permits and character home guidelines
+
+- [How to Read a Renovation Quote: Line-by-Line Guide](/zh-Hant/blog/how-to-read-renovation-quote-line-items/) — understanding renovation quotes and permits
+
+- [Office Renovation Vancouver: Tenant Improvements 2026](/zh-Hant/blog/office-renovation-vancouver-tenant-improvements-2026/) — office renovation permits and tenant improvements
+
+- [Restaurant Renovation Cost Vancouver](/zh-Hant/blog/restaurant-renovation-cost-vancouver/) — commercial restaurant renovation costs and permits
+<p>有關的： <a href="/blog/commercial-warehouse-door-renovation-burnaby">商業裝修本拿比</a></p>'::text)) WHERE id = '748491ab-98a5-4205-905c-e693a877571f' AND localizations->>'contentZhHant' = '<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "文章",
+  "headline": "BC 2026 年裝修許可證：地下室、廚房及如何申請",
+  "description": "BC 2026 年裝修許可證：地下室裝修、廚房和浴室許可證，哪些項目需要許可證，費用按城市劃分。大溫哥華地區指南。",
+  "url": "https://www.reno-stars.com/zh-Hant/blog/renovation-permits-bc-guide/",
+  「出版商」：{
+    "@type": "組織",
+    "名稱": "Reno Stars",
+    “網址”：”https://www.reno-stars.com”
+  }
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Do I need a permit to renovate my bathroom in Vancouver?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes \u2014 most bathroom renovations in Metro Vancouver require a building permit if they involve moving or adding plumbing, electrical changes, or structural work. A like-for-like swap of fixtures (toilet, vanity, faucet) in the same location generally does not require a permit. Adding a new bathroom, moving a toilet or shower drain, or changing from a tub to a walk-in shower with a new drain location typically requires both a building and plumbing permit. Reno Stars handles permit applications as part of our standard renovation contracts."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How long does it take to get a renovation permit in BC?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Permit processing times vary by municipality. In the City of Vancouver, straightforward residential permits take 6\u201310 weeks; complex structural or heritage projects can take 16+ weeks. In Burnaby and Richmond, processing typically runs 4\u20138 weeks. Surrey and Coquitlam are closer to 3\u20136 weeks for standard residential work. All Metro Vancouver municipalities now offer online permit applications (ePlan), which speeds up the intake step but not the review queue. Reno Stars submits permit packages on your behalf and monitors status weekly."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What happens if you renovate without a permit in BC?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Renovating without a required permit in BC carries serious consequences: the municipality can issue a Stop Work Order and require full demolition of unpermitted work, even if the work is complete and structurally sound. When you sell your home, unpermitted work must be disclosed and often needs retroactive approval (a \"permit after-the-fact\") at 3\u20134\u00d7 the original permit cost. Home insurance claims can be denied if damage is traced to unpermitted work. Buyers'' home inspectors routinely flag unpermitted additions and electrical panel upgrades."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Which renovations don''t need a permit in BC?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Work that typically does not require a permit in most BC municipalities: painting, flooring (non-structural), cabinet replacement in the same footprint, countertop replacement, like-for-like appliance swaps, minor drywall patching, and landscaping below 0.6m (2 ft). When in doubt, call your municipality''s building department \u2014 they will tell you over the phone whether your specific project requires a permit. Reno Stars always confirms permit requirements before quoting."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How much does a renovation permit cost in Vancouver?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Residential building permit fees in the City of Vancouver are calculated as a percentage of construction value \u2014 typically 1%\u20131.5% for projects under $500,000. A $50,000 kitchen renovation permit costs roughly $500\u2013$750. Plumbing and electrical permits are separate: plumbing permits run $150\u2013$400 for most residential work; electrical permits are $100\u2013$300. In addition to fees, most municipalities require a permit deposit that is refunded after final inspection. Fees vary slightly by municipality \u2014 Richmond, Burnaby, and Surrey each have their own fee schedules but are in a similar range.    <h"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How does the permit process differ between Metro Vancouver municipalities?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Permit processing time varies significantly across Metro Vancouver: City of Vancouver: 4\u20138 weeks (highest volume, slowest). City of Burnaby: 3\u20135 weeks. City of Surrey: 3\u20136 weeks. City of Richmond: 3\u20135 weeks. City of Coquitlam: 3\u20136 weeks. District of North Vancouver: 3\u20135 weeks. City of West Vancouver: 3\u20136 weeks. Smaller municipalities (Port Moody, Port Coquitlam, New Westminster, White Rock, Delta): 2\u20134 weeks. Processing times reflect application volume relative to staff capacity \u2014 Vancouver processes thousands of permits/month vs White Rock processing dozens. Permit fees also vary: Vancouver c"
+      }
+    }
+  ]
+}
+</script>
+
+<h2>您在 BC 省進行裝修需要許可證嗎？</h2>
+<p>在不列顛哥倫比亞省，《不列顛哥倫比亞省建築規範》規定了需要許可證的事項。溫哥華、本拿比、素里和列治文等城市各自管理自己的許可辦公室，但它們都遵循相同的省級框架。</p>
+<p><strong>需要許可證：</strong></p>
+<ul>
+<li>結構工程（拆除或移動承重牆）</li>
+<li>電氣工作（新電路、[面板升級](/en/services/critical-load-panel/)、在潮濕區域添加插座）</li>
+<li>管道（移動排水管、供應管線、添加固定裝置）</li>
+<li>HVAC 變更（新增管道、新設備）</li>
+<li>新增或修改輔助套件</li>
+<li>建造離地面超過 24 英吋的甲板</li>
+<li>建造附屬住宅單元（後巷屋）</li>
+<li>在新位置新增浴室</li>
+<li>改造未完工的地下室</li>
+</ul>
+<p><strong>以下情況不需要許可證：</strong></p>
+<ul>
+<li>油漆、地板、磁磚（僅限化妝品）</li>
+<li>更換同一位置的固定裝置（同一排水位置、同一接線）</li>
+<li>用相同尺寸的單元更換門窗（無結構變化）</li>
+<li>更換廚櫃（無需重新安置管道或電氣）</li>
+<li>小修和保養</li>
+</ul>
+<blockquote>
+<p><strong>重要的：</strong> 當以下情況時需要許可證 <em>範圍</em> 變化，不只是 <em>表面</em>。用相同的排水管更換同一位置的浴缸=不允許。將浴缸移動 12 英吋 = 需要許可。</p>
+</blockquote>
+<h2>各市府的裝修許可費用</h2>
+<table>
+<thead>
+<tr>
+<th>市政府</th>
+<th>建築許可證基本費</th>
+<th>筆記</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>溫哥華市</td>
+<td>$330 最小值 + $8–$15 每 $1,000 值</td>
+<td>可用線上入口網站</td>
+</tr>
+<tr>
+<td>貝納比</td>
+<td>$385 最低+費用表</td>
+<td>5-10 個工作天內即可辦理居住許可證</td>
+</tr>
+<tr>
+<td>素里</td>
+<td>$290 最低+費用表</td>
+<td>接受網上申請</td>
+</tr>
+<tr>
+<td>列治文</td>
+<td>$300 最低+費用表</td>
+<td>包括機械/電氣</td>
+</tr>
+<tr>
+<td>北溫哥華市</td>
+<td>$350 最小值</td>
+<td>包括 1 次檢查</td>
+</tr>
+<tr>
+<td>北溫哥華區</td>
+<td>$360 最小值</td>
+<td>3-4週處理標準</td>
+</tr>
+<tr>
+<td>高貴林</td>
+<td>$310 最低+費用表</td>
+<td>線上入口網站</td>
+</tr>
+<tr>
+<td>新威斯敏斯特</td>
+<td>$295 最低+費用表</td>
+<td>通常需要 1-2 週</td>
+</tr>
+</tbody></table>
+<p>對於典型的$25,000 [浴室裝修](/en/services/bathroom/)，預計需要支付$350–$600 的許可證費用。對於 $60,000 [廚房裝修](/en/services/kitchen/)，預算為 $600–$900  許可證費用。</p>
+<h2>在大溫哥華地區取得裝修許可證需要多長時間？</h2>
+<p>處理時間因城市和專案類型而異：</p>
+<table>
+<thead>
+<tr>
+<th>市政府</th>
+<th>典型處理時間</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>溫哥華市（快車）</td>
+<td>簡單許可證需要 1-3 個工作天</td>
+</tr>
+<tr>
+<td>溫哥華市（標準）</td>
+<td>複雜許可證需要 3-6 週</td>
+</tr>
+<tr>
+<td>貝納比</td>
+<td>5–10 個工作天</td>
+</tr>
+<tr>
+<td>素里</td>
+<td>2–4 週</td>
+</tr>
+<tr>
+<td>列治文</td>
+<td>1-3週</td>
+</tr>
+<tr>
+<td>北溫哥華</td>
+<td>2–4 週</td>
+</tr>
+<tr>
+<td>高貴林</td>
+<td>1-3週</td>
+</tr>
+</tbody></table>
+<p><strong>專業提示：</strong> 建築許可證處理時間與專案開始時間不同。您可以在許可證審核期間訂購材料、完成設計並進行非結構準備。優秀的裝修承包商會提前領取許可證，並安排工作人員在許可證到達的那週開始施工。</p>
+<p>在Reno Stars，我們將許可證管理納入所有適用的項目中 - 我們提取許可證、安排所需的檢查並處理文書工作，這樣您就無需&#39;。</p>
+<h2>許可流程：一步一步</h2>
+<h3>第 1 步：確定需要什麼&#39;</h3>
+<p>您的裝修承包商應告知您需要哪些許可證。如果您&#39;自己管理該項目，請致電當地的建築部門並描述工作範圍。他們&#39;會告訴您需要什麼&#39;。</p>
+<h3>第 2 步：準備圖紙</h3>
+<p>對於大多數住宅裝修，您&#39;需要：</p>
+<ul>
+<li>場地平面圖（顯示您的地段以及工作地點）</li>
+<li>平面圖（現有的和擬議的）</li>
+<li>立面圖（廚房、浴室、結構變化）</li>
+<li>任何結構工程的詳細信息</li>
+</ul>
+<p>簡單的許可證（單一固定裝置，無佈局變更）通常不需要&#39;超出書面描述的圖紙。</p>
+<h3>第三步：提交申請</h3>
+<p>大多數城市現在都接受線上申請。您&#39;將上傳圖面、支付費用並收到許可證號。有些城市會在同一天為簡單項目發放許可證；其他需要計劃審查（通常 2-4 週）。</p>
+<h3>第 4 步：張貼許可證</h3>
+<p>一旦頒發，許可證必須在施工期間在現場可見。您的承包商會處理這件事。</p>
+<h3>第 5 步：安排檢查</h3>
+<p>許可證包括特定階段所需的檢查：</p>
+<ul>
+<li><strong>粗加工檢查：</strong> 在框架、粗糙的管道和粗糙的電氣之後 - 在牆壁關閉之前</li>
+<li><strong>絕緣檢查：</strong> （如適用）</li>
+<li><strong>最終檢查：</strong> 全部工作完成後</li>
+</ul>
+<p>您的承包商安排這些檢查並確保工作準備就緒。</p>
+<h3>第 6 步：最終簽核</h3>
+<p>一旦所有檢查通過，許可證就會關閉。這是您完成編碼工作的文檔 - 對於保險和未來的銷售很重要。</p>
+<h2>如果未經許可進行裝修會怎樣？</h2>
+<p>跳過許可證似乎是一種節省時間和金錢的方法，但後果可能很嚴重：</p>
+<ol>
+<li><strong>強行拆除：</strong> 如果無法檢查&#39;，市政府可以命令您打開牆壁、暴露管道，甚至撕掉已完成的作品。</li>
+<li><strong>保險作廢：</strong> 如果未經許可的工作導致火災、洪水或結構故障，您的家庭保險可能會拒絕索賠。</li>
+<li><strong>銷售併發症：</strong> BC 省要求揭露未經許可的房屋銷售工作。買家可能會要求降價或完全走開。</li>
+<li><strong>抵押貸款問題：</strong> 貸款人可以要求提供證明，證明在再融資時所有工作均已獲得許可並經過檢查。</li>
+<li><strong>罰款：</strong> 市政府可以根據範圍發出停工令和$200–$10,000 的罰款。</li>
+</ol>
+<h2>公寓和分層房產許可證</h2>
+<p>如果您擁有公寓或分契式房產，許可證只是審批流程的一部分。你還需要 <strong>物業委員會批准</strong> 在開始任何影響以下方面的裝修之前：</p>
+<ul>
+<li>管路（排水管、供水管）</li>
+<li>電力</li>
+<li>從地板到天花板的瓷磚</li>
+<li>暖通空調</li>
+<li>單元內的結構元素</li>
+</ul>
+<p>分層審批是獨立於市政建築許可證的過程。兩者通常都需要 <a href="/en/services/bathroom/">浴室</a> 和 <a href="/en/services/kitchen/">廚房裝修</a> 在大溫哥華地區的公寓裡。</p>
+<p>Reno Stars 已完成數百層分契翻新 <a href="/en/areas/vancouver/">溫哥華</a>, <a href="/en/areas/burnaby/">貝納比</a>, <a href="/en/areas/richmond/">列治文</a>， 和 <a href="/en/areas/coquitlam/">高貴林</a>。作為我們標準專案流程的一部分，我們管理分層提交和許可證申請。請參閱我們針對大溫哥華地區房主的 [BC Strata 裝修規則](/zh-Hant/blog/strata-renovation-rules-vancouver/) 指南。</p>
+<h2>Secondary Suite and [Basement Renovation](/en/guides/basement-renovation-cost-vancouver/) Permits</h2>
+<p>在 BC 增加輔助套房（[地下室套房](/en/guides/basement-suite-cost-vancouver/)）需要：</p>
+<ul>
+<li>一個 <strong>建築許可證</strong> 來自您所在城市的</li>
+<li>遵守 <strong>不列顛哥倫比亞省建築規範</strong> 用於套房隔離（1小時防火牆/天花板，最小天花板高度6&#39;5&quot;）</li>
+<li><strong>電力許可證</strong> （歐空局 - 電氣安全局）</li>
+<li><strong>管道許可證</strong> （如果添加浴室或廚房）</li>
+<li>符合當地 <strong>分區章程</strong> （並非所有區域都允許套房）</li>
+</ul>
+<p>在溫哥華市，大多數 RS 區都允許使用二級套房。檢查您的區域 <a href="https://www.vancouver.ca">溫哥華網</a> 或致電您當地的規劃部門。</p>
+<p>有關地下室裝修的完整信息，請參閱我們的 <a href="/zh-Hant/blog/basement-renovation-vancouver-complete-guide/">溫哥華地下室裝潢完整指南</a>.</p>
+<h2>有關 BC 省翻修許可證的常見問題</h2>
+<p><strong>我的承包商可以為我提取許可證嗎？</strong>
+是的——他們應該這樣做。在不列顛哥倫比亞省，記錄承包商負責領取許可證。如果承包商要求您收回自己的許可證，那麼&#39;是一個重大危險信號 - 這可能意味著他們&#39;沒有許可證或試圖逃避責任。</p>
+<p><strong>更換廚櫃需要許可證嗎？</strong>
+否 — 如果您&#39;在不移動管道或電氣的情況下更換機櫃，則不需要許可證。</p>
+<p><strong>更換熱水箱需要許可證嗎？</strong>
+是的——通常需要管道許可證。你的水管工會處理這個。</p>
+<p><strong>如果前業主進行了未經許可的工作怎麼辦？</strong>
+在進行其他工作之前，您&#39;有責任使其合法化。許多買家在裝修過程中發現了未經許可的工作——正確的方法是與承包商和市政當局合作，使其符合規範。</p>
+<p><strong>建築許可證的有效期限是多久？</strong>
+BC 省的建築許可證通常有效期為 2 年。如果屆時工作尚未完成&#39;，您通常可以申請延期。</p>
+<h2>含許可證的裝修服務</h2>
+<p>Reno Stars 處理所有適用許可證的項目的完整許可流程－從確定所需的&#39;到最終檢查簽字。我們&#39;是一家有執照且有保險的裝修承包商，服務於 <a href="/en/areas/vancouver/">大溫哥華地區</a>, <a href="/en/areas/north-vancouver/">北溫哥華</a>, <a href="/en/areas/surrey/">素里</a>、及週邊地區。</p>
+<p>經常需要許可的服務包括 <a href="/en/services/kitchen/">廚房裝修</a>, <a href="/en/services/bathroom/">浴室裝修</a>, <a href="/en/services/basement/">地下室裝修</a>， 和 <a href="/en/services/whole-house/">全屋翻新</a>.</p>
+<p><a href="/zh-Hant/contact/">聯絡我們</a> 免費諮詢。我们&#39;将评估您的项目，就许可证要求提供建议，并提供详细的报价。致電或發短信：778-960-7999。</p>
+<p>參見： <a href="/zh-Hant/blog/how-to-choose-renovation-contractor-vancouver/">如何選擇溫哥華的裝潢承包商</a> | <a href="/en/guides/bathroom-renovation-cost-vancouver/">溫哥華的平均浴室裝修費用</a></p>
+
+
+## Bathroom Renovation Permit Vancouver
+
+Most bathroom renovations in Metro Vancouver require at least one permit — and often two or three. Here''s a practical breakdown:
+
+**Like-for-like fixture swaps (no permit needed):**
+- Toilet replacement in the same rough-in location
+- Vanity and faucet replacement (no plumbing relocation)
+- Light fixture swap (same wiring, no new circuits)
+- Mirror, towel bars, accessories
+
+**Bathroom work that REQUIRES a permit:**
+- Converting a bathtub to a walk-in shower (new drain location = plumbing permit)
+- Adding a bathroom in a new location (building + plumbing permit)
+- Moving a toilet (plumbing permit)
+- Adding exhaust fan wiring (electrical permit)
+- Heated floor installation (electrical permit)
+
+**Bathroom permit costs in Metro Vancouver (2026):**
+
+| City | Plumbing Permit | Electrical Permit | Combined Estimate |
+|-' || '-' || '-|-' || '-' || '-|-' || '-' || '-|-' || '-' || '-|
+| City of Vancouver | $175–$350 | $150–$300 | $325–$650 |
+| Burnaby | $150–$300 | $120–$250 | $270–$550 |
+| Surrey | $140–$280 | $110–$230 | $250–$510 |
+| Richmond | $150–$290 | $120–$240 | $270–$530 |
+| North Vancouver | $160–$320 | $130–$260 | $290–$580 |
+| Coquitlam | $145–$285 | $115–$235 | $260–$520 |
+
+For a typical $15,000–$25,000 bathroom renovation in Metro Vancouver, total permit fees run $300–$700. Processing takes 1–6 weeks depending on municipality and whether structural or electrical changes are involved.
+
+Permit fees are only a small slice of the total budget — see our guide to [bathroom renovation cost in Vancouver](/en/guides/bathroom-renovation-cost-vancouver/) for full 2026 pricing by size and style. Renovating on the North Shore? Our [bathroom renovation in West Vancouver](/en/areas/west-vancouver/) page covers District of West Vancouver permit timelines and real local project costs.
+
+## Basement Renovation Permit Vancouver
+
+Basement renovations almost always require permits — the scope determines which types:
+
+**Basement finishing (open unfinished space to livable area):**
+- Building permit required (framing, insulation, drywall)
+- Electrical permit required (new circuits, pot lights)
+- Plumbing permit if adding a bathroom or wet bar
+- Typical permit cost: $500–$1,200 for a 600–1,200 sq ft basement at $50–$150K construction value
+
+**General basement renovation permit checklist:**
+
+| Scope | Permit Required | Who Pulls It |
+|-' || '-' || '-|-' || '-' || '-|-' || '-' || '-|
+| Framing new walls | Building | Contractor |
+| Insulation + vapour barrier | Building | Contractor |
+| New electrical circuits | Electrical (ESA) | Electrician |
+| Adding a bathroom | Plumbing + Building | Contractor/Plumber |
+| HVAC extensions | Mechanical | Contractor |
+| Egress window enlargement | Building | Contractor |
+| Secondary suite creation | Building + Electrical + Plumbing | All trades |
+
+**Processing times for basement renovation permits in Metro Vancouver (2026):**
+- City of Vancouver: 6–14 weeks (online intake; complex projects take longer)
+- Burnaby: 4–8 weeks
+- Surrey: 3–6 weeks
+- Richmond: 3–5 weeks
+- Coquitlam + Tri-Cities: 3–6 weeks
+
+Reno Stars handles the complete permit application package — drawings, structural engineer sign-off where required, and inspection scheduling — as part of our standard [basement renovation](/en/services/basement/) contract.
+
+Ready to start your Metro Vancouver renovation? [Request a free quote](/zh-Hant/contact/) — our team will advise on permit requirements and handle the complete permit application process.
+
+
+
+
+## We Serve These Metro Vancouver Communities
+
+Reno Stars provides renovation permits across Metro Vancouver: [Delta](/en/areas/delta/) | [Langley](/en/areas/langley/) | [Maple Ridge](/en/areas/maple-ridge/) | [New Westminster](/en/areas/new-westminster/) | [Port Coquitlam](/en/areas/port-coquitlam/) | [Port Moody](/en/areas/port-moody/) | [West Vancouver](/en/areas/west-vancouver/) | [White Rock](/en/areas/white-rock/)
+
+## Frequently Asked Questions
+
+### Do I need a permit to renovate my bathroom in Vancouver?
+
+Yes — most bathroom renovations in Metro Vancouver require a building permit if they involve moving or adding plumbing, electrical changes, or structural work. A like-for-like swap of fixtures (toilet, vanity, faucet) in the same location generally does not require a permit. Adding a new bathroom, moving a toilet or shower drain, or changing from a tub to a walk-in shower with a new drain location typically requires both a building and plumbing permit. Our [Accessible Bathroom Renovation](/en/services/accessible-bathroom/) service specialises in safety upgrades and accessibility modifications. Reno Stars handles permit applications as part of our standard renovation contracts.
+
+### How long does it take to get a renovation permit in BC?
+
+Permit processing times vary by municipality. In the City of Vancouver, straightforward residential permits take 6–10 weeks; complex structural or heritage projects can take 16+ weeks. In Burnaby and Richmond, processing typically runs 4–8 weeks. Surrey and Coquitlam are closer to 3–6 weeks for standard residential work. All Metro Vancouver municipalities now offer online permit applications (ePlan), which speeds up the intake step but not the review queue. Reno Stars submits permit packages on your behalf and monitors status weekly.
+
+### What happens if you renovate without a permit in BC?
+
+Renovating without a required permit in BC carries serious consequences: the municipality can issue a Stop Work Order and require full demolition of unpermitted work, even if the work is complete and structurally sound. When you sell your home, unpermitted work must be disclosed and often needs retroactive approval (a "permit after-the-fact") at 3–4× the original permit cost. For expert [Pre-Sale Renovation Advice](/en/services/realtor/) before listing, speak with our renovation team. Home insurance claims can be denied if damage is traced to unpermitted work. Buyers'' home inspectors routinely flag unpermitted additions and electrical panel upgrades.
+
+### Which renovations don''t need a permit in BC?
+
+Work that typically does not require a permit in most BC municipalities: painting, flooring (non-structural), cabinet replacement in the same footprint, countertop replacement, like-for-like appliance swaps, minor drywall patching, and landscaping below 0.6m (2 ft). When in doubt, call your municipality''s building department — they will tell you over the phone whether your specific project requires a permit. Reno Stars always confirms permit requirements before quoting.
+
+### How much does a renovation permit cost in Vancouver?
+
+Residential building permit fees in the City of Vancouver are calculated as a percentage of construction value — typically 1%–1.5% for projects under $500,000. A $50,000 kitchen renovation permit costs roughly $500–$750. Plumbing and electrical permits are separate: plumbing permits run $150–$400 for most residential work; electrical permits are $100–$300. Older Metro Vancouver homes may also need our [Poly-B Pipe Replacement](/en/services/poly-b-replacement/) service to eliminate unsafe plastic piping. In addition to fees, most municipalities require a permit deposit that is refunded after final inspection. Fees vary slightly by municipality — Richmond, Burnaby, and Surrey each have their own fee schedules but are in a similar range.
+
+
+
+<hr />
+請參閱來自大溫哥華地區房主的[經過驗證的五星級評論](/en/reviews/)。
+
+[關於 Reno Stars](/en/about/) — 總部位於溫哥華的裝修公司，自 2019 年起為大溫哥華地區提供服務。
+
+[查看我們的改造專案組合→](/en/projects/)
+
+<p><strong>Reno Stars 處理大溫哥華地區每次翻修的所有許可證申請。</strong> 您是否需要許可證 <a href="/en/services/kitchen/">廚房裝修</a>, <a href="/en/services/bathroom/">浴室改造</a>， 或者 <a href="/en/services/whole-house/">全屋改造</a>，我們的團隊會歸檔文件、安排檢查並讓您的專案步入正軌。 <a href="/zh-Hant/contact/"><strong>索取免費報價</strong></a> ——沒有義務。</p>
+<hr />
+
+### How does the permit process differ between Metro Vancouver municipalities?
+
+Permit processing time varies significantly across Metro Vancouver: City of Vancouver: 4–8 weeks (highest volume, slowest). City of Burnaby: 3–5 weeks. City of Surrey: 3–6 weeks. City of Richmond: 3–5 weeks. City of Coquitlam: 3–6 weeks. District of North Vancouver: 3–5 weeks. City of West Vancouver: 3–6 weeks. Smaller municipalities (Port Moody, Port Coquitlam, New Westminster, White Rock, Delta): 2–4 weeks. Processing times reflect application volume relative to staff capacity — Vancouver processes thousands of permits/month vs White Rock processing dozens. Permit fees also vary: Vancouver charges per declared construction value, while many other cities charge flat fees by permit type.
+
+Also see: [renovation timeline](/zh-Hant/blog/renovation-timeline-how-long-does-each-project-take/) | [renovation insurance guide BC](/zh-Hant/blog/renovation-insurance-guide-bc/) | [duplex renovation permits Vancouver](/zh-Hant/blog/duplex-renovation-vancouver-costs-permits-2026/) | [multiplex & laneway renovation guide](/zh-Hant/blog/vancouver-multiplex-laneway-renovation-guide-2026/) | [pre-1980 home renovation guide](/zh-Hant/blog/pre-1980-home-renovation-vancouver-what-to-expect/) | [BC basement renovation financing](/zh-Hant/blog/basement-renovation-financing-bc-guide/) | [How to Finance Your Vancouver Renovation (HELOC Guide)](/zh-Hant/blog/renovation-financing-vancouver-heloc/) | [Renovation Financing Options](/en/financing/) | [Vancouver Renovation Cost Guide 2026](/zh-Hant/blog/renovation-cost-vancouver-2026-complete-guide/) | [BC Renovation Permits Guide](/zh-Hant/blog/renovation-permits-bc-guide/)
+
+## Related Renovation Cost Guides
+
+Our [Heat Pump Installation Vancouver](/en/services/heat-pump-hvac/) service modernises your home heating with energy-efficient heat pump systems.
+
+- [Kitchen Renovation Cost Vancouver](/en/guides/kitchen-renovation-cost-vancouver/) — average $15K–$80K in Metro Vancouver
+- [Whole House Renovation Cost Vancouver](/en/guides/whole-house-renovation-cost-vancouver/) — average $50K–$300K+
+- [Cabinet Refinishing Cost Vancouver](/en/guides/cabinet-refinishing-cost-vancouver/) | [Cabinet Refinishing Vancouver](/en/services/cabinet/vancouver/) — from $4K for refinishing
+- [Commercial Renovation Cost Vancouver](/en/guides/commercial-renovation-cost-vancouver/) — office & retail fit-out costs
+
+## City-Specific Renovation Permit Guides
+
+- [Burnaby Renovation Permits](/zh-Hant/blog/burnaby-home-renovation-guide-2026/) — Burnaby building permit requirements
+- [Surrey Renovation Permits Guide 2026](/zh-Hant/blog/surrey-renovation-permits-guide-2026/) — Surrey permits and bylaws
+- [Coquitlam Home Renovation Guide 2026](/zh-Hant/blog/coquitlam-home-renovation-guide-2026/) — Coquitlam permit process
+- [Delta Home Renovation Guide 2026](/zh-Hant/blog/delta-home-renovation-guide-2026/) — Delta building department
+- [Duplex Renovation Vancouver: Costs & Permits](/zh-Hant/blog/duplex-renovation-vancouver-costs-permits-2026/) — multi-family permit guide
+- [ADU & Laneway House Renovation Vancouver](/zh-Hant/blog/adu-renovation-vancouver-2026/) — secondary suite permits
+
+
+- [Split-Level Home Renovation Burnaby/Coquitlam 2026](/zh-Hant/blog/split-level-home-renovation-burnaby-coquitlam-2026/) — structural and permit considerations for split-level homes
+
+- [Heritage Home Renovation Vancouver 2026](/zh-Hant/blog/heritage-home-renovation-vancouver-2026/) — navigating heritage alteration permits and character home guidelines
+
+- [How to Read a Renovation Quote: Line-by-Line Guide](/zh-Hant/blog/how-to-read-renovation-quote-line-items/) — understanding renovation quotes and permits
+
+- [Office Renovation Vancouver: Tenant Improvements 2026](/zh-Hant/blog/office-renovation-vancouver-tenant-improvements-2026/) — office renovation permits and tenant improvements
+
+- [Restaurant Renovation Cost Vancouver](/zh-Hant/blog/restaurant-renovation-cost-vancouver/) — commercial restaurant renovation costs and permits
+<p>有關的： <a href="/blog/commercial-warehouse-door-renovation-burnaby">商業裝修本拿比</a></p>';
+UPDATE blog_posts SET localizations = jsonb_set(localizations, ARRAY['contentZhHant'], to_jsonb('<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "文章",
+  "headline": "改造時間表：每個專案實際需要多長時間？（2026）",
+  "description": "廚房裝修：4-8 週。浴室：3-6 週。地下室：8-12 週。全屋：2-6 個月。[溫哥華](/en/areas/vancouver/) 裝修完成的實際時間表。",
+  "圖像": "https://www.reno-stars.com/images/blog/renovation-timeline-vancouver.jpg",
+  "作者": {"@type": "組織", "名稱": "Reno Stars"},
+  "publisher": {"@type": "組織", "name": "Reno Stars", "logo": {"@type": "ImageObject", "url": "https://www.reno-stars.com/logo.png"}},
+  "發佈日期": "2026-04-17",
+  "修改日期": "2026-04-17",
+  "mainEntityOfPage": {"@type": "網頁", "@id": "https://www.reno-stars.com/zh-Hant/blog/renovation-timeline-how-long-does-each-project-take"}
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "How long does a kitchen renovation take in Vancouver?",
+      "acceptedAnswer": {"@type": "Answer", "text": "A standard kitchen renovation in Vancouver takes 4-8 weeks from demo to completion. Simple galley kitchens with in-stock cabinets can finish in 4 weeks; large open-concept kitchens with custom cabinetry, structural changes, or new plumbing can take 8 weeks or longer."}
+    },
+    {
+      "@type": "Question",
+      "name": "How long does a bathroom renovation take?",
+      "acceptedAnswer": {"@type": "Answer", "text": "A bathroom renovation typically takes 3-6 weeks. A simple refresh (vanity, fixtures, tile) can be done in 3 weeks. A full gut renovation with new layout, custom shower, and heated floors takes 5-6 weeks. Most Reno Stars bathroom projects complete in 3-4 weeks."}
+    },
+    {
+      "@type": "Question",
+      "name": "How long does a [basement renovation](/en/guides/basement-renovation-cost-vancouver/) take?",
+      "acceptedAnswer": {"@type": "Answer", "text": "Basement renovations take 8-12 weeks for a standard finish (framing, electrical, insulation, drywall, flooring). Adding a bathroom to the basement adds 2-3 weeks. A [basement suite](/en/guides/basement-suite-cost-vancouver/) with full kitchen requires 10-14 weeks total."}
+    },
+    {
+      "@type": "Question",
+      "name": "What causes renovation delays in Vancouver?",
+      "acceptedAnswer": {"@type": "Answer", "text": "The most common causes of renovation delays in Vancouver are: permit delays (City of Vancouver building permits can take 4-8 weeks to approve), custom material lead times (custom cabinets 6-10 weeks, imported tile 4-8 weeks), trade scheduling conflicts during busy seasons (spring/fall), and unforeseen structural issues discovered during demo."}
+    },
+    {
+      "@type": "Question",
+      "name": "How long does a [whole house renovation](/en/guides/whole-house-renovation-cost-vancouver/) take?",
+      "acceptedAnswer": {"@type": "Answer", "text": "A whole house renovation in Metro Vancouver typically takes 2-6 months depending on scope. A cosmetic refresh (flooring, paint, fixtures throughout) takes 2-3 months. A structural renovation with layout changes, new kitchen, multiple bathrooms, and basement development takes 4-6 months."}
+    }
+  ]
+}
+</script>
+
+<h2>為什麼裝修時間表很重要——以及為什麼它們經常是錯誤的</h2>
+
+<p>我們從溫哥華房主那裡聽到的最常見的問題之一是： <em>我的裝修實際上需要多長時間？</em> 這是一個完全合理的問題——你需要安排臨時住宿，圍繞學校時間表進行計劃，協調工作，並處理家庭的干擾。</p>
+
+<p>問題在於，您在網路上發現的許多翻新時間表要麼被樂觀地壓縮（一切順利的最佳情況），要麼因不必要的緩衝而膨脹。兩者對於規劃都沒有用。</p>
+
+<p>本指南為您提供 <strong>基於我們已完成專案的現實改造時間表</strong> 整個溫哥華都會區 - 包括出了什麼問題以及如何最大限度地減少延誤。</p>
+
+<h3>什麼決定了你的時間表？</h3>
+
+<p>在深入研究特定專案類型之前，請先了解影響改造時間表的關鍵因素：</p>
+
+<ul>
+  <li><strong>專案範圍：</strong> 外觀更新（新的固定裝置、油漆、五金）只需要全面結構翻新的一小部分時間</li>
+  <li><strong>許可證要求：</strong> 任何結構工程、電氣面板升級或管道添加都需要許可證 - 並且許可證審查會增加時間</li>
+  <li><strong>材料交貨時間：</strong> 庫存材料立即準備就緒；定製或進口材料可能需要 4-12 週才能到達</li>
+  <li><strong>交易可用性：</strong> 溫哥華的電工、水管工和瓷磚安裝工通常提前 4-8 週預訂</li>
+  <li><strong>不可預見的情況：</strong> 老房子的牆後經常會有意想不到的事情——石棉、過時的電線、水漬、不標準的框架</li>
+</ul>
+
+<h2>廚房裝修時間表：4-8 週</h2>
+
+<p>廚房裝修是比較複雜的項目之一，因為它幾乎涉及每一項工作：拆除、管道和電氣的粗修、櫥櫃安裝、檯面模板和製造、電器連接以及詳細的裝修工作。以下是典型的溫哥華廚房裝修流程：</p>
+
+<h3>第一周：拆除和修整</h3>
+<ul>
+  <li><strong>演示（1-2 天）：</strong> 拆除現有的櫥櫃、檯面、地板，有時還會拆除牆壁。工作速度快，但會造成重大干擾。</li>
+  <li><strong>結構工作（1-3 天）：</strong> 如果佈局發生變化，牆壁拆除、梁安裝或框架也會發生變化。需要許可和檢查。</li>
+  <li><strong>管道粗修（2-3 天）：</strong> 重新安置水槽排水管、添加洗碗機連接、移動燃氣管道（如果需要）。必須在圍牆關閉之前進行檢查。</li>
+  <li><strong>電氣初步檢查（2-3 天）：</strong> 用於電器的新電路、櫥櫃下照明裝置、冰箱和微波爐的專用電路。需要檢查。</li>
+</ul>
+
+<h3>第 2-3 週：地板和櫥櫃安裝</h3>
+<ul>
+  <li><strong>底層地板準備與地板鋪設（2-3 天）：</strong> 平整底層地板，安裝新地板（硬木、LVP 或瓷磚）。磁磚地板在通行前需要 24-48 小時的固化時間。</li>
+  <li><strong>機櫃交付與安裝（3-5天）：</strong> 這是決定時間軸的里程碑。庫存 RTA 機櫃可在 2-3 天內完成安裝。 BC 製造商的訂製櫥櫃通常需要 6 至 10 週的時間來建造——這通常是定制廚房項目帳篷中的長桿。</li>
+</ul>
+
+<h3>第 3-5 週：檯面、電器和裝修</h3>
+<ul>
+  <li><strong>檯面模板（1 天）：</strong> 機櫃安裝完畢後，加工人員上門精確測量。這會觸發 1-2 週的製造視窗。</li>
+  <li><strong>檯面安裝（1天）：</strong> 速度很快，但你必須等待製造——這是廚房時間延長的常​​見原因。</li>
+  <li><strong>磁磚後擋板（2-3 天）：</strong> 包括灌漿固化時間。</li>
+  <li><strong>設備安裝（1-2 天）：</strong> 連接爐具、洗碗機、抽油煙機、冰箱水管。</li>
+  <li><strong>完成（2-3 天）：</strong> 裝飾、五金安裝、補漆、電氣蓋板、最終檢查。</li>
+</ul>
+
+<h3>是什麼延長了廚房的時間</h3>
+<p>在我們的溫哥華專案中，最常見的廚房延遲來源是：(1) 客製化櫥櫃交貨時間（從訂單起 6-10 週），(2) 檯面模板必須等到櫥櫃完全安裝並調平——增加了 2 週的製造時間，以及 (3) 許可檢查安排（溫哥華市檢查可能需要 3-7 個工作天來安排）。</p>
+
+<p>我們的 [Langley](/en/areas/langley/) 廚房採用瀑布島設計進行了 4-6 週的改造——與這個框架一致。我們的 [素里](/en/areas/surrey/) 訂製櫥櫃廚房從開始到完成歷時 4-5 週。</p>
+
+<h2>[浴室裝潢](/en/services/bathroom/) 時間軸：3-6週</h2>
+
+<p>浴室的空間比廚房小，但通常涉及複雜的防水、瓷磚工作和管道更換，需要仔細排序。這是典型的細分：</p>
+
+<h3>第一周：演示和初步測試</h3>
+<ul>
+  <li><strong>演示（1-2 天）：</strong> 拆除磁磚、固定裝置、浴室櫃，有時還拆除牆壁水泥板直至龍骨。仔細的演示保留了相鄰的房間。</li>
+  <li><strong>管道安裝調試（1-3 天）：</strong> 如果佈局發生變化，則移動排水管、添加淋浴閥、重新定位馬桶法蘭。需要許可檢查。</li>
+  <li><strong>電氣磨合（1-2 天）：</strong> 添加 GFCI 電路、加熱燈、浴室風扇更換、加熱地板恆溫器。需要檢查。</li>
+</ul>
+
+<h3>第 2-3 週：防水和瓷磚</h3>
+<ul>
+  <li><strong>淋浴防水（2-3 天，包括固化時間）：</strong> 這一步不能操之過急。適當的防水——無論是 Schluter 系統、RedGard 膜還是傳統的泥床——都需要在貼瓷磚之前完全固化。</li>
+  <li><strong>瓷磚安裝（3-5 天）：</strong> 地磚、淋浴牆、壁龕安裝。複雜的磁磚圖案或大幅面磁磚需要更長的時間。灌漿前至少需要 24-48 小時固化。</li>
+  <li><strong>灌漿和密封（1-2天）：</strong> 包括使用淋浴前適當的固化時間。</li>
+</ul>
+
+<h3>第 3-5 週：賽程與收尾</h3>
+<ul>
+  <li><strong>浴室櫃和固定裝置安裝（2-3天）：</strong> 浴室櫃、檯面（如果與浴室櫃分開）、水龍頭、馬桶、淋浴裝置、鏡子、配件。</li>
+  <li><strong>玻璃淋浴間（1-2 天，加上訂製玻璃的 1-2 週交貨時間）：</strong> 無框淋浴玻璃在瓷磚完成後進行測量，通常需要 1-2 週的時間來製造。</li>
+  <li><strong>完成（1-2 天）：</strong> 補漆、填縫、五金、最終檢查。</li>
+</ul>
+
+<p>Our [North Vancouver](/en/areas/north-vancouver/) luxury curbless shower bathroom completed in 3–4 weeks. Our [Maple Ridge](/en/areas/maple-ridge/) bathroom with custom glass door also ran 3–4 weeks — the custom glass was ordered early to avoid delays. Our [Burnaby](/en/areas/burnaby/) master bathroom renovation took 4–5 weeks due to the complexity of the custom features.</p>
+
+<h2>地下室裝修時間表：8-12 週</h2>
+
+<p>地下室裝修往往比廚房或浴室需要更長的時間，因為它們涉及更大的空間，並且通常需要所有主要工作按順序進行：框架、電氣、管道（如果添加浴室）、絕緣、乾牆、地板和全面裝修。這種順序性質是不可避免的——每個階段都必須完成並通過檢查才能開始下一個階段。</p>
+
+<h3>第 1 階段 — 框架與草稿（第 1-3 週）</h3>
+<ul>
+  <li><strong>框架（3-5 天）：</strong> 隔間牆、艙壁、浴室框架、窗框。需要許可證和框架檢查。</li>
+  <li><strong>管道粗修（2-4 天）：</strong> 如果添加浴室，則需要破壞排水管的混凝土 - 增加 1-2 天的混凝土工作和固化時間。</li>
+  <li><strong>電氣初步檢查（3-5 天）：</strong> 地下室套房的完整電路佈局 - 臥室電路、浴室、起居區、廚房（如果適用）。需要檢查。</li>
+  <li><strong>保溫（2-3 天）：</strong> 牆壁絕緣棉絮、邊緣托樑噴塗泡棉、防潮層。需要進行絕緣檢查。</li>
+</ul>
+
+<h3>第 2 階段 — 乾牆（第 3-5 週）</h3>
+<ul>
+  <li><strong>乾牆安裝（3-5 天）：</strong> 懸掛、貼上和塗泥。每塗一層泥漿需要 24 小時乾燥時間——至少塗 3 層泥漿意味著至少需要 3 天的時間來乾燥泥漿。</li>
+  <li><strong>打磨和底漆（2-3 天）：</strong> 在不影響最終完成品質的情況下不能操之過急。</li>
+</ul>
+
+<h3>第 3 階段 — 完成（第 6-10 週）</h3>
+<ul>
+  <li><strong>地板（3-5 天）：</strong> LVP、地毯或瓷磚，取決於空間。浮動地板安裝速度最快；有加熱地板系統的磁磚需要更長的時間。</li>
+  <li><strong>浴室裝修（如果適用）（1-2 週）：</strong> 磁磚、浴室櫃、固定裝置－與其他裝修工作同時進行。</li>
+  <li><strong>廚房/小廚房（如果適用）（1-2 週）：</strong> 櫥櫃、檯面、電器——如果創建一套法律套件，則需要額外的時間。</li>
+  <li><strong>油漆、修剪和精加工（1 週）：</strong> 門、窗飾、底板、五金件、最終電氣連接、固定裝置。</li>
+</ul>
+
+<p>地下室套房的開發處於該範圍的上限——由於涉及額外的許可要求和貿易協調，創建帶廚房和浴室的完全合法的二級套房預計需要 10 至 14 週的時間。</p>
+
+<h2>全屋裝修時間：2-6個月</h2>
+
+<p>全屋翻新的範圍差異很大，但這裡有一個實用的框架：</p>
+
+<table>
+  <thead>
+    <tr><th>範圍</th><th>典型時間表</th><th>包含什麼</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>化妝品刷新</td><td>6–10 週</td><td>全新地板、新油漆、固定裝置更新，無結構變化</td></tr>
+    <tr><td>適度裝潢</td><td>3-4個月</td><td>廚房更新、1-2 間浴室翻新、新地板、電氣升級</td></tr>
+    <tr><td>全面裝修</td><td>4-6個月</td><td>結構變化、設備齊全的廚房、多個浴室、地下室開發</td></tr>
+  </tbody>
+</table>
+
+<p>我們在溫哥華的全屋翻新和浴室更新在 4-5 週內完成 - 但這主要集中在浴室和化妝品更新，而不是完整的結構項目。作為一個重點項目，我們的[列治文](/en/areas/richmond/)公寓翻新（廚房、浴室、地板）花費了 4-5 週的時間。</p>
+
+<h2>什麼延長了裝修時間</h2>
+
+<p>根據我們在大溫哥華地區的項目，以下是時間表延誤的真正罪魁禍首：</p>
+
+<h3>1. 許可證處理時間</h3>
+<p>溫哥華市的結構工程、配電板或管道擴建的建築許可證可以 <strong>4-8週</strong> 供審查。我們的[關鍵負載面板安裝](/en/services/critical-load-panel/)服務可升級您的家庭電力容量，以滿足現代裝修的需求。素里和本拿比通常更快（2-4 週）。許可證時鐘在您提交圖紙時開始，而不是在您開始裝修時開始。智慧承包商會在專案開始日期之前提交許可證，以便在演示開始時立即獲得批准。</p>
+
+<h3>2. 客製化材料交貨時間</h3>
+<ul>
+  <li>來自不列顛哥倫比亞省當地製造商的訂製櫥櫃：6-10 週</li>
+  <li>客製化/特殊瓷磚（進口或特殊訂單）：4-8 週</li>
+  <li>客製化檯面製造：模板製作後 1-2 週</li>
+  <li>訂製玻璃淋浴間：測量後 1-2 週</li>
+  <li>特別訂購管道裝置：2-6 週</li>
+</ul>
+
+<h3>3. 交易可用性</h3>
+<p>溫哥華的裝修市場競爭激烈。在旺季（春季：3 月至 6 月，秋季：9 月至 11 月），熟練的瓷磚安裝工、訂製櫥櫃安裝工和玻璃技術人員通常會提前 4 至 8 週預訂。在這些視窗啟動的項目需要提前預訂交易。</p>
+
+<h3>4. 不可預見的情況</h3>
+<p>溫哥華的老房子（1980 年之前）經常隱藏著驚喜：地磚或乾牆紋理中的石棉（需要專業消除，1-3 天加上測試），需要完全更換的旋鈕和管道佈線，鍍鋅管，非標準龍骨間距使瓷磚背襯複雜化，以及數十年輕微滲漏造成的水損壞。預算 10-15% 的時間作為意外發現的緩衝。</p>
+
+<h2>如何避免延誤</h2>
+
+<h3>儘早開始許可流程</h3>
+<p>如果您的專案需要許可，請在計劃開始工作之前提交圖紙。如果您有計劃的話，6 週的許可證審查期並不需要延長您的專案啟動時間。您的承包商應該能夠在設計階段就許可要求向您提供建議。</p>
+
+<h3>工作開始前訂購材料</h3>
+<p>我們在廚房裝修中看到的最大的延誤是訂製櫥櫃的交貨時間。在設計簽核階段訂購櫥櫃，而不是在演示開始時訂購。特種瓷磚和定制固定裝置也是如此。材料應在項目開始之前到達，而不是在交易等待時到達。</p>
+
+<h3>簽署前確認交易時間表</h3>
+<p>在簽署裝修合約之前，請明確詢問：「您目前的日程安排是什麼？這個專案什麼時候可以開始？」承包商可以在下週開始工作，但六週內都沒有電工，這會讓您面臨延誤。可靠的承包商在承諾開始日期之前規劃完整的交易順序。</p>
+
+<h3>儘早做出最終選擇</h3>
+<p>工作開始後的變更訂單是最具破壞性和最昂貴的時間殺手。安裝櫥櫃後更改檯面材料意味著重新啟動模板和製造窗口。防水後更換瓷磚意味著拆除並重新進行工作。在演示開始之前鎖定您的選擇。</p>
+
+<h2>我們的實際專案時間表</h2>
+
+<p>以下是我們完成的項目實際花費的時間，而不是估計值：</p>
+
+<ul>
+  <li><strong>帶瀑布島的蘭利廚房：</strong> 4–6 週（客製島設計，標準櫃交貨時間）</li>
+  <li><strong>木紋櫥櫃的本拿比訂製廚房：</strong> 4-5週</li>
+  <li><strong>北溫哥華豪華浴室（無圈淋浴）：</strong> 3–4 週</li>
+  <li><strong>附訂製玻璃門的楓樹嶺浴室：</strong> 3–4 週</li>
+  <li><strong>本拿比主浴室配有客製化功能：</strong> 4-5週</li>
+  <li><strong>本拿比聯排別墅浴室具有客製化功能：</strong> 2–3 週（緊湊範圍）</li>
+  <li><strong>列治文公寓（廚房+浴室+地板）：</strong> 4-5週</li>
+  <li><strong>溫哥華全屋裝修：</strong> 4-5週（重點範圍）</li>
+  <li><strong>溫哥華皮膚實驗室[商業裝修](/en/guides/commercial-renovation-cost-vancouver/)vation:</strong> 4-5個月（主要商業範圍）</li>
+</ul>
+
+<h2>裝修時間表常見問題解答</h2>
+
+<h3>廚房裝修期間我可以住在家裡嗎？</h3>
+<p>通常是的，儘管這需要計劃。您需要設置一個臨時廚房空間（微波爐、迷你冰箱、另一個房間的電爐）。最具破壞性的時期是演示和試運行（第一週）。從櫥櫃安裝開始，空間雖然凌亂，但仍宜居。大多數溫哥華房主選擇住宿 - 4 至 6 週的酒店住宿會增加大量費用。</p>
+
+<h3>我應該提前多久預訂承包商？</h3>
+<p>對於春季和秋季專案（旺季），請提前 8 至 12 週預訂。對於冬季項目（12 月至 2 月），4 至 6 週通常就足夠了。季節越繁忙，您就越需要鎖定開始日期並確認材料訂單。</p>
+
+<h3>我可以加快裝修時間嗎？</h3>
+<p>是的——在限度內。選擇庫存材料而不是定製材料可以大大壓縮時間（RTA 機櫃與定製材料：2 週與 8 週以上）。擁有一個協調所有交易的承包商（而不是自己管理每項交易）可以減少調度間隙。避免專案中期範圍變更是您可以做的影響最大的事情。</p>
+
+<h3>浴室裝潢最短的實際時間表是多少？</h3>
+<p>對於一個完整的浴室翻新（拆除所有東西並重新開始），對於一個有能力、組織良好、所有材料都已預訂的承包商來說，至少需要 3 週的時間。任何更短的時間都可能意味著在防水固化時間或檢查步驟上偷工減料——這會在以後產生昂貴的問題。</p>
+
+請參閱來自大溫哥華地區房主的[經過驗證的五星級評論](/en/reviews/)。
+
+[關於 Reno Stars](/en/about/) — 總部位於溫哥華的裝修公司，自 2019 年起為大溫哥華地區提供服務。
+
+[查看我們的改造專案組合→](/en/projects/)
+
+<p>準備好規劃您的專案時間表了嗎？我們的 <a href="/en/services/">裝修服務</a> 團隊提供詳細的專案時間表作為每次估算的一部分。我們在工作開始前制定了完整的交易順序，以便您確切地知道會發生什麼。 <a href="/zh-Hant/contact/">取得時間表估計</a> 針對您的特定項目，我們將引導您了解適合您的範圍和預算的實際情況。</p>
+
+<p>想了解裝修成本的驅動因素是什麼？我們詳細的 <a href="/en/guides/bathroom-renovation-cost-vancouver/">衛浴裝修費用指南</a> 和 <a href="/zh-Hant/blog/">完整的裝修指南庫</a> 擁有您規劃和預算溫哥華裝修所需的一切。</p>
+
+
+
+## We Serve These Metro Vancouver Communities
+
+Reno Stars provides renovation timelines across Metro Vancouver: [Coquitlam](/en/areas/coquitlam/) | [Delta](/en/areas/delta/) | [New Westminster](/en/areas/new-westminster/) | [Port Coquitlam](/en/areas/port-coquitlam/) | [Port Moody](/en/areas/port-moody/) | [West Vancouver](/en/areas/west-vancouver/) | [White Rock](/en/areas/white-rock/)
+
+## Frequently Asked Questions
+
+### How long does a kitchen renovation take in Vancouver?
+
+A kitchen renovation in Metro Vancouver takes 6–14 weeks from contract signing to handover. Breakdown: design + permit (2–4 weeks), ordering cabinets and appliances (4–6 weeks lead time), demolition and rough-ins (1 week), cabinet install (3–5 days), countertop template and install (1–2 weeks), tile, trim, paint, and fixtures (1–2 weeks), final inspection (if permit required). Complex kitchens with structural changes, custom cabinetry, or high-end appliances with long lead times can take 16–20 weeks.
+
+### How long does a bathroom renovation take in Vancouver?
+
+A standard bathroom renovation in Metro Vancouver takes 3–6 weeks. A basic refresh (no plumbing or layout changes) takes 10–14 business days. A full gut-and-replace with new layout takes 4–7 weeks including permit processing. Walk-in shower conversions that require moving the drain take 3–5 days of construction time after permits are issued. Ensuite additions in new locations take 6–10 weeks total.
+
+### How long does a basement renovation take in Vancouver?
+
+A basement renovation takes 8–16 weeks depending on scope. An open-concept basement finish (framing, drywall, flooring, pot lights, no bathroom) takes 6–10 weeks including permit. Adding a legal secondary suite (bathroom, kitchen, fire separation, egress) takes 12–20 weeks. The longest element is often permit processing — 4–14 weeks in Metro Vancouver depending on the municipality. Material procurement and finishing trades add 6–10 weeks of construction time.
+
+### What causes renovation delays in Vancouver?
+
+The most common causes of renovation delays in Metro Vancouver: (1) Permit processing times exceeding estimates — common in the City of Vancouver where complex permits can take 14+ weeks; (2) Material lead times — custom cabinetry takes 6–10 weeks, engineered hardwood 3–6 weeks, specialty tile 2–8 weeks; (3) Discovery of hidden problems once walls are opened — knob-and-tube wiring, asbestos in older homes, moisture damage; (4) Change orders mid-project — each change can add 1–3 weeks; (5) Trade scheduling gaps between rough-in inspections and finishing. Reno Stars builds buffer time for each stage into project timelines.
+
+### Can I live in my house during a renovation in Vancouver?
+
+Yes, for most targeted renovations like a single bathroom or basement. Full whole-house renovations or anything involving the main kitchen, primary bathroom, or HVAC system are difficult to live through. Consider our [Heat Pump Installation Vancouver](/en/services/heat-pump-hvac/) service to upgrade heating and cooling with modern energy-efficient systems. Dust containment, work hours (7 AM–6 PM weekdays typical in residential zones), and loss of kitchen or bathroom access are the main challenges. Reno Stars provides a weekly schedule so you can plan around key disruption windows. For whole-house projects, many clients rent a short-term unit for 6–12 weeks.
+
+
+### How long does a whole-home renovation take in Vancouver?
+
+A Vancouver whole-home renovation timeline: Design and planning: 4–8 weeks. Permit processing: 4–8 weeks (Vancouver) or 2–5 weeks (other Metro municipalities). Demolition and rough-in (plumbing, electrical, framing): 2–4 weeks. Older Metro Vancouver homes may also need our [Poly-B Pipe Replacement](/en/services/poly-b-replacement/) service to eliminate unsafe plastic piping. Insulation, drywall, subfloor: 2–3 weeks. Tile, flooring, cabinetry: 3–5 weeks. Fixtures, trim, paint, final inspection: 2–3 weeks. Total construction: 10–18 weeks. From initial planning to move-in: 20–36 weeks for a comprehensive whole-home project. Homes that can be occupied during construction (phased approach) allow homeowners to stay in place but add 20–30% to the total construction timeline.
+
+Also see: [BC renovation permits](/zh-Hant/blog/renovation-permits-bc-guide/) | [BC Strata Renovation Rules](/zh-Hant/blog/strata-renovation-rules-vancouver/) | [Whole-House Renovation Vancouver](/en/services/whole-house/) | [How to Choose a Contractor](/zh-Hant/blog/how-to-choose-renovation-contractor-vancouver/) | [how to read a renovation quote](/zh-Hant/blog/how-to-read-renovation-quote-line-items/) | [best time to renovate in Vancouver](/zh-Hant/blog/best-time-to-renovate-in-vancouver/) | [Vancouver Renovation Cost Guide 2026](/zh-Hant/blog/renovation-cost-vancouver-2026-complete-guide/) | [How to Finance Your Vancouver Renovation (HELOC Guide)](/zh-Hant/blog/renovation-financing-vancouver-heloc/) | [Renovation Financing Options](/en/financing/) | [Kitchen Renovation Vancouver](/en/services/kitchen/) | [Cabinet Refinishing](/en/services/cabinet/) | [Pre-Sale Renovation Advice](/en/services/realtor/) | [Basement Renovation Vancouver](/en/services/basement/) | [Accessible Bathroom Renovation](/en/services/accessible-bathroom/)
+
+## See Also — Renovation Cost Guides
+
+- [Kitchen Renovation Cost Vancouver](/en/guides/kitchen-renovation-cost-vancouver/) — average $15K–$80K in Metro Vancouver
+- [Cabinet Refinishing Cost Vancouver](/en/guides/cabinet-refinishing-cost-vancouver/) — from $4K for refinishing
+
+## City-Specific Renovation Guides
+
+- [Burnaby Home Renovation Guide 2026](/zh-Hant/blog/burnaby-home-renovation-guide-2026/) — Burnaby timelines and permit waits
+- [Surrey Home Renovation Guide 2026](/zh-Hant/blog/surrey-home-renovation-guide-2026/) — Surrey renovation timelines
+- [Richmond Home Renovation Guide 2026](/zh-Hant/blog/richmond-home-renovation-guide-2026/) — Richmond permit timelines
+- [North Vancouver Home Renovation Guide](/zh-Hant/blog/north-vancouver-home-renovation-guide-2026/) — North Van project timelines
+
+
+- [Spring Renovation Checklist Vancouver 2026](/zh-Hant/blog/spring-renovation-checklist-vancouver-2026/) — best seasons for different renovation projects
+<p>有關的： <a href="/blog/summer-renovation-vancouver-2026-best-projects">夏季裝修溫哥華最佳項目</a></p>'::text)) WHERE id = 'dd0e0262-a82d-4b96-ad3f-d8b7b723ab76' AND localizations->>'contentZhHant' = '<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "文章",
+  "headline": "改造時間表：每個專案實際需要多長時間？（2026）",
+  "description": "廚房裝修：4-8 週。浴室：3-6 週。地下室：8-12 週。全屋：2-6 個月。[溫哥華](/en/areas/vancouver/) 裝修完成的實際時間表。",
+  "圖像": "https://www.reno-stars.com/images/blog/renovation-timeline-vancouver.jpg",
+  "作者": {"@type": "組織", "名稱": "Reno Stars"},
+  "publisher": {"@type": "組織", "name": "Reno Stars", "logo": {"@type": "ImageObject", "url": "https://www.reno-stars.com/logo.png"}},
+  "發佈日期": "2026-04-17",
+  "修改日期": "2026-04-17",
+  "mainEntityOfPage": {"@type": "網頁", "@id": "https://www.reno-stars.com/zh-Hant/blog/renovation-timeline-how-long-does-each-project-take"}
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "How long does a kitchen renovation take in Vancouver?",
+      "acceptedAnswer": {"@type": "Answer", "text": "A standard kitchen renovation in Vancouver takes 4-8 weeks from demo to completion. Simple galley kitchens with in-stock cabinets can finish in 4 weeks; large open-concept kitchens with custom cabinetry, structural changes, or new plumbing can take 8 weeks or longer."}
+    },
+    {
+      "@type": "Question",
+      "name": "How long does a bathroom renovation take?",
+      "acceptedAnswer": {"@type": "Answer", "text": "A bathroom renovation typically takes 3-6 weeks. A simple refresh (vanity, fixtures, tile) can be done in 3 weeks. A full gut renovation with new layout, custom shower, and heated floors takes 5-6 weeks. Most Reno Stars bathroom projects complete in 3-4 weeks."}
+    },
+    {
+      "@type": "Question",
+      "name": "How long does a [basement renovation](/en/guides/basement-renovation-cost-vancouver/) take?",
+      "acceptedAnswer": {"@type": "Answer", "text": "Basement renovations take 8-12 weeks for a standard finish (framing, electrical, insulation, drywall, flooring). Adding a bathroom to the basement adds 2-3 weeks. A [basement suite](/en/guides/basement-suite-cost-vancouver/) with full kitchen requires 10-14 weeks total."}
+    },
+    {
+      "@type": "Question",
+      "name": "What causes renovation delays in Vancouver?",
+      "acceptedAnswer": {"@type": "Answer", "text": "The most common causes of renovation delays in Vancouver are: permit delays (City of Vancouver building permits can take 4-8 weeks to approve), custom material lead times (custom cabinets 6-10 weeks, imported tile 4-8 weeks), trade scheduling conflicts during busy seasons (spring/fall), and unforeseen structural issues discovered during demo."}
+    },
+    {
+      "@type": "Question",
+      "name": "How long does a [whole house renovation](/en/guides/whole-house-renovation-cost-vancouver/) take?",
+      "acceptedAnswer": {"@type": "Answer", "text": "A whole house renovation in Metro Vancouver typically takes 2-6 months depending on scope. A cosmetic refresh (flooring, paint, fixtures throughout) takes 2-3 months. A structural renovation with layout changes, new kitchen, multiple bathrooms, and basement development takes 4-6 months."}
+    }
+  ]
+}
+</script>
+
+<h2>為什麼裝修時間表很重要——以及為什麼它們經常是錯誤的</h2>
+
+<p>我們從溫哥華房主那裡聽到的最常見的問題之一是： <em>我的裝修實際上需要多長時間？</em> 這是一個完全合理的問題——你需要安排臨時住宿，圍繞學校時間表進行計劃，協調工作，並處理家庭的干擾。</p>
+
+<p>問題在於，您在網路上發現的許多翻新時間表要么被樂觀地壓縮（一切順利的最佳情況），要么因不必要的緩衝而膨脹。兩者對於規劃都沒有用。</p>
+
+<p>本指南為您提供 <strong>基於我們已完成專案的現實改造時間表</strong> 整個溫哥華都會區 - 包括出了什麼問題以及如何最大限度地減少延誤。</p>
+
+<h3>什麼決定了你的時間表？</h3>
+
+<p>在深入研究特定專案類型之前，請先了解影響改造時間表的關鍵因素：</p>
+
+<ul>
+  <li><strong>專案範圍：</strong> 外觀更新（新的固定裝置、油漆、五金）只需要全面結構翻新的一小部分時間</li>
+  <li><strong>許可證要求：</strong> 任何結構工程、電氣面板升級或管道添加都需要許可證 - 並且許可證審查會增加時間</li>
+  <li><strong>材料交貨時間：</strong> 庫存材料立即準備就緒；定製或進口材料可能需要 4-12 週才能到達</li>
+  <li><strong>交易可用性：</strong> 溫哥華的電工、水管工和瓷磚安裝工通常提前 4-8 週預訂</li>
+  <li><strong>不可預見的情況：</strong> 老房子的牆後經常會有意想不到的事情——石棉、過時的電線、水漬、不標準的框架</li>
+</ul>
+
+<h2>廚房裝修時間表：4-8 週</h2>
+
+<p>廚房裝修是比較複雜的項目之一，因為它幾乎涉及每一項工作：拆除、管道和電氣的粗修、櫥櫃安裝、檯面模板和製造、電器連接以及詳細的裝修工作。以下是典型的溫哥華廚房裝修流程：</p>
+
+<h3>第一周：拆除和修整</h3>
+<ul>
+  <li><strong>演示（1-2 天）：</strong> 拆除現有的櫥櫃、檯面、地板，有時還會拆除牆壁。工作速度快，但會造成重大干擾。</li>
+  <li><strong>結構工作（1-3 天）：</strong> 如果佈局發生變化，牆壁拆除、梁安裝或框架也會發生變化。需要許可和檢查。</li>
+  <li><strong>管道粗修（2-3 天）：</strong> 重新安置水槽排水管、添加洗碗機連接、移動燃氣管道（如果需要）。必須在圍牆關閉之前進行檢查。</li>
+  <li><strong>電氣初步檢查（2-3 天）：</strong> 用於電器的新電路、櫥櫃下照明裝置、冰箱和微波爐的專用電路。需要檢查。</li>
+</ul>
+
+<h3>第 2-3 週：地板和櫥櫃安裝</h3>
+<ul>
+  <li><strong>底層地板準備與地板鋪設（2-3 天）：</strong> 平整底層地板，安裝新地板（硬木、LVP 或瓷磚）。磁磚地板在通行前需要 24-48 小時的固化時間。</li>
+  <li><strong>機櫃交付與安裝（3-5天）：</strong> 這是決定時間軸的里程碑。庫存 RTA 機櫃可在 2-3 天內完成安裝。 BC 製造商的訂製櫥櫃通常需要 6 至 10 週的時間來建造——這通常是定制廚房項目帳篷中的長桿。</li>
+</ul>
+
+<h3>第 3-5 週：檯面、電器和裝修</h3>
+<ul>
+  <li><strong>檯面模板（1 天）：</strong> 機櫃安裝完畢後，加工人員上門精確測量。這會觸發 1-2 週的製造視窗。</li>
+  <li><strong>檯面安裝（1天）：</strong> 速度很快，但你必須等待製造——這是廚房時間延長的常​​見原因。</li>
+  <li><strong>磁磚後擋板（2-3 天）：</strong> 包括灌漿固化時間。</li>
+  <li><strong>設備安裝（1-2 天）：</strong> 連接爐具、洗碗機、抽油煙機、冰箱水管。</li>
+  <li><strong>完成（2-3 天）：</strong> 裝飾、五金安裝、補漆、電氣蓋板、最終檢查。</li>
+</ul>
+
+<h3>是什麼延長了廚房的時間</h3>
+<p>在我們的溫哥華專案中，最常見的廚房延遲來源是：(1) 客製化櫥櫃交貨時間（從訂單起 6-10 週），(2) 檯面模板必須等到櫥櫃完全安裝並調平——增加了 2 週的製造時間，以及 (3) 許可檢查安排（溫哥華市檢查可能需要 3-7 個工作天來安排）。</p>
+
+<p>我們的 [Langley](/en/areas/langley/) 廚房採用瀑布島設計進行了 4-6 週的改造——與這個框架一致。我們的 [素里](/en/areas/surrey/) 訂製櫥櫃廚房從開始到完成歷時 4-5 週。</p>
+
+<h2>[浴室裝潢](/en/services/bathroom/) 時間軸：3-6週</h2>
+
+<p>浴室的空间比厨房小，但通常涉及复杂的防水、瓷砖工作和管道更换，需要仔细排序。這是典型的細分：</p>
+
+<h3>第一周：演示和初步測試</h3>
+<ul>
+  <li><strong>演示（1-2 天）：</strong> 拆除磁磚、固定裝置、浴室櫃，有時還拆除牆壁水泥板直至龍骨。仔細的演示保留了相鄰的房間。</li>
+  <li><strong>管道安裝調試（1-3 天）：</strong> 如果佈局發生變化，則移動排水管、添加淋浴閥、重新定位馬桶法蘭。需要許可檢查。</li>
+  <li><strong>電氣磨合（1-2 天）：</strong> 添加 GFCI 電路、加熱燈、浴室風扇更換、加熱地板恆溫器。需要檢查。</li>
+</ul>
+
+<h3>第 2-3 週：防水和瓷磚</h3>
+<ul>
+  <li><strong>淋浴防水（2-3 天，包括固化時間）：</strong> 這一步不能操之過急。适当的防水——无论是 Schluter 系统、RedGard 膜还是传统的泥床——都需要在贴瓷砖之前完全固化。</li>
+  <li><strong>瓷磚安裝（3-5 天）：</strong> 地磚、淋浴牆、壁龕安裝。複雜的磁磚圖案或大幅面磁磚需要更長的時間。灌漿前至少需要 24-48 小時固化。</li>
+  <li><strong>灌漿和密封（1-2天）：</strong> 包括使用淋浴前適當的固化時間。</li>
+</ul>
+
+<h3>第 3-5 週：賽程與收尾</h3>
+<ul>
+  <li><strong>浴室櫃和固定裝置安裝（2-3天）：</strong> 浴室櫃、檯面（如果與浴室櫃分開）、水龍頭、馬桶、淋浴裝置、鏡子、配件。</li>
+  <li><strong>玻璃淋浴間（1-2 天，加上訂製玻璃的 1-2 週交貨時間）：</strong> 無框淋浴玻璃在瓷磚完成後進行測量，通常需要 1-2 週的時間來製造。</li>
+  <li><strong>完成（1-2 天）：</strong> 補漆、填縫、五金、最終檢查。</li>
+</ul>
+
+<p>Our [North Vancouver](/en/areas/north-vancouver/) luxury curbless shower bathroom completed in 3–4 weeks. Our [Maple Ridge](/en/areas/maple-ridge/) bathroom with custom glass door also ran 3–4 weeks — the custom glass was ordered early to avoid delays. Our [Burnaby](/en/areas/burnaby/) master bathroom renovation took 4–5 weeks due to the complexity of the custom features.</p>
+
+<h2>地下室裝修時間表：8-12 週</h2>
+
+<p>地下室裝修往往比廚房或浴室需要更長的時間，因為它們涉及更大的空間，並且通常需要所有主要工作按順序進行：框架、電氣、管道（如果添加浴室）、絕緣、乾牆、地板和全面裝修。這種順序性質是不可避免的——每個階段都必須完成並通過檢查才能開始下一個階段。</p>
+
+<h3>第 1 階段 — 框架與草稿（第 1-3 週）</h3>
+<ul>
+  <li><strong>框架（3-5 天）：</strong> 隔間牆、艙壁、浴室框架、窗框。需要許可證和框架檢查。</li>
+  <li><strong>管道粗修（2-4 天）：</strong> 如果添加浴室，則需要破壞排水管的混凝土 - 增加 1-2 天的混凝土工作和固化時間。</li>
+  <li><strong>電氣初步檢查（3-5 天）：</strong> 地下室套房的完整電路佈局 - 臥室電路、浴室、起居區、廚房（如果適用）。需要檢查。</li>
+  <li><strong>保溫（2-3 天）：</strong> 牆壁絕緣棉絮、邊緣托樑噴塗泡棉、防潮層。需要進行絕緣檢查。</li>
+</ul>
+
+<h3>第 2 階段 — 乾牆（第 3-5 週）</h3>
+<ul>
+  <li><strong>乾牆安裝（3-5 天）：</strong> 懸掛、貼上和塗泥。每塗一層泥漿需要 24 小時乾燥時間——至少塗 3 層泥漿意味著至少需要 3 天的時間來乾燥泥漿。</li>
+  <li><strong>打磨和底漆（2-3 天）：</strong> 在不影響最終完成品質的情況下不能操之過急。</li>
+</ul>
+
+<h3>第 3 階段 — 完成（第 6-10 週）</h3>
+<ul>
+  <li><strong>地板（3-5 天）：</strong> LVP、地毯或瓷磚，取決於空間。浮動地板安裝速度最快；有加熱地板系統的磁磚需要更長的時間。</li>
+  <li><strong>浴室裝修（如果適用）（1-2 週）：</strong> 磁磚、浴室櫃、固定裝置－與其他裝修工作同時進行。</li>
+  <li><strong>廚房/小廚房（如果適用）（1-2 週）：</strong> 櫥櫃、檯面、電器——如果創建一套法律套件，則需要額外的時間。</li>
+  <li><strong>油漆、修剪和精加工（1 週）：</strong> 門、窗飾、底板、五金件、最終電氣連接、固定裝置。</li>
+</ul>
+
+<p>地下室套房的開發處於該範圍的上限——由於涉及額外的許可要求和貿易協調，創建帶廚房和浴室的完全合法的二級套房預計需要 10 至 14 週的時間。</p>
+
+<h2>全屋裝修時間：2-6個月</h2>
+
+<p>全屋翻新的範圍差異很大，但這裡有一個實用的框架：</p>
+
+<table>
+  <thead>
+    <tr><th>範圍</th><th>典型時間表</th><th>包含什麼</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>化妝品刷新</td><td>6–10 週</td><td>全新地板、新油漆、固定裝置更新，無結構變化</td></tr>
+    <tr><td>適度裝潢</td><td>3-4個月</td><td>廚房更新、1-2 間浴室翻新、新地板、電氣升級</td></tr>
+    <tr><td>全面裝修</td><td>4-6個月</td><td>結構變化、設備齊全的廚房、多個浴室、地下室開發</td></tr>
+  </tbody>
+</table>
+
+<p>我們在溫哥華的全屋翻新和浴室更新在 4-5 週內完成 - 但這主要集中在浴室和化妝品更新，而不是完整的結構項目。作為一個重點項目，我們的[列治文](/en/areas/richmond/)公寓翻新（廚房、浴室、地板）花費了 4-5 週的時間。</p>
+
+<h2>什麼延長了裝修時間</h2>
+
+<p>根據我們在大溫哥華地區的項目，以下是時間表延誤的真正罪魁禍首：</p>
+
+<h3>1. 許可證處理時間</h3>
+<p>溫哥華市的結構工程、配電板或管道擴建的建築許可證可以 <strong>4-8週</strong> 供審查。我們的[關鍵負載面板安裝](/en/services/critical-load-panel/)服務可升級您的家庭電力容量，以滿足現代裝修的需求。素里和本拿比通常更快（2-4 週）。許可證時鐘在您提交圖紙時開始，而不是在您開始裝修時開始。智慧承包商會在專案開始日期之前提交許可證，以便在演示開始時立即獲得批准。</p>
+
+<h3>2. 客製化材料交貨時間</h3>
+<ul>
+  <li>來自不列顛哥倫比亞省當地製造商的訂製櫥櫃：6-10 週</li>
+  <li>客製化/特殊瓷磚（進口或特殊訂單）：4-8 週</li>
+  <li>客製化檯面製造：模板製作後 1-2 週</li>
+  <li>訂製玻璃淋浴間：測量後 1-2 週</li>
+  <li>特別訂購管道裝置：2-6 週</li>
+</ul>
+
+<h3>3. 交易可用性</h3>
+<p>溫哥華的裝修市場競爭激烈。在旺季（春季：3 月至 6 月，秋季：9 月至 11 月），熟練的瓷磚安裝工、訂製櫥櫃安裝工和玻璃技術人員通常會提前 4 至 8 週預訂。在這些視窗啟動的項目需要提前預訂交易。</p>
+
+<h3>4. 不可預見的情況</h3>
+<p>溫哥華的老房子（1980 年之前）經常隱藏著驚喜：地磚或乾牆紋理中的石棉（需要專業消除，1-3 天加上測試），需要完全更換的旋鈕和管道佈線，鍍鋅管，非標準龍骨間距使瓷磚背襯複雜化，以及數十年輕微滲漏造成的水損壞。預算 10-15% 的時間作為意外發現的緩衝。</p>
+
+<h2>如何避免延誤</h2>
+
+<h3>儘早開始許可流程</h3>
+<p>如果您的專案需要許可，請在計劃開始工作之前提交圖紙。如果您有計劃的話，6 週的許可證審查期並不需要延長您的專案啟動時間。您的承包商應該能夠在設計階段就許可要求向您提供建議。</p>
+
+<h3>工作開始前訂購材料</h3>
+<p>我們在廚房裝修中看到的最大的延誤是訂製櫥櫃的交貨時間。在設計簽核階段訂購櫥櫃，而不是在演示開始時訂購。特種瓷磚和定制固定裝置也是如此。材料應在項目開始之前到達，而不是在交易等待時到達。</p>
+
+<h3>簽署前確認交易時間表</h3>
+<p>在簽署裝修合約之前，請明確詢問：「您目前的日程安排是什麼？這個專案什麼時候可以開始？」承包商可以在下週開始工作，但六週內都沒有電工，這會讓您面臨延誤。可靠的承包商在承諾開始日期之前規劃完整的交易順序。</p>
+
+<h3>儘早做出最終選擇</h3>
+<p>工作開始後的變更訂單是最具破壞性和最昂貴的時間殺手。安裝櫥櫃後更改檯面材料意味著重新啟動模板和製造窗口。防水後更換瓷磚意味著拆除並重新進行工作。在演示開始之前鎖定您的選擇。</p>
+
+<h2>我們的實際專案時間表</h2>
+
+<p>以下是我們完成的項目實際花費的時間，而不是估計值：</p>
+
+<ul>
+  <li><strong>帶瀑布島的蘭利廚房：</strong> 4–6 週（客製島設計，標準櫃交貨時間）</li>
+  <li><strong>木紋櫥櫃的本拿比訂製廚房：</strong> 4-5週</li>
+  <li><strong>北溫哥華豪華浴室（無圈淋浴）：</strong> 3–4 週</li>
+  <li><strong>附訂製玻璃門的楓樹嶺浴室：</strong> 3–4 週</li>
+  <li><strong>本拿比主浴室配有客製化功能：</strong> 4-5週</li>
+  <li><strong>本拿比聯排別墅浴室具有客製化功能：</strong> 2–3 週（緊湊範圍）</li>
+  <li><strong>列治文公寓（廚房+浴室+地板）：</strong> 4-5週</li>
+  <li><strong>溫哥華全屋裝修：</strong> 4-5週（重點範圍）</li>
+  <li><strong>溫哥華皮膚實驗室[商業裝修](/en/guides/commercial-renovation-cost-vancouver/)vation:</strong> 4-5個月（主要商業範圍）</li>
+</ul>
+
+<h2>裝修時間表常見問題解答</h2>
+
+<h3>廚房裝修期間我可以住在家裡嗎？</h3>
+<p>通常是的，儘管這需要計劃。您需要設置一個臨時廚房空間（微波爐、迷你冰箱、另一個房間的電爐）。最具破壞性的時期是演示和試運行（第一週）。從櫥櫃安裝開始，空間雖然凌亂，但仍宜居。大多數溫哥華房主選擇住宿 - 4 至 6 週的酒店住宿會增加大量費用。</p>
+
+<h3>我應該提前多久預訂承包商？</h3>
+<p>對於春季和秋季專案（旺季），請提前 8 至 12 週預訂。對於冬季項目（12 月至 2 月），4 至 6 週通常就足夠了。季節越繁忙，您就越需要鎖定開始日期並確認材料訂單。</p>
+
+<h3>我可以加快裝修時間嗎？</h3>
+<p>是的——在限度內。選擇庫存材料而不是定製材料可以大大壓縮時間（RTA 機櫃與定製材料：2 週與 8 週以上）。擁有一個協調所有交易的承包商（而不是自己管理每項交易）可以減少調度間隙。避免專案中期範圍變更是您可以做的影響最大的事情。</p>
+
+<h3>浴室裝潢最短的實際時間表是多少？</h3>
+<p>對於一個完整的浴室翻新（拆除所有東西並重新開始），對於一個有能力、組織良好、所有材料都已預訂的承包商來說，至少需要 3 週的時間。任何更短的時間都可能意味著在防水固化時間或檢查步驟上偷工減料——這會在以後產生昂貴的問題。</p>
+
+請參閱來自大溫哥華地區房主的[經過驗證的五星級評論](/en/reviews/)。
+
+[關於 Reno Stars](/en/about/) — 總部位於溫哥華的裝修公司，自 2019 年起為大溫哥華地區提供服務。
+
+[查看我們的改造專案組合→](/en/projects/)
+
+<p>準備好規劃您的專案時間表了嗎？我們的 <a href="/en/services/">裝修服務</a> 團隊提供詳細的專案時間表作為每次估算的一部分。我們在工作開始前制定了完整的交易順序，以便您確切地知道會發生什麼。 <a href="/zh-Hant/contact/">取得時間表估計</a> 針對您的特定項目，我們將引導您了解適合您的範圍和預算的實際情況。</p>
+
+<p>想了解裝修成本的驅動因素是什麼？我們詳細的 <a href="/en/guides/bathroom-renovation-cost-vancouver/">衛浴裝修費用指南</a> 和 <a href="/zh-Hant/blog/">完整的裝修指南庫</a> 擁有您規劃和預算溫哥華裝修所需的一切。</p>
+
+
+
+## We Serve These Metro Vancouver Communities
+
+Reno Stars provides renovation timelines across Metro Vancouver: [Coquitlam](/en/areas/coquitlam/) | [Delta](/en/areas/delta/) | [New Westminster](/en/areas/new-westminster/) | [Port Coquitlam](/en/areas/port-coquitlam/) | [Port Moody](/en/areas/port-moody/) | [West Vancouver](/en/areas/west-vancouver/) | [White Rock](/en/areas/white-rock/)
+
+## Frequently Asked Questions
+
+### How long does a kitchen renovation take in Vancouver?
+
+A kitchen renovation in Metro Vancouver takes 6–14 weeks from contract signing to handover. Breakdown: design + permit (2–4 weeks), ordering cabinets and appliances (4–6 weeks lead time), demolition and rough-ins (1 week), cabinet install (3–5 days), countertop template and install (1–2 weeks), tile, trim, paint, and fixtures (1–2 weeks), final inspection (if permit required). Complex kitchens with structural changes, custom cabinetry, or high-end appliances with long lead times can take 16–20 weeks.
+
+### How long does a bathroom renovation take in Vancouver?
+
+A standard bathroom renovation in Metro Vancouver takes 3–6 weeks. A basic refresh (no plumbing or layout changes) takes 10–14 business days. A full gut-and-replace with new layout takes 4–7 weeks including permit processing. Walk-in shower conversions that require moving the drain take 3–5 days of construction time after permits are issued. Ensuite additions in new locations take 6–10 weeks total.
+
+### How long does a basement renovation take in Vancouver?
+
+A basement renovation takes 8–16 weeks depending on scope. An open-concept basement finish (framing, drywall, flooring, pot lights, no bathroom) takes 6–10 weeks including permit. Adding a legal secondary suite (bathroom, kitchen, fire separation, egress) takes 12–20 weeks. The longest element is often permit processing — 4–14 weeks in Metro Vancouver depending on the municipality. Material procurement and finishing trades add 6–10 weeks of construction time.
+
+### What causes renovation delays in Vancouver?
+
+The most common causes of renovation delays in Metro Vancouver: (1) Permit processing times exceeding estimates — common in the City of Vancouver where complex permits can take 14+ weeks; (2) Material lead times — custom cabinetry takes 6–10 weeks, engineered hardwood 3–6 weeks, specialty tile 2–8 weeks; (3) Discovery of hidden problems once walls are opened — knob-and-tube wiring, asbestos in older homes, moisture damage; (4) Change orders mid-project — each change can add 1–3 weeks; (5) Trade scheduling gaps between rough-in inspections and finishing. Reno Stars builds buffer time for each stage into project timelines.
+
+### Can I live in my house during a renovation in Vancouver?
+
+Yes, for most targeted renovations like a single bathroom or basement. Full whole-house renovations or anything involving the main kitchen, primary bathroom, or HVAC system are difficult to live through. Consider our [Heat Pump Installation Vancouver](/en/services/heat-pump-hvac/) service to upgrade heating and cooling with modern energy-efficient systems. Dust containment, work hours (7 AM–6 PM weekdays typical in residential zones), and loss of kitchen or bathroom access are the main challenges. Reno Stars provides a weekly schedule so you can plan around key disruption windows. For whole-house projects, many clients rent a short-term unit for 6–12 weeks.
+
+
+### How long does a whole-home renovation take in Vancouver?
+
+A Vancouver whole-home renovation timeline: Design and planning: 4–8 weeks. Permit processing: 4–8 weeks (Vancouver) or 2–5 weeks (other Metro municipalities). Demolition and rough-in (plumbing, electrical, framing): 2–4 weeks. Older Metro Vancouver homes may also need our [Poly-B Pipe Replacement](/en/services/poly-b-replacement/) service to eliminate unsafe plastic piping. Insulation, drywall, subfloor: 2–3 weeks. Tile, flooring, cabinetry: 3–5 weeks. Fixtures, trim, paint, final inspection: 2–3 weeks. Total construction: 10–18 weeks. From initial planning to move-in: 20–36 weeks for a comprehensive whole-home project. Homes that can be occupied during construction (phased approach) allow homeowners to stay in place but add 20–30% to the total construction timeline.
+
+Also see: [BC renovation permits](/zh-Hant/blog/renovation-permits-bc-guide/) | [BC Strata Renovation Rules](/zh-Hant/blog/strata-renovation-rules-vancouver/) | [Whole-House Renovation Vancouver](/en/services/whole-house/) | [How to Choose a Contractor](/zh-Hant/blog/how-to-choose-renovation-contractor-vancouver/) | [how to read a renovation quote](/zh-Hant/blog/how-to-read-renovation-quote-line-items/) | [best time to renovate in Vancouver](/zh-Hant/blog/best-time-to-renovate-in-vancouver/) | [Vancouver Renovation Cost Guide 2026](/zh-Hant/blog/renovation-cost-vancouver-2026-complete-guide/) | [How to Finance Your Vancouver Renovation (HELOC Guide)](/zh-Hant/blog/renovation-financing-vancouver-heloc/) | [Renovation Financing Options](/en/financing/) | [Kitchen Renovation Vancouver](/en/services/kitchen/) | [Cabinet Refinishing](/en/services/cabinet/) | [Pre-Sale Renovation Advice](/en/services/realtor/) | [Basement Renovation Vancouver](/en/services/basement/) | [Accessible Bathroom Renovation](/en/services/accessible-bathroom/)
+
+## See Also — Renovation Cost Guides
+
+- [Kitchen Renovation Cost Vancouver](/en/guides/kitchen-renovation-cost-vancouver/) — average $15K–$80K in Metro Vancouver
+- [Cabinet Refinishing Cost Vancouver](/en/guides/cabinet-refinishing-cost-vancouver/) — from $4K for refinishing
+
+## City-Specific Renovation Guides
+
+- [Burnaby Home Renovation Guide 2026](/zh-Hant/blog/burnaby-home-renovation-guide-2026/) — Burnaby timelines and permit waits
+- [Surrey Home Renovation Guide 2026](/zh-Hant/blog/surrey-home-renovation-guide-2026/) — Surrey renovation timelines
+- [Richmond Home Renovation Guide 2026](/zh-Hant/blog/richmond-home-renovation-guide-2026/) — Richmond permit timelines
+- [North Vancouver Home Renovation Guide](/zh-Hant/blog/north-vancouver-home-renovation-guide-2026/) — North Van project timelines
+
+
+- [Spring Renovation Checklist Vancouver 2026](/zh-Hant/blog/spring-renovation-checklist-vancouver-2026/) — best seasons for different renovation projects
+<p>有關的： <a href="/blog/summer-renovation-vancouver-2026-best-projects">夏季裝修溫哥華最佳項目</a></p>';
 UPDATE blog_posts SET localizations = jsonb_set(localizations, ARRAY['contentZhHant'], to_jsonb('<article>
 <h1>Condo vs House Renovation Cost in [Vancouver](/en/areas/vancouver/): What''s Actually Different?</h1>
 
@@ -8003,6 +11125,507 @@ Also see: [How to Finance Your Vancouver Renovation (HELOC Guide)](/zh-Hant/blog
 - [Basement Renovation Cost Vancouver](/en/guides/basement-renovation-cost-vancouver/) — average $20K–$80K
 - [Whole House Renovation Cost Vancouver](/en/guides/whole-house-renovation-cost-vancouver/) — average $50K–$300K+
 - [Cabinet Refinishing Cost Vancouver](/en/guides/cabinet-refinishing-cost-vancouver/) — from $4K for refinishing';
+UPDATE blog_posts SET localizations = jsonb_set(localizations, ARRAY['contentZhHant'], to_jsonb('<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "文章",
+  "headline": "分層裝修規則[溫哥華](/en/areas/vancouver/)：公寓業主需要了解什麼",
+  "description": "溫哥華公寓分契翻新規則：審批流程、演示時間、噪音章程、押金要求、保險證明以及應避免的違規行為。",
+  "圖像": "https://www.reno-stars.com/images/blog/strata-renovation-rules-vancouver.jpg",
+  "作者": {"@type": "組織", "名稱": "Reno Stars"},
+  "publisher": {"@type": "組織", "name": "Reno Stars", "logo": {"@type": "ImageObject", "url": "https://www.reno-stars.com/logo.png"}},
+  "發佈日期": "2026-04-17",
+  "修改日期": "2026-04-17",
+  "mainEntityOfPage": {"@type": "網頁", "@id": "https://www.reno-stars.com/zh-Hant/blog/strata-renovation-rules-vancouver"}
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "常見問題頁面",
+  「主要實體」：[
+    {
+      "@type": "問題",
+      "name": "在溫哥華裝修浴室需要分層批准嗎？",
+      "acceptedAnswer": {"@type": "Answer", "text": "是的，如果您的裝修涉及任何可能影響公共財產、結構元素或其他單位的工作，包括管道更換、地板更換（由於聲音傳播）或與鄰居共用的牆壁的任何滲透。大多數分契公司在開始任何裝修之前都需要書面批准，即使是可能產生大量噪音或碎片的裝飾。
+    },
+    {
+      "@type": "問題",
+      "name": "溫哥華分層建築的標準裝修時間是？",
+      "acceptedAnswer": {"@type": "Answer", "text": "大多數溫哥華分契公司允許週一至週五上午 8 點至下午 5 點、週六上午 9 點至下午 4 點或上午 10 點至下午 4 點進行翻修工作。週日和節假日禁止工作。它們優先於一般做法。
+    },
+    {
+      "@type": "問題",
+      "name": "分層公司可以讓我撤銷我的裝修嗎？",
+      "acceptedAnswer": {"@type": "Answer", "text": "是的。如果您在未獲得物業批准的情況下進行裝修，或違反了您批准的裝修協議，根據 BC 省物業法，物業公司擁有法律權力，要求您自費恢復所做的更改。這可能會花費數萬加元用於地板、瓷磚或管道。"}
+    }
+  ]
+}
+</script>
+
+<h2>為什麼分層裝修規則不同</h2>
+
+<p>翻修溫哥華的分契物業涉及兩個並行審批流程：溫哥華市建築許可流程（用於結構、電氣或管道變更）和分契公司自己的審批流程（受不列顛哥倫比亞省分契物業法和每棟建築獨特的章程管轄）。</p>
+
+<p>錯過分層批准步驟是我們在溫哥華公寓中看到的最常見的裝修錯誤。這可能會導致停工、根據分層罰款計劃進行罰款，以及在嚴重的情況下，分層扣留您的財產或法院命令要求您自費恢復變更。</p>
+
+<p>本指南涵蓋了業主在大溫哥華地區開始裝修之前需要了解的所有資訊。</p>
+
+<h2>第 1 步：先閱讀您的 Strata 章程</h2>
+
+<p>BC 省的每個分契公司都有自己的一套章程，這些章程要麼取自《分契財產法》下的標準章程，要麼採用在土地產權辦公室註冊的定製章程。您的裝修義務在這些章程中詳細說明，而不是在任何一般指南中。</p>
+
+<p>向您的物業經理索取一份目前章程的副本。特別尋找涵蓋以下內容的部分：</p>
+<ul>
+  <li><strong>裝修/改建審核流程：</strong> 哪些內容需要批准、如何申請以及各階層可能會要求您做些什麼</li>
+  <li><strong>允許的工作時間：</strong> 允許裝修噪音的日期和時間</li>
+  <li><strong>噪音和乾擾規定：</strong> 衝擊噪音（拆除、錘擊）是否與一般施工噪音有單獨的限制</li>
+  <li><strong>地板要求：</strong> 許多建築物要求新地板具有特定的聲音傳輸等級 (STC) 或衝擊隔離等級 (IIC)，尤其是從地毯更換為硬地板時</li>
+  <li><strong>常見的屬性存取規則：</strong> 承包商如何進入大樓、使用電梯和停車</li>
+</ul>
+
+<h2>第 2 步：提交正式變更請求</h2>
+
+<p>對於影響公共財產、結構元素或可能影響其他單位的任何裝修，您必須在工作開始前向您的分契公司提交正式的變更協議（有時稱為翻新請求或變更請求函）。</p>
+
+<h3>您的變更請求中應包含哪些內容</h3>
+<ul>
+  <li><strong>所有計劃工作的書面描述：</strong> 具體一點—「全部更換地板」是不夠的； 「拆除現有地毯，在除濕室之外的所有區域安裝 12 毫米工程硬木和 3 毫米聲學襯墊（IIC 52、STC 55 級）」是分契所需要的</li>
+  <li><strong>承包商詳細資料：</strong> 姓名、許可證號碼、聯絡資訊以及承包商已獲得許可和投保的聲明</li>
+  <li><strong>保險證明：</strong> 承包商的 CGL 證書，通常至少為$2 百萬，將分層公司指定為附加被保險人</li>
+  <li><strong>WorkSafeBC 授權函</strong></li>
+  <li><strong>建築許可證號碼</strong> （如果適用－用於電氣、管道或結構工程）</li>
+  <li><strong>擬議的開始和完成日期</strong></li>
+  <li><strong>範圍圖或繪圖</strong> （用於佈局變更或新的滲透）</li>
+</ul>
+
+<h3>分層審批時間表</h3>
+<p>根據不列顛哥倫比亞省的分層財產法，分層委員會必須在「合理的時間內」對變更請求做出回應。在實踐中：</p>
+<ul>
+  <li>簡單的外觀改造（油漆、更換固定裝置）：1-2 週</li>
+  <li>需要進行聲學檢查的地板更換：2-4 週</li>
+  <li>管道或結構變更：3-6 週，有時需要分層工程師審查</li>
+  <li>需要年度股東大會投票的複雜翻修：3-6 個月</li>
+</ul>
+
+<p><strong>根據分層核准來規劃您的裝修時間表，而不是相反。</strong> 在獲得分層批准之前預訂承包商是一個常見且昂貴的錯誤。</p>
+
+<h2>拆除時間和噪音限制</h2>
+
+<p>大多數溫哥華分層公司都遵循標準框架，但具體時間因附例而異：</p>
+
+<table>
+  <thead>
+    <tr><th>天</th><th>典型允許時間</th><th>筆記</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>週一至週五</td><td>上午 8:00–下午 5:00</td><td>大多數建築物的標準</td></tr>
+    <tr><td>週六</td><td>上午 9:00–下午 4:00 或上午 10:00–下午 3:00</td><td>因章程而異—檢查您的章程</td></tr>
+    <tr><td>星期日</td><td>不允許</td><td>在大溫哥華分契中幾乎普遍存在</td></tr>
+    <tr><td>法定假期</td><td>不允許</td><td>BC 統計假期：新年、家庭日、耶穌受難日、維多利亞日、加拿大國慶日、BC 國慶日、勞動節、感恩節、陣亡將士紀念日、聖誕節</td></tr>
+  </tbody>
+</table>
+
+<p>一些分契式建築對「衝擊噪音」（定義為拆除、手提鑽、混凝土鑽孔或重錘敲擊產生的聲音）施加了更嚴格的限制，將這些活動限制在較窄的窗口內，例如周一至週五上午 9 點至下午 4 點，即使在較寬的窗口內允許進行一般施工。</p>
+
+<p>違反噪音時間是裝修過程中最常見的物業章程違規行為，每起事件的罰款通常為 $200–$1,000  不等。重複違規可能會升級為您單位的分層留置權。</p>
+
+<h2>地板規則：溫哥華公寓最具爭議的裝修問題</h2>
+
+<p>與任何其他翻新類型相比，分層建築中的地板變化會產生更多爭議，因為用硬木或 LVP 替換地毯會顯著增加傳輸到下面單元的衝擊噪音。大多數溫哥華分層公司現在要求：</p>
+
+<ul>
+  <li><strong>最低 IIC（衝擊絕緣等級）等級為 50–55</strong> 用於組合地板組件（地板+墊層+現有混凝土）</li>
+  <li><strong>最低 STC（聲音傳輸等級）等級為 50–55</strong> 對於空氣傳播的聲音</li>
+  <li>所有硬地板下的隔音墊 — 最小厚度通常為 3-5 毫米</li>
+  <li>有時：音響工程師證明建議的組裝符合章程標準</li>
+</ul>
+
+<p>如果您要從地毯更換為硬地板，請在選擇地板產品之前，將您的分契的特定 IIC/STC 要求告知承包商。正確的墊層可以決定批准與否，而安裝後發現的錯誤選擇意味著代價高昂的撕毀。</p>
+
+<p>在Reno Stars，我們翻新了數十個溫哥華和[本拿比](/en/areas/burnaby/)分層單位，熟悉大溫哥華地區主要建築的聲學要求。我們在每個分層地板報價中指定了正確的墊層系統。</p>
+
+<h2>裝修押金要求</h2>
+
+<p>許多分層公司需要 <strong>裝修押金</strong> — 階層持有的資金，作為在翻修期間防止公共財產受損的擔保。這與向承包商支付的任何款項完全分開。</p>
+
+<p>大溫哥華地區典型的裝潢押金：</p>
+<ul>
+  <li><strong>外觀翻新（無結構/管道）：</strong> $500–$1,500</li>
+  <li><strong>Kitchen or [bathroom renovations](/en/services/bathroom/):</strong> $1,500–$3,000</li>
+  <li><strong>整體單位翻新：</strong> $3,000–$10,000</li>
+</ul>
+
+<p>裝修完成後，如果公共財產（電梯內部、走廊、大廳、停車場）沒有損壞，押金將退還。強烈建議在裝修前後檢查公共區域並附上照片，以保護您的押金。</p>
+
+<h2>常見物業出入和電梯規則</h2>
+
+<p>您的承包商需要在建築物的公共區域移動材料、工具和碎片。如果未能妥善協調，就會導致罰款和與鄰居的摩擦。標準要求：</p>
+
+<ul>
+  <li><strong>電梯預訂：</strong> 大多數分層建築都需要提前預訂服務電梯，以便運送材料和示範碎片清除。提前 48-72 小時預訂。有些建築在裝修期間使用電梯會收取費用（$100–$300）。</li>
+  <li><strong>電梯保護：</strong> 您的承包商負責用墊子和墊子保護電梯牆壁和地板。電梯飾面的損壞以商業重置成本向單位所有者收取費用。</li>
+  <li><strong>走廊及大廳防護：</strong> 在物料移動過程中，通常需要在走廊中使用地板滑軌和牆壁保護。</li>
+  <li><strong>廢棄物處理：</strong> 建築回收或垃圾房內無裝修垃圾。您的承包商必須安排一個垃圾箱（通常需要城市的街道許可證）或直接將碎片運出現場。</li>
+  <li><strong>停車處：</strong> 遊客停車場的承包商車輛通常有限—與物業經理確認專案期間是否可以享受停車豁免。</li>
+</ul>
+
+<h2>如果您在未經分層批准的情況下進行翻新，會發生什麼</h2>
+
+<p>根據不列顛哥倫比亞省分層財產法第 164 條，分層公司可以向不列顛哥倫比亞省民事解決法庭 (CRT) 或最高法院申請命令，要求您自費恢復未經授權的更改。這不是理論上的風險——我們已經看到客戶因為沒有先獲得批准而面臨拆除整個浴室磁磚安裝的命令。</p>
+
+<p>除了恢復令之外，後果還包括：</p>
+<ul>
+  <li>附例罰款（每次違規$200–$1,000+，每天）</li>
+  <li>您單位的分層留置權（可能會影響抵押貸款再融資或出售）</li>
+  <li>與裝修相關的損壞的房屋保險範圍無效</li>
+  <li>在違規問題解決之前無法出售或再融資</li>
+</ul>
+
+<h2>分契翻新清單</h2>
+
+<ol>
+  <li>請要求並閱讀您當前的物業章程—尤其是改造、噪音和地板部分</li>
+  <li>確定所有需要分層核准的工作（如有疑問，請申請）</li>
+  <li>提交完整的變更協議以及所有必要的文件</li>
+  <li>在預訂承包商之前等待書面的分層批准</li>
+  <li>繳交所需裝修押金</li>
+  <li>與物業經理預訂電梯通道並確認停車安排</li>
+  <li>確認您的承包商瞭解並將遵守所有噪音時間限制</li>
+  <li>工作開始前記錄公共區域狀況（照片/影片）</li>
+  <li>獲得所有必需的市政建築許可證</li>
+  <li>完成後，要求退還押金並確認最終檢查（如果需要）</li>
+</ol>
+
+<p>分層翻新是我們 Reno Stars 的特色之一。我們協助準備變更協議文件，提供所有必需的保險證書，並協調建築通道，以盡量減少對鄰居的干擾。我們的 <a href="/zh-Hant/blog/renovation-permits-bc-guide/">BC省裝修許可證指南</a> 涵蓋市政許可要求，並且我們的 <a href="/en/guides/bathroom-renovation-cost-vancouver/">浴室</a> 和 <a href="/en/guides/kitchen-renovation-cost-vancouver/">廚房成本指南</a> 擁有準確的溫哥華分契單位翻新定價。</p>
+
+請參閱來自大溫哥華地區房主的[經過驗證的五星級評論](/en/reviews/)。
+
+[關於 Reno Stars](/en/about/) — 總部位於溫哥華的裝修公司，自 2019 年起為大溫哥華地區提供服務。
+
+[查看我們的改造專案組合→](/en/projects/)
+
+<p><a href="/zh-Hant/contact/">獲得免費估價</a> — 作為規劃流程的一部分，我們將審查您的分契物業章程，以便您在我們開始之前準確了解您需要哪些批准。</p>
+
+
+
+## Strata Renovation Services Across Metro Vancouver
+
+Reno Stars handles strata renovation approvals and complex projects across Metro Vancouver: [Coquitlam](/en/areas/coquitlam/) | [Delta](/en/areas/delta/) | [Langley](/en/areas/langley/) | [Maple Ridge](/en/areas/maple-ridge/) | [New Westminster](/en/areas/new-westminster/) | [North Vancouver](/en/areas/north-vancouver/) | [Port Coquitlam](/en/areas/port-coquitlam/) | [Port Moody](/en/areas/port-moody/) | [Richmond](/en/areas/richmond/) | [Surrey](/en/areas/surrey/) | [West Vancouver](/en/areas/west-vancouver/) | [White Rock](/en/areas/white-rock/)
+
+## Frequently Asked Questions
+
+### Do I need strata council approval to renovate my Vancouver condo?
+
+Yes — most renovation work in a strata unit requires strata council approval before you start, even if you have a municipal building permit. The strata corporation controls common property, limited common property, and anything affecting shared systems (plumbing stacks, electrical panels, structural elements). Approval requirements vary by strata''s bylaws — some stratas require approval for any trade work; others only require it for structural or plumbing changes. Always request a "renovation approval" from your strata manager in writing before signing a contractor.
+
+### What renovations don''t need strata approval in BC?
+
+Work that typically doesn''t require strata approval (varies by bylaw): cosmetic changes entirely within your unit (painting, flooring over existing subfloor, fixture swaps in the same location), furniture changes, and like-for-like appliance replacements that don''t involve modifying plumbing or electrical. However, even "cosmetic" work can require notification if it creates dust, noise beyond strata hours, or involves using the freight elevator. Check your strata''s specific bylaws — they vary significantly between buildings.
+
+### How long does strata renovation approval take in Vancouver?
+
+Strata council approval typically takes 2–6 weeks in Metro Vancouver. Most strata councils meet monthly; if you miss the meeting cycle, you wait until the next one. Some larger stratas have management companies that can provide faster preliminary approval for straightforward projects. Submit a complete application (scope of work, contractor license number, insurance certificate, drawings if structural) to avoid resubmissions. Reno Stars provides all required documentation and has completed 100+ strata renovations across Metro Vancouver.
+
+### Can my Vancouver strata deny my renovation application?
+
+Yes — strata councils can deny renovation applications, particularly those affecting common property, structural elements, or shared systems. Common reasons for denial: inadequate contractor insurance ($2M+ CGL typically required), missing permits, proposed work that affects plumbing stacks or electrical panels without engineer sign-off, or work in common areas without authorization. Our [Critical Load Panel Installation](/en/services/critical-load-panel/) service upgrades your home electrical capacity for modern renovation demands. Older Metro Vancouver homes may also need our [Poly-B Pipe Replacement](/en/services/poly-b-replacement/) service to eliminate unsafe plastic piping. If denied, you can appeal to the Strata Property Act dispute resolution process. In practice, most denials are resolved by revising the scope or providing additional documentation.
+
+### What insurance does my contractor need for a strata renovation in Vancouver?
+
+Most Vancouver strata corporations require contractors to carry $2M–$5M Commercial General Liability (CGL) insurance before entering the building. Many also require proof of active WCB (WorkSafeBC) coverage to protect against injury claims. Some newer buildings require $5M CGL minimum. The contractor must name the strata corporation as an additional insured on the policy. Reno Stars carries $5M CGL insurance and active WCB coverage — we provide COI certificates in the strata''s required format on request.
+
+### What documentation does my contractor need to start a Vancouver strata renovation?
+
+Documentation required for a Vancouver strata renovation: (1) Strata council approval letter — the written authorization from your strata corporation. (2) BC Housing Licence — your contractor''s active residential builder licence (verify at bchousing.org). (3) WorkSafeBC clearance letter — confirms current workers compensation coverage (download at worksafebc.com/clearanceletter). (4) Certificate of Insurance — minimum $2M commercial general liability, with the strata corporation named as an additional insured. (5) Copy of the Renovation Agreement — required by many stratas, specifying scope, timeline, and contractor responsibility for common area damage. Allow 2–4 weeks to collect and submit this package before your first day of work.
+
+Also see: [condo strata renovation guide Vancouver (中文)](/zh-Hant/blog/vancouver-condo-strata-guide-zh/) | [low-budget condo renovation case study](/zh-Hant/blog/low-budget-condo-renovation-in-west-vancouver-case-study/) | [social-ready condo renovation case study](/zh-Hant/blog/social-ready-condo-renovation-case-study/) | [condo kitchen renovation space-saving ideas](/zh-Hant/blog/condo-kitchen-renovation-vancouver-space-saving-ideas/) | [Vancouver Renovation Cost Guide 2026](/zh-Hant/blog/renovation-cost-vancouver-2026-complete-guide/) | [How to Finance Your Vancouver Renovation (HELOC Guide)](/zh-Hant/blog/renovation-financing-vancouver-heloc/) | [Renovation Financing Options](/en/financing/) | [Pre-Sale Renovation Vancouver](/zh-Hant/blog/pre-sale-renovation-vancouver-what-to-fix-before-listing/) | [How to Choose a Renovation Contractor Vancouver](/zh-Hant/blog/how-to-choose-renovation-contractor-vancouver/) | [Pre-Sale Renovation Advice](/en/services/realtor/) | [Accessible Bathroom](/en/services/accessible-bathroom/) | [Heat Pump Installation](/en/services/heat-pump-hvac/) | [Renovation Timeline Guide](/zh-Hant/blog/renovation-timeline-how-long-does-each-project-take/) | [Vancouver Home Renovation Guide](/zh-Hant/blog/vancouver-home-renovation-guide-2026/) | [Kitchen Renovation Vancouver](/en/services/kitchen/) | [Cabinet Refinishing](/en/services/cabinet/) | [Basement Renovation Vancouver](/en/services/basement/) | [Whole-House Renovation Vancouver](/en/services/whole-house/)
+
+## See Also — Renovation Cost Guides
+
+- [Basement Renovation Cost Vancouver](/en/guides/basement-renovation-cost-vancouver/) — average $20K–$80K
+- [Whole House Renovation Cost Vancouver](/en/guides/whole-house-renovation-cost-vancouver/) — average $50K–$300K+
+- [Cabinet Refinishing Cost Vancouver](/en/guides/cabinet-refinishing-cost-vancouver/) — from $4K for refinishing
+
+## Condo Renovation Guides by City
+
+- [Condo Renovation North Vancouver](/zh-Hant/blog/condo-renovation-north-vancouver-2026/) — strata bylaws in North Van
+- [Condo Renovation Surrey BC](/zh-Hant/blog/condo-renovation-surrey-bc-2026/) — approvals and permits in Surrey
+- [Condo Renovation New Westminster](/zh-Hant/blog/condo-renovation-new-westminster-2026/) — New West strata rules
+- [Condo Renovation Delta BC](/zh-Hant/blog/condo-renovation-delta-bc-2026/) — Delta strata renovation guide
+
+
+- [Condo vs House Renovation Cost Vancouver](/zh-Hant/blog/condo-vs-house-renovation-cost-vancouver/) — which property type costs more to renovate
+
+- [Burnaby Condo Renovation Guide 2026](/zh-Hant/blog/condo-renovation-burnaby-bc-2026/) — condo renovation specialists serving Burnaby
+
+- [Coquitlam Condo Renovation Guide 2026](/zh-Hant/blog/condo-renovation-coquitlam-bc-2026/) — condo renovation specialists serving Coquitlam
+
+- [Richmond Condo Renovation Guide 2026](/zh-Hant/blog/condo-renovation-richmond-bc-2026/) — condo renovation specialists serving Richmond
+
+- [Vancouver Condo Renovation Guide 2026](/zh-Hant/blog/condo-renovation-vancouver-bc-2026/) — condo renovation specialists serving Vancouver
+
+- [Apartment Building Renovation Vancouver 2026](/zh-Hant/blog/apartment-building-renovation-vancouver-2026/) — multi-unit and strata building renovation guide
+
+- [New Westminster Kitchen & Bathroom Renovation 2026](/zh-Hant/blog/kitchen-bathroom-renovation-new-westminster-2026/) — combined kitchen and bathroom renovation guide for New Westminster
+
+- [Port Coquitlam Kitchen & Bathroom Renovation 2026](/zh-Hant/blog/kitchen-bathroom-renovation-port-coquitlam-2026/) — combined kitchen and bathroom renovation guide for Port Coquitlam
+
+- [Maple Ridge Kitchen & Bathroom Renovation 2026](/zh-Hant/blog/kitchen-bathroom-renovation-maple-ridge-2026/) — combined kitchen and bathroom renovation guide for Maple Ridge
+<p>有關的： <a href="/blog/coquitlam-condo-renovation-case-study">高貴林公寓改造案例研究</a></p>
+<p>有關的： <a href="/blog/burnaby-townhouse-renovation-case-study">本拿比聯排別墅改造案例研究</a></p>
+<p>有關的： <a href="/blog/coquitlam-home-renovation-case-study">高貴林市家居裝修案例研究</a></p>'::text)) WHERE id = '842db1b6-df63-4095-8ee5-44b2c5ab93b4' AND localizations->>'contentZhHant' = '<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "文章",
+  "headline": "分层装修规则[温哥华](/en/areas/vancouver/)：公寓业主需要了解什么",
+  "description": "溫哥華公寓分契翻新規則：審批流程、演示時間、噪音章程、押金要求、保險證明以及應避免的違規行為。",
+  "圖像": "https://www.reno-stars.com/images/blog/strata-renovation-rules-vancouver.jpg",
+  "作者": {"@type": "组织", "名称": "Reno Stars"},
+  "publisher": {"@type": "组织", "name": "Reno Stars", "logo": {"@type": "ImageObject", "url": "https://www.reno-stars.com/logo.png"}},
+  "發佈日期": "2026-04-17",
+  "修改日期": "2026-04-17",
+  "mainEntityOfPage": {"@type": "网页", "@id": "https://www.reno-stars.com/zh-Hant/blog/strata-renovation-rules-vancouver"}
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "常見問題頁面",
+  「主要實體」：[
+    {
+      "@type": "問題",
+      "name": "在溫哥華裝修浴室需要分層批准嗎？",
+      "acceptedAnswer": {"@type": "Answer", "text": "是的，如果您的裝修涉及任何可能影響公共財產、結構元素或其他單位的工作，包括管道更換、地板更換（由於聲音傳播）或與鄰居共用的牆壁的任何滲透。大多數分契公司在開始任何裝修之前都需要書面批准，即使是可能產生大量噪音或碎片的裝飾。
+    },
+    {
+      "@type": "問題",
+      "name": "溫哥華分層建築的標準裝修時間是？",
+      "acceptedAnswer": {"@type": "Answer", "text": "大多數溫哥華分契公司允許週一至週五上午 8 點至下午 5 點、週六上午 9 點至下午 4 點或上午 10 點至下午 4 點進行翻修工作。週日和節假日禁止工作。它們優先於一般做法。
+    },
+    {
+      "@type": "問題",
+      "name": "分層公司可以讓我撤銷我的裝修嗎？",
+      "acceptedAnswer": {"@type": "Answer", "text": "是的。如果您在未獲得物業批准的情況下進行裝修，或違反了您批准的裝修協議，根據 BC 省物業法，物業公司擁有法律權力，要求您自費恢復所做的更改。這可能會花費數萬加元用於地板、瓷磚或管道。"}
+    }
+  ]
+}
+</script>
+
+<h2>為什麼分層裝修規則不同</h2>
+
+<p>翻修溫哥華的分契物業涉及兩個並行審批流程：溫哥華市建築許可流程（用於結構、電氣或管道變更）和分契公司自己的審批流程（受不列顛哥倫比亞省分契物業法和每棟建築獨特的章程管轄）。</p>
+
+<p>錯過分層批准步驟是我們在溫哥華公寓中看到的最常見的裝修錯誤。這可能會導致停工、根據分層罰款計劃進行罰款，以及在嚴重的情況下，分層扣留您的財產或法院命令要求您自費恢復變更。</p>
+
+<p>本指南涵蓋了業主在大溫哥華地區開始裝修之前需要了解的所有資訊。</p>
+
+<h2>第 1 步：先閱讀您的 Strata 章程</h2>
+
+<p>BC 省的每個分契公司都有自己的一套章程，這些章程要么取自《分契財產法》下的標準章程，要么採用在土地產權辦公室註冊的定制章程。您的裝修義務在這些章程中詳細說明，而不是在任何一般指南中。</p>
+
+<p>向您的物業經理索取一份目前章程的副本。特别寻找涵盖以下内容的部分：</p>
+<ul>
+  <li><strong>裝修/改建審核流程：</strong> 哪些內容需要批准、如何申請以及各階層可能會要求您做些什麼</li>
+  <li><strong>允許的工作時間：</strong> 允許裝修噪音的日期和時間</li>
+  <li><strong>噪音和乾擾規定：</strong> 衝擊噪音（拆除、錘擊）是否與一般施工噪音有單獨的限制</li>
+  <li><strong>地板要求：</strong> 許多建築物要求新地板具有特定的聲音傳輸等級 (STC) 或衝擊隔離等級 (IIC)，尤其是從地毯更換為硬地板時</li>
+  <li><strong>常見的屬性存取規則：</strong> 承包商如何進入大樓、使用電梯和停車</li>
+</ul>
+
+<h2>第 2 步：提交正式變更請求</h2>
+
+<p>對於影響公共財產、結構元素或可能影響其他單位的任何裝修，您必須在工作開始前向您的分契公司提交正式的變更協議（有時稱為翻新請求或變更請求函）。</p>
+
+<h3>您的變更請求中應包含哪些內容</h3>
+<ul>
+  <li><strong>所有計劃工作的書面描述：</strong> 具體一點—「全部更換地板」是不夠的； 「拆除現有地毯，在除濕室之外的所有區域安裝 12 毫米工程硬木和 3 毫米聲學襯墊（IIC 52、STC 55 級）」是分契所需要的</li>
+  <li><strong>承包商詳細資料：</strong> 姓名、許可證號碼、聯絡資訊以及承包商已獲得許可和投保的聲明</li>
+  <li><strong>保險證明：</strong> 承包商的 CGL 證書，通常至少為$2 百萬，將分層公司指定為附加被保險人</li>
+  <li><strong>WorkSafeBC 授權函</strong></li>
+  <li><strong>建築許可證號碼</strong> （如果適用－用於電氣、管道或結構工程）</li>
+  <li><strong>擬議的開始和完成日期</strong></li>
+  <li><strong>範圍圖或繪圖</strong> （用於佈局變更或新的滲透）</li>
+</ul>
+
+<h3>分層審批時間表</h3>
+<p>根據不列顛哥倫比亞省的分層財產法，分層委員會必須在「合理的時間內」對變更請求做出回應。在實踐中：</p>
+<ul>
+  <li>簡單的外觀改造（油漆、更換固定裝置）：1-2 週</li>
+  <li>需要進行聲學檢查的地板更換：2-4 週</li>
+  <li>管道或結構變更：3-6 週，有時需要分層工程師審查</li>
+  <li>需要年度股東大會投票的複雜翻修：3-6 個月</li>
+</ul>
+
+<p><strong>根據分層核准來規劃您的裝修時間表，而不是相反。</strong> 在獲得分層批准之前預訂承包商是一個常見且昂貴的錯誤。</p>
+
+<h2>拆除時間和噪音限制</h2>
+
+<p>大多數溫哥華分層公司都遵循標準框架，但具體時間因附例而異：</p>
+
+<table>
+  <thead>
+    <tr><th>天</th><th>典型允許時間</th><th>筆記</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>週一至週五</td><td>上午 8:00–下午 5:00</td><td>大多數建築物的標準</td></tr>
+    <tr><td>週六</td><td>上午 9:00–下午 4:00 或上午 10:00–下午 3:00</td><td>因章程而異—檢查您的章程</td></tr>
+    <tr><td>星期日</td><td>不允許</td><td>在大溫哥華分契中幾乎普遍存在</td></tr>
+    <tr><td>法定假期</td><td>不允許</td><td>BC 統計假期：新年、家庭日、耶穌受難日、維多利亞日、加拿大國慶日、BC 國慶日、勞動節、感恩節、陣亡將士紀念日、聖誕節</td></tr>
+  </tbody>
+</table>
+
+<p>一些分契式建築對「衝擊噪音」（定義為拆除、手提鑽、混凝土鑽孔或重錘敲擊產生的聲音）施加了更嚴格的限制，將這些活動限制在較窄的窗口內，例如周一至週五上午 9 點至下午 4 點，即使在較寬的窗口內允許進行一般施工。</p>
+
+<p>違反噪音時間是裝修過程中最常見的物業章程違規行為，每起事件的罰款通常為 $200–$1,000  不等。重複違規可能會升級為您單位的分層留置權。</p>
+
+<h2>地板規則：溫哥華公寓最具爭議的裝修問題</h2>
+
+<p>與任何其他翻新類型相比，分層建築中的地板變化會產生更多爭議，因為用硬木或 LVP 替換地毯會顯著增加傳輸到下面單元的衝擊噪音。大多数温哥华分层公司现在要求：</p>
+
+<ul>
+  <li><strong>最低 IIC（衝擊絕緣等級）等級為 50–55</strong> 用於組合地板組件（地板+墊層+現有混凝土）</li>
+  <li><strong>最低 STC（聲音傳輸等級）等級為 50–55</strong> 對於空氣傳播的聲音</li>
+  <li>所有硬地板下的隔音墊 — 最小厚度通常為 3-5 毫米</li>
+  <li>有時：音響工程師證明建議的組裝符合章程標準</li>
+</ul>
+
+<p>如果您要從地毯更換為硬地板，請在選擇地板產品之前，將您的分契的特定 IIC/STC 要求告知承包商。正確的墊層可以決定批准與否，而安裝後發現的錯誤選擇意味著代價高昂的撕毀。</p>
+
+<p>在Reno Stars，我們翻新了數十個溫哥華和[本拿比](/en/areas/burnaby/)分層單位，熟悉大溫哥華地區主要建築的聲學要求。我們在每個分層地板報價中指定了正確的墊層系統。</p>
+
+<h2>裝修押金要求</h2>
+
+<p>許多分層公司需要 <strong>裝修押金</strong> — 階層持有的資金，作為在翻修期間防止公共財產受損的擔保。這與向承包商支付的任何款項完全分開。</p>
+
+<p>大溫哥華地區典型的裝潢押金：</p>
+<ul>
+  <li><strong>外觀翻新（無結構/管道）：</strong> $500–$1,500</li>
+  <li><strong>Kitchen or [bathroom renovations](/en/services/bathroom/):</strong> $1,500–$3,000</li>
+  <li><strong>整體單位翻新：</strong> $3,000–$10,000</li>
+</ul>
+
+<p>裝修完成後，如果公共財產（電梯內部、走廊、大廳、停車場）沒有損壞，押金將退還。強烈建議在裝修前後檢查公共區域並附上照片，以保護您的押金。</p>
+
+<h2>常見物業出入和電梯規則</h2>
+
+<p>您的承包商需要在建筑物的公共区域移动材料、工具和碎片。如果未能妥善协调，就会导致罚款和与邻居的摩擦。標準要求：</p>
+
+<ul>
+  <li><strong>電梯預訂：</strong> 大多數分層建築都需要提前預訂服務電梯，以便運送材料和示範碎片清除。提前 48-72 小時預訂。有些建築在裝修期間使用電梯會收取費用（$100–$300）。</li>
+  <li><strong>電梯保護：</strong> 您的承包商負責用墊子和墊子保護電梯牆壁和地板。電梯飾面的損壞以商業重置成本向單位所有者收取費用。</li>
+  <li><strong>走廊及大廳防護：</strong> 在物料移動過程中，通常需要在走廊中使用地板滑軌和牆壁保護。</li>
+  <li><strong>廢棄物處理：</strong> 建築回收或垃圾房內無裝修垃圾。您的承包商必须安排一个垃圾箱（通常需要城市的街道许可证）或直接将碎片运出现场。</li>
+  <li><strong>停車處：</strong> 遊客停車場的承包商車輛通常有限—與物業經理確認專案期間是否可以享受停車豁免。</li>
+</ul>
+
+<h2>如果您在未經分層批准的情況下進行翻新，會發生什麼</h2>
+
+<p>根據不列顛哥倫比亞省分層財產法第 164 條，分層公司可以向不列顛哥倫比亞省民事解決法庭 (CRT) 或最高法院申請命令，要求您自費恢復未經授權的更改。這不是理論上的風險——我們已經看到客戶因為沒有先獲得批准而面臨拆除整個浴室磁磚安裝的命令。</p>
+
+<p>除了恢復令之外，後果還包括：</p>
+<ul>
+  <li>附例罰款（每次違規$200–$1,000+，每天）</li>
+  <li>您單位的分層留置權（可能會影響抵押貸款再融資或出售）</li>
+  <li>與裝修相關的損壞的房屋保險範圍無效</li>
+  <li>在違規問題解決之前無法出售或再融資</li>
+</ul>
+
+<h2>分契翻新清單</h2>
+
+<ol>
+  <li>請要求並閱讀您當前的物業章程—尤其是改造、噪音和地板部分</li>
+  <li>確定所有需要分層核准的工作（如有疑問，請申請）</li>
+  <li>提交完整的變更協議以及所有必要的文件</li>
+  <li>在預訂承包商之前等待書面的分層批准</li>
+  <li>繳交所需裝修押金</li>
+  <li>與物業經理預訂電梯通道並確認停車安排</li>
+  <li>確認您的承包商瞭解並將遵守所有噪音時間限制</li>
+  <li>工作開始前記錄公共區域狀況（照片/影片）</li>
+  <li>獲得所有必需的市政建築許可證</li>
+  <li>完成後，要求退還押金並確認最終檢查（如果需要）</li>
+</ol>
+
+<p>分層翻新是我們 Reno Stars 的特色之一。我們協助準備變更協議文件，提供所有必需的保險證書，並協調建築通道，以盡量減少對鄰居的干擾。我們的 <a href="/zh-Hant/blog/renovation-permits-bc-guide/">BC省裝修許可證指南</a> 涵蓋市政許可要求，並且我們的 <a href="/en/guides/bathroom-renovation-cost-vancouver/">浴室</a> 和 <a href="/en/guides/kitchen-renovation-cost-vancouver/">廚房成本指南</a> 擁有準確的溫哥華分契單位翻新定價。</p>
+
+請參閱來自大溫哥華地區房主的[經過驗證的五星級評論](/en/reviews/)。
+
+[關於 Reno Stars](/en/about/) — 總部位於溫哥華的裝修公司，自 2019 年起為大溫哥華地區提供服務。
+
+[查看我們的改造專案組合→](/en/projects/)
+
+<p><a href="/zh-Hant/contact/">獲得免費估價</a> — 作為規劃流程的一部分，我們將審查您的分契物業章程，以便您在我們開始之前準確了解您需要哪些批准。</p>
+
+
+
+## Strata Renovation Services Across Metro Vancouver
+
+Reno Stars handles strata renovation approvals and complex projects across Metro Vancouver: [Coquitlam](/en/areas/coquitlam/) | [Delta](/en/areas/delta/) | [Langley](/en/areas/langley/) | [Maple Ridge](/en/areas/maple-ridge/) | [New Westminster](/en/areas/new-westminster/) | [North Vancouver](/en/areas/north-vancouver/) | [Port Coquitlam](/en/areas/port-coquitlam/) | [Port Moody](/en/areas/port-moody/) | [Richmond](/en/areas/richmond/) | [Surrey](/en/areas/surrey/) | [West Vancouver](/en/areas/west-vancouver/) | [White Rock](/en/areas/white-rock/)
+
+## Frequently Asked Questions
+
+### Do I need strata council approval to renovate my Vancouver condo?
+
+Yes — most renovation work in a strata unit requires strata council approval before you start, even if you have a municipal building permit. The strata corporation controls common property, limited common property, and anything affecting shared systems (plumbing stacks, electrical panels, structural elements). Approval requirements vary by strata''s bylaws — some stratas require approval for any trade work; others only require it for structural or plumbing changes. Always request a "renovation approval" from your strata manager in writing before signing a contractor.
+
+### What renovations don''t need strata approval in BC?
+
+Work that typically doesn''t require strata approval (varies by bylaw): cosmetic changes entirely within your unit (painting, flooring over existing subfloor, fixture swaps in the same location), furniture changes, and like-for-like appliance replacements that don''t involve modifying plumbing or electrical. However, even "cosmetic" work can require notification if it creates dust, noise beyond strata hours, or involves using the freight elevator. Check your strata''s specific bylaws — they vary significantly between buildings.
+
+### How long does strata renovation approval take in Vancouver?
+
+Strata council approval typically takes 2–6 weeks in Metro Vancouver. Most strata councils meet monthly; if you miss the meeting cycle, you wait until the next one. Some larger stratas have management companies that can provide faster preliminary approval for straightforward projects. Submit a complete application (scope of work, contractor license number, insurance certificate, drawings if structural) to avoid resubmissions. Reno Stars provides all required documentation and has completed 100+ strata renovations across Metro Vancouver.
+
+### Can my Vancouver strata deny my renovation application?
+
+Yes — strata councils can deny renovation applications, particularly those affecting common property, structural elements, or shared systems. Common reasons for denial: inadequate contractor insurance ($2M+ CGL typically required), missing permits, proposed work that affects plumbing stacks or electrical panels without engineer sign-off, or work in common areas without authorization. Our [Critical Load Panel Installation](/en/services/critical-load-panel/) service upgrades your home electrical capacity for modern renovation demands. Older Metro Vancouver homes may also need our [Poly-B Pipe Replacement](/en/services/poly-b-replacement/) service to eliminate unsafe plastic piping. If denied, you can appeal to the Strata Property Act dispute resolution process. In practice, most denials are resolved by revising the scope or providing additional documentation.
+
+### What insurance does my contractor need for a strata renovation in Vancouver?
+
+Most Vancouver strata corporations require contractors to carry $2M–$5M Commercial General Liability (CGL) insurance before entering the building. Many also require proof of active WCB (WorkSafeBC) coverage to protect against injury claims. Some newer buildings require $5M CGL minimum. The contractor must name the strata corporation as an additional insured on the policy. Reno Stars carries $5M CGL insurance and active WCB coverage — we provide COI certificates in the strata''s required format on request.
+
+### What documentation does my contractor need to start a Vancouver strata renovation?
+
+Documentation required for a Vancouver strata renovation: (1) Strata council approval letter — the written authorization from your strata corporation. (2) BC Housing Licence — your contractor''s active residential builder licence (verify at bchousing.org). (3) WorkSafeBC clearance letter — confirms current workers compensation coverage (download at worksafebc.com/clearanceletter). (4) Certificate of Insurance — minimum $2M commercial general liability, with the strata corporation named as an additional insured. (5) Copy of the Renovation Agreement — required by many stratas, specifying scope, timeline, and contractor responsibility for common area damage. Allow 2–4 weeks to collect and submit this package before your first day of work.
+
+Also see: [condo strata renovation guide Vancouver (中文)](/zh-Hant/blog/vancouver-condo-strata-guide-zh/) | [low-budget condo renovation case study](/zh-Hant/blog/low-budget-condo-renovation-in-west-vancouver-case-study/) | [social-ready condo renovation case study](/zh-Hant/blog/social-ready-condo-renovation-case-study/) | [condo kitchen renovation space-saving ideas](/zh-Hant/blog/condo-kitchen-renovation-vancouver-space-saving-ideas/) | [Vancouver Renovation Cost Guide 2026](/zh-Hant/blog/renovation-cost-vancouver-2026-complete-guide/) | [How to Finance Your Vancouver Renovation (HELOC Guide)](/zh-Hant/blog/renovation-financing-vancouver-heloc/) | [Renovation Financing Options](/en/financing/) | [Pre-Sale Renovation Vancouver](/zh-Hant/blog/pre-sale-renovation-vancouver-what-to-fix-before-listing/) | [How to Choose a Renovation Contractor Vancouver](/zh-Hant/blog/how-to-choose-renovation-contractor-vancouver/) | [Pre-Sale Renovation Advice](/en/services/realtor/) | [Accessible Bathroom](/en/services/accessible-bathroom/) | [Heat Pump Installation](/en/services/heat-pump-hvac/) | [Renovation Timeline Guide](/zh-Hant/blog/renovation-timeline-how-long-does-each-project-take/) | [Vancouver Home Renovation Guide](/zh-Hant/blog/vancouver-home-renovation-guide-2026/) | [Kitchen Renovation Vancouver](/en/services/kitchen/) | [Cabinet Refinishing](/en/services/cabinet/) | [Basement Renovation Vancouver](/en/services/basement/) | [Whole-House Renovation Vancouver](/en/services/whole-house/)
+
+## See Also — Renovation Cost Guides
+
+- [Basement Renovation Cost Vancouver](/en/guides/basement-renovation-cost-vancouver/) — average $20K–$80K
+- [Whole House Renovation Cost Vancouver](/en/guides/whole-house-renovation-cost-vancouver/) — average $50K–$300K+
+- [Cabinet Refinishing Cost Vancouver](/en/guides/cabinet-refinishing-cost-vancouver/) — from $4K for refinishing
+
+## Condo Renovation Guides by City
+
+- [Condo Renovation North Vancouver](/zh-Hant/blog/condo-renovation-north-vancouver-2026/) — strata bylaws in North Van
+- [Condo Renovation Surrey BC](/zh-Hant/blog/condo-renovation-surrey-bc-2026/) — approvals and permits in Surrey
+- [Condo Renovation New Westminster](/zh-Hant/blog/condo-renovation-new-westminster-2026/) — New West strata rules
+- [Condo Renovation Delta BC](/zh-Hant/blog/condo-renovation-delta-bc-2026/) — Delta strata renovation guide
+
+
+- [Condo vs House Renovation Cost Vancouver](/zh-Hant/blog/condo-vs-house-renovation-cost-vancouver/) — which property type costs more to renovate
+
+- [Burnaby Condo Renovation Guide 2026](/zh-Hant/blog/condo-renovation-burnaby-bc-2026/) — condo renovation specialists serving Burnaby
+
+- [Coquitlam Condo Renovation Guide 2026](/zh-Hant/blog/condo-renovation-coquitlam-bc-2026/) — condo renovation specialists serving Coquitlam
+
+- [Richmond Condo Renovation Guide 2026](/zh-Hant/blog/condo-renovation-richmond-bc-2026/) — condo renovation specialists serving Richmond
+
+- [Vancouver Condo Renovation Guide 2026](/zh-Hant/blog/condo-renovation-vancouver-bc-2026/) — condo renovation specialists serving Vancouver
+
+- [Apartment Building Renovation Vancouver 2026](/zh-Hant/blog/apartment-building-renovation-vancouver-2026/) — multi-unit and strata building renovation guide
+
+- [New Westminster Kitchen & Bathroom Renovation 2026](/zh-Hant/blog/kitchen-bathroom-renovation-new-westminster-2026/) — combined kitchen and bathroom renovation guide for New Westminster
+
+- [Port Coquitlam Kitchen & Bathroom Renovation 2026](/zh-Hant/blog/kitchen-bathroom-renovation-port-coquitlam-2026/) — combined kitchen and bathroom renovation guide for Port Coquitlam
+
+- [Maple Ridge Kitchen & Bathroom Renovation 2026](/zh-Hant/blog/kitchen-bathroom-renovation-maple-ridge-2026/) — combined kitchen and bathroom renovation guide for Maple Ridge
+<p>有關的： <a href="/blog/coquitlam-condo-renovation-case-study">高貴林公寓改造案例研究</a></p>
+<p>有關的： <a href="/blog/burnaby-townhouse-renovation-case-study">本拿比聯排別墅改造案例研究</a></p>
+<p>有關的： <a href="/blog/coquitlam-home-renovation-case-study">高貴林市家居裝修案例研究</a></p>';
 UPDATE blog_posts SET localizations = jsonb_set(localizations, ARRAY['contentZhHant'], to_jsonb('<article>
 <h1>[浴室裝潢](/en/services/bathroom/)費用[溫哥華](/en/areas/vancouver/)依風格：現代、水療、傳統</h1>
 
@@ -9708,6 +13331,617 @@ UPDATE faqs SET localizations = coalesce(localizations, '{}'::jsonb) || jsonb_bu
 UPDATE faqs SET localizations = coalesce(localizations, '{}'::jsonb) || jsonb_build_object('questionZhHant', '溫哥華的地下室裝修要多少錢？'::text) WHERE id = '671d291f-d9ec-4daa-b665-9dc5f558717b' AND NOT (coalesce(localizations, '{}'::jsonb) ? 'questionZhHant');
 UPDATE faqs SET localizations = coalesce(localizations, '{}'::jsonb) || jsonb_build_object('answerZhHant', '素里的地下室裝修，從籤合同算起通常需要 10–16 周——其中素里市政府的建築許可證審批 4–6 周，之後是 6–10 周的實際施工。合法附屬套房改建在許可證批下來後需要 10–14 周施工。凡涉及水管、電路、暖通空調或結構改動的地下室裝修，素里市都要求辦理建築許可證。素里的分區法規允許在大多數獨立屋住宅分區內設置附屬套房，但須滿足最低 1.95m（6''5"）淨層高、獨立入口和防火分隔等要求。Fleetwood、Guildford 和 Sullivan Station 等較新的社區，層高通常本身就達標，無需開挖混凝土，工期可落在較短的一端。'::text) WHERE id = '67d99d03-489f-46bd-97c5-146259a4da16' AND NOT (coalesce(localizations, '{}'::jsonb) ? 'answerZhHant');
 UPDATE faqs SET localizations = coalesce(localizations, '{}'::jsonb) || jsonb_build_object('questionZhHant', '素里的地下室裝修需要多長時間？'::text) WHERE id = '67d99d03-489f-46bd-97c5-146259a4da16' AND NOT (coalesce(localizations, '{}'::jsonb) ? 'questionZhHant');
+UPDATE services SET localizations = jsonb_set(localizations, ARRAY['longDescriptionZhHant'], to_jsonb('大溫商業改造——辦公、零售、餐飲、醫療診所、美容沙龍、健身工作室。許可辦理、BC 建築規範 Part 3（如適用）、無障礙 / CSA B651 合規、非營業時段施工、施工期間維持業務運營。
+
+我們既服務業主也服務租戶。租戶改造含與房東協調（租約改造補貼、LL 審批）。
+
+每個商業項目均含書面範圍、固定總價合同、BC 許可包、$500 萬綜合責任險、WorkSafeBC、2 年施工质保。
+
+## 溫哥華商業改造真實費用（2026）
+
+| 類型 | 每平方尺投資 | 典型總投資 |
+|-' || '-' || '-|-' || '-' || '-|-' || '-' || '-|
+| **辦公翻新**（油漆、地板、燈光、隔斷） | $80–$160 | $50K–$200K |
+| **零售改造** | $100–$300 | $100K–$500K |
+| **餐廳整體建造**（含廚房 + 用餐區） | $200–$500 | $300K–$120 萬 |
+| **醫療 / 牙科診所** | $300–$700 | $400K–$150 萬 |
+| **美容沙龍 / 水療** | $150–$350 | $150K–$500K |
+| **健身 / 瑜伽 / 普拉提** | $80–$200 | $80K–$300K |
+| **大麻零售**（高安防規格） | $250–$500 | $300K–$800K |
+
+## 包含內容
+
+### 1. 施工前
+- 現狀勘察 + 測量
+- 租約審閱（租戶業務）
+- 房東審批協調
+- 建築規範審核（Part 3 vs Part 9——影響噴淋、無障礙）
+- 衛生部門簽字（餐廳、診所、沙龍）
+- 酒類 / 大麻牌照配合（如適用）
+- BC 建築許可包
+- 業務連續性排期（非營業時段、週末、分階段）
+
+### 2. 規範與合規
+
+| 項目 | 規範引用 |
+|-' || '-' || '-|-' || '-' || '-|
+| 無障礙設計 | BC §3.8 + CSA B651 |
+| 衛生潔具數量 | BC 給排水規範 §2.6.4 |
+| 出口 + 應急照明 | NBC §3.4 |
+| 噴淋系統（Part 3 建築） | NFPA 13 |
+| 衛生局（餐廳） | VCH FoodSafe + 油水分離 + 商用排風 |
+| 空氣處理 | ASHRAE 62.1（診所尤需） |
+| 隔音 | 租戶間 STC 45+ |
+
+### 3. 餐廳專項
+
+| 項目 | 2026 費用區間 |
+|-' || '-' || '-|-' || '-' || '-|
+| 商用油煙罩（I 型）+ 屋頂穿透 | $35K–$90K |
+| 補風機 | $15K–$35K |
+| 油水分離器（室內 1,000 磅） | 含安裝 $8K–$18K |
+| 步入式冷庫（8x10） | $25K–$45K |
+| 衛生合規備餐區 + 三盆水池 | $8K–$20K |
+| 酒牌裝修配合 | $5K–$15K |
+| 露台 + 戶外服務 | $20K–$80K |
+
+### 4. 醫療 / 牙科診所專項
+
+| 項目 | 2026 費用區間 |
+|-' || '-' || '-|-' || '-' || '-|
+| 鉛板 X 光室 | $25K–$60K |
+| 牙科椅水電 + 氣路 | 每椅 $5K–$10K |
+| HEPA / 臨床級 HVAC | $20K–$60K |
+| 滅菌室 / 高壓滅菌設備間 | $15K–$30K |
+| ADA / 無障礙衛生間（CSA B651） | $25K–$45K |
+| 接待木工 | $10K–$25K |
+
+### 5. 價格上行因素
+
+- **公寓樓宇**（高層辦公）——工時限、貨梯預訂、樓宇保護：+10–20%
+- **歷史建築**外立面限制：相關範圍 +10–25%
+- **許可複雜度**（Part 3 vs Part 9）：工程師 / 建築師費用 +$15K–$50K
+- **石棉清除**（1990 年前商業）：+$10K–$80K
+- **HVAC 分區重做**（診所 / 餐廳）：+$30K–$80K
+- **噴淋系統升級**（部分用途變更觸發）：+$25K–$80K
+
+### 6. 業務連續性方案
+
+| 方式 | 適用 |
+|-' || '-' || '-|-' || '-' || '-|
+| **分段施工**——分區進行，店鋪保持營業 | 開放式零售、大型辦公 |
+| **僅非營業時段**（夜間 + 週末） | 無法關閉的核心零售 |
+| **全閉店 + 工期保證** | 最快路徑；我方按日費率違約條款保工期 |
+| **施工期臨時點位** | 我方曾為餐廳與沙龍協調 |
+
+### 7. 工期
+
+| 類型 | 時長 |
+|-' || '-' || '-|-' || '-' || '-|
+| 辦公翻新 | 4–10 周 |
+| 零售改造 | 8–14 周 |
+| 餐廳建造 | 14–24 周 |
+| 醫療診所 | 16–28 周 |
+
+### 8. 免費現場勘察
+
+商業項目從 60–90 分鐘現場勘察開始——測量、租約審閱、範圍討論、大致費用。我方在 14 天內提供書面固定總價。'::text)) WHERE id = 'cc1effef-49f0-417b-9751-b95c99636f68' AND localizations->>'longDescriptionZhHant' = '大温商业改造——办公、零售、餐饮、医疗诊所、美容沙龙、健身工作室。许可办理、BC 建筑规范 Part 3（如适用）、无障碍 / CSA B651 合规、非营业时段施工、施工期间维持业务运营。
+
+我们既服务业主也服务租户。租户改造含与房东协调（租约改造补贴、LL 审批）。
+
+每个商业项目均含书面范围、固定总价合同、BC 许可包、$500 万综合责任险、WorkSafeBC、2 年施工质保。
+
+## 温哥华商业改造真实费用（2026）
+
+| 类型 | 每平方尺投资 | 典型总投资 |
+|-' || '-' || '-|-' || '-' || '-|-' || '-' || '-|
+| **办公翻新**（油漆、地板、灯光、隔断） | $80–$160 | $50K–$200K |
+| **零售改造** | $100–$300 | $100K–$500K |
+| **餐厅整体建造**（含厨房 + 用餐区） | $200–$500 | $300K–$120 万 |
+| **医疗 / 牙科诊所** | $300–$700 | $400K–$150 万 |
+| **美容沙龙 / 水疗** | $150–$350 | $150K–$500K |
+| **健身 / 瑜伽 / 普拉提** | $80–$200 | $80K–$300K |
+| **大麻零售**（高安防规格） | $250–$500 | $300K–$800K |
+
+## 包含内容
+
+### 1. 施工前
+- 现状勘察 + 测量
+- 租约审阅（租户业务）
+- 房东审批协调
+- 建筑规范审核（Part 3 vs Part 9——影响喷淋、无障碍）
+- 卫生部门签字（餐厅、诊所、沙龙）
+- 酒类 / 大麻牌照配合（如适用）
+- BC 建筑许可包
+- 业务连续性排期（非营业时段、周末、分阶段）
+
+### 2. 规范与合规
+
+| 项目 | 规范引用 |
+|-' || '-' || '-|-' || '-' || '-|
+| 无障碍设计 | BC §3.8 + CSA B651 |
+| 卫生洁具数量 | BC 给排水规范 §2.6.4 |
+| 出口 + 应急照明 | NBC §3.4 |
+| 喷淋系统（Part 3 建筑） | NFPA 13 |
+| 卫生局（餐厅） | VCH FoodSafe + 油水分离 + 商用排风 |
+| 空气处理 | ASHRAE 62.1（诊所尤需） |
+| 隔音 | 租户间 STC 45+ |
+
+### 3. 餐厅专项
+
+| 项目 | 2026 费用区间 |
+|-' || '-' || '-|-' || '-' || '-|
+| 商用油烟罩（I 型）+ 屋顶穿透 | $35K–$90K |
+| 补风机 | $15K–$35K |
+| 油水分离器（室内 1,000 磅） | 含安装 $8K–$18K |
+| 步入式冷库（8x10） | $25K–$45K |
+| 卫生合规备餐区 + 三盆水池 | $8K–$20K |
+| 酒牌装修配合 | $5K–$15K |
+| 露台 + 户外服务 | $20K–$80K |
+
+### 4. 医疗 / 牙科诊所专项
+
+| 项目 | 2026 费用区间 |
+|-' || '-' || '-|-' || '-' || '-|
+| 铅板 X 光室 | $25K–$60K |
+| 牙科椅水电 + 气路 | 每椅 $5K–$10K |
+| HEPA / 临床级 HVAC | $20K–$60K |
+| 灭菌室 / 高压灭菌设备间 | $15K–$30K |
+| ADA / 无障碍卫生间（CSA B651） | $25K–$45K |
+| 接待木工 | $10K–$25K |
+
+### 5. 价格上行因素
+
+- **公寓楼宇**（高层办公）——工时限、货梯预订、楼宇保护：+10–20%
+- **历史建筑**外立面限制：相关范围 +10–25%
+- **许可复杂度**（Part 3 vs Part 9）：工程师 / 建筑师费用 +$15K–$50K
+- **石棉清除**（1990 年前商业）：+$10K–$80K
+- **HVAC 分区重做**（诊所 / 餐厅）：+$30K–$80K
+- **喷淋系统升级**（部分用途变更触发）：+$25K–$80K
+
+### 6. 业务连续性方案
+
+| 方式 | 适用 |
+|-' || '-' || '-|-' || '-' || '-|
+| **分段施工**——分区进行，店铺保持营业 | 开放式零售、大型办公 |
+| **仅非营业时段**（夜间 + 周末） | 无法关闭的核心零售 |
+| **全闭店 + 工期保证** | 最快路径；我方按日费率违约条款保工期 |
+| **施工期临时点位** | 我方曾为餐厅与沙龙协调 |
+
+### 7. 工期
+
+| 类型 | 时长 |
+|-' || '-' || '-|-' || '-' || '-|
+| 办公翻新 | 4–10 周 |
+| 零售改造 | 8–14 周 |
+| 餐厅建造 | 14–24 周 |
+| 医疗诊所 | 16–28 周 |
+
+### 8. 免费现场勘察
+
+商业项目从 60–90 分钟现场勘察开始——测量、租约审阅、范围讨论、大致费用。我方在 14 天内提供书面固定总价。';
 UPDATE services SET localizations = jsonb_set(localizations, ARRAY['descriptionZhHant'], to_jsonb('老化浴室翻新——無門檻淋浴、扶手、舒適高度的固定裝置、防燙閥門、防滑地板。符合 CSA B651，職能治療師協調。我們幫助 HAFI 撥款文書工作。'::text)) WHERE id = '8ced0acf-88e2-483f-9e92-0a625502093c' AND localizations->>'descriptionZhHant' = '老化浴室翻新——无门槛淋浴、扶手、舒适高度的固定装置、防烫阀门、防滑地板。符合 CSA B651，職能治療師協調。我們幫助 HAFI 撥款文書工作。';
+UPDATE services SET localizations = jsonb_set(localizations, ARRAY['longDescriptionZhHant'], to_jsonb('無障礙浴室——也稱為"老人/適老化浴室"——其設計目標是在不同行動能力下都能安全、獨立使用。我們為以下人群提供改造服務：50 歲以上希望長期居住於家中的業主、中風或受傷後從康復中心回家的業主、多代同堂家庭（祖輩搬入同住）、以及任何年齡段的殘障業主。
+
+施工範圍從針對性的安全升級，到全輪椅無障礙主衛，應有盡有。每個項目均按現行 BC 建築規範 §3.8（無障礙設計）與 CSA B651-23 標準設計施工，並在客戶已有職業治療師介入時與之協作。
+
+## 包含內容
+
+### 1. 通行與移動
+
+| 項目 | 作用 |
+|-' || '-' || '-|-' || '-' || '-|
+| 無門檻 / 無檻淋浴 | 消除導致跌倒、阻擋輪椅的邊沿 |
+| 線性地漏 | 輪椅可平滑穿過整間浴室——中部無凸起 |
+| 加寬門洞（32"–36" 淨寬） | BC 規範要求 32" 起；36" 是輪椅標準 |
+| 推拉門 / 穀倉門 | 比平開門省約 9 平方尺通行空間——小浴室關鍵 |
+| 5 尺迴轉直徑 | 60" 直徑淨空地面讓輪椅原地轉向 |
+| 馬桶轉移空間 | 前側 32"×48" 淨空，便於滑板轉移 |
+| 步入式淋浴（最小 60"×36"） | 輪椅可入，預留陪護協助空間 |
+
+### 2. 防滑與防跌倒
+
+| 項目 | 作用 |
+|-' || '-' || '-|-' || '-' || '-|
+| R10/R11 防滑瓷磚 | 溼態 DCOF ≥ 0.42（ANSI A137.1）——遠高於普通瓷磚 |
+| 現有瓷磚防滑改造塗層 | 蝕刻塗層——無需重鋪即可升級 |
+| 恆溫防燙閥 | TempAssure 閥，最高 49°C——BC 規範 §3.8.3.16 強制要求 |
+| 平壓淋浴閥 | 防止他處沖水時溫度突變 |
+| 門口與邊沿對比色邊條 | 2" 高對比色邊條——視障人士識別門檻 |
+| 70+ 燭光高亮度照明 | 比標準住宅亮 3 倍——降低跌倒風險 |
+| 腳踢 LED + 紅外感應夜燈 | 夜間免觸摸路徑照明 |
+| 全部扶手位置牆體加固 | 2×6 夾板背板，承重 200 公斤+——合規扶手安裝基礎 |
+
+### 3. 潔具與水電
+
+| 項目 | 作用 |
+|-' || '-' || '-|-' || '-' || '-|
+| 舒適高度馬桶（17"–19"） | 減輕膝髖負擔——所有年齡段都更舒適 |
+| 壁掛式馬桶 | 安裝高度可調；地板易清潔 |
+| 步入式浴缸 | 側開門，2 分鐘注水，可選水療按摩 |
+| 可滾入式浴室櫃 | 28"–32" 檯面高，27" 膝下空間，保溫下水管（防燙腿） |
+| 槓桿式水龍頭 | 緊握拳頭即可操作——關節炎友好 |
+| 手持淋浴噴頭 | 60"+ 滑桿，噴頭自帶開關 |
+| 多噴頭側噴 | 可坐姿淋浴——減輕疲勞 |
+| 智能潔身座圈（Toto Washlet 等） | 華人 / 韓國家庭常見標配，也降低陪護依賴 |
+| WaterSense 節水潔具 | 節省水費，不影響無障礙性能 |
+
+### 4. 扶手與支撐
+
+| 項目 | 作用 |
+|-' || '-' || '-|-' || '-' || '-|
+| 馬桶扶手 | 橫豎各一，直徑 1.25"–1.5"，安裝高 33"–36" |
+| 淋浴間扶手 | 至少兩面牆，含入口處豎向扶手 |
+| 摺疊壁掛淋浴座椅 | 承重 350 磅，軟包，不用時可收起 |
+| 嵌入式瓷磚淋浴長凳 | 與無門檻斜坡一體——既像水療又滿足無障礙 |
+| 設計款隱藏扶手 | Moen Home Care、Invisia——兼作毛巾杆與置物架 |
+| 浴缸旁豎向起立杆 | 助力保留浴缸的用戶起身 |
+| 馬桶升高架（含扶手） | 4" 升高，可拆卸——更換馬桶前的過渡方案 |
+
+### 5. 智能化
+
+| 項目 | 作用 |
+|-' || '-' || '-|-' || '-' || '-|
+| 語音控制燈光 | Alexa / Google Home 調光——任何行動能力都免觸摸 |
+| 紅外感應水龍頭 | 免觸摸，關節炎友好，減少細菌傳播 |
+| 地暖 | 舒適 + 快乾——降低打滑風險 |
+| 電熱毛巾架 | 兼作低溫乾衣架 |
+| 緊急呼叫按鈕 | 接外部燈光、智能家居警報或醫療監護服務 |
+| 跌倒檢測集成 | Apple Watch + 浴室無手機區方案 |
+| 防霧 / 帶燈化妝鏡 | 視障人士更易自理 |
+| 防水淋浴手機架 | 跌倒時緊急呼叫 |
+
+### 6. 未來預留
+
+| 項目 | 作用 |
+|-' || '-' || '-|-' || '-' || '-|
+| 預留扶手牆體加固 | 現在 $200 vs 後期 $2,500（拆鋪瓷磚費用） |
+| 加固天花板 | 為日後吊運式護理升降做準備 |
+| 預留智能馬桶冷水接口 | 馬桶旁多留接口，日後無需開牆 |
+| 加寬牆體間距（特色牆） | 日後擴展櫃體不需大改 |
+| 預接電源（樓梯升降椅） | 走廊預留——日後樓梯升降椅即裝即用 |
+
+### 7. 我們協助申請的資助
+
+| 項目 | 適用人群 | 金額 |
+|-' || '-' || '-|-' || '-' || '-|-' || '-' || '-|
+| BC 居家適老化改造資助 (HAFI) | 符合資格的低收入老人 / 殘障人士 | 最高 $20,000 |
+| 加拿大退伍軍人事務部無障礙資金 | 退伍軍人 | 數額視情況 |
+| 殘障稅收抵免（DTC）改造發票 | 已批 DTC 業主 | 分項發票供稅務申報 |
+| 醫療費用稅收抵免 | 憑處方人士 | 改造費用部分可抵扣 |
+| RDSP / RRSP 首房計劃 | 初次購房殘障人士 | 最多 $35,000 RRSP 提取用於無障礙施工 |
+
+我方完成 HAFI 申請的承包商部分文件、出具壓力測試證書（HAFI 水路要求），並按稅收抵免要求分項開具發票。
+
+### 8. 合規與協作
+
+- **BC 建築規範 §3.8**（無障礙設計）合規——驗收時確認
+- **CSA B651-23**（2023 年最新版）審核——全輪椅無障礙項目適用
+- **許可證 + 政府檢驗**——動管線或承重牆時必需
+- **職業治療師協作**——OT 出方案，我方按圖施工
+- **RAA 認證適老化評估師**入戶評估——可在報價前提供
+- **改造前全屋評估**——不僅限於浴室，整屋適老化審核
+
+### 9. 多代同堂適配
+
+溫哥華、本拿比、列治文、Surrey 多代同堂家庭常見考量：
+
+- **智能潔身座圈作為標配**——華人 / 韓國家庭普及，我們視為默認而非高端配置
+- **雙人浴室櫃**——便於陪護協助
+- **可鎖藥櫃**——孫輩同住時防誤取
+- **嬰兒房 → 適老化可轉換佈局**——年輕家庭也可預先加寬門洞與扶手牆體加固
+
+### 10. 高端可選
+
+- 整體溼區設計（整間浴室即淋浴，斜坡排水）
+- 自動注水浴缸（Kohler PerfectFill 等，可預設溫度水位）
+- 樓層間升降梯（主樓 → 樓上浴室）
+- 雙門設計（臥室 + 走廊雙入口，方便陪護）
+- 智能馬桶（自動沖水 + 自動開關蓋，Toto Neorest、Kohler Numi 等）
+- 蒸汽淋浴 + 香薰
+
+## 我們給每位客戶的"適老化"建議
+
+**按 75 歲的需求設計浴室，而不是今天的需求。** 改造時一次性預留扶手牆體加固只需 $200；待真正需要時再加，瓷磚拆鋪要 $2,500。無門檻淋浴同理——一次做無門檻遠比未來重做便宜。
+
+**報價前先請職業治療師介入。** OT 根據您具體的行動能力檔案，給出淨空、潔具高度與通行模式規範。我方將其轉化為符合 BC 規範與 CSA B651 的施工方案。
+
+**為資助與稅收抵免準備完整文件。** 我方提供分項發票、施工照片、壓力測試證書，可滿足 HAFI、VAC、DTC 申報要求。
+
+## 免費上門無障礙評估
+
+每個無障礙浴室項目都從入戶評估開始——我們測量淨空、識別承重牆、評估現有水電容量，並討論您當前與未來可能的行動能力變化。評估免費，約一小時，並出具書面方案——無論是否最終由我方施工，您都可使用此方案。'::text)) WHERE id = '8ced0acf-88e2-483f-9e92-0a625502093c' AND localizations->>'longDescriptionZhHant' = '无障碍浴室——也称为"老人/适老化浴室"——其设计目标是在不同行动能力下都能安全、独立使用。我们为以下人群提供改造服务：50 岁以上希望长期居住于家中的业主、中风或受伤后从康复中心回家的业主、多代同堂家庭（祖辈搬入同住）、以及任何年龄段的残障业主。
+
+施工范围从针对性的安全升级，到全轮椅无障碍主卫，应有尽有。每个项目均按现行 BC 建筑规范 §3.8（无障碍设计）与 CSA B651-23 标准设计施工，并在客户已有职业治疗师介入时与之协作。
+
+## 包含内容
+
+### 1. 通行与移动
+
+| 项目 | 作用 |
+|-' || '-' || '-|-' || '-' || '-|
+| 无门槛 / 无槛淋浴 | 消除导致跌倒、阻挡轮椅的边沿 |
+| 线性地漏 | 轮椅可平滑穿过整间浴室——中部无凸起 |
+| 加宽门洞（32"–36" 净宽） | BC 规范要求 32" 起；36" 是轮椅标准 |
+| 推拉门 / 谷仓门 | 比平开门省约 9 平方尺通行空间——小浴室关键 |
+| 5 尺回转直径 | 60" 直径净空地面让轮椅原地转向 |
+| 马桶转移空间 | 前侧 32"×48" 净空，便于滑板转移 |
+| 步入式淋浴（最小 60"×36"） | 轮椅可入，预留陪护协助空间 |
+
+### 2. 防滑与防跌倒
+
+| 项目 | 作用 |
+|-' || '-' || '-|-' || '-' || '-|
+| R10/R11 防滑瓷砖 | 湿态 DCOF ≥ 0.42（ANSI A137.1）——远高于普通瓷砖 |
+| 现有瓷砖防滑改造涂层 | 蚀刻涂层——无需重铺即可升级 |
+| 恒温防烫阀 | TempAssure 阀，最高 49°C——BC 规范 §3.8.3.16 强制要求 |
+| 平压淋浴阀 | 防止他处冲水时温度突变 |
+| 门口与边沿对比色边条 | 2" 高对比色边条——视障人士识别门槛 |
+| 70+ 烛光高亮度照明 | 比标准住宅亮 3 倍——降低跌倒风险 |
+| 脚踢 LED + 红外感应夜灯 | 夜间免触摸路径照明 |
+| 全部扶手位置墙体加固 | 2×6 夹板背板，承重 200 公斤+——合规扶手安装基础 |
+
+### 3. 洁具与水电
+
+| 项目 | 作用 |
+|-' || '-' || '-|-' || '-' || '-|
+| 舒适高度马桶（17"–19"） | 减轻膝髋负担——所有年龄段都更舒适 |
+| 壁挂式马桶 | 安装高度可调；地板易清洁 |
+| 步入式浴缸 | 侧开门，2 分钟注水，可选水疗按摩 |
+| 可滚入式浴室柜 | 28"–32" 檯面高，27" 膝下空间，保温下水管（防烫腿） |
+| 杠杆式水龙头 | 紧握拳头即可操作——关节炎友好 |
+| 手持淋浴喷头 | 60"+ 滑杆，喷头自带开关 |
+| 多喷头侧喷 | 可坐姿淋浴——减轻疲劳 |
+| 智能洁身座圈（Toto Washlet 等） | 华人 / 韩国家庭常见标配，也降低陪护依赖 |
+| WaterSense 节水洁具 | 节省水费，不影响无障碍性能 |
+
+### 4. 扶手与支撑
+
+| 项目 | 作用 |
+|-' || '-' || '-|-' || '-' || '-|
+| 马桶扶手 | 横竖各一，直径 1.25"–1.5"，安装高 33"–36" |
+| 淋浴间扶手 | 至少两面墙，含入口处竖向扶手 |
+| 折叠壁挂淋浴座椅 | 承重 350 磅，软包，不用时可收起 |
+| 嵌入式瓷砖淋浴长凳 | 与无门槛斜坡一体——既像水疗又满足无障碍 |
+| 设计款隐藏扶手 | Moen Home Care、Invisia——兼作毛巾杆与置物架 |
+| 浴缸旁竖向起立杆 | 助力保留浴缸的用户起身 |
+| 马桶升高架（含扶手） | 4" 升高，可拆卸——更换马桶前的过渡方案 |
+
+### 5. 智能化
+
+| 项目 | 作用 |
+|-' || '-' || '-|-' || '-' || '-|
+| 语音控制灯光 | Alexa / Google Home 调光——任何行动能力都免触摸 |
+| 红外感应水龙头 | 免触摸，关节炎友好，减少细菌传播 |
+| 地暖 | 舒适 + 快干——降低打滑风险 |
+| 电热毛巾架 | 兼作低温干衣架 |
+| 紧急呼叫按钮 | 接外部灯光、智能家居警报或医疗监护服务 |
+| 跌倒检测集成 | Apple Watch + 浴室无手机区方案 |
+| 防雾 / 带灯化妆镜 | 视障人士更易自理 |
+| 防水淋浴手机架 | 跌倒时紧急呼叫 |
+
+### 6. 未来预留
+
+| 项目 | 作用 |
+|-' || '-' || '-|-' || '-' || '-|
+| 预留扶手墙体加固 | 现在 $200 vs 后期 $2,500（拆铺瓷砖费用） |
+| 加固天花板 | 为日后吊运式护理升降做准备 |
+| 预留智能马桶冷水接口 | 马桶旁多留接口，日后无需开墙 |
+| 加宽墙体间距（特色墙） | 日后扩展柜体不需大改 |
+| 预接电源（楼梯升降椅） | 走廊预留——日后楼梯升降椅即装即用 |
+
+### 7. 我们协助申请的资助
+
+| 项目 | 适用人群 | 金额 |
+|-' || '-' || '-|-' || '-' || '-|-' || '-' || '-|
+| BC 居家适老化改造资助 (HAFI) | 符合资格的低收入老人 / 残障人士 | 最高 $20,000 |
+| 加拿大退伍军人事务部无障碍资金 | 退伍军人 | 数额视情况 |
+| 残障税收抵免（DTC）改造发票 | 已批 DTC 业主 | 分项发票供税务申报 |
+| 医疗费用税收抵免 | 凭处方人士 | 改造费用部分可抵扣 |
+| RDSP / RRSP 首房计划 | 初次购房残障人士 | 最多 $35,000 RRSP 提取用于无障碍施工 |
+
+我方完成 HAFI 申请的承包商部分文件、出具压力测试证书（HAFI 水路要求），并按税收抵免要求分项开具发票。
+
+### 8. 合规与协作
+
+- **BC 建筑规范 §3.8**（无障碍设计）合规——验收时确认
+- **CSA B651-23**（2023 年最新版）审核——全轮椅无障碍项目适用
+- **许可证 + 政府检验**——动管线或承重墙时必需
+- **职业治疗师协作**——OT 出方案，我方按图施工
+- **RAA 认证适老化评估师**入户评估——可在报价前提供
+- **改造前全屋评估**——不仅限于浴室，整屋适老化审核
+
+### 9. 多代同堂适配
+
+温哥华、本拿比、列治文、Surrey 多代同堂家庭常见考量：
+
+- **智能洁身座圈作为标配**——华人 / 韩国家庭普及，我们视为默认而非高端配置
+- **双人浴室柜**——便于陪护协助
+- **可锁药柜**——孙辈同住时防误取
+- **婴儿房 → 适老化可转换布局**——年轻家庭也可预先加宽门洞与扶手墙体加固
+
+### 10. 高端可选
+
+- 整体湿区设计（整间浴室即淋浴，斜坡排水）
+- 自动注水浴缸（Kohler PerfectFill 等，可预设温度水位）
+- 楼层间升降梯（主楼 → 楼上浴室）
+- 双门设计（卧室 + 走廊双入口，方便陪护）
+- 智能马桶（自动冲水 + 自动开关盖，Toto Neorest、Kohler Numi 等）
+- 蒸汽淋浴 + 香薰
+
+## 我们给每位客户的"适老化"建议
+
+**按 75 岁的需求设计浴室，而不是今天的需求。** 改造时一次性预留扶手墙体加固只需 $200；待真正需要时再加，瓷砖拆铺要 $2,500。无门槛淋浴同理——一次做无门槛远比未来重做便宜。
+
+**报价前先请职业治疗师介入。** OT 根据您具体的行动能力档案，给出净空、洁具高度与通行模式规范。我方将其转化为符合 BC 规范与 CSA B651 的施工方案。
+
+**为资助与税收抵免准备完整文件。** 我方提供分项发票、施工照片、压力测试证书，可满足 HAFI、VAC、DTC 申报要求。
+
+## 免费上门无障碍评估
+
+每个无障碍浴室项目都从入户评估开始——我们测量净空、识别承重墙、评估现有水电容量，并讨论您当前与未来可能的行动能力变化。评估免费，约一小时，并出具书面方案——无论是否最终由我方施工，您都可使用此方案。';
+UPDATE services SET localizations = jsonb_set(localizations, ARRAY['longDescriptionZhHant'], to_jsonb('溫哥華全屋整體改造——從牆內骨架到表面飾面，所有工種由一名項目經理協調，統一合同。覆蓋大溫獨立屋、聯排與大型公寓，含歷史與特色保護房屋。
+
+每個全屋項目均含書面範圍、按節點付款合同、BC 建築規範許可包、需要時的結構工程師協調、$500 萬綜合責任險、WorkSafeBC、3 年施工质保。
+
+## 溫哥華全屋改造真實費用（2026）
+
+| 等級 | 範圍 | 總投資 |
+|-' || '-' || '-|-' || '-' || '-|-' || '-' || '-|
+| **表面翻新**（小房 <1,800 平方尺） | 油漆、地板、燈光、廚房 + 衛生間中端翻新，不動結構 | $150,000 – $250,000 |
+| **中端全屋**（2,000–3,000 平方尺） | 整廚房 + 2–3 衛整改、全屋地板、油漆、燈光、電路升級、基礎地下室完工 | $250,000 – $500,000 |
+| **高端全屋**（3,000–4,500 平方尺含結構改造） | 上述 + 承重牆拆除、佈局重構、高端飾面、定製木工、智能家居佈線 | $500,000 – $900,000 |
+| **豪華**（4,500+ 平方尺、加建、設計師規格） | 上述 + 加建或大型結構、設計師飾面、家庭自動化集成、景觀整合 | $900,000 – $1,500,000 |
+| **超豪華 / 歷史保護修復** | 時代準確修復 + 現代系統、專業工種、定製構件 | $1,500,000 – $3,000,000+ |
+
+## 包含內容
+
+### 1. 施工前
+- 現狀勘察 + 測量
+- 結構評估（涉及承重或加建時由工程師出具）
+- BC 建築規範審核 + 許可包
+- Heritage Alteration Permit（溫哥華市歷史保護區適用）
+- 工程量清單 + 固定總價合同
+- 3D 漫游（高端起）
+
+### 2. 一份合同涵蓋所有工種
+- 拆除 + 石棉清除
+- 結構木工 + 龍骨變更
+- 電氣（通常 200A 總電箱升級）
+- 水路（通常 PEX-A 重新走管，含燃氣線）
+- HVAC（熱泵安裝或風管重做）
+- 保溫升級（溫哥華 2000 年前房屋多為 R-12——升級至少 R-22）
+- 石膏板、油漆、收口木工
+- 地板（硬木、瓷磚、LVP）
+- 櫥櫃 + 檯面 + 瓷磚
+- 屋頂（如納入範圍）
+- 窗戶 + 外門
+
+### 3. 價格上行因素
+
+- **石棉清除**（1990 年前房屋）：+$8K–$40K（視範圍）
+- **管線 + 接線盒線路**更換（1950 年前房屋）：+$15K–$35K
+- **鍍鋅水管 / 含鉛管線**更換：+$8K–$25K
+- **200A 總電箱升級** + 進戶線：+$5K–$10K
+- **屋頂更換**（如納入範圍）：+$15K–$35K
+- **地基裂縫修復 / 基礎加固**：+$10K–$80K
+- **歷史 / 特色保護**要求：相關範圍 +15–30%
+- **溫哥華市許可費**（全屋範圍）：$5K–$15K
+- **工程師 + 建築師**（高端 / 結構）：$15K–$50K
+
+### 4. 工期
+
+| 範圍 | 時長 |
+|-' || '-' || '-|-' || '-' || '-|
+| 表面翻新 | 3–6 個月 |
+| 中端全屋 | 6–10 個月 |
+| 高端含結構 | 10–14 個月 |
+| 豪華 / 加建 | 14–24 個月 |
+
+### 5. 為什麼我們的底線是 $150K 而不是 $50K
+
+溫哥華 2026 年 "$50K 全屋改造" 在數學上不成立，單是以下硬性成本：
+- BC 許可 + 檢驗：$4K–$12K
+- 石棉檢測（1990 年前必檢）+ 清除：$5K–$30K
+- 200A 總電箱升級（多數老房需要）：$5K–$10K
+- 單衛 + 廚房翻新：$40K–$70K
+
+報價 "$150K 以內全屋" 的，要麼把範圍限制在單一房間，要麼把額外費用藏在變更單裡，要麼不辦許可。
+
+### 6. 每個項目都包含
+
+- 按節點付款的書面合同（非整筆現金）
+- BC 建築規範許可包（我方申報，您直付市政費用）
+- 結構工程師協調
+- $500 萬綜合責任險 + WorkSafeBC
+- 3 年施工质保
+- 每日工地清理、每週照片存檔
+- 單一項目經理（一個電話，一個郵箱）
+- 分項發票（稅務 / 保險用）
+
+### 7. 免費上門諮詢
+
+全屋項目從 2 小時上門勘察開始——全屋測量、範圍討論、大致價格區間，並（若您繼續）在 14 天內提供固定總價書面合同。免費、無義務。'::text)) WHERE id = '2657bf9d-b4cb-4fa4-8138-d67f223b98ef' AND localizations->>'longDescriptionZhHant' = '温哥华全屋整体改造——从墙内骨架到表面饰面，所有工种由一名项目经理协调，统一合同。覆盖大温独立屋、联排与大型公寓，含历史与特色保护房屋。
+
+每个全屋项目均含书面范围、按节点付款合同、BC 建筑规范许可包、需要时的结构工程师协调、$500 万综合责任险、WorkSafeBC、3 年施工质保。
+
+## 温哥华全屋改造真实费用（2026）
+
+| 等级 | 范围 | 总投资 |
+|-' || '-' || '-|-' || '-' || '-|-' || '-' || '-|
+| **表面翻新**（小房 <1,800 平方尺） | 油漆、地板、灯光、厨房 + 卫生间中端翻新，不动结构 | $150,000 – $250,000 |
+| **中端全屋**（2,000–3,000 平方尺） | 整厨房 + 2–3 卫整改、全屋地板、油漆、灯光、电路升级、基础地下室完工 | $250,000 – $500,000 |
+| **高端全屋**（3,000–4,500 平方尺含结构改造） | 上述 + 承重墙拆除、布局重构、高端饰面、定制木工、智能家居布线 | $500,000 – $900,000 |
+| **豪华**（4,500+ 平方尺、加建、设计师规格） | 上述 + 加建或大型结构、设计师饰面、家庭自动化集成、景观整合 | $900,000 – $1,500,000 |
+| **超豪华 / 历史保护修复** | 时代准确修复 + 现代系统、专业工种、定制构件 | $1,500,000 – $3,000,000+ |
+
+## 包含内容
+
+### 1. 施工前
+- 现状勘察 + 测量
+- 结构评估（涉及承重或加建时由工程师出具）
+- BC 建筑规范审核 + 许可包
+- Heritage Alteration Permit（温哥华市历史保护区适用）
+- 工程量清单 + 固定总价合同
+- 3D 漫游（高端起）
+
+### 2. 一份合同涵盖所有工种
+- 拆除 + 石棉清除
+- 结构木工 + 龙骨变更
+- 电气（通常 200A 总电箱升级）
+- 水路（通常 PEX-A 重新走管，含燃气线）
+- HVAC（热泵安装或风管重做）
+- 保温升级（温哥华 2000 年前房屋多为 R-12——升级至少 R-22）
+- 石膏板、油漆、收口木工
+- 地板（硬木、瓷砖、LVP）
+- 橱柜 + 檯面 + 瓷砖
+- 屋顶（如纳入范围）
+- 窗户 + 外门
+
+### 3. 价格上行因素
+
+- **石棉清除**（1990 年前房屋）：+$8K–$40K（视范围）
+- **管线 + 接线盒线路**更换（1950 年前房屋）：+$15K–$35K
+- **镀锌水管 / 含铅管线**更换：+$8K–$25K
+- **200A 总电箱升级** + 进户线：+$5K–$10K
+- **屋顶更换**（如纳入范围）：+$15K–$35K
+- **地基裂缝修复 / 基础加固**：+$10K–$80K
+- **历史 / 特色保护**要求：相关范围 +15–30%
+- **温哥华市许可费**（全屋范围）：$5K–$15K
+- **工程师 + 建筑师**（高端 / 结构）：$15K–$50K
+
+### 4. 工期
+
+| 范围 | 时长 |
+|-' || '-' || '-|-' || '-' || '-|
+| 表面翻新 | 3–6 个月 |
+| 中端全屋 | 6–10 个月 |
+| 高端含结构 | 10–14 个月 |
+| 豪华 / 加建 | 14–24 个月 |
+
+### 5. 为什么我们的底线是 $150K 而不是 $50K
+
+温哥华 2026 年 "$50K 全屋改造" 在数学上不成立，单是以下硬性成本：
+- BC 许可 + 检验：$4K–$12K
+- 石棉检测（1990 年前必检）+ 清除：$5K–$30K
+- 200A 总电箱升级（多数老房需要）：$5K–$10K
+- 单卫 + 厨房翻新：$40K–$70K
+
+报价 "$150K 以内全屋" 的，要么把范围限制在单一房间，要么把额外费用藏在变更单里，要么不办许可。
+
+### 6. 每个项目都包含
+
+- 按节点付款的书面合同（非整笔现金）
+- BC 建筑规范许可包（我方申报，您直付市政费用）
+- 结构工程师协调
+- $500 万综合责任险 + WorkSafeBC
+- 3 年施工质保
+- 每日工地清理、每周照片存档
+- 单一项目经理（一个电话，一个邮箱）
+- 分项发票（税务 / 保险用）
+
+### 7. 免费上门咨询
+
+全屋项目从 2 小时上门勘察开始——全屋测量、范围讨论、大致价格区间，并（若您继续）在 14 天内提供固定总价书面合同。免费、无义务。';
 UPDATE testimonials SET localizations = jsonb_set(localizations, ARRAY['textZhHant'], to_jsonb('我們最好的裝修體驗。準時、不超預算，質量出眾。'::text)) WHERE id = '2cee1f5c-5566-4cf6-a86c-e9220a261411' AND localizations->>'textZhHant' = '我們最好的裝修體驗。準時、不超預算，質量出衆。';
 COMMIT;
