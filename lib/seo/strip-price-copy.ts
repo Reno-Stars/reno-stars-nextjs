@@ -592,6 +592,56 @@ function stripLine(line: string): string | null {
   return body && !isBareLabel(body) ? body : null;
 }
 
+const TABLE_ROW = /^\s*\|.*\|\s*$/;
+const TABLE_SEP = /^\s*\|[\s:|-]+\|\s*$/;
+/** `[indent, cells…, tail]` of a markdown table row ("| a | b |" → ['', ' a ', ' b ', '']). */
+const tableParts = (line: string) => line.split('|');
+const cellsOf = (line: string) => tableParts(line).slice(1, -1);
+function withoutColumns(line: string, drop: ReadonlySet<number>): string {
+  const parts = tableParts(line);
+  const cells = parts.slice(1, -1).filter((_, c) => !drop.has(c));
+  return `${parts[0]}|${cells.join('|')}|${parts[parts.length - 1]}`;
+}
+
+/**
+ * A table column whose every data cell was emptied by the price cut goes — header cell, alignment cell
+ * and data cells — so "Replacement cost" no longer sits over blank cells while the Timeline column stays
+ * (poly-b hub, task 175 plan A). Only tables the cut changed are touched, and only a column that had
+ * content in the source and has none left; at least one column always stays. Tables untouched by the
+ * cut, an already-empty source column and tables with an escaped pipe or uneven rows stay byte-identical.
+ */
+function dropEmptiedColumns(rows: Array<{ orig: string; kept: string | null }>): Array<{ orig: string; kept: string | null }> {
+  const out = rows.map((r) => ({ ...r }));
+  for (let i = 0; i + 1 < out.length; i++) {
+    if (!TABLE_ROW.test(out[i].orig) || !TABLE_SEP.test(out[i + 1].orig)) continue;
+    let j = i + 2; while (j < out.length && /^\s*\|/.test(out[j].orig)) j++;
+    const block = out.slice(i, j);
+    const data = block.slice(2);
+    const changed = data.some((r) => r.kept !== r.orig);
+    const live = data.filter((r): r is { orig: string; kept: string } => r.kept !== null);
+    const width = cellsOf(block[0].orig).length;
+    const regular = block.every((r) => !r.orig.includes('\\|') && cellsOf(r.orig).length === width)
+      && live.every((r) => cellsOf(r.kept).length === width);
+    if (changed && live.length && regular) {
+      const drop = new Set<number>();
+      for (let c = 0; c < width; c++) {
+        const emptied = live.every((r) => !cellsOf(r.kept)[c].trim());
+        const hadContent = data.some((r) => cellsOf(r.orig)[c].trim());
+        if (emptied && hadContent) drop.add(c);
+      }
+      if (drop.size && drop.size < width) {
+        for (let k = i; k < j; k++) {
+          const r = out[k];
+          if (k < i + 2) r.kept = withoutColumns(r.orig, drop);
+          else if (r.kept !== null) r.kept = withoutColumns(r.kept, drop);
+        }
+      }
+    }
+    i = j - 1;
+  }
+  return out;
+}
+
 /** Drop markdown tables left with only a header and separator row. */
 function dropEmptyTables(lines: string[]): string[] {
   const out: string[] = [];
@@ -675,7 +725,7 @@ export function stripPriceMarkdown(md: string): string {
   const inSubsidyList = subsidyListRows(md.split('\n'));
   const rows = md.split('\n').map((orig, i) => ({ orig, kept: inSubsidyList[i] ? orig : stripLine(orig) }));
   const source = md.split('\n');
-  const lines = dropEmptiedHeadings(dropEmptyTables(dropOrphans(rows)), source);
+  const lines = dropEmptiedHeadings(dropEmptyTables(dropOrphans(dropEmptiedColumns(rows))), source);
   return renumberHeadings(dropEmptiedQuestions(lines, source), source).join('\n').replace(/\n{3,}/g, '\n\n').trim();
 }
 
