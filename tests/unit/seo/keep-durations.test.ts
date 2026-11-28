@@ -112,9 +112,9 @@ describe('task 148: durations in cost FAQs, tables and Arabic area copy stay', (
     expect(out).toBe('标准翻新（壁挂式浴室柜、无框淋浴、地铁砖）需要 2–3 周。');
     expect(hasPriceCopy(out)).toBe(false);
   });
-  it('a table row with a duration keeps it and empties only the price cell', () => {
+  it('a table row with a duration keeps it and loses only the price (task 175: the emptied Cost column goes)', () => {
     expect(stripPriceMarkdown('| Scope | Cost | Time |\n|---|---|---|\n| Suite | $65K–$95K | 8–10 weeks |\n| Rec room | $50K–$90K | |'))
-      .toBe('| Scope | Cost | Time |\n|---|---|---|\n| Suite | | 8–10 weeks |');
+      .toBe('| Scope | Time |\n|---|---|\n| Suite | 8–10 weeks |');
   });
 });
 
