@@ -1,4 +1,6 @@
 import { Metadata } from 'next';
+import { filterPriceFaqs } from '@/lib/seo/strip-price-copy';
+import { nearMeAreaLinks } from '@/lib/seo/client-price-messages';
 import { getTranslations, setRequestLocale } from 'next-intl/server';
 import { ogLocaleMap, type Locale } from '@/i18n/config';
 import NearMePage from '@/components/pages/NearMePage';
@@ -11,12 +13,9 @@ import ClientMessages from '@/components/ClientMessages';
 
 interface PageProps { params: Promise<{ locale: string }>; }
 
-// Single source for this page's price band (finding #9/#24). Used by the meta
-// description, the ServiceSchema serviceDescription, and the ServiceSchema
-// priceRange prop so the three can never drift. The trailing "+" is a display
-// convention (open-ended top), not a number. Do NOT re-type the band inline.
-const PRICE_RANGE = { min: 50000, max: 200000 } as const;
-const PRICE_BAND = `$${PRICE_RANGE.min / 1000}K-$${PRICE_RANGE.max / 1000}K+`;
+// DI-15 (2026-11-24, Ryan via Captain): near-me pages carry no prices — the
+// former PRICE_BAND (meta + serviceDescription) and the ServiceSchema
+// priceRange offers were removed; message copy is filtered at render.
 
 // This page canonicalizes onto /services/whole-house/ (see generateMetadata) —
 // it is NOT self-canonical. Single source for that path so the declared
@@ -38,8 +37,8 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   // 2026-05-21 SEO trim: EN desc was 187 chars (truncates ~155).
   // Drops "lighting" + "one team, one timeline" framing to fit.
   const description = isZh
-    ? `大温哥华附近全屋翻新：厨房+卫浴+地板+油漆+照明一站式装修。${PRICE_BAND}，含许可与保险。免费估价。`
-    : `Whole house renovation near you in Metro Vancouver — kitchen + bath + flooring + paint, one team. ${PRICE_BAND}. Permits + $5M insured.`;
+    ? `大温哥华附近全屋翻新：厨房+卫浴+地板+油漆+照明一站式装修，含许可与保险。免费估价。`
+    : `Whole house renovation near you in Metro Vancouver — kitchen + bath + flooring + paint, one team. Permits + $5M insured.`;
   const baseUrl = getBaseUrl();
   return {
     title, description,
@@ -73,8 +72,8 @@ export default async function Page({ params }: PageProps) {
   const isZh = locale === 'zh';
   const serviceName = isZh ? '全屋翻新' : 'Whole House Renovation';
   const serviceDescription = isZh
-    ? `大温哥华附近全屋翻新：厨房、卫浴、地板、油漆、电气照明一站式协调。${PRICE_BAND}。`
-    : `Whole house renovation across Metro Vancouver — kitchen, bath, flooring, paint, lighting coordinated end-to-end. ${PRICE_BAND} typical. Permits handled.`;
+    ? `大温哥华附近全屋翻新：厨房、卫浴、地板、油漆、电气照明一站式协调。`
+    : `Whole house renovation across Metro Vancouver — kitchen, bath, flooring, paint, lighting coordinated end-to-end. Permits handled.`;
   // Share URL is DERIVED from the canonical this page declares (the same
   // CANONICAL_PATH generateMetadata passes to buildAlternates) rather than
   // rebuilt, so the two cannot drift apart. Note that canonical is the
@@ -84,19 +83,18 @@ export default async function Page({ params }: PageProps) {
   return (
     <ClientMessages ns={['nearMe', 'share']}>
       <BreadcrumbSchema items={breadcrumbs} locale={locale} />
-      <FAQSchema faqs={faqs} locale={locale} />
+      <FAQSchema faqs={filterPriceFaqs(faqs)} locale={locale} />
       <ServiceSchema
         company={company}
         serviceName={serviceName}
         serviceDescription={serviceDescription}
         url={`/${locale}/whole-house-renovation-near-me/`}
         areaServed={areas.map((a) => a.name.en)}
-        priceRange={PRICE_RANGE}
         serviceRadiusKm={50}
       />
       <NearMePage
         locale={locale as Locale}
-        areas={areas}
+        areas={nearMeAreaLinks(areas)}
         h1Override={isZh ? '附近全屋翻新 — Metro Vancouver' : 'Whole-House Renovation Near Me in Metro Vancouver'}
         googleRating={googleReviews.rating}
         reviewCount={googleReviews.userRatingCount}

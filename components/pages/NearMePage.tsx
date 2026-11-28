@@ -1,13 +1,14 @@
 "use client";
 
 import { useTranslations } from "next-intl";
+import { stripPriceCopy, filterPriceFaqs } from "@/lib/seo/strip-price-copy";
 import Link from "next/link";
 import { MapPin, Star, ShieldCheck, Clock, Phone, ArrowRight } from "lucide-react";
 import OptimizedImage from "@/components/OptimizedImage";
 import ShareBar from "@/components/share/ShareBar";
 import type { Locale } from "@/i18n/config";
 import type { ShareContext } from "@/lib/share/types";
-import type { ServiceArea } from "@/lib/types";
+import type { NearMeAreaLink } from "@/lib/seo/client-price-messages";
 import {
   NAVY,
   GOLD,
@@ -45,7 +46,7 @@ export interface NearbyProject {
 
 interface Props {
   locale: Locale;
-  areas: ServiceArea[];
+  areas: NearMeAreaLink[];
   /** Service-specific H1 override. If provided, replaces the generic
    *  t("hero.h1") text so each near-me sub-page targets a distinct
    *  service query rather than duplicating "Looking for a renovation
@@ -79,7 +80,21 @@ interface Props {
 }
 
 export default function NearMePage({ locale, areas, h1Override, googleRating, reviewCount, variant, nearbyProjects = [], nearbyExact = true, share, shareItemId }: Props) {
-  const t = useTranslations("nearMe");
+  const tRaw = useTranslations("nearMe");
+  // DI-15: near-me pages carry no prices. The nearMe message copy (service
+  // blurbs, FAQ answers — in all 14 languages) quotes price bands; every
+  // rendered string is filtered here, keeping the catalogue untouched.
+  // `trust.*` are company facts, not prices: the "$5M" stat value sits in its
+  // own element with "Liability + WCB" as a separate label, so it must never
+  // go through the filter (ALWAYS KEEP).
+  const t = ((key: string, values?: Record<string, string | number>) => {
+    const s = tRaw(key as never, values as never) as string;
+    return key.startsWith('trust.') ? s : stripPriceCopy(s);
+  }) as unknown as typeof tRaw;
+  // FAQs: a cost question whose answer quoted amounts is dropped whole.
+  const faqItems = filterPriceFaqs(
+    [1, 2, 3, 4, 5, 6].map((n) => ({ n, question: tRaw(`faq.q${n}` as never), answer: tRaw(`faq.a${n}` as never) })),
+  );
 
   // Live reviews rating for the trust stat — only when the SSOT actually has
   // reviews (guards against rendering a rating when the count is 0). Falls back
@@ -355,17 +370,17 @@ export default function NearMePage({ locale, areas, h1Override, googleRating, re
             {t("faq.heading")}
           </h2>
           <div className="space-y-4">
-            {[1, 2, 3, 4, 5, 6].map((n) => (
+            {faqItems.map(({ n, question, answer }) => (
               <details
                 key={n}
                 className="p-5 rounded-xl"
                 style={{ backgroundColor: CARD, boxShadow: neu() }}
               >
                 <summary className="cursor-pointer font-semibold" style={{ color: NAVY }}>
-                  {t(`faq.q${n}`)}
+                  {question}
                 </summary>
                 <p className="mt-3" style={{ color: TEXT_MID }}>
-                  {t(`faq.a${n}`)}
+                  {answer}
                 </p>
               </details>
             ))}

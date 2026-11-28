@@ -6,6 +6,7 @@ import { getLocalizedArea } from '@/lib/data/areas';
 import AreaPage from '@/components/pages/AreaPage';
 import { BreadcrumbSchema, AreaServiceSchema, FAQSchema } from '@/components/structured-data';
 import { getBaseUrl, buildAlternates, SITE_NAME, pickLocale, buildAlternateLocales, minimalLocalized, slimForClient, deepMinimalLocalized } from '@/lib/utils';
+import { stripPriceDeep, stripPriceTitle, stripPriceCopy, filterPriceFaqs, firstPriceFree, firstIntactText } from '@/lib/seo/strip-price-copy';
 import { getLocalizedService } from '@/lib/data/services';
 import { images as siteImages } from '@/lib/data';
 import { getCompanyFromDb, getServicesFromDb, getServiceAreasFromDb, getServiceAreaBySlugFromDb, getFaqsByAreaFromDb, getProjectsByAreaFromDb, getReviewsByCityFromDb } from '@/lib/db/queries';
@@ -311,15 +312,24 @@ async function resolveAreaMeta(
 ): Promise<{ title: string; description: string }> {
   const t = await getTranslations({ locale, namespace: 'metadata.area' });
   const enOverride = locale === 'en' ? getEnAreaOverrides()[city] : undefined;
-  return {
-    title: localizedArea.metaTitle
-      || enOverride?.title
-      || t('title', { area: localizedArea.name }),
-    description: localizedArea.metaDescription
-      || enOverride?.description
-      || localizedArea.description
-      || t('description', { area: localizedArea.name }),
-  };
+  // DI-15: area pages carry no prices — DB meta, the EN code map and the
+  // message fallback alike are filtered here (shared by generateMetadata and
+  // the share card). The database is not written.
+  // Each candidate is stripped on its own; the first non-empty one wins, so a
+  // DB meta that was nothing but a price falls through to the next source.
+  // The last fallback is non-empty and price-free (never '').
+  // A stripped title that lost the city name falls through to the next source (task 153: ja Richmond).
+  const named = (s: string | undefined) =>
+    (s && s.includes(localizedArea.name) && !stripPriceTitle(s).includes(localizedArea.name) ? undefined : s);
+  const title = firstPriceFree(stripPriceTitle,
+    [named(localizedArea.metaTitle), named(enOverride?.title), t('title', { area: localizedArea.name })],
+    `${localizedArea.name} | Reno Stars`);
+  // A meta that carried a price gives way to the next price-free source, a complete sentence (task 153).
+  const description = firstIntactText(
+    [localizedArea.metaDescription, enOverride?.description, localizedArea.description,
+      t('description', { area: localizedArea.name })],
+    title);
+  return { title, description };
 }
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
@@ -367,26 +377,39 @@ export default async function Page({ params }: PageProps) {
   // edit to this city busts only this page; `areas` is the full list, still
   // needed for the cross-area nav (`allAreas` below) and only busts on
   // list-level changes (broad `service-areas` tag).
-  const [areas, area] = await Promise.all([
+  const [areas, rawArea] = await Promise.all([
     getServiceAreasFromDb(),
     getServiceAreaBySlugFromDb(city),
   ]);
 
-  if (!area) {
+  if (!rawArea) {
     notFound();
   }
 
   // Note: getProjectsByAreaFromDb matches projects.locationCity against the area's English name.
   // This coupling works because project locationCity values use city names (e.g. "Burnaby").
-  const [company, services, googleReviews, areaFaqs, areaProjects, cityClientReviews] = await Promise.all([
+  const [company, rawServices, googleReviews, rawAreaFaqs, rawAreaProjects, cityClientReviews] = await Promise.all([
     getCompanyFromDb(),
     getServicesFromDb(),
     getGoogleReviews(),
-    getFaqsByAreaFromDb(area.id),
-    getProjectsByAreaFromDb(area.name.en),
+    getFaqsByAreaFromDb(rawArea.id),
+    getProjectsByAreaFromDb(rawArea.name.en),
     // Same English-name coupling as getProjectsByAreaFromDb above.
-    getReviewsByCityFromDb(area.name.en),
+    getReviewsByCityFromDb(rawArea.name.en),
   ]);
+
+  // DI-15 price removal at the route boundary: area copy, service cards,
+  // project budgets (→ the "Real Renovation Costs" block hides itself) and FAQ
+  // answers. A cost question whose answer quoted amounts is dropped whole.
+  const area = stripPriceDeep(rawArea);
+  const services = rawServices.map((sv) => stripPriceDeep(sv));
+  const areaProjects = rawAreaProjects.map((p) => stripPriceDeep(p));
+  const areaFaqs = rawAreaFaqs
+    .filter((f) => filterPriceFaqs([{
+      question: pickLocale(f.question, locale as Locale),
+      answer: pickLocale(f.answer, locale as Locale),
+    }]).length > 0)
+    .map((f) => stripPriceDeep(f));
 
   const localizedArea = getLocalizedArea(area, locale as Locale);
 
@@ -466,7 +489,7 @@ export default async function Page({ params }: PageProps) {
         services={clientServices}
         faqs={clientFaqs}
         areaProjects={clientAreaProjects}
-        introOverride={getAreaIntroOverride(city, locale as Locale)}
+        introOverride={(() => { const intro = getAreaIntroOverride(city, locale as Locale); return intro && stripPriceCopy(intro); })()}
         h1Override={getAreaH1Override(city, locale as Locale)}
         googleReviews={projectReviewsToLocale(googleReviews, locale)}
         cityClientReviews={cityClientReviews}

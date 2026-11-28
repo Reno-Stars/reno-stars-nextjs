@@ -1,4 +1,5 @@
 import { Metadata } from 'next';
+import { stripPriceDeep, filterPriceFaqs } from '@/lib/seo/strip-price-copy';
 import { getTranslations, setRequestLocale } from 'next-intl/server';
 import { ogLocaleMap, hasNativeSupport, type Locale } from '@/i18n/config';
 import ServicesPage from '@/components/pages/ServicesPage';
@@ -47,11 +48,13 @@ export default async function Page({ params }: PageProps) {
   const { locale } = await params;
   setRequestLocale(locale);
 
-  const [company, services, areas] = await Promise.all([
+  const [company, rawServices, areas] = await Promise.all([
     getCompanyFromDb(),
     getServicesFromDb(),
     getServiceAreasFromDb(),
   ]);
+  // DI-15: service-card copy is DB text quoting price tiers; filtered here.
+  const services = rawServices.map((sv) => stripPriceDeep(sv));
 
   const [t, sectionT, aboutT] = await Promise.all([
     getTranslations({ locale, namespace: 'nav' }),
@@ -184,7 +187,7 @@ export default async function Page({ params }: PageProps) {
           FAQPage schemas. This schema surfaces in Google's rich snippets for
           "{service} contractor Vancouver" queries that land on the hub.
           Source: on-page scanner finding on-page-9e16c591391d (2026-06-18). */}
-      <FAQSchema faqs={hubFaqs} locale={locale} />
+      <FAQSchema faqs={filterPriceFaqs(hubFaqs)} locale={locale} />
       {answerBlockT && (
         <AnswerBlockSection
           foundingYear={company.foundingYear}

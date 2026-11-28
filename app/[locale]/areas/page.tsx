@@ -1,4 +1,5 @@
 import { Metadata } from 'next';
+import { stripPriceDeep } from '@/lib/seo/strip-price-copy';
 import { getTranslations, setRequestLocale } from 'next-intl/server';
 import { ogLocaleMap, type Locale } from '@/i18n/config';
 import AreasPage from '@/components/pages/AreasPage';
@@ -61,17 +62,15 @@ export default async function Page({ params }: PageProps) {
       question: 'What renovation services does Reno Stars offer in Metro Vancouver?',
       answer: 'Reno Stars offers kitchen, bathroom, basement, whole-house, and commercial renovations across Metro Vancouver including Vancouver, Richmond, Burnaby, Surrey, and 13 other communities.',
     },
-    {
-      question: 'How much does a renovation cost in Metro Vancouver?',
-      answer: 'Kitchen renovations in Vancouver typically range from $30,000-$80,000+. Bathroom renovations range from $20,000-$60,000+. Basement renovations start around $50,000 for legal suites.',
-    },
+    // DI-15: the "How much does a renovation cost?" Q&A (kitchen / bathroom /
+    // basement price ranges) was removed — prices live on the cost guides only.
   ];
 
   return (
     <ClientMessages ns={['areas', 'cta', 'projects']}>
       <BreadcrumbSchema items={breadcrumbs} locale={locale} />
       <FAQSchema faqs={areasFaqs} locale={locale} />
-      <AreasPage locale={locale as Locale} areas={areas.map((a) => ({ id: a.id, slug: a.slug, name: a.name, description: a.description }))} company={company} areasFaqs={areasFaqs} />
+      <AreasPage locale={locale as Locale} areas={areas.map((a) => ({ id: a.id, slug: a.slug, name: a.name, description: a.description && stripPriceDeep(a.description) }))} company={company} areasFaqs={areasFaqs} />
     </ClientMessages>
   );
 }

@@ -2,7 +2,7 @@
 
 import { useMemo } from 'react';
 import sanitizeHtml from 'sanitize-html';
-import { Marked } from 'marked';
+import { areaContentRenderer } from '@/lib/seo/area-markdown';
 import OptimizedImage from '@/components/OptimizedImage';
 import { renderProseChips, PROSE_CHIP_CONTENT_CLASSES } from '@/lib/prose-chips';
 import { normalizeInternalLinks } from '@/lib/markdown-html';
@@ -11,7 +11,6 @@ import { normalizeInternalLinks } from '@/lib/markdown-html';
 // Area page content uses ## headings, **bold**, and [links]() throughout.
 // Previously these rendered as literal characters in <p> tags — now properly
 // parsed to semantic HTML. Added 2026-06-25 SEO tick-598.
-const areaContentRenderer = new Marked();
 
 const AREA_SANITIZE_OPTIONS: sanitizeHtml.IOptions = {
   allowedTags: sanitizeHtml.defaults.allowedTags.concat(['h2', 'h3', 'h4']),

@@ -138,21 +138,54 @@ const compiled = SENTENCE_RULES.map((r) => ({
 // Generic amount detection
 // ---------------------------------------------------------------------------
 const D = '[0-9٠-٩۰-۹]';
-/** 25,000 · 25.000 · 25 000 (incl. NBSP / narrow NBSP) · 2.7 · 345000 */
-const NUM = `${D}{1,3}(?:[,.\u00A0\u202F ]${D}{3})+(?:\\.${D}+)?|${D}+(?:\\.${D}+)?`;
-const MAG = `(?:\\s?(?:[KkMm]|万|萬|만)(?![A-Za-z]))?`;
+/**
+ * 25,000 · 25.000 · 25 000 (incl. NBSP / narrow NBSP, and zero-width spaces after the separator: "32 \u200B\u200B000") · 2.7 · 345000
+ * · Persian / Arabic "۲۰٬۰۰۰" (U+066C ARABIC THOUSANDS SEPARATOR) and "۲٫۵" (U+066B decimal separator) — task 152:
+ * without them only the "۰۰۰ دلار" tail of "۲۰٬۰۰۰ تا ۲۵٬۰۰۰ دلار" was cut and "۲۰٬۰۰۰ تا ۲۵٬" stayed on the page.
+ */
+/**
+ * Comma-decimal amounts are ONE number (task 155 — Captain CAP-15): es "$1,5 mil", vi "$1,5K" / "1,5 nghìn",
+ * ru "1,5 тысячи", and fr's "1,5 000 $" (a mistranslated $1.5K). Only "1"/"$1" used to match, which left
+ * ",5 mil" / "за 1," on the cabinet hub. A comma decimal counts only right before a magnitude, so
+ * "1,500" and lists such as "1,2 et 3" are untouched.
+ */
+const NUM_COMMA_DEC =
+  `${D}{1,3},${D}{1,2}(?=\\s?(?:[KkMm](?![A-Za-z])|万|萬|만|mil(?![A-Za-zÀ-ỹ])|mille|nghìn|ngàn|тыс|тысяч|млн|ألف|آلاف|هزار|हजार|हज़ार|ਹਜ਼ਾਰ))` +
+  `|${D}{1,3},${D}[\u00A0\u202F ]${D}{3}(?!${D})`;
+const NUM = `${NUM_COMMA_DEC}|${D}{1,3}(?:[,.\u066C\u00A0\u202F ]\u200B*${D}{3})+(?:[.\u066B]${D}+)?|${D}+(?:[.\u066B]${D}+)?`;
+/**
+ * Magnitude after the number: K / M / 万 / 萬 / 만, and the Arabic spelled forms
+ * ألف / آلاف (thousand) and مليون / ملايين (million): "25 ألف دولار - 72 ألف دولار" (task 138).
+ */
+const MAG = `(?:\\s?(?:[KkMm]|万|萬|만)(?![A-Za-z])|\\s?(?:ألف|آلاف|مليون|ملايين)(?![\\u0600-\\u06FF]))?`;
+/**
+ * Spelled "thousand" / "million" between the number and the currency (task 153 — Captain CAP-13):
+ * fa "20 تا 80 هزار دلار", ru "25–150 тыс. долларов США" / "15–72 тысяч долларов", vi "nghìn/ngàn",
+ * hi "हजार/हज़ार", pa "ਹਜ਼ਾਰ", es "mil", fr "mille", en "thousand", tl "libong". Optional, so every
+ * amount that matched before still matches the same way.
+ */
+const MAG_WORD =
+  `(?:\\s(?:هزار|میلیون)(?![\\u0600-\\u06FF])` +
+  `|\\s(?:тыс\\.|тысяч[аи]?|млн\\.?)(?![а-яё])` +
+  `|\\s(?:thousand|mille|mil|nghìn|ngàn|libong)(?![A-Za-zÀ-ỹ])` +
+  `|\\s(?:हजार|हज़ार|ਹਜ਼ਾਰ|ਹਜਾਰ))?`;
+/** "80 000–200 000 и более долларов США", "$X or more", "100 هزار دلار و بیشتر" — wording between amount and currency. */
+const MORE = `(?:\\s(?:и более|или более|or more|o más|ou plus|و بیشتر|يا بیشتر))?`;
 const CUR_PRE = `(?:CA\\$|C\\$|US\\$|CAD\\s?\\$?|\\$)`;
 const CUR_POST =
-  '(?:\\$|USD|CAD|加元|加幣|dollars?|dólares|đô la|долларов(?:\\s+США)?|доллара|долл\\.|دولار(?:\\s+أمريكي)?|دلار(?:ی)?|डॉलर|ਡਾਲਰ|ドル|달러)';
-const SEP = '\\s?(?:–|—|-|~|to|à|a|et|y|至|到|إلى|و|تا|đến|से|ਤੋਂ|до)\\s?';
-const PRE_AMT = `${CUR_PRE}\\s?(?:${NUM})${MAG}`;
-const POST_AMT = `(?:${NUM})${MAG}\\s?${CUR_POST}`;
-const BARE = `(?:${NUM})${MAG}`;
+  '(?:\\$|USD|CAD|加元|加幣|加币|美元|美金|dollars?|dólares|đô la|долларов(?:\\s+США)?|доллара|долл\\.|دولار(?:\\s+أمريكي)?|دلار(?:ی)?|डॉलर|ਡਾਲਰ|ドル|달러)';
+const SEP = '\\s?(?:–|—|-|~|～|〜|to|à|a|et|y|至|到|إلى|و|تا|đến|से|ਤੋਂ|до)\\s?';
+const PRE_AMT = `${CUR_PRE}\\s?(?:${NUM})${MAG}${MAG_WORD}`;
+const POST_AMT = `(?:${NUM})${MAG}${MAG_WORD}${MORE}\\s?${CUR_POST}`;
+const BARE = `(?:${NUM})${MAG}${MAG_WORD}`;
 /** One amount or range, with the currency written before and/or after. */
+/** "$200K+" and the spaced "200 ألف دولار +" (not "$5,000 + tax", where text follows). */
+const PLUS = `(?:\\+|\\s\\+(?!\\s*[A-Za-z0-9$]))?`;
 export const PRICE_SOURCE =
-  `(?:${PRE_AMT}(?:${SEP}(?:${PRE_AMT}|${POST_AMT}|${BARE}))?\\+?` +
-  `|${BARE}${SEP}(?:${PRE_AMT}|${POST_AMT})\\+?` +
-  `|${POST_AMT}\\+?)`;
+  `(?:${PRE_AMT}(?:${SEP}(?:${PRE_AMT}|${POST_AMT}|${BARE}))?${PLUS}` +
+  `|${BARE}${SEP}(?:${PRE_AMT}|${POST_AMT})${PLUS}` +
+  // currency after EACH number: "15 ألف دولار - 72 ألف دولار", "15 000 $ à 72 000 $", "8000 加元到 20000 加元"
+  `|${POST_AMT}(?:${SEP}(?:${PRE_AMT}|${POST_AMT}|${BARE}))?${PLUS})`;
 
 /**
  * Insurance amounts are not prices ("$5M CGL", "500 万ドルの CGL 保険", "$5 मिलियन तक सीजीएल बीमा").
