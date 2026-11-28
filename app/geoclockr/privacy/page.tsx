@@ -27,7 +27,7 @@ import { NAVY, TEXT_MID, SURFACE, CARD, GOLD } from '@/lib/theme';
  * users should both be able to find it.
  */
 
-const LAST_UPDATED = '15 July 2026';
+const LAST_UPDATED = '26 November 2026';
 const CONTACT_EMAIL = 'airenostars@gmail.com';
 
 export const metadata: Metadata = {
@@ -185,6 +185,18 @@ export default function RenoStarsCompanionPrivacyPage() {
               </li>
             </ul>
             <p className="mt-3">
+              <strong style={{ color: NAVY }}>AI assistant (optional) — MiniMax.</strong> The
+              in-app AI assistant is optional and off until you agree to it in the app. When you use
+              it, we send MiniMax (minimax.io), a third-party AI model provider, only what it needs to
+              understand the request: the text of your request (typed, or turned into text by speech
+              recognition on your phone — the audio itself is never uploaded), and your name, your
+              organization&rsquo;s name and your role. Your location, photos and contacts are not
+              sent. MiniMax uses this only to produce the reply and the suggested actions, which you
+              confirm before anything runs; it is not used for advertising. We expect MiniMax to
+              protect this data at least as well as this policy does. If you do not agree, every
+              other feature of the app keeps working.
+            </p>
+            <p className="mt-3">
               <strong style={{ color: NAVY }}>Legal reasons.</strong> We may disclose information if
               required by law or to protect the rights, safety, or property of users or the public.
             </p>
@@ -234,6 +246,11 @@ export default function RenoStarsCompanionPrivacyPage() {
               <li>
                 <strong style={{ color: NAVY }}>Clocking out.</strong> When you clock out,
                 continuous location tracking stops.
+              </li>
+              <li>
+                <strong style={{ color: NAVY }}>AI assistant.</strong> The app asks before the AI
+                assistant sends anything to MiniMax. You can decline and use the rest of the app as
+                normal.
               </li>
               <li>
                 <strong style={{ color: NAVY }}>Notifications.</strong> You can disable push
