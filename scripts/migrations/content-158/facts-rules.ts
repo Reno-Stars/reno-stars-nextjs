@@ -1,9 +1,10 @@
 /**
  * Replacement rules for the task-158 company-facts migration (Ryan, 2026-11-26):
- * founded May 2021, 900+ completed projects, no years-of-experience claim,
- * builder-licence number removed. Pure functions — no DB access.
+ * founded May 2021, 900+ completed projects, builder-licence number removed; a company
+ * "20+ years" claim is kept as the team's INDUSTRY experience (Ryan 2026-11-27, task 172).
+ * Pure functions — no DB access.
  *
- *  1. RULES        experience-years claims → per-locale replacement;
+ *  1. RULES        experience-years claims → the industry-experience form of that locale;
  *  2. COUNT        company project totals 700+/100+ → 900+ (sub-counts are left and listed);
  *  3. FOUND        "since/founded 2020" → May 2021;
  *  4. LICNUM       a licence number in body copy is removed;
@@ -18,49 +19,84 @@ export type SubcountLeft = { match: string; context: string };
 type Rule = { id: string; rx: RegExp; rep: string };
 const rule = (id: string, p: string, rep: string): Rule => ({ id, rx: re(p), rep });
 
+/**
+ * Task 172 (Ryan 2026-11-27 「20年+的经验，没问题，这是行业经验」): a company "20+ years" claim is KEPT
+ * as the team's INDUSTRY experience — one form per locale, never "in business N years" — instead of
+ * being replaced. Founded May 2021 and 900+ projects stay where they are. Each pattern excludes the
+ * text it produces (negative lookahead), so a re-run on migrated text is a no-op.
+ * Comparison-table cell (blog c771922c, "Experience" row): "20+ years industry experience · est. May 2021".
+ */
+export const IND: Record<string, string> = {
+  en: '20+ years of industry experience', zh: '20 多年行业经验', zhHant: '20 多年業界經驗', ja: '20年以上の業界経験',
+  ko: '20년 이상의 업계 경험', es: 'más de 20 años de experiencia en el sector', fr: "plus de 20 ans d'expérience dans le secteur",
+  ru: 'более 20 лет опыта в отрасли', ar: 'أكثر من 20 عامًا من الخبرة في القطاع', fa: 'بیش از ۲۰ سال تجربه در صنعت',
+  hi: '20+ वर्षों का उद्योग अनुभव', pa: '20+ ਸਾਲਾਂ ਦਾ ਉਦਯੋਗ ਤਜਰਬਾ', tl: '20+ taong karanasan sa industriya',
+  vi: 'hơn 20 năm kinh nghiệm trong ngành',
+};
+const TD: Record<string, string> = {
+  en: '<td>20+ years industry experience · est. May 2021</td>', zh: '<td>20 多年行业经验 · 2021 年 5 月成立</td>',
+  zhHant: '<td>20 多年業界經驗 · 2021 年 5 月成立</td>', ja: '<td>20年以上の業界経験 · 2021年5月創業</td>',
+  ko: '<td>20년 이상의 업계 경험 · 2021년 5월 설립</td>', es: '<td>Más de 20 años de experiencia en el sector · desde mayo de 2021</td>',
+  fr: "<td>Plus de 20 ans d'expérience dans le secteur · depuis mai 2021</td>", ru: '<td>Более 20 лет опыта в отрасли · с мая 2021 года</td>',
+  ar: '<td>أكثر من 20 عامًا من الخبرة في القطاع · منذ مايو 2021</td>', fa: '<td>بیش از ۲۰ سال تجربه در صنعت · از مه ۲۰۲۱</td>',
+  hi: '<td>20+ वर्षों का उद्योग अनुभव · मई 2021 से</td>', pa: '<td>20+ ਸਾਲਾਂ ਦਾ ਉਦਯੋਗ ਤਜਰਬਾ · ਮਈ 2021 ਤੋਂ</td>',
+  tl: '<td>20+ taong karanasan sa industriya · mula Mayo 2021</td>', vi: '<td>Hơn 20 năm kinh nghiệm trong ngành · từ tháng 5 năm 2021</td>',
+};
+
 export const RULES: readonly Rule[] = [
-  rule('years:en:experience', '(?:over |more than )?20\\+? years of (?:renovation |combined |hands-on )*experience', '900+ completed projects'),
-  rule('years:en:over-20-in-mv', 'over 20 years in Metro Vancouver', '900+ completed projects in Metro Vancouver'),
-  rule('years:en:renovating-across-mv', '20\\+ years renovating across Metro Vancouver', '900+ projects across Metro Vancouver since May 2021'),
-  rule('years:en:decade', 'over a decade of (?:hands-on )?experience', '900+ completed projects'),
-  rule('years:en:td', '<td>20\\+ years</td>', '<td>Since May 2021</td>'),
-  rule('years:zh:mv', '在大温哥华超过 ?20 ?年装修经验', '2021 年 5 月成立，在大温哥华已完成 900+ 个项目'),
-  rule('years:zhHant:mv', '在大溫哥華超過 ?20 ?年裝修經驗', '2021 年 5 月成立，在大溫哥華已完成 900+ 個項目'),
-  rule('years:zh:experience', '(?:超过|拥有|具有)?\\s?20 ?(?:\\+|多)? ?年(?:以上)?(?:的)?(?:装修|翻新|行业|综合)?经验', '900+ 个已完成项目'),
-  rule('years:zhHant:experience', '(?:超過|擁有|具有)?\\s?20 ?(?:\\+|多)? ?年(?:以上)?(?:的)?(?:裝修|翻新|行業|綜合)?經驗', '900+ 個已完成項目'),
-  rule('years:zh:td', '<td>20 多年</td>', '<td>2021 年 5 月成立</td>'),
-  rule('years:zh:decade', '十多年(?:的)?(?:实践|实战)?经验', '900+ 个已完成项目'),
-  rule('years:zhHant:decade', '十多年(?:的)?(?:實務|實戰)?經驗', '900+ 個已完成項目'),
-  rule('years:ja:experience', '20 ?年以上の(?:改修|リノベーション)?経験', '900件以上の施工実績'),
-  rule('years:ja:td', '<td>20 年以上</td>', '<td>2021年5月創業</td>'),
-  rule('years:ko:experience', '20년 이상의 (?:개조 |리노베이션 )?경험', '900개 이상의 완료 프로젝트'),
-  rule('years:ko:td', '<td>20년 이상</td>', '<td>2021년 5월 설립</td>'),
-  rule('years:es:experience', 'más de 20 años de experiencia(?: en (?:renovación|remodelación))?', 'más de 900 proyectos completados'),
-  rule('years:es:td', '<td>[Mm]ás de 20 años</td>', '<td>Desde mayo de 2021</td>'),
-  rule('years:fr:experience', "plus de 20 ans d'expérience(?: dans la rénovation| en rénovation)?", 'plus de 900 projets réalisés'),
-  rule('years:fr:td', '<td>[Pp]lus de 20 ans</td>', '<td>Depuis mai 2021</td>'),
-  rule('years:ru:experience', 'более 20 лет опыта(?: в (?:сфере )?ремонт[а-я]*)?', 'более 900 реализованных проектов'),
-  rule('years:ru:td', '<td>[Бб]олее 20 лет</td>', '<td>С мая 2021 года</td>'),
-  rule('years:ar:experience', 'أكثر من 20 عامًا من الخبرة(?: في (?:مجال )?التجديد)?', 'أكثر من 900 مشروع منجز'),
-  rule('years:ar:td', '<td>أكثر من 20 عامًا</td>', '<td>منذ مايو 2021</td>'),
-  rule('years:fa:experience', 'بیش از (?:۲۰|20) سال تجربه(?: در (?:زمینه )?بازسازی)?', 'بیش از ۹۰۰ پروژه تکمیل‌شده'),
-  rule('years:fa:td', '<td>بیش از (?:۲۰|20) سال</td>', '<td>از مه ۲۰۲۱</td>'),
-  rule('years:hi:experience', '20\\+ (?:वर्षों|वर्ष|साल) का (?:नवीनीकरण |नवीकरण )?अनुभव', '900+ पूरी हुई परियोजनाएँ'),
-  rule('years:hi:td', '<td>20\\+ (?:वर्ष|साल)</td>', '<td>मई 2021 से</td>'),
-  rule('years:pa:experience', '20\\+ ਸਾਲਾਂ ਦਾ (?:ਰੈਨੋਵੇਸ਼ਨ |ਮੁਰੰਮਤ )?ਤਜ਼?ਰਬਾ', '900+ ਪੂਰੇ ਕੀਤੇ ਪ੍ਰੋਜੈਕਟ'),
-  rule('years:pa:td', '<td>20\\+ ਸਾਲ</td>', '<td>ਮਈ 2021 ਤੋਂ</td>'),
-  rule('years:tl:experience', '20\\+ (?:na )?(?:taon|taong) (?:ng )?(?:karanasan|renovation experience)', '900+ na natapos na proyekto'),
-  rule('years:tl:td', '<td>20\\+ taon</td>', '<td>Mula Mayo 2021</td>'),
-  rule('years:vi:experience', '(?:hơn |trên )?20 năm kinh nghiệm(?: (?:cải tạo|trong ngành))?', 'hơn 900 dự án đã hoàn thành'),
-  rule('years:vi:td', '<td>(?:[Hh]ơn )?20 năm</td>', '<td>Từ tháng 5 năm 2021</td>'),
+  rule('years:en:experience', '(?:[Oo]ver |[Mm]ore than )?20\\+? years of (?:renovation |combined |hands-on )*experience', IND.en),
+  rule('years:en:over-20-in-mv', 'over 20 years in Metro Vancouver', `${IND.en} in Metro Vancouver`),
+  rule('years:en:renovating-across-mv', '20\\+ years renovating across Metro Vancouver', `${IND.en} across Metro Vancouver`),
+  rule('years:en:decade', 'over a decade of (?:hands-on )?experience', IND.en),
+  rule('years:en:td', '<td>20\\+ years</td>', TD.en),
+  rule('years:zh:mv', '在大温哥华超过 ?20 ?年装修经验', `在大温哥华拥有 ${IND.zh}`),
+  rule('years:zhHant:mv', '在大溫哥華超過 ?20 ?年裝修經驗', `在大溫哥華擁有 ${IND.zhHant}`),
+  // 行业/業界 is the industry form already: never matched; 拥有/具有 before the figure stays in the text
+  rule('years:zh:experience', '(?:超过\\s?)?20 ?(?:\\+|多)? ?年(?:以上)?(?:的)?(?:装修|翻新|综合)?经验', IND.zh),
+  rule('years:zhHant:experience', '(?:超過\\s?)?20 ?(?:\\+|多)? ?年(?:以上)?(?:的)?(?:裝修|翻新|綜合)?經驗', IND.zhHant),
+  rule('years:zh:td', '<td>20 多年</td>', TD.zh),
+  rule('years:zh:decade', '十多年(?:的)?(?:实践|实战)?经验', IND.zh),
+  rule('years:zhHant:decade', '十多年(?:的)?(?:實務|實戰)?經驗', IND.zhHant),
+  rule('years:ja:experience', '20 ?年以上の(?:改修|リノベーション)?経験', IND.ja),
+  rule('years:ja:td', '<td>20 年以上</td>', TD.ja),
+  rule('years:ko:experience', '20년 이상의 (?:개조 |리노베이션 )?경험', IND.ko),
+  rule('years:ko:td', '<td>20년 이상</td>', TD.ko),
+  rule('years:es:experience', 'más de 20 años de experiencia(?: en (?:renovación|remodelación))?(?! en el sector)', IND.es),
+  rule('years:es:td', '<td>[Mm]ás de 20 años</td>', TD.es),
+  rule('years:fr:experience', "plus de 20 ans d'expérience(?: dans la rénovation| en rénovation)?(?! dans le secteur)", IND.fr),
+  rule('years:fr:td', '<td>[Pp]lus de 20 ans</td>', TD.fr),
+  rule('years:ru:experience', 'более 20 лет опыта(?: в (?:сфере )?ремонт[а-я]*)?(?! в отрасли)', IND.ru),
+  rule('years:ru:td', '<td>[Бб]олее 20 лет</td>', TD.ru),
+  rule('years:ar:experience', 'أكثر من 20 عامًا من الخبرة(?: في (?:مجال )?التجديد)?(?! في القطاع)', IND.ar),
+  rule('years:ar:td', '<td>أكثر من 20 عامًا</td>', TD.ar),
+  rule('years:fa:experience', 'بیش از (?:۲۰|20) سال تجربه(?: در (?:زمینه )?بازسازی)?(?! در صنعت)', IND.fa),
+  rule('years:fa:td', '<td>بیش از (?:۲۰|20) سال</td>', TD.fa),
+  rule('years:hi:experience', '20\\+ (?:वर्षों|वर्ष|साल) का (?:नवीनीकरण |नवीकरण )?अनुभव', IND.hi),
+  rule('years:hi:td', '<td>20\\+ (?:वर्ष|साल)</td>', TD.hi),
+  rule('years:pa:experience', '20\\+ ਸਾਲਾਂ ਦਾ (?:ਰੈਨੋਵੇਸ਼ਨ |ਮੁਰੰਮਤ )?ਤਜ਼?ਰਬਾ', IND.pa),
+  rule('years:pa:td', '<td>20\\+ ਸਾਲ</td>', TD.pa),
+  rule('years:tl:experience', '20\\+ (?:na )?(?:taon|taong) (?:ng )?(?:karanasan|renovation experience)(?! sa industriya)', IND.tl),
+  rule('years:tl:td', '<td>20\\+ taon</td>', TD.tl),
+  rule('years:vi:experience', '(?:[Hh]ơn |[Tt]rên )?20 năm kinh nghiệm(?: cải tạo)?(?! trong ngành)', IND.vi),
+  rule('years:vi:td', '<td>(?:[Hh]ơn )?20 năm</td>', TD.vi),
 ];
 
 /**
  * Locale-scoped rules (task 170 M-B): applied only to the column / localizations key of
  * that language, so a phrase that is a company claim in one language cannot fire in another.
  * The About line "[About Reno Stars](/xx/about/) — 20+ years, $5M insured…" in translated
- * form → "900+ projects," in that language, $5M kept; zh-Hant comparison-table cell.
+ * form → the industry-experience form of that language, $5M kept; zh-Hant comparison-table cell.
  */
+/**
+ * The About line "[About Reno Stars](/xx/about/) — 20+ years, $5M insured, …" keeps its claim as INDUSTRY
+ * experience (task 172). It sits near the 1000-char cut of a truncated FAQ JSON-LD answer on some posts
+ * (task 165 B: /en/blog/diy-vs-contractor-renovation-vancouver-2026/ keeps only 21 chars after "$5M"), so
+ * it carries the short industry form and NOT "900+ projects" — a longer line pushes "$5M" out of the summary.
+ */
+export const ABOUT: Record<string, string> = {
+  en: '20+ yrs industry experience', zh: IND.zh, zhHant: IND.zhHant, ko: IND.ko, es: IND.es, fr: IND.fr,
+  vi: IND.vi, tl: IND.tl, hi: IND.hi, pa: IND.pa,
+};
 const ABOUT_LINK = '(\\]\\(/[a-z-]+/about/\\)(?: [—–-]|:) )';
 const about = (id: string, phrase: string, rep: string, sep = ','): Rule =>
   ({ id, rx: re(`${ABOUT_LINK}${phrase}${sep}`), rep: `$1${rep}${sep}` });
@@ -68,39 +104,39 @@ const about = (id: string, phrase: string, rep: string, sep = ','): Rule =>
 const local = (id: string, p: string, rep: string): Rule => ({ id, rx: re(p), rep });
 export const LOCAL_RULES: Record<string, readonly Rule[]> = {
   Es: [
-    about('about:es', '[Mm]ás de 20 años', 'más de 900 proyectos'),
-    local('years:es:experience-cap', 'Más de 20 años de experiencia', 'Más de 900 proyectos completados'),
+    about('about:es', '[Mm]ás de 20 años', ABOUT.es),
+    local('years:es:experience-cap', 'Más de 20 años de experiencia(?! en el sector)', 'Más de 20 años de experiencia en el sector'),
     local('count:es:project-data', '([Mm]ás de) 100 (datos de proyectos)', '$1 900 $2'),
   ],
   Fr: [
-    about('about:fr', '(?:20\\+|[Pp]lus de 20) ans', '900+ projets'),
-    local('years:fr:experience-cap', "Plus de 20 ans d'expérience", 'Plus de 900 projets réalisés'),
-    local('years:fr:td-plus', '<td>20\\+ ans</td>', '<td>Depuis mai 2021</td>'),
+    about('about:fr', '(?:20\\+|[Pp]lus de 20) ans', ABOUT.fr),
+    local('years:fr:experience-cap', "Plus de 20 ans d'expérience(?! dans le secteur)", "Plus de 20 ans d'expérience dans le secteur"),
+    local('years:fr:td-plus', '<td>20\\+ ans</td>', TD.fr),
     local('count:fr:project-data', '([Pp]lus de) 100 (données de projet)', '$1 900 $2'),
   ],
   Ru: [
-    local('years:ru:experience-plus', '20\\+ лет опыта', 'Более 900 реализованных проектов'),
-    local('years:ru:td-plus', '<td>20\\+ лет</td>', '<td>С мая 2021 года</td>'),
+    local('years:ru:experience-plus', '20\\+ лет опыта(?! в отрасли)', 'Более 20 лет опыта в отрасли'),
+    local('years:ru:td-plus', '<td>20\\+ лет</td>', TD.ru),
   ],
   Fa: [
-    local('years:fa:experience-plus', '(?:۲۰|20)\\+ سال تجربه', 'بیش از ۹۰۰ پروژه تکمیل‌شده'),
-    local('years:fa:td-plus', '<td>(?:۲۰|20)\\+ سال</td>', '<td>از مه ۲۰۲۱</td>'),
+    local('years:fa:experience-plus', '(?:۲۰|20)\\+ سال تجربه(?! در صنعت)', IND.fa),
+    local('years:fa:td-plus', '<td>(?:۲۰|20)\\+ سال</td>', TD.fa),
   ],
   Vi: [
-    about('about:vi', '[Hh]ơn 20 năm', 'hơn 900 dự án'),
+    about('about:vi', '[Hh]ơn 20 năm', ABOUT.vi),
     local('count:vi:projects', '([Hh]ơn) 100 ((?:dữ liệu )?dự án)', '$1 900 $2'),
   ],
-  Ko: [about('about:ko', '20년 이상', '900개 이상의 프로젝트')],
-  Tl: [about('about:tl', '20\\+ taon', '900+ proyekto')],
-  Hi: [about('about:hi', '20\\+ (?:वर्ष|साल)', '900+ परियोजनाएँ')],
+  Ko: [about('about:ko', '20년 이상', ABOUT.ko)],
+  Tl: [about('about:tl', '20\\+ taon', ABOUT.tl)],
+  Hi: [about('about:hi', '20\\+ (?:वर्ष|साल)', ABOUT.hi)],
   Pa: [
-    about('about:pa', '20\\+ ਸਾਲ', '900+ ਪ੍ਰੋਜੈਕਟ'),
-    local('years:pa:experience-anubhav', '20\\+ ਸਾਲਾਂ ਦਾ (?:ਨਵੀਨੀਕਰਨ )?ਅਨੁਭਵ', '900+ ਪੂਰੇ ਕੀਤੇ ਪ੍ਰੋਜੈਕਟ'),
+    about('about:pa', '20\\+ ਸਾਲ', ABOUT.pa),
+    local('years:pa:experience-anubhav', '20\\+ ਸਾਲਾਂ ਦਾ (?:ਨਵੀਨੀਕਰਨ )?ਅਨੁਭਵ', IND.pa),
   ],
-  Zh: [about('about:zh', '20 ?多年', '900+ 个项目', '，')],
+  Zh: [about('about:zh', '20 ?多年', ABOUT.zh, '，')],
   ZhHant: [
-    about('about:zhHant', '20 ?多年', '900+ 個項目', '，'),
-    local('years:zhHant:td', '<td>20 ?年以上</td>', '<td>2021 年 5 月成立</td>'),
+    about('about:zhHant', '20 ?多年', ABOUT.zhHant, '，'),
+    local('years:zhHant:td', '<td>20 ?年以上</td>', TD.zhHant),
   ],
 };
 
@@ -144,8 +180,9 @@ const MAY: Record<string, string> = {
 function applyRules(v: string, changes: FactsChange[]): string {
   let s = v;
   for (const r of RULES) {
-    for (const m of finditer(r.rx, s)) changes.push({ rule: r.id, old: m[0], new: r.rep });
-    s = sub(r.rx, s, () => r.rep);
+    // keep the case of the first letter ("Hơn 20 năm …" / "Over 20 years …" at a sentence start)
+    for (const m of finditer(r.rx, s)) changes.push({ rule: r.id, old: m[0], new: matchCase(m[0], r.rep) });
+    s = sub(r.rx, s, (m) => matchCase(m[0], r.rep));
   }
   return s;
 }
@@ -214,7 +251,7 @@ export function sinceEn(v: string): { value: string; changes: FactsChange[] } {
     return r;
   });
   s = sub(ABOUT_EN, s, (m) => {
-    const r = `${m[1]}900+ projects,`;
+    const r = `${m[1]}${ABOUT.en},`;
     changes.push({ rule: 'about:en', old: m[0], new: r });
     return r;
   });

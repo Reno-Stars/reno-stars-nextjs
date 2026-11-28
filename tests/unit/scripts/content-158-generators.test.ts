@@ -17,13 +17,13 @@ describe('company-facts rules', () => {
   it('rewrites the English claims', () => {
     const v = 'Reno Stars has been serving Metro Vancouver since 2019 with 20+ years of renovation experience and 700+ projects.';
     const r = rewriteColumn('content_en', v, true, sub);
-    expect(r.value).toBe('Reno Stars has been serving Metro Vancouver since May 2021 with 900+ completed projects and 900+ projects.');
+    expect(r.value).toBe('Reno Stars has been serving Metro Vancouver since May 2021 with 20+ years of industry experience and 900+ projects.');
     expect(r.changes.map((c) => c.rule).sort()).toEqual(['count:company-total', 'since:en', 'years:en:experience']);
   });
 
-  it('replaces the embedded English About line inside a localized body (168 M1), keeping $5M', () => {
+  it('keeps the embedded English About line as industry experience (168 M1 / 172), keeping $5M', () => {
     const v = 'Texte.\n[About Reno Stars](/fr/about/) — 20+ years, $5M insured';
-    expect(rewriteLocalization('contentFr', v, false, sub).value).toBe('Texte.\n[About Reno Stars](/fr/about/) — 900+ projects, $5M insured');
+    expect(rewriteLocalization('contentFr', v, false, sub).value).toBe('Texte.\n[About Reno Stars](/fr/about/) — 20+ yrs industry experience, $5M insured');
   });
 
   it('localized "since 2019" follows only when the en text makes the company claim', () => {
@@ -108,22 +108,22 @@ describe('task 170', () => {
     expect(() => assertSafeSql(`BEGIN;\n${sql}COMMIT;\n`)).toThrow(/transaction-control/);
   });
 
-  it('About line in translated form → "900+ projects" in that language, $5M kept, case kept', () => {
+  it('About line in translated form → industry experience in that language, $5M kept, case kept (172)', () => {
     const sub: SubcountLeft[] = [];
     expect(rewriteLocalization('contentEs', '[Acerca de Reno Stars](/en/about/): más de 20 años, $5M reseñas.', false, sub).value)
-      .toBe('[Acerca de Reno Stars](/en/about/): más de 900 proyectos, $5M reseñas.');
+      .toBe('[Acerca de Reno Stars](/en/about/): más de 20 años de experiencia en el sector, $5M reseñas.');
     expect(rewriteLocalization('contentEs', '[Aproximadamente Reno Stars](/en/about/) — Más de 20 años, $5M asegurado', false, sub).value)
-      .toBe('[Aproximadamente Reno Stars](/en/about/) — Más de 900 proyectos, $5M asegurado');
+      .toBe('[Aproximadamente Reno Stars](/en/about/) — Más de 20 años de experiencia en el sector, $5M asegurado');
     expect(rewriteLocalization('contentVi', '[Giới thiệu](/en/about/) - Hơn 20 năm, $5M được bảo hiểm', false, sub).value)
-      .toBe('[Giới thiệu](/en/about/) - Hơn 900 dự án, $5M được bảo hiểm');
+      .toBe('[Giới thiệu](/en/about/) - Hơn 20 năm kinh nghiệm trong ngành, $5M được bảo hiểm');
     expect(rewriteColumn('content_zh', '[关于 Reno Stars](/en/about/) — 20 多年，保险 500 万加元', false, sub).value)
-      .toBe('[关于 Reno Stars](/en/about/) — 900+ 个项目，保险 500 万加元');
+      .toBe('[关于 Reno Stars](/en/about/) — 20 多年行业经验，保险 500 万加元');
   });
 
   it('locale rules stay in their locale: a zh-Hant table cell changes, the same text in Ja does not; broken tags are left', () => {
     const sub: SubcountLeft[] = [];
     const v = '<標題> <tr><td>經驗</td><td>成立10年以上</td><td>20年以上</td></tr> </標題> <正文>';
-    expect(rewriteLocalization('contentZhHant', v, false, sub).value).toBe('<標題> <tr><td>經驗</td><td>成立10年以上</td><td>2021 年 5 月成立</td></tr> </標題> <正文>');
+    expect(rewriteLocalization('contentZhHant', v, false, sub).value).toBe('<標題> <tr><td>經驗</td><td>成立10年以上</td><td>20 多年業界經驗 · 2021 年 5 月成立</td></tr> </標題> <正文>');
     expect(rewriteLocalization('contentJa', '<td>20年以上</td>', false, sub).changes).toEqual([]);
   });
 
@@ -139,5 +139,55 @@ describe('task 170', () => {
     expect(r.residuals[0]).toMatchObject({ id: 'x1', detector: 'years20:en' });
     expect(r.excludedByPattern).toEqual({ 'lifespan:tile': 1 });
     expect(r.residualsInSkipList).toBe(1);
+  });
+});
+
+describe('task 172 — "20+ years" kept as INDUSTRY experience (Ryan 2026-11-27)', () => {
+  const sub = (): SubcountLeft[] => [];
+
+  it('one industry form per locale, never company age', () => {
+    expect(rewriteColumn('content_en', 'The company brings <strong>20+ years of renovation experience</strong>.', false, sub()).value)
+      .toBe('The company brings <strong>20+ years of industry experience</strong>.');
+    expect(rewriteColumn('content_en', '- 20+ years renovating across Metro Vancouver', false, sub()).value)
+      .toBe('- 20+ years of industry experience across Metro Vancouver');
+    expect(rewriteColumn('content_zh', '在大温哥华超过20年装修经验', false, sub()).value).toBe('在大温哥华拥有 20 多年行业经验');
+    expect(rewriteLocalization('contentJa', '20 年以上の改修経験', false, sub()).value).toBe('20年以上の業界経験');
+    expect(rewriteLocalization('contentKo', '20년 이상의 경험', false, sub()).value).toBe('20년 이상의 업계 경험');
+    expect(rewriteLocalization('contentRu', '20+ лет опыта', false, sub()).value).toBe('Более 20 лет опыта в отрасли');
+    expect(rewriteLocalization('contentVi', 'Hơn 20 năm kinh nghiệm', false, sub()).value).toBe('Hơn 20 năm kinh nghiệm trong ngành');
+  });
+
+  it('the comparison-table cell reads industry experience + est. May 2021', () => {
+    expect(rewriteColumn('content_en', '<td>10+ years, established</td><td>20+ years</td>', false, sub()).value)
+      .toBe('<td>10+ years, established</td><td>20+ years industry experience · est. May 2021</td>');
+  });
+
+  it('a re-run on migrated text is a no-op (fixpoint), and existing industry wording is left alone', () => {
+    for (const [k, v] of [
+      ['contentEs', 'con más de 20 años de experiencia en el sector, calidad'],
+      ['contentFr', "Plus de 20 ans d'expérience dans le secteur"],
+      ['contentRu', 'более 20 лет опыта в отрасли'],
+      ['contentAr', 'أكثر من 20 عامًا من الخبرة في القطاع'],
+      ['contentFa', 'بیش از ۲۰ سال تجربه در صنعت'],
+      ['contentTl', '20+ taong karanasan sa industriya'],
+      ['contentVi', 'Hơn 20 năm kinh nghiệm trong ngành'],
+      ['contentZhHant', '20 多年業界經驗'],
+    ] as const) {
+      expect(rewriteLocalization(k, v, false, sub()).changes).toEqual([]);
+    }
+    expect(rewriteColumn('content_zh', '我们拥有20多年行业经验', false, sub()).changes).toEqual([]);
+    expect(rewriteColumn('content_en', 'About Reno Stars — 20+ yrs industry experience, $5M insured', false, sub()).changes).toEqual([]);
+  });
+
+  it('residual scan: industry-experience wording is its own pattern id, a bare company claim still counts', async () => {
+    const { scanResiduals } = await import('@/scripts/migrations/content-158/residuals');
+    const r = scanResiduals([
+      { table: 'blog_posts', id: 'a', field: 'content_en', value: 'We bring 20+ years of industry experience.', state: 'new' },
+      { table: 'blog_posts', id: 'b', field: 'content_zh', value: '团队拥有 20 多年行业经验。', state: 'new' },
+      { table: 'blog_posts', id: 'c', field: 'content_en', value: 'In business for 20+ years.', state: 'new' },
+    ]);
+    expect(r.excludedByPattern['industry-experience']).toBe(2);
+    expect(r.residualsOutsideSkipList).toBe(1);
+    expect(r.residuals[0]).toMatchObject({ id: 'c' });
   });
 });

@@ -7,6 +7,11 @@
  * 700+, company 100+. Documented NON-company uses are excluded by pattern id and
  * counted. The target is 0 residuals outside the skip list; residuals in skipped
  * rows (Test-A-rendered / tied) are listed separately.
+ *
+ * Task 172: "20+ years" worded as the team's INDUSTRY experience is allowed (Ryan 2026-11-27) and is
+ * counted under its own pattern id `industry-experience` — only when the hit lies INSIDE an
+ * industry-experience phrase of that value (a span test, not a nearby-words test). A bare company
+ * "20+ years" / "in business 20 years" / "since 2005" stays a residual.
  */
 import { B, re, finditer, cpWindow } from './pyre';
 
@@ -74,6 +79,22 @@ export const EXCLUSIONS: readonly Exclusion[] = [
   { id: 'subcount:kitchens-700', rowId: 'fbfe62bc', detectors: re('^count:700$'), rx: re('kitchen', 'i'), why: '"completed over 700 kitchen renovations" — a sub-count like 842db1b6; left for Ryan (flagged in 170 result)' },
 ];
 
+/** Industry-experience phrases, every locale (the forms the rules write, plus the forms already in copy). */
+const INDUSTRY = re([
+  '20\\+ (?:[Yy]ears?|[Yy]rs) (?:of )?[Ii]ndustry [Ee]xperience', '20 ?多年(?:的)?(?:行业经验|業界經驗|行業經驗)',
+  '20 ?(?:\\+|多) ?年(?:以上)?(?:的)?(?:行业|業界|行業)(?:经验|經驗)', '20 ?年以上の業界経験', '20년 이상의 업계 경험',
+  '[Mm]ás de 20 años de experiencia en el sector', "[Pp]lus de 20 ans d'expérience dans le secteur",
+  '[Бб]олее 20 лет опыта в отрасли', 'أكثر من 20 عامًا من الخبرة في القطاع', 'بیش از (?:۲۰|20) سال تجربه در صنعت',
+  '20\\+ वर्षों का उद्योग अनुभव', '20\\+ ਸਾਲਾਂ ਦਾ ਉਦਯੋਗ ਤਜਰਬਾ', '20\\+ taong karanasan sa industriya', '[Hh]ơn 20 năm kinh nghiệm trong ngành',
+].join('|'));
+const INDUSTRY_WHY = 'the team\'s INDUSTRY experience ("20+ years of industry experience" and its per-locale form) — allowed, Ryan 2026-11-27 (task 172)';
+
+/** True when [start, end) of `value` lies inside an industry-experience phrase. */
+function inIndustryPhrase(value: string, start: number, end: number): boolean {
+  for (const m of finditer(INDUSTRY, value)) if (m.index <= start && m.index + m[0].length >= end) return true;
+  return false;
+}
+
 export type ScannedValue = { table: string; id: string; field: string; value: string; state: 'new' | 'untouched' | 'skipped' };
 export type Residual = { table: string; id: string; field: string; state: ScannedValue['state']; detector: string; match: string; context: string };
 
@@ -85,6 +106,11 @@ export function scanResiduals(values: ScannedValue[]) {
     for (const d of DETECTORS) {
       for (const m of finditer(d.rx, v.value)) {
         const context = cpWindow(v.value, m, 90, 90).replace(/\s+/g, ' ');
+        if (YEARS20.test(d.id) && inIndustryPhrase(v.value, m.index, m.index + m[0].length)) {
+          excluded['industry-experience'] = (excluded['industry-experience'] ?? 0) + 1;
+          excludedHits.push({ exclusion: 'industry-experience', table: v.table, id: v.id, field: v.field, match: m[0] });
+          continue;
+        }
         const ex = EXCLUSIONS.find((e) => (!e.rowId || v.id.startsWith(e.rowId)) && e.detectors.test(d.id) && e.rx.test(context));
         if (ex) {
           excluded[ex.id] = (excluded[ex.id] ?? 0) + 1;
@@ -101,7 +127,7 @@ export function scanResiduals(values: ScannedValue[]) {
     residualsOutsideSkipList: outside.length,
     residualsInSkipList: inSkip.length,
     excludedByPattern: Object.fromEntries(Object.entries(excluded).sort()),
-    exclusions: EXCLUSIONS.map((e) => ({ id: e.id, why: e.why, rowId: e.rowId ?? null })),
+    exclusions: [{ id: 'industry-experience', why: INDUSTRY_WHY, rowId: null }, ...EXCLUSIONS.map((e) => ({ id: e.id, why: e.why, rowId: e.rowId ?? null }))],
     residuals: outside,
     skipListResiduals: inSkip,
     excludedHits,
