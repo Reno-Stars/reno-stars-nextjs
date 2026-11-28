@@ -14,9 +14,9 @@ export const COMPANY_FALLBACK: Company = (() => {
   return {
     name: 'Reno Stars', tagline: '', phone: '', email: '', address: '',
     logo: '', quoteUrl: '/contact/',
-    // No years-of-experience claim since 2026-11-26 (founded 2021, Ryan). The
-    // key stays, empty, so the 14 frozen Test A pages can carry their old '20'
-    // in the same position (lib/seo/test-a-freeze.ts).
+    // Empty outside Test A: the 20+ figure is INDUSTRY experience and comes from
+    // COMPANY_STATS.industryExperience* (Ryan 2026-11-27). The key stays so the 14
+    // frozen Test A pages carry their old '20' in the same position (test-a-freeze.ts).
     yearsExperience: '',
     // The founding year of Reno Stars (2021) — feeds the AnswerBlock "…founded
     // in {year}" copy and every "since / founded" stat.

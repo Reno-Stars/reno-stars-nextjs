@@ -3,12 +3,12 @@
     "home": {
       "title": "Nhà Thầu Cải Tạo Vancouver | Reno Stars",
       "titleRated": "Nhà Thầu Cải Tạo Vancouver {rating}/5 | Reno Stars",
-      "description": "Cải tạo bếp, phòng tắm và toàn bộ nhà khắp Metro Vancouver. Từ tháng 5 năm 2021, bảo hiểm $5M CGL, bảo hành 3 năm. Báo giá miễn phí trong 24h.",
+      "description": "Cải tạo bếp, phòng tắm và toàn bộ nhà khắp Metro Vancouver. Hơn 20 năm kinh nghiệm trong ngành, bảo hiểm $5M CGL, bảo hành 3 năm. Báo giá miễn phí trong 24h.",
       "descriptionRated": "Đánh giá {rating}/5 từ {reviewCount} nhận xét Google. Cải tạo bếp, phòng tắm, tầng hầm và toàn bộ nhà khắp Metro Vancouver. Báo giá miễn phí trong 24h."
     },
     "services": {
       "title": "Dịch Vụ Cải Tạo Vancouver — Bảo Hiểm $5M | Reno Stars",
-      "description": "Dịch vụ cải tạo phòng bếp, phòng tắm, toàn bộ nhà, tầng hầm và thương mại khắp Metro Vancouver. Từ tháng 5 năm 2021, bảo hiểm $5M CGL, bảo hành 3 năm. Báo giá miễn phí."
+      "description": "Dịch vụ cải tạo phòng bếp, phòng tắm, toàn bộ nhà, tầng hầm và thương mại khắp Metro Vancouver. Hơn 20 năm kinh nghiệm trong ngành, bảo hiểm $5M CGL, bảo hành 3 năm. Báo giá miễn phí."
     },
     "projects": {
       "title": "Hơn 900 Dự Án Cải Tạo Vancouver | Trước & Sau | Reno Stars",
@@ -44,7 +44,7 @@
     "serviceLocation": {
       "title": "{service} tại {area} | Reno Stars",
       "titleWithTagline": "{service} tại {area} – {tagline} | Reno Stars",
-      "description": "{service} chuyên nghiệp tại {area} bởi Reno Stars. Hơn 900 dự án đã hoàn thành, bảo hiểm $5M CGL, bảo hiểm WCB đang hiệu lực, bảo hành lên đến 3 năm. Xem các dự án địa phương và nhận báo giá miễn phí ngay hôm nay."
+      "description": "{service} chuyên nghiệp tại {area} bởi Reno Stars. Hơn 20 năm kinh nghiệm trong ngành, hơn 900 dự án đã hoàn thành, bảo hiểm $5M CGL, bảo hiểm WCB đang hiệu lực, bảo hành lên đến 3 năm. Xem các dự án địa phương và nhận báo giá miễn phí ngay hôm nay."
     },
     "areas": {
       "title": "Cải Tạo Gần Bạn | 17 Khu Vực Metro Vancouver | Reno Stars",
@@ -107,8 +107,8 @@
       }
     },
     "about": {
-      "title": "Về Reno Stars | Từ Tháng 5 Năm 2021, Đánh Giá 5 sao | Cải Tạo Vancouver",
-      "description": "Gặp gỡ đội ngũ đứng sau hơn 900 dự án cải tạo tại Metro Vancouver. Từ tháng 5 năm 2021, bảo hiểm $5M, có WCB, đánh giá năm sao trên Google. Tư vấn miễn phí."
+      "title": "Về Reno Stars | Hơn 20 năm kinh nghiệm trong ngành, Đánh Giá 5 sao | Cải Tạo Vancouver",
+      "description": "Gặp gỡ đội ngũ đứng sau hơn 900 dự án cải tạo tại Metro Vancouver. Hơn 20 năm kinh nghiệm trong ngành, bảo hiểm $5M, có WCB, đánh giá năm sao trên Google. Tư vấn miễn phí."
     },
     "reviews": {
       "title": "Đánh giá Reno Stars — Công ty cải tạo nhà tại Vancouver",
@@ -128,7 +128,7 @@
     },
     "nearMe": {
       "title": "Cải Tạo Nhà Gần Tôi | Vancouver Metro | Reno Stars",
-      "description": "Công ty cải tạo nhà được đánh giá cao gần bạn tại Vancouver, Richmond, Burnaby, Surrey & 14 thành phố Metro Vancouver. Google 5 sao, từ tháng 5 năm 2021, bảo hiểm $5M. Báo giá miễn phí."
+      "description": "Công ty cải tạo nhà được đánh giá cao gần bạn tại Vancouver, Richmond, Burnaby, Surrey & 14 thành phố Metro Vancouver. Google 5 sao, hơn 20 năm kinh nghiệm trong ngành, bảo hiểm $5M. Báo giá miễn phí."
     },
     "localBusinessDescription": "Dịch vụ cải tạo nhà chuyên nghiệp tại Metro Vancouver. Cải tạo phòng bếp, phòng tắm, toàn bộ nhà. Có giấy phép, bảo hiểm với bảo hiểm CGL lên đến $5M, bảo hiểm WCB đang hiệu lực và bảo hành lên đến 3 năm.",
     "careers": {

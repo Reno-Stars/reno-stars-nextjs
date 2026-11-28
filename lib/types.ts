@@ -499,8 +499,9 @@ export interface Company {
   logo: string;
   /** Quote request form URL */
   quoteUrl: string;
-  /** Legacy "20+ years" stat: '' since 2026-11-26 (founded 2021 — no experience-years
-   *  claim). Only the frozen Test A render carries '20' (lib/seo/test-a-freeze.ts). */
+  /** Legacy company-years value: '' since 2026-11-26 (founded May 2021). Only the frozen
+   *  Test A render carries '20' (lib/seo/test-a-freeze.ts); everything else shows the
+   *  team's industry experience from COMPANY_STATS.industryExperience*. */
   yearsExperience: string;
   /** Year company was founded */
   foundingYear: number;

@@ -59,8 +59,8 @@ export default async function Page({ params }: PageProps) {
   ];
 
   const ABOUT_FAQ_KEYS = [1, 2, 3, 4, 5] as const;
-  // The faq.a* answers no longer carry a {years} placeholder (founded 2021, no
-  // experience-years claim — Ryan 2026-11-26).
+  // The faq.a* answers no longer carry a {years} placeholder: founded May 2021,
+  // and the team's experience is written out as industry experience (Ryan 2026-11-27).
   const faqs = ABOUT_FAQ_KEYS.map((i) => ({
     question: t(`faq.q${i}`),
     answer: t(`faq.a${i}`),
@@ -71,7 +71,7 @@ export default async function Page({ params }: PageProps) {
     '@context': 'https://schema.org',
     '@type': 'AboutPage',
     name: `About ${company.name} — Vancouver Renovations Since ${COMPANY_STATS.companyFoundedLabel}`,
-    description: `Learn about ${company.name}, Metro Vancouver's renovation contractor since ${COMPANY_STATS.companyFoundedLabel}, with ${company.projectsCompleted} projects completed, $5M CGL insurance, and active WCB coverage.`,
+    description: `Learn about ${company.name}, Metro Vancouver's renovation contractor since ${COMPANY_STATS.companyFoundedLabel}, with ${COMPANY_STATS.industryExperience}, ${company.projectsCompleted} projects completed, $5M CGL insurance, and active WCB coverage.`,
     url: `${baseUrl}/${locale}/about/`,
     inLanguage: locale,
     mainEntity: { '@id': `${baseUrl}/#organization` },

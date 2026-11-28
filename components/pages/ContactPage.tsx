@@ -16,6 +16,7 @@ import {
   CARD, TEXT, TEXT_MID, GOLD, GOLD_ON_DARK, neu,
 } from '@/lib/theme';
 import PhoneLink from '@/components/PhoneLink';
+import { COMPANY_STATS } from '@/lib/company-config';
 
 /** Form dropdown option populated from the DB (service_areas / property_types). */
 export interface FormSelectOption {
@@ -61,7 +62,7 @@ export default function ContactPage({ company, hours, areaNames, cityOptions, pr
   ], [t, company, hours]);
 
   const heroBadges = useMemo(() => [
-    { label: t('stats.foundedIn') },
+    { label: `${COMPANY_STATS.industryExperienceStat} ${t('stats.yearsExperience')}` },
     { label: t('stats.fullCoverage') },
   ], [t]);
 
@@ -73,7 +74,7 @@ export default function ContactPage({ company, hours, areaNames, cityOptions, pr
 
   const stats = useMemo(() => [
     { value: company.projectsCompleted, label: t('stats.projectsDone') },
-    { value: t('stats.foundedDate'), label: t('stats.founded') },
+    { value: COMPANY_STATS.industryExperienceStat, label: t('stats.yearsExperience') },
     { value: '100%', label: t('stats.satisfaction') },
     { value: '24/7', label: t('stats.support') },
   ], [t, company]);

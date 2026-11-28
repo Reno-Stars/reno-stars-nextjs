@@ -86,7 +86,6 @@
       },
       "trust": {
         "experience": {
-          "stat": "20+",
           "label": "Years in Vancouver"
         }
       }
@@ -106,6 +105,9 @@
     "serviceBenefits": {
       "experience": "{years}+ years experience",
       "projectsDone": "700+ projects completed"
+    },
+    "stats": {
+      "yearsExperience": "Years Combined Team Experience"
     }
   },
   "added": [

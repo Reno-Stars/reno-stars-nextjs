@@ -89,7 +89,7 @@ export default function AwardsPage({
     {
       key: 'years',
       icon: CalendarDays,
-      value: tStats('foundedIn'),
+      value: `${COMPANY_STATS.industryExperienceStat} ${tStats('years')}`,
       note: t('verified.yearsNote'),
     },
     {

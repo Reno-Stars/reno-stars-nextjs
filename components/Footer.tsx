@@ -2,7 +2,7 @@
 
 import OptimizedImage from '@/components/OptimizedImage';
 import { Phone, Mail, MapPin, Facebook, Instagram, Youtube, Linkedin, Star, Shield } from 'lucide-react';
-import { WECHAT_ID } from '@/lib/company-config';
+import { WECHAT_ID, COMPANY_STATS } from '@/lib/company-config';
 import { useMemo, useState, useCallback, useEffect, useRef, type SVGProps } from 'react';
 import { useTranslations, useLocale } from 'next-intl';
 import { Link } from '@/navigation';
@@ -302,7 +302,7 @@ export default function Footer({ company, socialLinks, services, areas, googleRa
     // carry the legacy experience stat (lib/seo/test-a-freeze.ts).
     company.yearsExperience
       ? { key: 'years', val: `${company.yearsExperience}+`, lbl: t('stats.yearsExperience') }
-      : { key: 'years', val: t('stats.foundedDate'), lbl: t('stats.founded') },
+      : { key: 'years', val: COMPANY_STATS.industryExperienceStat, lbl: t('stats.yearsExperience') },
     { key: 'projects', val: company.projectsCompleted, lbl: t('stats.projectsCompleted') },
   ], [company, t]);
 

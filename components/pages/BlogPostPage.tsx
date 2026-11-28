@@ -41,6 +41,7 @@ const BLOG_SANITIZE_OPTIONS: IOptions = {
 import ShareBar from '@/components/share/ShareBar';
 import type { ShareContext } from '@/lib/share/types';
 import VisualBreadcrumb from '@/components/VisualBreadcrumb';
+import { COMPANY_STATS } from '@/lib/company-config';
 import {
   GOLD, SURFACE, SURFACE_ALT, NAVY,
   CARD, TEXT, TEXT_MID, TEXT_MUTED, neu,
@@ -316,8 +317,8 @@ export default function BlogPostPage({ locale, post, company, services = [], are
                   <p className="font-semibold text-sm" style={{ color: NAVY }}>{company.name}</p>
                   <p className="text-sm mt-1" style={{ color: TEXT_MID }}>
                     {locale === 'zh'
-                      ? `大温哥华地区专业装修公司，${company.foundingYear}年5月成立，已完成${company.projectsCompleted}项目，${company.liabilityCoverage} CGL保险，WCB工伤保障，至多3年质保。`
-                      : `Professional renovation company serving Metro Vancouver since May ${company.foundingYear}, with ${company.projectsCompleted} projects completed, ${company.liabilityCoverage} CGL insurance, WCB coverage, and up to 3-year warranty.`}
+                      ? `大温哥华地区专业装修公司，${company.foundingYear}年5月成立，${COMPANY_STATS.industryExperienceZh}，已完成${company.projectsCompleted}项目，${company.liabilityCoverage} CGL保险，WCB工伤保障，至多3年质保。`
+                      : `Professional renovation company serving Metro Vancouver since May ${company.foundingYear}, with ${COMPANY_STATS.industryExperience}, ${company.projectsCompleted} projects completed, ${company.liabilityCoverage} CGL insurance, WCB coverage, and up to 3-year warranty.`}
                   </p>
                   <p className="text-sm mt-2">
                     <Link

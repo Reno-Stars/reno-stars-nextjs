@@ -3,12 +3,12 @@
     "home": {
       "title": "Entrepreneur en Rénovation à Vancouver | Reno Stars",
       "titleRated": "Entrepreneur en Rénovation Vancouver {rating}/5 | Reno Stars",
-      "description": "Rénovation de cuisine, salle de bain et maison complète à Vancouver. Depuis mai 2021, assurance 5 M$, garantie 3 ans. Devis gratuit en 24 h.",
+      "description": "Rénovation de cuisine, salle de bain et maison complète à Vancouver. Plus de 20 ans d'expérience dans le secteur, assurance 5 M$, garantie 3 ans. Devis gratuit en 24 h.",
       "descriptionRated": "Noté {rating}/5 sur {reviewCount} avis Google. Rénovation de cuisine, salle de bain, sous-sol et maison complète à Vancouver. Devis gratuit en 24 h."
     },
     "services": {
       "title": "Services de rénovation de Vancouver — 5 millions de dollars assurés | Reno Stars",
-      "description": "Services de rénovation de cuisines, de salles de bains, de maisons entières, de sous-sols et de commerces dans la région métropolitaine de Vancouver. Depuis mai 2021, assurance CGL de 5 millions de dollars, garantie de 3 ans. Devis gratuits."
+      "description": "Services de rénovation de cuisines, de salles de bains, de maisons entières, de sous-sols et de commerces dans la région métropolitaine de Vancouver. Plus de 20 ans d'expérience dans le secteur, assurance CGL de 5 millions de dollars, garantie de 3 ans. Devis gratuits."
     },
     "projects": {
       "title": "Plus de 900 projets de rénovation Vancouver | Avant et après | Reno Stars",
@@ -44,7 +44,7 @@
     "serviceLocation": {
       "title": "{service} dans {area} | Reno Stars",
       "titleWithTagline": "{service} dans {area} – {tagline} | Reno Stars",
-      "description": "Expert {service} dans {area} par Reno Stars. Plus de 900 projets réalisés, assurance CGL de 5 millions de dollars, couverture WCB active, jusqu'à 3 ans de garantie. Consultez les projets locaux et obtenez un devis gratuit dès aujourd'hui."
+      "description": "Expert {service} dans {area} par Reno Stars. Plus de 20 ans d'expérience dans le secteur, plus de 900 projets réalisés, assurance CGL de 5 millions de dollars, couverture WCB active, jusqu'à 3 ans de garantie. Consultez les projets locaux et obtenez un devis gratuit dès aujourd'hui."
     },
     "areas": {
       "title": "Rénovation près de chez vous | 17 régions métropolitaines de Vancouver | Reno Stars",
@@ -107,8 +107,8 @@
       }
     },
     "about": {
-      "title": "À propos des étoiles Reno | Depuis mai 2021, Avis 5 étoiles | Rénovations à Vancouver",
-      "description": "Rencontrez l'équipe derrière plus de 900 rénovations dans la région métropolitaine de Vancouver. Depuis mai 2021, 5 millions de dollars assurés, couverts par la WCB, des avis cinq étoiles de Google. Consultations gratuites."
+      "title": "À propos des étoiles Reno | Plus de 20 ans d'expérience dans le secteur, Avis 5 étoiles | Rénovations à Vancouver",
+      "description": "Rencontrez l'équipe derrière plus de 900 rénovations dans la région métropolitaine de Vancouver. Plus de 20 ans d'expérience dans le secteur, 5 millions de dollars assurés, couverts par la WCB, des avis cinq étoiles de Google. Consultations gratuites."
     },
     "reviews": {
       "title": "Avis Reno Stars — Entreprise de rénovation à Vancouver",
@@ -128,7 +128,7 @@
     },
     "nearMe": {
       "title": "Rénovation domiciliaire à proximité | Métro de Vancouver | Reno Stars",
-      "description": "Entreprise de rénovation domiciliaire la mieux notée près de chez vous à Vancouver, Richmond, Burnaby, Surrey et 14 villes de la région métropolitaine de Vancouver. Avis Google 5 étoiles, depuis mai 2021, 5 millions de dollars assurés. Devis gratuits."
+      "description": "Entreprise de rénovation domiciliaire la mieux notée près de chez vous à Vancouver, Richmond, Burnaby, Surrey et 14 villes de la région métropolitaine de Vancouver. Avis Google 5 étoiles, plus de 20 ans d'expérience dans le secteur, 5 millions de dollars assurés. Devis gratuits."
     },
     "localBusinessDescription": "Services professionnels de rénovation domiciliaire dans la région métropolitaine de Vancouver. Cuisine, salle de bain, rénovations de toute la maison. Agréé, assuré avec une assurance CGL jusqu'à 5 millions de dollars, une couverture WCB active et jusqu'à 3 ans de garantie.",
     "careers": {

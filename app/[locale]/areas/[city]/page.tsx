@@ -90,7 +90,7 @@ function getEnAreaOverrides(): Record<string, { title: string; description: stri
   'port-coquitlam': {
     title: 'Port Coquitlam Renovation Contractor (2026) | Reno Stars',
     description:
-      `Port Coquitlam home renovation contractor. Kitchens, bathrooms & basements — Citadel Heights, Lincoln Park. ${COMPANY_STATS.projectsCompleted} projects, $5M insured.`,
+      `Port Coquitlam home renovation contractor. Kitchens, bathrooms & basements — Citadel Heights, Lincoln Park. ${COMPANY_STATS.industryExperienceShort}, ${COMPANY_STATS.projectsCompleted} projects, $5M insured.`,
   },
   // 2026-04-30 CTR pass: 10 cities previously falling back to translation namespace.
   // Lead with city-name + service in title (Google bolds matching keywords),
@@ -101,7 +101,7 @@ function getEnAreaOverrides(): Record<string, { title: string; description: stri
   vancouver: {
     title: 'Home Renovations Vancouver (2026) | Real Costs | Reno Stars',
     description:
-      `Vancouver home renovations from $50K to $200K+. Kitchens, bathrooms & whole-house. ${COMPANY_STATS.projectsCompleted} projects, $5M CGL, 3-yr warranty. Free quote.`,
+      `Vancouver home renovations from $50K to $200K+. Kitchens, bathrooms & whole-house. ${COMPANY_STATS.industryExperienceShort}, ${COMPANY_STATS.projectsCompleted} projects, $5M CGL, 3-yr warranty. Free quote.`,
   },
   // 2026-05-10 GSC retune: page sat at pos 23.4 / 106 imp for 7d.
   // Top non-brand query is "bathroom renovation richmond" (23 imp pos 43.7).
@@ -195,7 +195,7 @@ function getEnAreaOverrides(): Record<string, { title: string; description: stri
   'port-moody': {
     title: 'Port Moody Renovations (2026) | Heritage Mountain | Reno Stars',
     description:
-      'Port Moody home renovations — Heritage Mountain, Ioco, Newport. Kitchens, bathrooms & whole-house. 900+ projects, $5M insured, 3-yr warranty. Free quote in 24h.',
+      'Port Moody home renovations — Heritage Mountain, Ioco, Newport. Kitchens, bathrooms & whole-house. 20+ yrs industry experience, 900+ projects, $5M insured, 3-yr warranty. Free quote in 24h.',
   },
   // 2026-05-15 GSC retune: page sat at pos 19.0 / 394 imp for 7d.
   // Top non-brand query is "home renovations white rock" (86 imp pos 17.3) —
@@ -219,7 +219,7 @@ function getEnAreaOverrides(): Record<string, { title: string; description: stri
  */
 const enAreaIntros: Record<string, string> = {
   coquitlam:
-    'Reno Stars is a full-service renovation contractor in Coquitlam, BC — serving homes from Burke Mountain and Westwood Plateau down through Maillardville, Austin Heights, Eagle Ridge and Ranch Park. Since May 2021, with 900+ completed projects, we handle kitchens, bathrooms, basements and whole-house renovations end-to-end with $5M CGL coverage and up to a 3-year warranty. Use the service tiles below for Coquitlam-specific kitchen, bathroom and whole-house pricing.',
+    'Reno Stars is a full-service renovation contractor in Coquitlam, BC — serving homes from Burke Mountain and Westwood Plateau down through Maillardville, Austin Heights, Eagle Ridge and Ranch Park. With 20+ years of industry experience and 900+ completed projects since May 2021, we handle kitchens, bathrooms, basements and whole-house renovations end-to-end with $5M CGL coverage and up to a 3-year warranty. Use the service tiles below for Coquitlam-specific kitchen, bathroom and whole-house pricing.',
   // 2026-06-02 GSC retune: "basement renovations burnaby" pos 16.3 / 55 imp
   // and "basement remodeling burnaby" pos 19.4 / 31 imp — 86 imp combined
   // at striking distance. Lead with basement renovation (was buried 3rd in

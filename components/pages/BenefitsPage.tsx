@@ -6,6 +6,7 @@ import { Award, Users, Wrench, Clock, ShieldCheck, Star } from 'lucide-react';
 import type { Company } from '@/lib/types';
 import CTASection from '@/components/CTASection';
 import BenefitList from '@/components/BenefitList';
+import { COMPANY_STATS } from '@/lib/company-config';
 import {
   NAVY, NAVY_MID, NAVY_PALE, GOLD, GOLD_ON_DARK, GOLD_PALE, SURFACE, SURFACE_ALT,
   CARD, TEXT, TEXT_MID, neu,
@@ -61,7 +62,7 @@ export default function BenefitsPage({ company }: BenefitsPageProps) {
   const t = useTranslations();
 
   const trustBadges = useMemo(() => [
-    { type: 'stat' as const, value: t('stats.foundedDate'), label: t('stats.founded') },
+    { type: 'stat' as const, value: COMPANY_STATS.industryExperienceStat, label: t('stats.yearsExperience') },
     { type: 'stat' as const, value: company.projectsCompleted, label: t('stats.projectsCompleted') },
     { type: 'stat' as const, value: company.liabilityCoverage, label: t('stats.liabilityCoverage') },
     { type: 'stat' as const, value: '', label: t('stats.wcbCoverage') },
@@ -69,7 +70,7 @@ export default function BenefitsPage({ company }: BenefitsPageProps) {
   ], [company, t]);
 
   const stats = useMemo(() => [
-    { value: t('stats.foundedDate'), label: t('stats.founded') },
+    { value: COMPANY_STATS.industryExperienceStat, label: t('stats.yearsExperience') },
     { value: company.projectsCompleted, label: t('stats.projectsCompleted') },
     { value: '100%', label: t('stats.satisfactionRate') },
   ], [company, t]);

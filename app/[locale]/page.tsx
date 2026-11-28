@@ -19,6 +19,7 @@ import {
   getPartnersFromDb,
 } from "@/lib/db/queries";
 import { getGoogleReviews, serpRatingParams } from "@/lib/google-reviews";
+import { COMPANY_STATS } from '@/lib/company-config';
 
 
 interface PageProps {
@@ -204,7 +205,7 @@ export default async function Page({ params }: PageProps) {
   ];
 
   const stats = [
-    { value: t("stats.foundedDate"), label: t("stats.founded") },
+    { value: COMPANY_STATS.industryExperienceStat, label: t("stats.yearsExperience") },
     { value: company.projectsCompleted, label: t("stats.projectsCompleted") },
     { value: company.liabilityCoverage, label: t("stats.liabilityCoverage") },
     { value: '', label: t("stats.wcbCoverage"), image: WORKSAFE_BC_LOGO },
@@ -219,7 +220,7 @@ export default async function Page({ params }: PageProps) {
       }),
       getFreeQuote: t("cta.getFreeQuote"),
       callNow: t("cta.callNow"),
-      foundedIn: t("stats.foundedIn"),
+      yearsExperience: t("stats.yearsExperience"),
       liabilityCoverage: t("stats.liabilityCoverage"),
       wcbCoverage: t("stats.wcbCoverage"),
       rating: t("stats.rating"),

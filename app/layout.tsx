@@ -50,7 +50,7 @@ export function generateMetadata(): Metadata {
   // getGoogleReviews() in app/[locale]/page.tsx, which is the only place that
   // asserts it.
   title: `Vancouver Renovation Contractor | ${SITE_NAME}`,
-  description: `Kitchen, bathroom, basement and whole-home renovations across Metro Vancouver. ${COMPANY_STATS.projectsCompleted} projects, $5M CGL insured, 3-yr warranty. Free quote in 24 hours.`,
+  description: `Kitchen, bathroom, basement and whole-home renovations across Metro Vancouver. ${COMPANY_STATS.industryExperienceShort}, ${COMPANY_STATS.projectsCompleted} projects, $5M CGL insured, 3-yr warranty. Free quote in 24 hours.`,
   authors: [{ name: 'Reno Stars' }],
   // formatDetection: telephone:true makes iOS Safari auto-link any phone
   // number in body text into a tap-to-call link. The contractor business

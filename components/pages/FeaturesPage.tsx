@@ -6,6 +6,7 @@ import { Award, Users, Wrench, Clock, ShieldCheck, Star, AlertCircle, CheckCircl
 import type { Company } from '@/lib/types';
 import { Link } from '@/navigation';
 import CTASection from '@/components/CTASection';
+import { COMPANY_STATS } from '@/lib/company-config';
 import {
   NAVY, NAVY_MID, NAVY_PALE, GOLD, GOLD_PALE, SURFACE, CARD, TEXT, TEXT_MID, neu,
   STEP_TEAL, STEP_TEAL_LIGHT,
@@ -35,7 +36,7 @@ export default function FeaturesPage({ company }: FeaturesPageProps) {
   const tStats = useTranslations('stats');
 
   const trustBadges = useMemo(() => [
-    { type: 'stat' as const, value: tStats('foundedDate'), label: tStats('founded') },
+    { type: 'stat' as const, value: COMPANY_STATS.industryExperienceStat, label: tStats('yearsExperience') },
     { type: 'stat' as const, value: company.projectsCompleted, label: t('foundation.items.rating.title') },
     // Label was incorrectly set to company.liabilityCoverage ("$5M") — show coverage context instead
     { type: 'stat' as const, value: company.liabilityCoverage, label: 'CGL Insurance' },

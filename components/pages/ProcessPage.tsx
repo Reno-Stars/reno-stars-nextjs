@@ -21,6 +21,7 @@ import {
 } from '@/lib/theme';
 import { stepIllustrations, TreeSvg, HouseSvg } from '@/components/illustrations/process';
 import PhoneLink from '@/components/PhoneLink';
+import { COMPANY_STATS } from '@/lib/company-config';
 
 interface ProcessPageProps {
   company: Company;
@@ -85,7 +86,7 @@ export default function ProcessPage({ company, locale, googleRating }: ProcessPa
   const t = useTranslations();
 
   const trustBadges = useMemo(() => [
-    { type: 'stat' as const, value: t('stats.foundedDate'), label: t('stats.founded') },
+    { type: 'stat' as const, value: COMPANY_STATS.industryExperienceStat, label: t('stats.yearsExperience') },
     { type: 'stat' as const, value: String(company.projectsCompleted), label: t('stats.projectsCompleted') },
     { type: 'rating' as const, label: googleRating ? `${googleRating} ${t('process.hero.googleReviews')}` : t('process.hero.googleReviews') },
   ], [company, t, googleRating]);
@@ -99,7 +100,7 @@ export default function ProcessPage({ company, locale, googleRating }: ProcessPa
   ], []);
 
   const footerStats = useMemo(() => [
-    { type: 'stat' as const, value: t('stats.foundedDate'), label: t('process.footer.yearsIndustry') },
+    { type: 'stat' as const, value: COMPANY_STATS.industryExperienceStat, label: t('process.footer.yearsIndustry') },
     { type: 'rating' as const, label: googleRating ? `${googleRating} ${t('process.footer.googleRating')}` : t('process.footer.googleRating') },
     { type: 'stat' as const, value: t('stats.fullCoverage'), label: t('process.footer.warrantyService') },
   ], [t, googleRating]);

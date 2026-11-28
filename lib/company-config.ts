@@ -11,15 +11,24 @@ import { locales, LOCALE_META, type Locale } from '@/i18n/config';
 export const COMPANY_STATS = {
   /** Year Reno Stars was founded — Ryan, 2026-11-26 (task 158): "founded 2021".
    *  Drives schema.org Organization.foundingDate and every "since / founded"
-   *  line. The site makes NO years-of-experience claim beyond this (the old
-   *  team-start 2007 → "20+ years" stat was retired the same day; the 14 Test A
-   *  pages keep it frozen — lib/seo/test-a-freeze.ts). */
+   *  line. The "20+ years" figure is the team's INDUSTRY experience
+   *  (industryExperience* below, Ryan 2026-11-27), never the company's age; the
+   *  14 Test A pages keep their original wording frozen (lib/seo/test-a-freeze.ts). */
   companyFoundingYear: 2021,
   /** Ryan set the Google Business Profile opening date to May 2021 (Captain
    *  addendum 2026-11-26 20:29): schema.org foundingDate, ISO year-month. */
   companyFoundingDate: '2021-05',
   /** The English display form; other locales use messages stats.foundedDate. */
   companyFoundedLabel: 'May 2021',
+  /** The team's INDUSTRY experience — Ryan, 2026-11-27 「20年+的经验，没问题，这是行业经验」.
+   *  Always worded as industry experience, never as company age (Reno Stars was
+   *  founded May 2021). One form per locale: messages stats.yearsExperience is the
+   *  label next to this value; the en/zh sentence forms are below. */
+  industryExperienceStat: '20+',
+  industryExperience: '20+ years of industry experience',
+  /** Short en form for titles / tight meta descriptions. */
+  industryExperienceShort: '20+ yrs industry experience',
+  industryExperienceZh: '20 多年行业经验',
   teamSize: 17,
   /** Ryan, 2026-11-26: 900+ projects completed (all locales). */
   projectsCompleted: "900+",

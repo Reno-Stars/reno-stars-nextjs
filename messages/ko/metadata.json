@@ -3,12 +3,12 @@
     "home": {
       "title": "밴쿠버 리노베이션 시공업체 | Reno Stars",
       "titleRated": "평점 {rating} 밴쿠버 리노베이션 시공업체 | Reno Stars",
-      "description": "메트로 밴쿠버 주방·욕실·지하실·전체 리모델링. 2021년 5월 설립, $500만 CGL 보험, 3년 보증. 24시간 내 무료 견적.",
+      "description": "메트로 밴쿠버 주방·욕실·지하실·전체 리모델링. 20년 이상의 업계 경험, $500만 CGL 보험, 3년 보증. 24시간 내 무료 견적.",
       "descriptionRated": "Google 리뷰 {reviewCount}개 평점 {rating}/5. 메트로 밴쿠버 주방·욕실·지하실·전체 리모델링. $500만 CGL 보험, 3년 보증. 24시간 내 무료 견적."
     },
     "services": {
       "title": "밴쿠버 리노베이션 서비스 - 500만 달러 보장 | Reno Stars",
-      "description": "메트로 밴쿠버 전역의 주방, 욕실, 집 전체, 지하실 및 상업용 개조 공사. 2021년 5월 설립, $5M CGL 보험, 3년 보증."
+      "description": "메트로 밴쿠버 전역의 주방, 욕실, 집 전체, 지하실 및 상업용 개조 공사. 20년 이상의 업계 경험, $5M CGL 보험, 3년 보증."
     },
     "projects": {
       "title": "900개 이상의 밴쿠버 혁신 | 전후 | Reno Stars",
@@ -44,7 +44,7 @@
     "serviceLocation": {
       "title": "{area}의 {service} | Reno Stars",
       "titleWithTagline": "{area}의 {service} – {tagline} | Reno Stars",
-      "description": "Reno Stars의 {area} 지역 전문가 {service}. 900개 이상의 프로젝트 완료, $5M CGL 보험, 활성 WCB 보장, 최대 3년 보증. 오늘 무료 견적을 받으세요."
+      "description": "Reno Stars의 {area} 지역 전문가 {service}. 20년 이상의 업계 경험, 900개 이상의 프로젝트 완료, $5M CGL 보험, 활성 WCB 보장, 최대 3년 보증. 오늘 무료 견적을 받으세요."
     },
     "areas": {
       "title": "가까운 혁신 | 17개 메트로 밴쿠버 지역 | Reno Stars",
@@ -107,8 +107,8 @@
       }
     },
     "about": {
-      "title": "Reno Stars 소개 | 2021년 5월 설립, 별 5개 밴쿠버 리노베이션",
-      "description": "900개 이상의 메트로 밴쿠버 개조 작업을 맡은 팀을 만나보세요. 2021년 5월 설립, $5M 보험, WCB 보장, Google 별 5개 리뷰. 무료 상담."
+      "title": "Reno Stars 소개 | 20년 이상의 업계 경험, 별 5개 밴쿠버 리노베이션",
+      "description": "900개 이상의 메트로 밴쿠버 개조 작업을 맡은 팀을 만나보세요. 20년 이상의 업계 경험, $5M 보험, WCB 보장, Google 별 5개 리뷰. 무료 상담."
     },
     "reviews": {
       "title": "Reno Stars 리뷰 — 밴쿠버 리노베이션 회사 후기",
@@ -128,7 +128,7 @@
     },
     "nearMe": {
       "title": "내 근처의 주택 개조 | 밴쿠버 메트로 | Reno Stars",
-      "description": "밴쿠버, 리치먼드, 버나비, 서리 + 메트로 밴쿠버 14개 도시에서 가까운 최고 등급의 개조 회사입니다. Google 5성급 평점, 2021년 5월 설립, 500만 달러 보장."
+      "description": "밴쿠버, 리치먼드, 버나비, 서리 + 메트로 밴쿠버 14개 도시에서 가까운 최고 등급의 개조 회사입니다. Google 5성급 평점, 20년 이상의 업계 경험, 500만 달러 보장."
     },
     "localBusinessDescription": "메트로 밴쿠버의 전문 주택 개조 서비스. 주방, 욕실, 집 전체 리모델링. 최대 500만 달러의 CGL 보험, 활성 WCB 보장 및 최대 3년 보증으로 라이선스가 부여되고 보험이 적용됩니다.",
     "careers": {

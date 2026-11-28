@@ -3,12 +3,12 @@
     "home": {
       "title": "Contratista de Renovación en Vancouver | Reno Stars",
       "titleRated": "Contratista de Renovación Vancouver {rating}/5 | Reno Stars",
-      "description": "Remodelación de cocina, baño y casa completa en Metro Vancouver. Desde mayo de 2021, seguro CGL de $5M, garantía de 3 años. Cotización gratis en 24 h.",
+      "description": "Remodelación de cocina, baño y casa completa en Metro Vancouver. Más de 20 años de experiencia en el sector, seguro CGL de $5M, garantía de 3 años. Cotización gratis en 24 h.",
       "descriptionRated": "Calificación {rating}/5 con {reviewCount} reseñas de Google. Remodelación de cocina, baño y casa completa en Metro Vancouver. Cotización gratis en 24 h."
     },
     "services": {
       "title": "Servicios de remodelación en Vancouver — $5M asegurado | Reno Stars",
-      "description": "Servicios de remodelación de cocina, baño, casa completa, sótano y comercial en todo Metro Vancouver. Desde mayo de 2021, seguro CGL de $5M, 3 años de garantía. Cotizaciones gratis."
+      "description": "Servicios de remodelación de cocina, baño, casa completa, sótano y comercial en todo Metro Vancouver. Más de 20 años de experiencia en el sector, seguro CGL de $5M, 3 años de garantía. Cotizaciones gratis."
     },
     "projects": {
       "title": "Más de 900 proyectos en Vancouver | Antes y después | Reno Stars",
@@ -44,7 +44,7 @@
     "serviceLocation": {
       "title": "{service} en {area} | Reno Stars",
       "titleWithTagline": "{service} en {area} – {tagline} | Reno Stars",
-      "description": "{service} experto en {area} por Reno Stars. Más de 900 proyectos completados, seguro CGL de $5M, cobertura WCB activa, hasta 3 años de garantía. Vea proyectos locales y obtenga cotización gratis."
+      "description": "{service} experto en {area} por Reno Stars. Más de 20 años de experiencia en el sector, más de 900 proyectos completados, seguro CGL de $5M, cobertura WCB activa, hasta 3 años de garantía. Vea proyectos locales y obtenga cotización gratis."
     },
     "areas": {
       "title": "Remodelación cerca de usted | 17 áreas de Metro Vancouver | Reno Stars",
@@ -107,8 +107,8 @@
       }
     },
     "about": {
-      "title": "Sobre Reno Stars | Desde mayo de 2021, reseñas 5 estrellas | Remodelación en Vancouver",
-      "description": "Conozca al equipo detrás de más de 900 remodelaciones en Metro Vancouver. Desde mayo de 2021, $5M asegurado, cobertura WCB, reseñas de 5 estrellas en Google. Consultas gratis."
+      "title": "Sobre Reno Stars | Más de 20 años de experiencia en el sector, reseñas 5 estrellas | Remodelación en Vancouver",
+      "description": "Conozca al equipo detrás de más de 900 remodelaciones en Metro Vancouver. Más de 20 años de experiencia en el sector, $5M asegurado, cobertura WCB, reseñas de 5 estrellas en Google. Consultas gratis."
     },
     "reviews": {
       "title": "Reseñas de Reno Stars — Empresa de renovación en Vancouver",
@@ -128,7 +128,7 @@
     },
     "nearMe": {
       "title": "Remodelación cerca de mí | Metro Vancouver | Reno Stars",
-      "description": "Empresa de remodelación bien valorada cerca de usted en Vancouver, Richmond, Burnaby, Surrey y 14 ciudades de Metro Vancouver. Reseñas 5 estrellas en Google, desde mayo de 2021, $5M asegurado. Cotizaciones gratis."
+      "description": "Empresa de remodelación bien valorada cerca de usted en Vancouver, Richmond, Burnaby, Surrey y 14 ciudades de Metro Vancouver. Reseñas 5 estrellas en Google, más de 20 años de experiencia en el sector, $5M asegurado. Cotizaciones gratis."
     },
     "localBusinessDescription": "Servicios profesionales de remodelación residencial en Metro Vancouver. Remodelaciones de cocina, baño y casa completa. Licenciados, asegurados con hasta $5M de seguro CGL, cobertura WCB activa y hasta 3 años de garantía.",
     "careers": {

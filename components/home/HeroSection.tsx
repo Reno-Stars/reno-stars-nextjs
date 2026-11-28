@@ -10,6 +10,7 @@ import LazyVideo from '@/components/LazyVideo';
 import { buildProcessedSrcSet, buildProcessedUrl, isR2Url } from '@/lib/image';
 import { trackCtaClick } from '@/lib/analytics';
 import PhoneLink from '@/components/PhoneLink';
+import { COMPANY_STATS } from '@/lib/company-config';
 
 interface HeroSectionProps {
   company: Company;
@@ -19,7 +20,7 @@ interface HeroSectionProps {
     professionalExcellenceDesc: string;
     getFreeQuote: string;
     callNow: string;
-    foundedIn: string;
+    yearsExperience: string;
     liabilityCoverage: string;
     wcbCoverage: string;
     rating: string;
@@ -196,7 +197,7 @@ export default function HeroSection({ company, googleRating, translations: t }: 
         <div className="flex flex-wrap md:flex-nowrap gap-x-4 gap-y-2">
           <span className="whitespace-nowrap text-sm font-medium text-white/70 flex items-center gap-1.5">
             <Shield className="w-4 h-4 shrink-0" style={{ color: GOLD_ON_DARK }} />
-            {t.foundedIn}
+            {COMPANY_STATS.industryExperienceStat} {t.yearsExperience}
           </span>
           <span className="whitespace-nowrap text-sm font-medium text-white/70 flex items-center gap-1.5">
             <Shield className="w-4 h-4 shrink-0" style={{ color: GOLD_ON_DARK }} />
