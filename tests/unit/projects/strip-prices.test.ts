@@ -212,6 +212,9 @@ describe('guards: filtered at every projects-route hand-off, nowhere else', () =
       // DI-17: the hub's "Our Projects" cards are project rows → same treatment
       // as /projects/ (strip, then omit budget). Nothing else on the hub is filtered.
       'app/[locale]/services/[service-slug]/page.tsx',
+      // DI-15: the site-wide render-time filter reuses PRICE_SOURCE only (same
+      // detection); it never calls the project-row filters. See its own tests.
+      'lib/seo/strip-price-copy.ts',
     ]);
   });
   it('service hub: the filter is applied once, to the related-project rows only, before omitBudget', () => {

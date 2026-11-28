@@ -1,12 +1,12 @@
 "use client";
 
 import { useTranslations } from "next-intl";
+import { stripPriceCopy, filterPriceFaqs } from "@/lib/seo/strip-price-copy";
 import {
   CreditCard,
   Home,
   Landmark,
   PiggyBank,
-  Calculator,
   CheckCircle,
   ArrowRight,
   HelpCircle,
@@ -17,7 +17,6 @@ import CTASection from "@/components/CTASection";
 import {
   NAVY,
   GOLD,
-  GOLD_PALE,
   SURFACE,
   SURFACE_ALT,
   CARD,
@@ -40,7 +39,18 @@ interface FinancingPageProps {
 }
 
 export default function FinancingPage({ locale: _locale }: FinancingPageProps) {
-  const t = useTranslations("financing");
+  const tRaw = useTranslations("financing");
+  // DI-15: renovation cost ranges are removed from this page (permit-fee tip,
+  // FAQ answers); loan terms — options and typical rates — carry no currency
+  // amounts and pass through unchanged.
+  const t = ((key: string, values?: Record<string, string | number>) =>
+    stripPriceCopy(tRaw(key as never, values as never))) as unknown as typeof tRaw;
+  // A cost question whose answer quoted amounts is dropped whole, never left hollow.
+  const faqItems = filterPriceFaqs(
+    (["q1", "q2", "q3", "q4", "q5"] as const).map((key) => ({
+      key, question: tRaw(`faq.${key}` as never), answer: tRaw(`faq.${key}Answer` as never),
+    })),
+  );
   const tCta = useTranslations("cta");
 
   const financingOptions = [
@@ -79,13 +89,6 @@ export default function FinancingPage({ locale: _locale }: FinancingPageProps) {
     { key: "roi", icon: CheckCircle },
   ];
 
-  const costRanges = [
-    { key: "bathroom", range: "$10,000 – $60,000" },
-    { key: "kitchen", range: "$15,000 – $72,000" },
-    { key: "basement", range: "$25,000 – $80,000" },
-    { key: "wholeHouse", range: "$50,000 – $200,000+" },
-    { key: "commercial", range: "$8,000 – $360,000+" },
-  ];
 
   return (
     <main>
@@ -158,10 +161,10 @@ export default function FinancingPage({ locale: _locale }: FinancingPageProps) {
               {tCta('showroomTagline')}
             </Link>
           </p>
-          <div className="grid grid-cols-2 md:grid-cols-3 gap-4 max-w-2xl mx-auto">
+          {/* DI-15: the "$30K Avg Kitchen Reno" / "$25K Avg Bathroom Reno" stats
+              were removed (renovation prices); the financing-options count stays. */}
+          <div className="flex flex-wrap justify-center gap-4 max-w-2xl mx-auto">
             {[
-              { label: t("stats.avgKitchen"), value: "$30K" },
-              { label: t("stats.avgBathroom"), value: "$25K" },
               { label: t("stats.financingOptions"), value: "4+" },
             ].map((stat) => (
               <div
@@ -313,60 +316,9 @@ export default function FinancingPage({ locale: _locale }: FinancingPageProps) {
         </div>
       </section>
 
-      {/* Cost Overview by Project Type */}
-      <section
-        className="py-14 px-4 sm:px-6 lg:px-8"
-        style={{ backgroundColor: SURFACE }}
-      >
-        <div className="max-w-4xl mx-auto">
-          <h2
-            className="text-2xl md:text-3xl font-bold mb-2 text-center"
-            style={{ color: TEXT }}
-          >
-            {t("costs.title")}
-          </h2>
-          <p
-            className="text-center mb-8"
-            style={{ color: TEXT_MID }}
-          >
-            {t("costs.subtitle")}
-          </p>
-          <div className="grid gap-3">
-            {costRanges.map((cost) => (
-              <div
-                key={cost.key}
-                className="rounded-xl p-4 flex items-center justify-between"
-                style={{ backgroundColor: CARD, boxShadow: neu() }}
-              >
-                <div className="flex items-center gap-3">
-                  <Calculator
-                    size={18}
-                    style={{ color: GOLD }}
-                  />
-                  <span
-                    className="font-semibold"
-                    style={{ color: TEXT }}
-                  >
-                    {t(`costs.${cost.key}`)}
-                  </span>
-                </div>
-                <span
-                  className="text-sm font-bold px-3 py-1 rounded-full"
-                  style={{ backgroundColor: GOLD_PALE, color: GOLD }}
-                >
-                  {cost.range}
-                </span>
-              </div>
-            ))}
-          </div>
-          <p
-            className="text-xs text-center mt-4"
-            style={{ color: TEXT_MUTED }}
-          >
-            {t("costs.disclaimer")}
-          </p>
-        </div>
-      </section>
+      {/* DI-15 (2026-11-24, Ryan via Captain): the "Typical Renovation Costs in
+          Metro Vancouver" range table was removed — renovation prices live on the
+          cost guides only. Loan terms below (options, typical rates) are kept. */}
 
       {/* Budget Planning Tips */}
       <section
@@ -435,7 +387,7 @@ export default function FinancingPage({ locale: _locale }: FinancingPageProps) {
             {t("faqSection.title")}
           </h2>
           <div className="space-y-4">
-            {(["q1", "q2", "q3", "q4", "q5"] as const).map((key) => (
+            {faqItems.map(({ key, question, answer }) => (
               <details
                 key={key}
                 className="rounded-xl p-5 group"
@@ -450,7 +402,7 @@ export default function FinancingPage({ locale: _locale }: FinancingPageProps) {
                       size={18}
                       style={{ color: GOLD }}
                     />
-                    {t(`faq.${key}`)}
+                    {question}
                   </span>
                   <ArrowRight
                     size={16}
@@ -462,7 +414,7 @@ export default function FinancingPage({ locale: _locale }: FinancingPageProps) {
                   className="mt-3 text-sm"
                   style={{ color: TEXT_MID }}
                 >
-                  {t(`faq.${key}Answer`)}
+                  {answer}
                 </p>
               </details>
             ))}

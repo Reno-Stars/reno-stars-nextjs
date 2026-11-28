@@ -1,4 +1,6 @@
 import { Metadata } from 'next';
+import { filterPriceFaqs } from '@/lib/seo/strip-price-copy';
+import { nearMeAreaLinks } from '@/lib/seo/client-price-messages';
 import { getTranslations, setRequestLocale } from 'next-intl/server';
 import { ogLocaleMap, type Locale } from '@/i18n/config';
 import NearMePage from '@/components/pages/NearMePage';
@@ -11,11 +13,9 @@ import ClientMessages from '@/components/ClientMessages';
 
 interface PageProps { params: Promise<{ locale: string }>; }
 
-// Single source for this page's price band (finding #9/#24). Used by the meta
-// description, the ServiceSchema serviceDescription, and the ServiceSchema
-// priceRange prop so the three can never drift. Do NOT re-type the band inline.
-const PRICE_RANGE = { min: 10000, max: 60000 } as const;
-const PRICE_BAND = `$${PRICE_RANGE.min / 1000}K-$${PRICE_RANGE.max / 1000}K`;
+// DI-15 (2026-11-24, Ryan via Captain): near-me pages carry no prices — the
+// former PRICE_BAND (meta + serviceDescription) and the ServiceSchema
+// priceRange offers were removed; message copy is filtered at render.
 
 // This page canonicalizes onto /services/bathroom/ (see generateMetadata) — it
 // is NOT self-canonical. Single source for that path so the declared canonical
@@ -30,8 +30,8 @@ function getPageMeta(locale: string): { title: string; description: string; ogIm
   // 2026-05-21 SEO trim: EN desc was 201 chars (truncates ~155). Drops the
   // 3-city list (on-page elsewhere) and the warranty tail to fit.
   const description = isZh
-    ? `大温哥华附近专业卫浴装修：淋浴房改造、浴缸更换、瓷砖墙面、洗手柜。${PRICE_BAND}，3-6周完工。五星好评，免费估价。`
-    : `Bathroom renovation near you across Metro Vancouver — walk-in showers, tub conversions, custom vanities. ${PRICE_BAND}, 3-6 wks. $5M insured.`;
+    ? `大温哥华附近专业卫浴装修：淋浴房改造、浴缸更换、瓷砖墙面、洗手柜。3-6周完工。五星好评，免费估价。`
+    : `Bathroom renovation near you across Metro Vancouver — walk-in showers, tub conversions, custom vanities. 3-6 wks. $5M insured.`;
   return { title, description, ogImage: buildOgImageUrl(title, description) };
 }
 
@@ -71,8 +71,8 @@ export default async function Page({ params }: PageProps) {
   const isZh = locale === 'zh';
   const serviceName = isZh ? '卫浴装修' : 'Bathroom Renovation';
   const serviceDescription = isZh
-    ? `大温哥华附近专业卫浴装修：淋浴房改造、浴缸更换、定制洗手柜。${PRICE_BAND}，3-6周完工。`
-    : `Bathroom renovation across Metro Vancouver — walk-in showers, tub-to-shower conversions, custom vanities, full retile. ${PRICE_BAND}, 3-6 wks.`;
+    ? `大温哥华附近专业卫浴装修：淋浴房改造、浴缸更换、定制洗手柜。3-6周完工。`
+    : `Bathroom renovation across Metro Vancouver — walk-in showers, tub-to-shower conversions, custom vanities, full retile. 3-6 wks.`;
   const { title, ogImage } = getPageMeta(locale);
   // Share URL is DERIVED from the canonical this page declares (the same
   // CANONICAL_PATH generateMetadata passes to buildAlternates) rather than
@@ -83,19 +83,18 @@ export default async function Page({ params }: PageProps) {
   return (
     <ClientMessages ns={['nearMe', 'share']}>
       <BreadcrumbSchema items={breadcrumbs} locale={locale} />
-      <FAQSchema faqs={faqs} locale={locale} />
+      <FAQSchema faqs={filterPriceFaqs(faqs)} locale={locale} />
       <ServiceSchema
         company={company}
         serviceName={serviceName}
         serviceDescription={serviceDescription}
         url={`/${locale}/bathroom-renovation-near-me/`}
         areaServed={areas.map((a) => a.name.en)}
-        priceRange={PRICE_RANGE}
         serviceRadiusKm={50}
       />
       <NearMePage
         locale={locale as Locale}
-        areas={areas}
+        areas={nearMeAreaLinks(areas)}
         h1Override={isZh ? '附近浴室翻新 — Metro Vancouver' : 'Bathroom Renovation Near Me in Metro Vancouver'}
         googleRating={googleReviews.rating}
         reviewCount={googleReviews.userRatingCount}

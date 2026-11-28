@@ -21,6 +21,8 @@ interface PageProps {
 // FULLY DYNAMIC — see /services/{svc}/page.tsx for full root-cause
 // notes. Same Next 16 prerender-shell regression; same workaround.
 import { serviceCityOverrides } from '@/lib/data/seo-overrides';
+import { isTestA } from '@/lib/seo/test-a';
+import { stripPriceDeep, stripPriceTitle, stripPriceProse, filterPriceFaqs, firstPriceFree } from '@/lib/seo/strip-price-copy';
 import ClientMessages from '@/components/ClientMessages';
 
 export const dynamic = 'force-dynamic';
@@ -69,6 +71,17 @@ function buildComboMeta(args: {
   if (locale === 'zh' && zhOverrides[overrideKey]) {
     title = zhOverrides[overrideKey].title;
     description = zhOverrides[overrideKey].description;
+  }
+
+  // DI-15: no prices in the SERP/OG title or description of a non-test-A
+  // combo. TEST A (lib/seo/test-a.ts) keeps its original copy byte-for-byte;
+  // seo-overrides.ts itself is not edited.
+  // Each candidate is stripped on its own (override → template), first
+  // non-empty wins.
+  if (!isTestA(locale, serviceSlug, city)) {
+    // The last fallback is non-empty and price-free (never '').
+    title = firstPriceFree(stripPriceTitle, [title, t('title', tParams)], 'Reno Stars');
+    description = firstPriceFree(stripPriceProse, [description, t('description', tParams)], title);
   }
 
   return { title, description };
@@ -151,14 +164,24 @@ export default async function Page({ params }: PageProps) {
     getServiceAreasFromDb(),
   ]);
   const company = isTestAServiceCity(locale, serviceSlug, city) ? freezeCompanyForTestA(liveCompany) : liveCompany;
-  const service = services.find((s) => s.slug === serviceSlug);
-  const area = areas.find((a) => a.slug === city);
+  const rawService = services.find((s) => s.slug === serviceSlug);
+  const rawArea = areas.find((a) => a.slug === city);
 
-  if (!service || !area || service.showOnServicesPage === false) {
+  if (!rawService || !rawArea || rawService.showOnServicesPage === false) {
     notFound();
   }
 
-  const [areaProjects, projectPool, areaFaqs, t, faqT] = await Promise.all([
+  // DI-15 price removal, at the route boundary. Every price on this page comes
+  // from the DB rows read here (service / area copy, FAQ answers, project
+  // budget_range → the cost stat and project cards) or from the service FAQ
+  // messages below, so stripping these inputs removes them all — the database
+  // and ServiceLocationPage itself are untouched. TEST A pages take the
+  // original objects (same references), so their output is byte-identical.
+  const stripPrices = !isTestA(locale, serviceSlug, city);
+  const service = stripPrices ? stripPriceDeep(rawService) : rawService;
+  const area = stripPrices ? stripPriceDeep(rawArea) : rawArea;
+
+  const [rawAreaProjects, rawProjectPool, areaFaqs, t, faqT] = await Promise.all([
     getProjectsByAreaFromDb(area.name.en),
     // Full published-project pool powers the honest related-project fallback
     // (same-service other-city / same-city other-service) when this exact
@@ -168,6 +191,8 @@ export default async function Page({ params }: PageProps) {
     getTranslations({ locale, namespace: 'nav' }),
     getTranslations({ locale, namespace: 'faq' }),
   ]);
+  const areaProjects = stripPrices ? rawAreaProjects.map((p) => stripPriceDeep(p)) : rawAreaProjects;
+  const projectPool = stripPrices ? rawProjectPool.map((p) => stripPriceDeep(p)) : rawProjectPool;
 
   // Derive the related-project selection and the general cost figure HERE, on
   // the server. These used to be computed inside ServiceLocationPage from a
@@ -216,8 +241,11 @@ export default async function Page({ params }: PageProps) {
     { id: `${serviceSlug}-3`, question: safeFaq(`${serviceSlug}.q3`), answer: safeFaq(`${serviceSlug}.a3`) },
   ].filter((f) => f.question && f.answer);
 
-  // Combine: area-specific first, then service-level
-  const faqs = [...dbFaqs, ...serviceFaqs];
+  // Combine: area-specific first, then service-level. DI-15: priced answers are
+  // removed (a cost question whose answer quoted amounts is dropped whole) —
+  // never on TEST A, whose en FAQ messages are left exactly as they are.
+  const allFaqs = [...dbFaqs, ...serviceFaqs];
+  const faqs = stripPrices ? filterPriceFaqs(allFaqs) : allFaqs;
 
   const breadcrumbs = [
     { name: t('home'), url: `/${locale}/` },
@@ -248,7 +276,7 @@ export default async function Page({ params }: PageProps) {
   const ogImage = service.image || siteImages.hero;
 
   return (
-    <ClientMessages ns={['areas', 'cta', 'lightbox', 'locationBenefits', 'modal', 'projects', 'share', 'wholeHouse']}>
+    <ClientMessages ns={['areas', 'cta', 'lightbox', 'locationBenefits', 'modal', 'projects', 'share', 'wholeHouse']} keepPrices={!stripPrices}>
       <BreadcrumbSchema items={breadcrumbs} locale={locale} />
       {/* One Service node, provided by the layout Organization (by @id) and
           scoped to this city. The former LocalBusinessAreaSchema here declared
