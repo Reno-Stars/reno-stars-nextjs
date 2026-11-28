@@ -436,6 +436,23 @@ function continuesAmount(sentence: string, at: number, hits: ReadonlyArray<{ sta
   return TIMED_PREDICATE.test(sentence.slice(at)) && hits.some((h) => h.end <= at && /^[\s,，;；،]*$/.test(sentence.slice(h.end, at)));
 }
 
+/** Leading markup before a sentence's first word: "**", "> ", "(", quotes. */
+const LEAD = /^[\s*_`>#([«"“„'‘]*/u;
+/**
+ * A cut that removed a sentence's opening clause must not leave it starting in lower case:
+ * "Heat pump central system runs $14–22K installed, rebates can offset $7–11K." →
+ * "Rebates can offset $7–11K.", not "… now. rebates can offset …" (task 173). Only when the
+ * original sentence started with a capital and the kept text now starts with a small letter.
+ */
+function keepSentenceCase(sentence: string, body: string): string {
+  const first = (s: string) => s.slice(LEAD.exec(s)?.[0].length ?? 0).match(/^\p{L}/u)?.[0] ?? '';
+  const was = first(sentence);
+  const now = first(body);
+  if (!was || !now || !/\p{Lu}/u.test(was) || !/\p{Ll}/u.test(now)) return body;
+  const at = LEAD.exec(body)?.[0].length ?? 0;
+  return body.slice(0, at) + now.toLocaleUpperCase() + body.slice(at + now.length);
+}
+
 function dropPriceSentences(text: string): string {
   const hits = priceHits(text);
   const inside = (a: number, b: number) => hits.some((h) => h.start >= a && h.end <= b);
@@ -477,10 +494,11 @@ function dropPriceSentences(text: string): string {
     const body = joinKept(clauses)
       // "装修费用方面：未完工的毛坯空间需要 8–10 周" — the amounts are gone, what is left is the time (task 152)
       .replace(/(费用|費用|成本)方面([:：])/g, '工期方面$2')
-      .replace(/[\s,，;；،:：·—–-]+$/, '')
-      .replace(/^[\s,，;；،:：·—–-]+/, '')
+      // 「、」 too: "通常 4 ～ 8 週間、15,000 ～ 72,000 ドル。" keeps its duration, not "通常 4 ～ 8 週間、。" (task 173)
+      .replace(/[\s,，、;；،:：·—–-]+$/, '')
+      .replace(/^[\s,，、;；،:：·—–-]+/, '')
       .replace(/[.!?。！？।۔؟]$/, '');
-    return body ? body + end : '';
+    return body ? keepSentenceCase(sentence, body) + end : '';
   });
   return joinKept(kept.filter(Boolean));
 }
@@ -615,6 +633,16 @@ const isLeadIn = (l: string) => /[:：]\s*(?:\*\*|__)?\s*$/.test(l) && !HEADING.
 function dropOrphans(rows: Array<{ orig: string; kept: string | null }>): string[] {
   const kept = rows.map((r) => r.kept);
   const nextNonBlank = (i: number) => { for (let j = i + 1; j < rows.length; j++) if (rows[j].orig.trim()) return j; return -1; };
+  // 0. a table whose every data row was removed is removed WHOLE here, header + separator too, so its lead-in
+  //    ("**Real Vancouver heat pump installation costs (before rebates):**") is seen as orphaned in pass 1 —
+  //    the same tables dropEmptyTables would empty later, only earlier (task 173)
+  for (let i = 0; i + 1 < rows.length; i++) {
+    if (!/^\s*\|.*\|\s*$/.test(rows[i].orig) || !/^\s*\|[\s:|-]+\|\s*$/.test(rows[i + 1].orig)) continue;
+    let j = i + 2; while (j < rows.length && /^\s*\|/.test(rows[j].orig)) j++;
+    const data = kept.slice(i + 2, j);
+    if (data.length && data.every((k) => k === null)) { kept[i] = null; kept[i + 1] = null; }
+    i = j - 1;
+  }
   // 1. lead-ins whose following block was removed and nothing list-like survives after them
   for (let i = 0; i < rows.length; i++) {
     const k = kept[i];

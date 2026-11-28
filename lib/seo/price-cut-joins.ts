@@ -297,8 +297,11 @@ export function joinAroundCut(left: string, right: string): string {
     const hit = rule(left, right);
     if (hit) return tidyJoin(hit[0], hit[1]);
   }
-  const l = left.replace(PRICE_LEAD, '');
+  let l = left.replace(PRICE_LEAD, '');
   let r = right;
+  // the amount was the last item before the sentence end: "通常 4 ～ 8 週間、15,000 ～ 72,000 ドル。" →
+  // "通常 4 ～ 8 週間。", never "…週間、。" (task 173)
+  if (/^\s*[。．.！!？?]/.test(r)) l = l.replace(/[\s、,，]+$/, '');
   // ko genitive / ja-zh enumeration comma that only attached the amount: "**라벨:** $X、2～3 週間"
   if (/[:：](?:\*\*|__)?\s*$/.test(l)) r = r.replace(/^\s*[、,，]\s*/, ' ');
   if (/^의\s/.test(r)) r = r.slice(1);
