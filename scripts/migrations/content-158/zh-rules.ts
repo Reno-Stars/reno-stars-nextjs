@@ -22,6 +22,17 @@ export const DUAL = new Set([...FULL_DUAL, ...DUAL_EXTRA].filter((c) => !'价苏
 export const PROTECT_NAMES = ['素里', '默里', '芬里', '公里', '鄰里', '邻里', '萬里'];
 /** Task 164 (Captain): only WARRANTY wording keeps its characters; insurance clauses are converted. */
 export const PROTECT_CLAUSE = re('保修|保固|质保|質保|保用|保养|保養');
+/**
+ * Task 172 Part B (Ryan 2026-11-27 「5.6 up to 3 years」): the four rows whose warranty clauses were left as
+ * written. Their duration now changes to "up to 3 years" (facts-rules WARRANTY_DURATION), so their zh-Hant
+ * text is converted like every other row — PROTECT_CLAUSE no longer applies to them.
+ */
+export const WARRANTY_ROWS: ReadonlySet<string> = new Set([
+  'fbfe62bc-8887-44a0-a6a0-eef892a1e986', // blog 保修条款
+  '59dc7aba-5dd9-4fc1-8a67-4167425e8abd', // faq 3 年工艺质保
+  'cc1effef-49f0-417b-9751-b95c99636f68', // services 2 年施工质保
+  '2657bf9d-b4cb-4fa4-8138-d67f223b98ef', // services 3 年施工质保
+]);
 const SENT = re('([。！？；!?;\\n])', 'g');
 const CLAUSE = re('([，、,|·•：:（）()])', 'g');
 export const GLOSSARY: ReadonlyArray<readonly [string, string]> = [['復雜', '複雜'], ['幹牆', '乾牆'], ['台面', '檯面']];
@@ -42,7 +53,7 @@ export class ZhConverter {
     return Array.from(s).some((c) => this.scOnly.has(c));
   }
 
-  private convertSentence(s: string, o: string): { text: string; left: Residue[] } {
+  private convertSentence(s: string, o: string, protect = true): { text: string; left: Residue[] } {
     const sc = Array.from(s);
     const oc = Array.from(o);
     const names = namesMask(sc);
@@ -51,7 +62,7 @@ export class ZhConverter {
     let pos = 0;
     for (const part of s.split(CLAUSE)) {
       const pc = Array.from(part);
-      const prot = PROTECT_CLAUSE.test(part);
+      const prot = protect && PROTECT_CLAUSE.test(part);
       pc.forEach((a, j) => {
         const i = pos + j;
         const b = oc[i];
@@ -66,8 +77,11 @@ export class ZhConverter {
     return { text: applyGlossary(s, out.join('')), left };
   }
 
-  /** Convert many values; returns the converted texts and, per text, the warranty characters left as-is. */
-  convertMany(texts: string[]): { texts: string[]; residues: Residue[][] } {
+  /**
+   * Convert many values; returns the converted texts and, per text, the warranty characters left as-is.
+   * `protect[i] === false` converts text i's warranty clauses too (WARRANTY_ROWS).
+   */
+  convertMany(texts: string[], protect: readonly boolean[] = []): { texts: string[]; residues: Residue[][] } {
     const sents = texts.map((t) => t.split(SENT));
     const todo = sents.flat().filter((p) => this.hasSc(p));
     const conv = new Map<string, string>();
@@ -77,14 +91,14 @@ export class ZhConverter {
     }
     const outTexts: string[] = [];
     const residues: Residue[][] = [];
-    for (const ps of sents) {
+    for (const [ti, ps] of sents.entries()) {
       const out: string[] = [];
       const left: Residue[] = [];
       let base = 0;
       for (const p of ps) {
         const c = conv.get(p);
         if (c !== undefined && Array.from(c).length === Array.from(p).length) {
-          const r = this.convertSentence(p, c);
+          const r = this.convertSentence(p, c, protect[ti] !== false);
           out.push(r.text);
           left.push(...r.left.map((x) => ({ ...x, index: base + x.index })));
         } else out.push(p);
@@ -97,11 +111,11 @@ export class ZhConverter {
   }
 
   /** First pass over all texts, then a second pass on any output still carrying a Simplified-only character. */
-  convertWithSecondPass(texts: string[]): { texts: string[]; residues: Residue[][] } {
-    const { texts: conv, residues } = this.convertMany(texts);
+  convertWithSecondPass(texts: string[], protect: readonly boolean[] = []): { texts: string[]; residues: Residue[][] } {
+    const { texts: conv, residues } = this.convertMany(texts, protect);
     conv.forEach((c, i) => {
       if (!this.hasSc(c)) return;
-      const again = this.convertMany([c]);
+      const again = this.convertMany([c], [protect[i] !== false]);
       conv[i] = again.texts[0];
       residues[i] = again.residues[0];
     });

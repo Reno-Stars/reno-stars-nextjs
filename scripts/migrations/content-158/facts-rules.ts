@@ -308,3 +308,145 @@ export function rewriteLocalization(key: string, v: string, companySince: boolea
   const e = sinceEn(value);
   return { value: e.value, changes: [...changes, ...e.changes] };
 }
+
+/**
+ * Task 172 Part B (Ryan 2026-11-27 「5.6 up to 3 years」): the warranty DURATION in the four rows that were on
+ * the warranty-wording skip list now reads "up to 3 years" in every locale that states it — only the duration
+ * phrase changes, the rest of the clause stays. Exact (old → new) pairs per field, applied after the other rules;
+ * the zh-Hant pairs match the Traditional text the zh-Hant migration writes (it no longer protects these rows,
+ * zh-rules WARRANTY_ROWS). blog fbfe62bc only lists "Warranty terms" / 保修条款 — no duration to change.
+ */
+export const WARRANTY_DURATION: Readonly<Record<string, Readonly<Record<string, ReadonlyArray<readonly [string, string]>>>>> = {
+  '59dc7aba-5dd9-4fc1-8a67-4167425e8abd': {
+    'answer_en': [
+      ['and a 3-year workmanship warranty.', 'and a workmanship warranty of up to 3 years.'],
+    ],
+    'answer_zh': [
+      ['以及 3 年工艺质保。', '以及最长 3 年工艺质保。'],
+    ],
+    'localizations->answerZhHant': [
+      ['以及 3 年工藝質保。', '以及最長 3 年工藝質保。'],
+    ],
+  },
+  '2657bf9d-b4cb-4fa4-8138-d67f223b98ef': {
+    'long_description_en': [
+      ['and our 3-year workmanship warranty.', 'and our workmanship warranty of up to 3 years.'],
+      ['- 3-year workmanship warranty', '- Workmanship warranty of up to 3 years'],
+    ],
+    'long_description_zh': [
+      ['和我们的 3 年工艺保修。', '和我们最长 3 年的工艺保修。'],
+      ['- 3年工艺保修', '- 最长 3 年工艺保修'],
+    ],
+    'localizations->longDescriptionZhHant': [
+      ['3 年施工質保', '最長 3 年施工質保'],
+      ['3 年施工质保', '最長 3 年施工質保'],
+    ],
+    'localizations->longDescriptionEs': [
+      ['de mano de obra de 3 años', 'de mano de obra de hasta 3 años'],
+    ],
+    'localizations->longDescriptionFr': [
+      ['garantie de fabrication de 3 ans', 'garantie de fabrication jusqu\'à 3 ans'],
+      ['Garantie de fabrication de 3 ans', 'Garantie de fabrication jusqu\'à 3 ans'],
+    ],
+    'localizations->longDescriptionAr': [
+      ['وضماننا للتصنيع لمدة 3 سنوات', 'وضماننا للتصنيع لمدة تصل إلى 3 سنوات'],
+      ['ضمان المصنعية لمدة 3 سنوات', 'ضمان المصنعية لمدة تصل إلى 3 سنوات'],
+    ],
+    'localizations->longDescriptionFa': [
+      ['ضمانت کار 3 ساله ما', 'ضمانت کار حداکثر 3 ساله ما'],
+      ['- 3 سال گارانتی کار', '- تا 3 سال گارانتی کار'],
+    ],
+    'localizations->longDescriptionHi': [
+      ['3 साल की कारीगरी वारंटी', '3 साल तक की कारीगरी वारंटी'],
+    ],
+    'localizations->longDescriptionJa': [
+      ['3 年間の仕上がり保証', '最長 3 年間の仕上がり保証'],
+      ['3年間の製造保証', '最長3年間の製造保証'],
+    ],
+    'localizations->longDescriptionKo': [
+      ['3년 기술 보증', '최대 3년 기술 보증'],
+    ],
+    'localizations->longDescriptionPa': [
+      ['3-ਸਾਲ ਦੀ ਕਾਰੀਗਰੀ ਵਾਰੰਟੀ', '3 ਸਾਲ ਤੱਕ ਦੀ ਕਾਰੀਗਰੀ ਵਾਰੰਟੀ'],
+    ],
+    'localizations->longDescriptionRu': [
+      ['нашу трехлетнюю гарантию качества', 'нашу гарантию качества сроком до 3 лет'],
+      ['Гарантия на качество изготовления 3 года.', 'Гарантия на качество изготовления до 3 лет.'],
+    ],
+    'localizations->longDescriptionTl': [
+      ['ang aming 3-taong warranty sa pagkakagawa', 'ang aming warranty sa pagkakagawa na hanggang 3 taon'],
+      ['3-taong warranty ng pagkakagawa', 'Warranty ng pagkakagawa na hanggang 3 taon'],
+    ],
+    'localizations->longDescriptionVi': [
+      ['bảo hành tay nghề 3 năm', 'bảo hành tay nghề lên đến 3 năm'],
+      ['Bảo hành tay nghề 3 năm', 'Bảo hành tay nghề lên đến 3 năm'],
+    ],
+  },
+  'cc1effef-49f0-417b-9751-b95c99636f68': {
+    'long_description_en': [
+      ['and a 2-year workmanship warranty.', 'and a workmanship warranty of up to 3 years.'],
+    ],
+    'long_description_zh': [
+      ['和 2 年工艺保修。', '和最长 3 年工艺保修。'],
+    ],
+    'localizations->longDescriptionZhHant': [
+      ['2 年施工質保', '最長 3 年施工質保'],
+      ['2 年施工质保', '最長 3 年施工質保'],
+    ],
+    'localizations->longDescriptionAr': [
+      ['وضمان صنعة لمدة عامين', 'وضمان صنعة لمدة تصل إلى 3 سنوات'],
+    ],
+    'localizations->longDescriptionEs': [
+      ['una garantía de mano de obra de 2 años', 'una garantía de mano de obra de hasta 3 años'],
+    ],
+    'localizations->longDescriptionFa': [
+      ['و 2 سال ضمانت کار', 'و تا 3 سال ضمانت کار'],
+    ],
+    'localizations->longDescriptionFr': [
+      ['une garantie de fabrication de 2 ans', 'une garantie de fabrication jusqu\'à 3 ans'],
+    ],
+    'localizations->longDescriptionHi': [
+      ['2 साल की कारीगरी वारंटी', '3 साल तक की कारीगरी वारंटी'],
+    ],
+    'localizations->longDescriptionJa': [
+      ['2 年間の仕上がり保証', '最長 3 年間の仕上がり保証'],
+    ],
+    'localizations->longDescriptionKo': [
+      ['2년 기술 보증', '최대 3년 기술 보증'],
+    ],
+    'localizations->longDescriptionPa': [
+      ['2-ਸਾਲ ਦੀ ਕਾਰੀਗਰੀ ਵਾਰੰਟੀ', '3 ਸਾਲ ਤੱਕ ਦੀ ਕਾਰੀਗਰੀ ਵਾਰੰਟੀ'],
+    ],
+    'localizations->longDescriptionRu': [
+      ['двухлетнюю гарантию качества', 'гарантию качества сроком до 3 лет'],
+    ],
+    'localizations->longDescriptionTl': [
+      ['isang 2 taong warranty sa pagkakagawa', 'isang warranty sa pagkakagawa na hanggang 3 taon'],
+    ],
+    'localizations->longDescriptionVi': [
+      ['bảo hành tay nghề 2 năm', 'bảo hành tay nghề lên đến 3 năm'],
+    ],
+  },
+  'fbfe62bc-8887-44a0-a6a0-eef892a1e986': {
+  },
+};
+
+/** Warranty duration → "up to 3 years" for a WARRANTY_DURATION row; every other row is returned unchanged. */
+export function rewriteWarranty(rowId: string, field: string, v: string): { value: string; changes: FactsChange[] } {
+  const changes: FactsChange[] = [];
+  let s = v;
+  for (const [o, n] of WARRANTY_DURATION[rowId]?.[field] ?? []) {
+    // an occurrence that already sits inside its replacement ("최대 3년 기술 보증") is left: a re-run is a no-op
+    const k = n.indexOf(o);
+    let out = '';
+    let from = 0;
+    for (let i = s.indexOf(o); i !== -1; i = s.indexOf(o, i + o.length)) {
+      if (k >= 0 && i >= k && s.slice(i - k, i - k + n.length) === n) continue;
+      out += s.slice(from, i) + n;
+      from = i + o.length;
+      changes.push({ rule: 'warranty:up-to-3y', old: o, new: n });
+    }
+    s = out + s.slice(from);
+  }
+  return { value: s, changes };
+}

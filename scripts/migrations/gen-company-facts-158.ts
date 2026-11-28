@@ -16,7 +16,7 @@
  */
 import type { Client } from 'pg';
 import {
-  rowMakesSinceClaim, rewriteColumn, rewriteLocalization, type FactsChange, type SubcountLeft,
+  rowMakesSinceClaim, rewriteColumn, rewriteLocalization, rewriteWarranty, type FactsChange, type SubcountLeft,
 } from './content-158/facts-rules';
 import { scanResiduals, type ScannedValue } from './content-158/residuals';
 import {
@@ -47,6 +47,12 @@ function consider(ctx: Ctx, acc: Acc, base: Omit<Stmt, 'rules' | 'mode'>, change
   seen(base.new, 'new');
 }
 
+/** Task 172 B: the warranty-duration pairs of the four WARRANTY_DURATION rows, after the other rules. */
+function withWarranty(id: string, field: string, x: { value: string; changes: FactsChange[] }): { value: string; changes: FactsChange[] } {
+  const w = rewriteWarranty(id, field, x.value);
+  return { value: w.value, changes: [...x.changes, ...w.changes] };
+}
+
 async function scanTable(client: Client, ctx: Ctx, acc: Acc, t: string): Promise<void> {
   const cols = (await textColumns(client, t, "data_type in ('text', 'character varying')")).filter((c) => !NOT_COPY.includes(c));
   const sel = cols.map((c) => `, ${ident(c)}`).join('');
@@ -56,13 +62,13 @@ async function scanTable(client: Client, ctx: Ctx, acc: Acc, t: string): Promise
     for (const c of cols) {
       const v = r[c];
       if (typeof v !== 'string' || !v) continue;
-      const x = rewriteColumn(c, v, since, acc.subcounts);
+      const x = withWarranty(r.id, c, rewriteColumn(c, v, since, acc.subcounts));
       consider(ctx, acc, { table: t, id: r.id, field: c, old: v, new: x.value }, x.changes, true);
     }
     const loc: Record<string, unknown> = r.loc ? JSON.parse(r.loc) ?? {} : {};
     for (const [k, v] of Object.entries(loc)) {
       if (typeof v !== 'string' || !v) continue;
-      const x = rewriteLocalization(k, v, since, acc.subcounts);
+      const x = withWarranty(r.id, `localizations->${k}`, rewriteLocalization(k, v, since, acc.subcounts));
       consider(ctx, acc, { table: t, id: r.id, field: `localizations->${k}`, old: v, new: x.value }, x.changes, false);
     }
   }

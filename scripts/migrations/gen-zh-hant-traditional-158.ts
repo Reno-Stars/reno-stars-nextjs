@@ -15,7 +15,7 @@
  */
 import * as OpenCC from 'opencc-js';
 import type { Client } from 'pg';
-import { ZhConverter, zhHantKey } from './content-158/zh-rules';
+import { ZhConverter, zhHantKey, WARRANTY_ROWS } from './content-158/zh-rules';
 import {
   arg, connectReadOnly, closeReadOnly, ident, textColumns, tiedIds, testACorpus, skipReason,
   sortStmts, renderFile, checkGuards, writeOutputs, countBy, type Stmt, type SkipReason,
@@ -63,7 +63,8 @@ async function main(): Promise<void> {
 
   const conv = OpenCC.Converter({ from: 'cn', to: 'tw' });
   const zh = new ZhConverter((xs) => xs.map((x) => conv(x)), jobs.map((j) => j.src).join(''));
-  const { texts, residues } = zh.convertWithSecondPass(jobs.map((j) => j.src));
+  // WARRANTY_ROWS (task 172 B): their warranty clauses are converted too — no longer left as written
+  const { texts, residues } = zh.convertWithSecondPass(jobs.map((j) => j.src), jobs.map((j) => !WARRANTY_ROWS.has(j.id)));
 
   const stmts: Stmt[] = [];
   const skipped: Array<{ table: string; id: string; field: string; reason: SkipReason; mode: string; valueHead: string }> = [];
@@ -92,6 +93,7 @@ async function main(): Promise<void> {
     rowsHitPerTableKey: countBy(sorted, (s) => `${s.table}.${s.field.slice(15)} ${s.mode}`),
     skippedByReason: countBy(skipped, (s) => s.reason),
     warrantyClausesLeftAsIs: protectedLeft,
+    warrantyRowsConverted: [...WARRANTY_ROWS].sort(),
     guardCheck: guards,
     skipped: [...skipped].sort((a, b) => { const x = `${a.table}|${a.id}|${a.field}`, y = `${b.table}|${b.id}|${b.field}`; return x < y ? -1 : x > y ? 1 : 0; }),
   };

@@ -391,6 +391,14 @@ rows. Output is sorted by table, id, field — same snapshot ⇒ same bytes.
      include by hand only if confirmed;
    - `laterFixes` — defects this migration deliberately does not touch;
    - rows hit per rule, rows skipped by reason, warranty clauses left, sub-counts left.
+   - Task 172 (Ryan 2026-11-27): a company "20+ years" claim is **kept as industry
+     experience** (`industry-experience` in `excludedByPattern` counts that wording; it is
+     allowed) — never deleted; the About line carries the short form without "900+
+     projects" so "$5M" stays inside the 1000-char FAQ JSON-LD summary. The four
+     warranty-wording rows (`zh-rules` `WARRANTY_ROWS`) now get "up to 3 years"
+     (`warranty:up-to-3y`, `WARRANTY_DURATION`) and their zh-Hant clauses are converted
+     (`warrantyRowsConverted`, `warrantyClausesLeftAsIs` = 0). Values of those rows that
+     render on Test A are skipped like any other — check them in `skipped`.
 5. **Ryan approves.**
 6. **Rollback point first:** dump the affected tables before migrating, e.g.
    `pg_dump --data-only -t blog_posts -t faqs -t services -t service_benefits -t projects -t testimonials …`

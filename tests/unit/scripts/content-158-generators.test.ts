@@ -191,3 +191,34 @@ describe('task 172 — "20+ years" kept as INDUSTRY experience (Ryan 2026-11-27)
     expect(r.residuals[0]).toMatchObject({ id: 'c' });
   });
 });
+
+describe('task 172 B — warranty "up to 3 years" in the four warranty-wording rows (Ryan 2026-11-27)', () => {
+  it('changes only the duration phrase, only in those rows, and a re-run is a no-op', async () => {
+    const { rewriteWarranty } = await import('@/scripts/migrations/content-158/facts-rules');
+    const faq = '59dc7aba-5dd9-4fc1-8a67-4167425e8abd';
+    const v = 'All Delta projects include permits, $5M CGL coverage, and a 3-year workmanship warranty.';
+    const r = rewriteWarranty(faq, 'answer_en', v);
+    expect(r.value).toBe('All Delta projects include permits, $5M CGL coverage, and a workmanship warranty of up to 3 years.');
+    expect(rewriteWarranty(faq, 'answer_en', r.value).changes).toEqual([]);
+    expect(rewriteWarranty('00000000-other-row', 'answer_en', v).value).toBe(v);
+    const svc = 'cc1effef-49f0-417b-9751-b95c99636f68';
+    const ko = rewriteWarranty(svc, 'localizations->longDescriptionKo', 'WorkSafeBC 및 2년 기술 보증이 포함됩니다.');
+    expect(ko.value).toBe('WorkSafeBC 및 최대 3년 기술 보증이 포함됩니다.');
+    expect(rewriteWarranty(svc, 'localizations->longDescriptionKo', ko.value).changes).toEqual([]);
+    const zht = rewriteWarranty('2657bf9d-b4cb-4fa4-8138-d67f223b98ef', 'localizations->longDescriptionZhHant', 'WorkSafeBC、3 年施工質保。 - 3 年施工質保 -');
+    expect(zht.value).toBe('WorkSafeBC、最長 3 年施工質保。 - 最長 3 年施工質保 -');
+    expect(rewriteWarranty('2657bf9d-b4cb-4fa4-8138-d67f223b98ef', 'localizations->longDescriptionZhHant', zht.value).changes).toEqual([]);
+  });
+
+  it('zh-Hant converts the warranty clauses of WARRANTY_ROWS only; other rows keep them as written', () => {
+    const cc = OpenCC.Converter({ from: 'cn', to: 'tw' });
+    const opencc = (xs: string[]) => xs.map((x) => cc(x));
+    const texts = ['提供 2 年施工质保，并且免费检查。', '提供 2 年施工质保，并且免费检查。'];
+    const z = new ZhConverter(opencc, texts.join(''));
+    const { texts: out, residues } = z.convertWithSecondPass(texts, [true, false]);
+    expect(out[0]).toContain('施工质保');
+    expect(residues[0].length).toBeGreaterThan(0);
+    expect(out[1]).toBe('提供 2 年施工質保，並且免費檢查。');
+    expect(residues[1]).toEqual([]);
+  });
+});
